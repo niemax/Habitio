@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import {
     HomeheaderContainer,
@@ -7,7 +8,6 @@ import {
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 import getCurrentDate from '../utils/helpers/currentDate';
-import { TouchableOpacity } from 'react-native';
 import colors from '../utils/colors';
 
 export default function Homepage({ navigation }) {
@@ -23,7 +23,7 @@ export default function Homepage({ navigation }) {
             <HomeheaderContainer>
                 <HomepageTextContainer>
                     <Text left twentyEight fontFamily="Bold" marginLeft="15px">
-                        Dashboard for,
+                        Dashboard for
                     </Text>
                     <Text
                         twenty

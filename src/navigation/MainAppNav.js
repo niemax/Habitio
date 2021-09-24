@@ -5,29 +5,19 @@ import Homepage from '../screens/Homepage';
 import SplashScreen from '../screens/AuthScreens/Splash';
 import Test from '../screens/Test';
 import CustomTabBar from '../components/CustomTabBar';
+import HabitScreen from '../screens/HabitScreen';
+import AddModal from '../components/AddGoalModal';
 
 const Tab = createBottomTabNavigator();
 
-const HomepageStack = () => (
-    <Stack.Navigator
-        initialRouteName="Homepage" // VAIHDA TÄMÄ TAKAISIN SIGNUP
-    >
-        <Stack.Screen
-            name="Homepage"
-            options={{ headerShown: false, gestureEnabled: false }}
-            component={Homepage}
-        />
-    </Stack.Navigator>
-);
-
 const MainTab = () => (
-    <Tab.Navigator initialRouteName="HomepageStack" tabBar={(props) => <CustomTabBar {...props} />}>
+    <Tab.Navigator initialRouteName="Homepage" tabBar={(props) => <CustomTabBar {...props} />}>
         <Tab.Screen
             options={{
                 headerShown: false,
             }}
             name="Home"
-            component={HomepageStack}
+            component={Homepage}
         />
         <Tab.Screen
             options={{
@@ -40,19 +30,25 @@ const MainTab = () => (
 );
 
 const MainAppStack = () => (
-    <Stack.Navigator
-        initialRouteName="SplashScreen" // VAIHDA TÄMÄ TAKAISIN SIGNUP
-    >
+    <Stack.Navigator initialRouteName="SplashScreen">
         <Stack.Screen
-            name="SplashScreen"
-            options={{ headerShown: false, gestureEnabled: false }}
-            component={SplashScreen}
-        />
-        <Stack.Screen
-            name="Homepage"
+            name="MainTab"
             options={{ headerShown: false, gestureEnabled: false }}
             component={MainTab}
         />
+        <Stack.Group>
+            <Stack.Screen
+                screenOptions={{ presentationStyle: 'modal', gestureEnabled: true }}
+                name="AddModal"
+                options={{ headerShown: false, gestureEnabled: false }}
+                component={AddModal}
+            />
+            <Stack.Screen
+                name="HabitScreen"
+                options={{ headerShown: false, gestureEnabled: true }}
+                component={HabitScreen}
+            />
+        </Stack.Group>
     </Stack.Navigator>
 );
 

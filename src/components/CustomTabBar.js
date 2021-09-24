@@ -8,6 +8,7 @@ import {
 } from '../utils/StyledComponents/Styled';
 import Tab from './Tab';
 import AddModal from './AddGoalModal';
+import { haptics } from '../utils/helpers/haptics';
 
 const CustomTabBar = ({ state, navigation }) => {
     const [selected, setSelected] = useState('Home');
@@ -23,9 +24,13 @@ const CustomTabBar = ({ state, navigation }) => {
     return (
         <TabBarContainer style={tabBarShadow}>
             <TabBarAddContainer>
-                <AddModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
                 {selected === 'Home' && (
-                    <TabAddButton onPress={() => setModalVisible(true)}>
+                    <TabAddButton
+                        onPress={() => {
+                            haptics.selection();
+                            navigation.navigate('AddModal');
+                        }}
+                    >
                         <Feather name="plus" size={36} color="white" />
                     </TabAddButton>
                 )}

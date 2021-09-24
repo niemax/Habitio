@@ -1,7 +1,9 @@
 import styled from 'styled-components/native';
 import colors from '../colors';
 
-const { mainBackground } = colors;
+const { mainBackground, mainGreen } = colors;
+
+const radius = '15px';
 
 export const MainContainer = styled.View`
     background-color: ${mainBackground};
@@ -19,15 +21,13 @@ export const HomepageTextContainer = styled.View`
     flex-direction: column;
 `;
 
-const radius = 200;
-
 export const TabAddButton = styled.TouchableOpacity`
     height: 70px;
     width: 70px;
     justify-content: center;
     align-items: center;
     background-color: green;
-    border-radius: ${radius};
+    border-radius: 200px;
     background: #2eb284;
 `;
 export const TabContainer = styled.View`
@@ -66,4 +66,68 @@ export const ModalView = styled.View``;
 export const ModalContent = styled.View`
     flex: 1;
     background-color: ${mainBackground};
+`;
+
+export const InputContainer = styled.View`
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+`;
+
+export const HabitInput = styled.TextInput`
+    width: 342px;
+    height: 60px
+    background-color: #383838;
+    border-radius: 15px;
+    padding: 15px;
+`;
+
+export const ButtonContainer = styled.View`
+    justify-content: center;
+    align-items: center;
+    margin-top: 150px;
+`;
+
+export const HabitNextButton = styled.TouchableOpacity`
+    width: 350px;
+    height: 60px;
+    background-color: ${mainGreen};
+    justify-content: center;
+    align-items: center;
+    border-radius: ${radius};
+`;
+
+export const PreDefinedContainer = styled.View`
+    justify-content: center;
+    align-items: center;
+`;
+export const PreDefinedHabitsContainer = styled.View`
+    background-color: #383838;
+    width: 360px;
+    height: 90px;
+    border-radius: ${radius};
+    margin-top: 20px;
+    flex-direction: row;
+    align-items: center;
+`;
+
+export const HabitScreenContainer = styled.View`
+    flex: 1;
+    background-color: ${mainBackground};
+    align-items: center;
+`;
+
+export const ImageContainer = styled.View`
+    width: 100%;
+    height: 160px;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center
+    background-color: #141414;
+`;
+
+export const ChevronTextContainer = styled.View`
+    flex-direction: column;
+    margin-top: 10px;
 `;
