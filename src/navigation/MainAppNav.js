@@ -2,11 +2,11 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Homepage from '../screens/Homepage';
-import SplashScreen from '../screens/AuthScreens/Splash';
 import Test from '../screens/Test';
 import CustomTabBar from '../components/CustomTabBar';
 import HabitScreen from '../screens/HabitScreen';
-import AddModal from '../components/AddGoalModal';
+import CreateHabit from '../screens/CreateHabit';
+import FirstHabitModal from '../components/AddGoalModal';
 
 const Tab = createBottomTabNavigator();
 
@@ -38,15 +38,23 @@ const MainAppStack = () => (
         />
         <Stack.Group>
             <Stack.Screen
-                screenOptions={{ presentationStyle: 'modal', gestureEnabled: true }}
-                name="AddModal"
+                screenOptions={{ presentation: 'modal' }}
+                name="FirstHabitModal"
                 options={{ headerShown: false, gestureEnabled: false }}
-                component={AddModal}
+                component={FirstHabitModal}
             />
             <Stack.Screen
                 name="HabitScreen"
                 options={{ headerShown: false, gestureEnabled: true }}
                 component={HabitScreen}
+            />
+            <Stack.Screen
+                name="CreateHabit"
+                options={{
+                    gestureEnabled: true,
+                    headerShown: false,
+                }}
+                component={CreateHabit}
             />
         </Stack.Group>
     </Stack.Navigator>

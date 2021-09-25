@@ -12,11 +12,10 @@ import {
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 import data from '../categories';
-import { useNavigation } from '@react-navigation/core';
+import { habitBoxShadow } from '../utils/globalStyles';
 
-export default function AddModal() {
+export default function FirstHabitModal({ navigation }) {
     const [habitName, setHabitName] = useState('');
-    const navigation = useNavigation();
 
     return (
         <ModalContent>
@@ -34,30 +33,36 @@ export default function AddModal() {
             </Text>
             <InputContainer>
                 <HabitInput
+                    clearButtonMode="always"
                     placeholder="Habit name"
                     placeholderTextColor="white"
-                    style={{ color: 'white', fontSize: 18, fontFamily: 'Bold' }}
+                    style={{
+                        color: 'white',
+                        fontSize: 18,
+                        fontFamily: 'Bold',
+                        ...habitBoxShadow,
+                    }}
                     onChangeText={(text) => setHabitName(text)}
                 />
             </InputContainer>
             <Text left fontFamily="Regular" marginLeft="25px" marginTop="50px">
                 Or choose from existing Habits
             </Text>
-            <PreDefinedContainer>
-                {data.map((item, index) => (
+            <PreDefinedContainer style={habitBoxShadow}>
+                {data.map(({ name, image, icon }, index) => (
                     <TouchableOpacity
                         key={index.toString()}
                         onPress={() =>
                             navigation.push('HabitScreen', {
-                                image: item.image,
-                                name: item.name,
+                                image: image,
+                                name: name,
                             })
                         }
                     >
                         <PreDefinedHabitsContainer>
-                            {item.icon}
+                            {icon}
                             <Text marginLeft="15px" fontFamily="Medium">
-                                {item.name}
+                                {name}
                             </Text>
                         </PreDefinedHabitsContainer>
                     </TouchableOpacity>

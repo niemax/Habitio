@@ -1,6 +1,17 @@
-const colors = {
+export const colors = {
     mainBackground: '#262626',
     mainGreen: '#2EB284',
 };
 
-export default colors;
+export const habitSelectionColors = [
+    '#FF4040',
+    '#FF6347',
+    '#7F3FBF',
+    '#7FBF3F',
+    '#3F3FBF',
+    '#FA9C0F',
+    '#E2FA0F',
+    '#FA0FE2',
+    '#0FCBFA',
+    '#0F84FA',
+];

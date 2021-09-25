@@ -20,7 +20,7 @@ const Text = styled.Text`
     /* prettier-ignore */
     fontFamily: ${(props) => props.fontFamily ?? 'SemiBold'};
     color: ${(props) => props.color ?? '#FFF'}
-        ${({ twenty, twentyEight, thirtyFour, twentyTwo }) => {
+        ${({ sixteen, twenty, twentyEight, thirtyFour, twentyTwo }) => {
             switch (true) {
                 case thirtyFour:
                     return `font-size: 30px`;
@@ -33,6 +33,9 @@ const Text = styled.Text`
 
                 case twenty:
                     return `font-size: 20px`;
+
+                case sixteen:
+                    return `font-size: 16px`;
 
                 default:
                     return `font-size: 18px`;

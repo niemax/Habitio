@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import colors from '../colors';
+import { colors } from '../colors';
 
 const { mainBackground, mainGreen } = colors;
 
@@ -130,4 +130,75 @@ export const ImageContainer = styled.View`
 export const ChevronTextContainer = styled.View`
     flex-direction: column;
     margin-top: 10px;
+`;
+
+export const HabitCardsContainer = styled.View`
+    background-color: #292929;
+    width: 360px;
+    height: 90px;
+    border-radius: ${radius};
+    margin-top: 20px;
+    flex-direction: row;
+    align-items: center;
+`;
+
+export const HabitTextColumnContainer = styled.View`
+    flex-direction: column;
+`;
+
+export const CreateHabitHeader = styled.View`
+    margin-top: 48px;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-horizontal: 12px;
+    align-items: center;
+`;
+
+export const HabitInfoContainer = styled.View`
+    flex: 1;
+`;
+
+export const HabitDescriptionInput = styled.TextInput`
+    width: 360px;
+    height: 100px;
+    background-color: #383838;
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 10px;
+    margin-left: 15px;
+`;
+
+export const HabitUtilityInfoContainer = styled.View`
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 15px;
+`;
+
+export const SelectHabitColorButton = styled.TouchableOpacity`
+    justify-content: center;
+    margin-left: 15px;
+    margin-top: 10px;
+    background-color: #191919;
+    align-items: center;
+    height: 70px;
+    width: 70px;
+    border-radius: 15px;
+`;
+
+export const ColorModalContainer = styled.View`
+    flex-direction: row;
+    justify-content: space-evenly;
+`;
+
+export const FrequencyTouchable = styled.TouchableOpacity`
+    width: 360px;
+    height: 60px;
+    background-color: #383838;
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 10px;
+    margin-left: 15px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 `;

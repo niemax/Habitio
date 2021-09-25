@@ -31,3 +31,20 @@ export const tabBarShadow = {
     shadowRadius: 6.68,
     elevation: 11,
 };
+
+export const habitBoxShadow = {
+    shadowColor: '#000',
+    shadowOffset: {
+        width: 0,
+        height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
+};
+
+export const createHabitColorIndicator = {
+    width: 35,
+    height: 35,
+    borderRadius: '50%',
+};

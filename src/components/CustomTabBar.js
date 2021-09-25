@@ -7,7 +7,6 @@ import {
     TabBarContainer,
 } from '../utils/StyledComponents/Styled';
 import Tab from './Tab';
-import AddModal from './AddGoalModal';
 import { haptics } from '../utils/helpers/haptics';
 
 const CustomTabBar = ({ state, navigation }) => {
@@ -28,7 +27,7 @@ const CustomTabBar = ({ state, navigation }) => {
                     <TabAddButton
                         onPress={() => {
                             haptics.selection();
-                            navigation.navigate('AddModal');
+                            navigation.navigate('FirstHabitModal');
                         }}
                     >
                         <Feather name="plus" size={36} color="white" />

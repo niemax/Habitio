@@ -7,16 +7,28 @@ import {
     MainContainer,
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
-import getCurrentDate from '../utils/helpers/currentDate';
-import colors from '../utils/colors';
+import { colors } from '../utils/colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Homepage({ navigation }) {
-    const [date, setDate] = useState('');
+    /* const [date, setDate] = useState('');
 
     useEffect(() => {
         const { date } = getCurrentDate();
         setDate(date);
-    }, [date]);
+    }, [date]); */
+
+    const getData = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem('@habit');
+            console.log(jsonValue != null ? JSON.parse(jsonValue) : null);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+    useEffect(() => {
+        getData();
+    }, []);
 
     return (
         <MainContainer>
@@ -32,7 +44,7 @@ export default function Homepage({ navigation }) {
                         left
                         marginLeft="15px"
                     >
-                        {date}
+                        26. syyskuuta, 2021
                     </Text>
                 </HomepageTextContainer>
                 <TouchableOpacity>
