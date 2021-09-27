@@ -14,6 +14,7 @@ export const HomeheaderContainer = styled.View`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin-top: 10px;
 `;
 
 export const HomepageTextContainer = styled.View`
@@ -84,9 +85,11 @@ export const HabitInput = styled.TextInput`
 `;
 
 export const ButtonContainer = styled.View`
+    position: absolute;
+    bottom: 25px;
+    left: 20px;
     justify-content: center;
     align-items: center;
-    margin-top: 150px;
 `;
 
 export const HabitNextButton = styled.TouchableOpacity`
@@ -147,7 +150,7 @@ export const HabitTextColumnContainer = styled.View`
 `;
 
 export const CreateHabitHeader = styled.View`
-    margin-top: 48px;
+    margin-top: 35px;
     flex-direction: row;
     justify-content: space-between;
     padding-horizontal: 12px;
@@ -156,6 +159,7 @@ export const CreateHabitHeader = styled.View`
 
 export const HabitInfoContainer = styled.View`
     flex: 1;
+    align-items: center;
 `;
 
 export const HabitDescriptionInput = styled.TextInput`
@@ -165,7 +169,6 @@ export const HabitDescriptionInput = styled.TextInput`
     border-radius: 15px;
     padding: 15px;
     margin-top: 10px;
-    margin-left: 15px;
 `;
 
 export const HabitUtilityInfoContainer = styled.View`
@@ -176,7 +179,7 @@ export const HabitUtilityInfoContainer = styled.View`
 
 export const SelectHabitColorButton = styled.TouchableOpacity`
     justify-content: center;
-    margin-left: 15px;
+    margin-left: 10px;
     margin-top: 10px;
     background-color: #191919;
     align-items: center;
@@ -190,15 +193,96 @@ export const ColorModalContainer = styled.View`
     justify-content: space-evenly;
 `;
 
-export const FrequencyTouchable = styled.TouchableOpacity`
+export const FrequencyTouchable = styled.View`
     width: 360px;
     height: 60px;
     background-color: #383838;
     border-radius: 15px;
     padding: 15px;
     margin-top: 10px;
-    margin-left: 15px;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+`;
+
+export const HomepageDataView = styled.View`
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+`;
+
+export const HomepageDataBox = styled.TouchableOpacity`
+    margin-top: 25px;
+    width: 160px;
+    height: 150px;
+    background-color: #383838;
+    border-radius: 15px;
+    margin-horizontal: 10px;
+    margin-vertical: 10px;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+`;
+
+export const FrequencyContainer = styled.View`
+    justify-content: center;
+    align-items: center;
+`;
+
+export const ShowHabitDataContainer = styled.View`
+    justify-content: center;
+    align-items: center;
+`;
+
+export const ShowHabitHeader = styled.View``;
+
+export const ShowHabitFrequency = styled.View`
+    margin-top: 50px;
+    flex-direction: row;
+`;
+export const ShowFrequencyContainer = styled.View``;
+
+export const LineBreak = styled.View`
+    margin-left: 15px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    height: 1px;
+    background-color: #494949;
+    width: 300px;
+`;
+
+export const ShowHabitActionsContainer = styled.View`
+    justify-content: center;
+    align-items: center;
+`;
+
+export const ShowHabitActionsButton = styled.TouchableOpacity`
+    width: 350px;
+    height: 60px;
+    background-color: #383838;
+    justify-content: center;
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 10px;
+`;
+
+export const ShowHabitActionsButtonDelete = styled.TouchableOpacity`
+    width: 350px;
+    height: 60px;
+    background-color: #f64141;
+    justify-content: center;
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 10px;
+`;
+
+export const CalendarTextContainer = styled.View`
+    flex-direction: column;
+    margin-top: 25px;
+`;
+
+export const VerticalLineBreak = styled.View`
+    height: 90px;
+    background-color: gray;
+    width: 2px;
 `;

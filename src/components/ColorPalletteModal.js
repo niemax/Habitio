@@ -19,7 +19,7 @@ export default function ColorPalletteModal({ modalVisible, setModalVisible, upda
                 <Text marginTop="15px" fontFamily="Bold" twentyEight>
                     Choose a Color
                 </Text>
-                {habitSelectionColors.map((item) => (
+                {habitSelectionColors.map((item, index) => (
                     <View
                         style={{
                             flex: 1,
@@ -30,6 +30,7 @@ export default function ColorPalletteModal({ modalVisible, setModalVisible, upda
                         }}
                     >
                         <TouchableOpacity
+                            key={index.toString()}
                             onPress={() => {
                                 setModalVisible(false);
                                 updateColor(item);

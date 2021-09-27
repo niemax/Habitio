@@ -1,53 +1,55 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
-  "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject"
-  },
-  "resolutions": {
-    "styled-components": "^5"
-  },
-  "dependencies": {
-    "@react-native-async-storage/async-storage": "~1.15.0",
-    "@react-native-community/datetimepicker": "^3.5.2",
-    "@react-navigation/bottom-tabs": "^6.0.5",
-    "@react-navigation/native": "^6.0.2",
-    "@react-navigation/stack": "^5.x",
-    "axios": "^0.21.4",
-    "expo": "~42.0.1",
-    "expo-app-loading": "^1.1.2",
-    "expo-blur": "~9.0.3",
-    "expo-font": "~9.2.1",
-    "expo-haptics": "~10.1.0",
-    "expo-status-bar": "~1.0.4",
-    "firebase": "8.2.3",
-    "formik": "^2.2.9",
-    "moment": "^2.29.1",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
-    "react-native-appearance": "~0.3.3",
-    "react-native-dropdown-picker": "^5.1.27",
-    "react-native-gesture-handler": "~1.10.2",
-    "react-native-safe-area-context": "3.2.0",
-    "react-native-screens": "~3.4.0",
-    "react-native-web": "~0.13.12",
-    "styled-components": "^5.3.1"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "eslint": "^7.2.0",
-    "eslint-config-airbnb": "18.2.1",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.21.5",
-    "eslint-plugin-react-hooks": "^1.7.0",
-    "prettier": "^2.4.1"
-  },
-  "private": true
+    "main": "node_modules/expo/AppEntry.js",
+    "scripts": {
+        "start": "expo start",
+        "android": "expo start --android",
+        "ios": "expo start --ios",
+        "web": "expo start --web",
+        "eject": "expo eject"
+    },
+    "resolutions": {
+        "styled-components": "^5"
+    },
+    "dependencies": {
+        "@react-native-async-storage/async-storage": "~1.15.0",
+        "@react-native-community/datetimepicker": "^3.5.2",
+        "@react-navigation/bottom-tabs": "^6.0.5",
+        "@react-navigation/native": "^6.0.2",
+        "@react-navigation/stack": "^5.x",
+        "axios": "^0.21.4",
+        "date-fns": "^2.24.0",
+        "expo": "~42.0.1",
+        "expo-app-loading": "^1.1.2",
+        "expo-blur": "~9.0.3",
+        "expo-font": "~9.2.1",
+        "expo-haptics": "~10.1.0",
+        "expo-status-bar": "~1.0.4",
+        "firebase": "8.2.3",
+        "formik": "^2.2.9",
+        "moment": "^2.29.1",
+        "react": "16.13.1",
+        "react-dom": "16.13.1",
+        "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
+        "react-native-appearance": "~0.3.3",
+        "react-native-calendars": "^1.1266.0",
+        "react-native-dropdown-picker": "^5.1.27",
+        "react-native-gesture-handler": "~1.10.2",
+        "react-native-safe-area-context": "3.2.0",
+        "react-native-screens": "~3.4.0",
+        "react-native-web": "~0.13.12",
+        "styled-components": "^5.3.1"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.9.0",
+        "eslint": "^7.2.0",
+        "eslint-config-airbnb": "18.2.1",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-import": "^2.22.1",
+        "eslint-plugin-jsx-a11y": "^6.4.1",
+        "eslint-plugin-prettier": "^4.0.0",
+        "eslint-plugin-react": "^7.21.5",
+        "eslint-plugin-react-hooks": "^1.7.0",
+        "prettier": "^2.4.1"
+    },
+    "private": true
 }

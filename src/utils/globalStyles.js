@@ -1,3 +1,5 @@
+import { colors } from './colors';
+
 export const textInputStyling = {
     color: '#FFF',
     fontSize: 20,
@@ -47,4 +49,30 @@ export const createHabitColorIndicator = {
     width: 35,
     height: 35,
     borderRadius: '50%',
+};
+
+export const showHabitImageBackground = {
+    backgroundColor: '#181818',
+    opacity: 0.8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 100,
+    height: 100,
+    borderRadius: 15,
+};
+
+export const calendarStyles = {
+    calendarBackground: colors.mainBackground,
+    textDayFontFamily: 'Regular',
+    arrowColor: colors.mainGreen,
+    textMonthFontFamily: 'Medium',
+    textDayHeaderFontFamily: 'SemiBold',
+    monthTextColor: 'white',
+    dayTextColor: 'white',
+    todayTextColor: colors.mainGreen,
+    indicatorColor: colors.mainGreen,
+    selectedDayBackgroundColor: colors.mainGreen,
+    textDayFontSize: 22,
+    textMonthFontSize: 20,
+    textDayHeaderFontSize: 14,
 };

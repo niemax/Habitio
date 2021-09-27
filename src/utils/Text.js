@@ -26,7 +26,7 @@ const Text = styled.Text`
                     return `font-size: 30px`;
 
                 case twentyTwo:
-                    return `font-size: 24px`;
+                    return `font-size: 22px`;
 
                 case twentyEight:
                     return `font-size: 28px`;

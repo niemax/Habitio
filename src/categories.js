@@ -4,27 +4,27 @@ import { Feather, IonIcons } from '@expo/vector-icons';
 const data = [
     {
         name: 'Wellbeing',
-        icon: <Feather name="heart" size={40} color="#FB467C" style={{ marginLeft: 20 }} />,
+        mainIcon: 'heart',
         image: require('./assets/flatIcons/healthcare.png'),
         habits: [
             {
                 name: 'Drink Water',
-                icon: require('./assets/flatIcons/water-drop.png'),
+                habitIcon: require('./assets/flatIcons/water-drop.png'),
                 description: 'Keep your energy levels up',
             },
             {
                 name: 'Hit the gym',
-                icon: require('./assets/flatIcons/exercises.png'),
+                habitIcon: require('./assets/flatIcons/exercises.png'),
                 description: 'Get Stronger',
             },
             {
                 name: 'Get enough sleep',
-                icon: require('./assets/flatIcons/enough-sleep.png'),
+                habitIcon: require('./assets/flatIcons/enough-sleep.png'),
                 description: 'Be more energetic',
             },
             {
                 name: 'Meditate',
-                icon: require('./assets/flatIcons/meditation.png'),
+                habitIcon: require('./assets/flatIcons/meditation.png'),
                 description: 'Take a moment for yourself to think',
             },
         ],

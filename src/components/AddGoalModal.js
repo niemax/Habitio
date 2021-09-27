@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Modal, View, StyleSheet, Pressable, TouchableOpacity, Button } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, Feather } from '@expo/vector-icons';
 import {
     ButtonContainer,
     HabitInput,
@@ -16,6 +16,17 @@ import { habitBoxShadow } from '../utils/globalStyles';
 
 export default function FirstHabitModal({ navigation }) {
     const [habitName, setHabitName] = useState('');
+    const [error, setError] = useState('');
+
+    const handleOwnHabit = () => {
+        if (habitName === '') {
+            setError('Name Required');
+        } else {
+            navigation.push('CreateHabit', {
+                habitName: habitName,
+            });
+        }
+    };
 
     return (
         <ModalContent>
@@ -45,11 +56,15 @@ export default function FirstHabitModal({ navigation }) {
                     onChangeText={(text) => setHabitName(text)}
                 />
             </InputContainer>
+
+            <Text left marginLeft="25px" marginTop="10px" color="red">
+                {error}
+            </Text>
             <Text left fontFamily="Regular" marginLeft="25px" marginTop="50px">
                 Or choose from existing Habits
             </Text>
             <PreDefinedContainer style={habitBoxShadow}>
-                {data.map(({ name, image, icon }, index) => (
+                {data.map(({ name, image, mainIcon }, index) => (
                     <TouchableOpacity
                         key={index.toString()}
                         onPress={() =>
@@ -60,7 +75,12 @@ export default function FirstHabitModal({ navigation }) {
                         }
                     >
                         <PreDefinedHabitsContainer>
-                            {icon}
+                            <Feather
+                                name={mainIcon}
+                                size={40}
+                                color="#FB467C"
+                                style={{ marginLeft: 20 }}
+                            />
                             <Text marginLeft="15px" fontFamily="Medium">
                                 {name}
                             </Text>
@@ -69,7 +89,7 @@ export default function FirstHabitModal({ navigation }) {
                 ))}
             </PreDefinedContainer>
             <ButtonContainer>
-                <HabitNextButton>
+                <HabitNextButton onPress={handleOwnHabit}>
                     <Text twentyTwo>Next</Text>
                 </HabitNextButton>
             </ButtonContainer>

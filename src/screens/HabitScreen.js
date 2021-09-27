@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import {
@@ -13,8 +13,12 @@ import data from '../categories';
 import { habitBoxShadow } from '../utils/globalStyles';
 
 const HabitScreen = ({ route, navigation }) => {
-    const { name, image } = route.params;
+    const [name, setName] = useState('');
+    const { habitName, image } = route.params;
 
+    useEffect(() => {
+        setName(habitName);
+    }, []);
     return (
         <HabitScreenContainer>
             <ImageContainer>
@@ -33,12 +37,13 @@ const HabitScreen = ({ route, navigation }) => {
                 />
             </ImageContainer>
             {data.map((item) => {
-                return item.habits.map(({ icon, name, description }, idx) => (
+                return item.habits.map(({ habitIcon, name, description }, idx) => (
                     <TouchableOpacity
                         key={idx}
                         onPress={() =>
-                            navigation.navigate('CreateHabit', {
-                                name: name,
+                            navigation.push('CreateHabit', {
+                                habitIcon: habitIcon,
+                                habitName: name,
                                 ...data,
                             })
                         }
@@ -46,7 +51,7 @@ const HabitScreen = ({ route, navigation }) => {
                         <HabitCardsContainer key={idx} style={habitBoxShadow}>
                             <Image
                                 style={{ height: 45, width: 45, marginLeft: 15 }}
-                                source={icon}
+                                source={habitIcon}
                             />
                             <HabitTextColumnContainer>
                                 <Text left marginLeft="15px" fontFamily="Medium">

@@ -1,17 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useEffect, useState } from 'react';
+import { Image, TouchableOpacity } from 'react-native';
+import ShowHabitModal from '../components/ShowHabitModal';
+import { colors } from '../utils/colors';
+import getCurrentDate from '../utils/helpers/currentDate';
+import { haptics } from '../utils/helpers/haptics';
 import {
     HomeheaderContainer,
+    HomepageDataBox,
+    HomepageDataView,
     HomepageTextContainer,
     MainContainer,
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
-import { colors } from '../utils/colors';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Homepage({ navigation }) {
-    /* const [date, setDate] = useState('');
+export default function Homepage() {
+    const [habitData, setHabitData] = useState({});
+    const [visibleItem, setVisibleItem] = useState();
+    /*   const [date, setDate] = useState('');
 
     useEffect(() => {
         const { date } = getCurrentDate();
@@ -21,13 +28,14 @@ export default function Homepage({ navigation }) {
     const getData = async () => {
         try {
             const jsonValue = await AsyncStorage.getItem('@habit');
-            console.log(jsonValue != null ? JSON.parse(jsonValue) : null);
+            const parsedValue = JSON.parse(jsonValue);
+            if (parsedValue !== null) setHabitData(parsedValue);
         } catch (e) {
             console.error(e);
         }
     };
     useEffect(() => {
-        getData();
+        getData(); //        AsyncStorage.removeItem('@habit');
     }, []);
 
     return (
@@ -56,6 +64,34 @@ export default function Homepage({ navigation }) {
                     />
                 </TouchableOpacity>
             </HomeheaderContainer>
+            <HomepageDataView>
+                {habitData !== null &&
+                    Object.values(habitData).map((item, index) => {
+                        console.log(item);
+                        const id = index.toString();
+                        return (
+                            <HomepageDataBox
+                                key={id}
+                                onPress={() => {
+                                    setVisibleItem(id);
+                                    haptics.selection();
+                                }}
+                                style={{ borderBottomWidth: 7, borderBottomColor: `${item.color}` }}
+                            >
+                                <Image style={{ height: 50, width: 50 }} source={item.icon} />
+                                <Text fontFamily="SemiBold" marginLeft="5px">
+                                    {item.name}
+                                </Text>
+
+                                <ShowHabitModal
+                                    data={item}
+                                    modalVisible={visibleItem === id}
+                                    setModalVisible={setVisibleItem}
+                                />
+                            </HomepageDataBox>
+                        );
+                    })}
+            </HomepageDataView>
         </MainContainer>
     );
 }

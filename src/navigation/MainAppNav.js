@@ -7,6 +7,7 @@ import CustomTabBar from '../components/CustomTabBar';
 import HabitScreen from '../screens/HabitScreen';
 import CreateHabit from '../screens/CreateHabit';
 import FirstHabitModal from '../components/AddGoalModal';
+import ShowHabitModal from '../components/ShowHabitModal';
 
 const Tab = createBottomTabNavigator();
 
@@ -29,6 +30,8 @@ const MainTab = () => (
     </Tab.Navigator>
 );
 
+const Stack = createStackNavigator();
+
 const MainAppStack = () => (
     <Stack.Navigator initialRouteName="SplashScreen">
         <Stack.Screen
@@ -36,30 +39,26 @@ const MainAppStack = () => (
             options={{ headerShown: false, gestureEnabled: false }}
             component={MainTab}
         />
-        <Stack.Group>
-            <Stack.Screen
-                screenOptions={{ presentation: 'modal' }}
-                name="FirstHabitModal"
-                options={{ headerShown: false, gestureEnabled: false }}
-                component={FirstHabitModal}
-            />
-            <Stack.Screen
-                name="HabitScreen"
-                options={{ headerShown: false, gestureEnabled: true }}
-                component={HabitScreen}
-            />
-            <Stack.Screen
-                name="CreateHabit"
-                options={{
-                    gestureEnabled: true,
-                    headerShown: false,
-                }}
-                component={CreateHabit}
-            />
-        </Stack.Group>
+        <Stack.Screen
+            screenOptions={{ presentation: 'modal' }}
+            name="FirstHabitModal"
+            options={{ headerShown: false, gestureEnabled: false }}
+            component={FirstHabitModal}
+        />
+        <Stack.Screen
+            name="HabitScreen"
+            options={{ headerShown: false, gestureEnabled: true }}
+            component={HabitScreen}
+        />
+        <Stack.Screen
+            name="CreateHabit"
+            options={{
+                gestureEnabled: true,
+                headerShown: false,
+            }}
+            component={CreateHabit}
+        />
     </Stack.Navigator>
 );
-
-const Stack = createStackNavigator();
 
 export default MainAppStack;
