@@ -75,4 +75,5 @@ export const calendarStyles = {
     textDayFontSize: 22,
     textMonthFontSize: 20,
     textDayHeaderFontSize: 14,
+    dotColor: 'transparent',
 };

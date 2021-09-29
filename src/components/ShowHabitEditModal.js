@@ -26,11 +26,11 @@ export default function ShowHabitEditModal({
     const [updatedColor, setUpdatedColor] = useState();
     const [colorUpdated, setColorUpdated] = useState(false);
     const [description, setDescription] = useState('');
-    const [daysCount, setDaysCount] = useState(1);
-    const [timesCount, setTimesCount] = useState(1);
+    const [daysCount, setDaysCount] = useState(0);
+    const [timesCount, setTimesCount] = useState(0);
     const [storageItems, setStorageItems] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [selectedDate, setSelectedDate] = useState();
+    const [selectedDate, setSelectedDate] = useState(data.reminders);
     const [date, setDate] = useState(new Date(1598051730000));
     const [mode, setMode] = useState('time');
 
@@ -52,6 +52,7 @@ export default function ShowHabitEditModal({
     useEffect(() => {
         readData();
     }, []);
+
     return (
         <Modal animationType="slide" presentationStyle="pageSheet" visible={editHabitModalVisible}>
             <ModalContent>

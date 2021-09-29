@@ -17,7 +17,7 @@ const MainTab = () => (
             options={{
                 headerShown: false,
             }}
-            name="Home"
+            name="Habits"
             component={Homepage}
         />
         <Tab.Screen

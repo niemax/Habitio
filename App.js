@@ -6,6 +6,7 @@ import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import MainAppStack from './src/navigation/MainAppNav';
 import * as Font from 'expo-font';
+import { MenuProvider } from 'react-native-popup-menu';
 
 export default function App() {
     const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -27,9 +28,11 @@ export default function App() {
     if (fontsLoaded) {
         return (
             <NavigationContainer>
-                <StatusBar style="auto" />
+                <StatusBar style="light" />
                 <SafeAreaProvider>
-                    <MainAppStack />
+                    <MenuProvider>
+                        <MainAppStack />
+                    </MenuProvider>
                 </SafeAreaProvider>
             </NavigationContainer>
         );

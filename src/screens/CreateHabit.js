@@ -60,10 +60,12 @@ export default function CreateHabit({ navigation, route }) {
             name: habitName,
             color: updatedColor,
             icon: habitIcon,
+            currentDay: null,
             completed: false,
             completedDates: {},
             days: daysCount,
             times: timesCount,
+            timesCompleted: 0,
             reminder: selectedDate,
             description: description,
         };

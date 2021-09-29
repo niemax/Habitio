@@ -3,6 +3,7 @@ import { Modal, View, Dimensions, TouchableOpacity } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
 import {
+    CalendarHeader,
     CalendarTextContainer,
     CreateHabitHeader,
     ModalContent,
@@ -62,21 +63,16 @@ export default function CalendarModal({ calendarModalVisible, setCalendarModalVi
     return (
         <Modal animationType="slide" presentationStyle="pageSheet" visible={calendarModalVisible}>
             <ModalContent>
-                <CreateHabitHeader>
-                    <Text twenty fontFamily="SemiBold">
+                <CalendarHeader>
+                    <Text twentyTwo fontFamily="SemiBold">
                         {data.name}
                     </Text>
                     <TouchableOpacity onPress={() => setCalendarModalVisible(false)}>
-                        <Text
-                            twenty
-                            marginRight="15px"
-                            color={colors.mainGreen}
-                            fontFamily="SemiBold"
-                        >
+                        <Text marginRight="10px" color={colors.mainGreen} fontFamily="SemiBold">
                             Done
                         </Text>
                     </TouchableOpacity>
-                </CreateHabitHeader>
+                </CalendarHeader>
                 <Calendar
                     style={{
                         marginTop: 35,
@@ -85,6 +81,7 @@ export default function CalendarModal({ calendarModalVisible, setCalendarModalVi
                     }}
                     theme={calendarStyles}
                     markingType="custom"
+                    firstDay={1}
                     markedDates={completedDates}
                 />
                 <CalendarTextContainer>

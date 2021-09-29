@@ -13,12 +13,8 @@ import data from '../categories';
 import { habitBoxShadow } from '../utils/globalStyles';
 
 const HabitScreen = ({ route, navigation }) => {
-    const [name, setName] = useState('');
     const { habitName, image } = route.params;
 
-    useEffect(() => {
-        setName(habitName);
-    }, []);
     return (
         <HabitScreenContainer>
             <ImageContainer>
@@ -28,7 +24,7 @@ const HabitScreen = ({ route, navigation }) => {
                     </TouchableOpacity>
 
                     <Text left fontFamily="Bold" thirtyFour marginLeft="10px" marginTop="20px">
-                        {name}
+                        {habitName}
                     </Text>
                 </ChevronTextContainer>
                 <Image

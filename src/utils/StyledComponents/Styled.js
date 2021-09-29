@@ -37,16 +37,18 @@ export const TabContainer = styled.View`
 
 export const TabBarContainer = styled.View`
     background-color: #161616;
+    opacity: 0.99;
     justify-content: space-evenly;
     align-items: center;
+    width: 90%;
     height: 80px;
     position: absolute;
-    bottom: 25px;
+    bottom: 0px;
+    left: 19px;
     flex-direction: row;
-    left: 20px;
-    right: 20px;
     elevation: 0;
-    border-radius: 15px;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
 `;
 
 export const TabBarAddContainer = styled.View`
@@ -88,6 +90,7 @@ export const ButtonContainer = styled.View`
     position: absolute;
     bottom: 25px;
     left: 20px;
+    right: 20px;
     justify-content: center;
     align-items: center;
 `;
@@ -150,11 +153,10 @@ export const HabitTextColumnContainer = styled.View`
 `;
 
 export const CreateHabitHeader = styled.View`
-    margin-top: 35px;
+    margin-top: 55px;
     flex-direction: row;
     justify-content: space-between;
     padding-horizontal: 12px;
-    align-items: center;
 `;
 
 export const HabitInfoContainer = styled.View`
@@ -211,7 +213,11 @@ export const HomepageDataView = styled.View`
     flex-wrap: wrap;
 `;
 
-export const HomepageDataBox = styled.TouchableOpacity`
+export const HomepageTimesView = styled.View`
+    margin-left: 130px;
+`;
+
+export const HomepageDataBox = styled.Pressable`
     margin-top: 25px;
     width: 160px;
     height: 150px;
@@ -244,7 +250,7 @@ export const ShowFrequencyContainer = styled.View``;
 
 export const LineBreak = styled.View`
     margin-left: 15px;
-    margin-top: 10px;
+    margin-top: 20px;
     margin-bottom: 20px;
     height: 1px;
     background-color: #494949;
@@ -263,6 +269,19 @@ export const ShowHabitActionsButton = styled.TouchableOpacity`
     justify-content: center;
     border-radius: 15px;
     padding: 15px;
+    margin-top: 10px;
+`;
+export const ShowHabitActionsAddContainer = styled.View`
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+`;
+
+export const ShowHabitActionsAddButton = styled.TouchableOpacity`
+    width: 100px;
+    height: 60px;
+    justify-content: center;
+    border-radius: 15px;
     margin-top: 10px;
 `;
 
@@ -285,4 +304,23 @@ export const VerticalLineBreak = styled.View`
     height: 90px;
     background-color: gray;
     width: 2px;
+`;
+
+export const CalendarHeader = styled.View`
+    margin-top: 35px;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-horizontal: 12px;
+`;
+
+export const HomepageImageView = styled.View`
+    flex-direction: row;
+    position: absolute;
+    justify-content: space-between;
+    bottom: 40px;
+    margin-left: 25px;
+`;
+
+export const NoHabitsContainer = styled.View`
+    margin-top: 100px;
 `;

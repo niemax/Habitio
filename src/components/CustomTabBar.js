@@ -10,10 +10,11 @@ import Tab from './Tab';
 import { haptics } from '../utils/helpers/haptics';
 
 const CustomTabBar = ({ state, navigation }) => {
-    const [selected, setSelected] = useState('Home');
-    const [modalVisible, setModalVisible] = useState(false);
+    const [selected, setSelected] = useState('Habits');
     const { routes } = state;
     const renderColor = (currentTab) => (currentTab === selected ? '#2eb284' : 'white');
+
+    const todayIcon = <Feather name="calendar" size={24} color="black" />;
 
     const handlePress = (activeTab) => {
         setSelected(activeTab);
@@ -23,7 +24,7 @@ const CustomTabBar = ({ state, navigation }) => {
     return (
         <TabBarContainer style={tabBarShadow}>
             <TabBarAddContainer>
-                {selected === 'Home' && (
+                {selected === 'Habits' && (
                     <TabAddButton
                         onPress={() => {
                             haptics.selection();
@@ -35,12 +36,15 @@ const CustomTabBar = ({ state, navigation }) => {
                 )}
             </TabBarAddContainer>
             {routes.map((route) => (
-                <Tab
-                    key={route.key}
-                    tab={route}
-                    onPress={() => handlePress(route.name)}
-                    color={renderColor(route.name)}
-                />
+                <>
+                    <Tab
+                        key={route.key}
+                        tab={route}
+                        onPress={() => handlePress(route.name)}
+                        color={renderColor(route.name)}
+                        icon={todayIcon}
+                    />
+                </>
             ))}
         </TabBarContainer>
     );

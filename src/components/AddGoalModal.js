@@ -13,6 +13,7 @@ import {
 import Text from '../utils/Text';
 import data from '../categories';
 import { habitBoxShadow } from '../utils/globalStyles';
+import { colors } from '../utils/colors';
 
 export default function FirstHabitModal({ navigation }) {
     const [habitName, setHabitName] = useState('');
@@ -57,7 +58,7 @@ export default function FirstHabitModal({ navigation }) {
                 />
             </InputContainer>
 
-            <Text left marginLeft="25px" marginTop="10px" color="red">
+            <Text left marginLeft="25px" marginTop="10px" color={colors.error}>
                 {error}
             </Text>
             <Text left fontFamily="Regular" marginLeft="25px" marginTop="50px">
@@ -70,7 +71,7 @@ export default function FirstHabitModal({ navigation }) {
                         onPress={() =>
                             navigation.push('HabitScreen', {
                                 image: image,
-                                name: name,
+                                habitName: name,
                             })
                         }
                     >
