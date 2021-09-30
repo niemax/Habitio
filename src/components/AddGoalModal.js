@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Modal, View, StyleSheet, Pressable, TouchableOpacity, Button } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import {
     ButtonContainer,
@@ -37,8 +37,8 @@ export default function FirstHabitModal({ navigation }) {
             >
                 <Ionicons name="close-circle-sharp" size={34} color="gray" />
             </TouchableOpacity>
-            <Text left marginLeft="25px" thirtyFour fontFamily="Bold" marginTop="20px">
-                Add a goal
+            <Text left marginLeft="25px" thirtyFour fontFamily="Extra" marginTop="20px">
+                Add a habit
             </Text>
             <Text left fontFamily="Regular" marginLeft="25px" marginTop="25px">
                 Create your own Habit
@@ -65,13 +65,14 @@ export default function FirstHabitModal({ navigation }) {
                 Or choose from existing Habits
             </Text>
             <PreDefinedContainer style={habitBoxShadow}>
-                {data.map(({ name, image, mainIcon }, index) => (
+                {data.map(({ name, image, mainIcon, color, habits }, index) => (
                     <TouchableOpacity
                         key={index.toString()}
                         onPress={() =>
                             navigation.push('HabitScreen', {
                                 image: image,
                                 habitName: name,
+                                habitData: habits,
                             })
                         }
                     >
@@ -79,7 +80,7 @@ export default function FirstHabitModal({ navigation }) {
                             <Feather
                                 name={mainIcon}
                                 size={40}
-                                color="#FB467C"
+                                color={color}
                                 style={{ marginLeft: 20 }}
                             />
                             <Text marginLeft="15px" fontFamily="Medium">

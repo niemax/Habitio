@@ -1,5 +1,5 @@
 export const colors = {
-    mainBackground: '#262626',
+    mainBackground: '#242424',
     mainGreen: '#2EB284',
     error: '#f64141',
 };

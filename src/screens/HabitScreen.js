@@ -9,11 +9,11 @@ import {
     ImageContainer,
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
-import data from '../categories';
 import { habitBoxShadow } from '../utils/globalStyles';
 
 const HabitScreen = ({ route, navigation }) => {
-    const { habitName, image } = route.params;
+    const { habitData, habitName, image } = route.params;
+    console.log(habitData);
 
     return (
         <HabitScreenContainer>
@@ -23,7 +23,7 @@ const HabitScreen = ({ route, navigation }) => {
                         <Feather name="chevron-left" size={32} color="white" />
                     </TouchableOpacity>
 
-                    <Text left fontFamily="Bold" thirtyFour marginLeft="10px" marginTop="20px">
+                    <Text left fontFamily="Extra" thirtyFour marginLeft="10px" marginTop="20px">
                         {habitName}
                     </Text>
                 </ChevronTextContainer>
@@ -32,41 +32,40 @@ const HabitScreen = ({ route, navigation }) => {
                     source={image}
                 />
             </ImageContainer>
-            {data.map((item) => {
-                return item.habits.map(({ habitIcon, name, description }, idx) => (
-                    <TouchableOpacity
-                        key={idx}
-                        onPress={() =>
-                            navigation.push('CreateHabit', {
-                                habitIcon: habitIcon,
-                                habitName: name,
-                                ...data,
-                            })
-                        }
-                    >
-                        <HabitCardsContainer key={idx} style={habitBoxShadow}>
-                            <Image
-                                style={{ height: 45, width: 45, marginLeft: 15 }}
-                                source={habitIcon}
-                            />
-                            <HabitTextColumnContainer>
-                                <Text left marginLeft="15px" fontFamily="Medium">
-                                    {name}
-                                </Text>
-                                <Text
-                                    left
-                                    marginLeft="15px"
-                                    marginTop="3px"
-                                    fontFamily="Regular"
-                                    sixteen
-                                >
-                                    {description}
-                                </Text>
-                            </HabitTextColumnContainer>
-                        </HabitCardsContainer>
-                    </TouchableOpacity>
-                ));
-            })}
+            {habitData.map(({ habitIcon, name, data, description }, index) => (
+                <TouchableOpacity
+                    key={index.toString()}
+                    onPress={() =>
+                        navigation.push('CreateHabit', {
+                            habitIcon: habitIcon,
+                            habitName: name,
+                            ...data,
+                        })
+                    }
+                >
+                    <HabitCardsContainer key={index.toString()} style={habitBoxShadow}>
+                        <Image
+                            style={{ height: 45, width: 45, marginLeft: 15 }}
+                            source={habitIcon}
+                        />
+                        <HabitTextColumnContainer>
+                            <Text left marginLeft="15px" fontFamily="Medium">
+                                {name}
+                            </Text>
+                            <Text
+                                left
+                                marginLeft="15px"
+                                marginTop="3px"
+                                fontFamily="Regular"
+                                sixteen
+                                color="gray"
+                            >
+                                {description}
+                            </Text>
+                        </HabitTextColumnContainer>
+                    </HabitCardsContainer>
+                </TouchableOpacity>
+            ))}
         </HabitScreenContainer>
     );
 };

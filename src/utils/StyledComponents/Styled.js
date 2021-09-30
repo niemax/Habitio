@@ -40,21 +40,20 @@ export const TabBarContainer = styled.View`
     opacity: 0.99;
     justify-content: space-evenly;
     align-items: center;
-    width: 90%;
+    width: 92%;
     height: 80px;
     position: absolute;
-    bottom: 0px;
-    left: 19px;
+    bottom: 20px;
+    left: 14px;
     flex-direction: row;
     elevation: 0;
-    border-top-right-radius: 25px;
-    border-top-left-radius: 25px;
+    border-radius: 15px;
 `;
 
 export const TabBarAddContainer = styled.View`
     position: absolute;
     top: -30px;
-    left: 135px;
+    left: 140px;
     justify-content: center;
     align-items: center;
 `;
@@ -168,20 +167,19 @@ export const HabitDescriptionInput = styled.TextInput`
     width: 360px;
     height: 100px;
     background-color: #383838;
-    border-radius: 15px;
+    border-radius: ${radius};
     padding: 15px;
     margin-top: 10px;
 `;
 
 export const HabitUtilityInfoContainer = styled.View`
+    margin-top: 15px;
     flex-direction: column;
     justify-content: space-between;
-    margin-top: 15px;
 `;
 
 export const SelectHabitColorButton = styled.TouchableOpacity`
     justify-content: center;
-    margin-left: 10px;
     margin-top: 10px;
     background-color: #191919;
     align-items: center;
@@ -207,6 +205,14 @@ export const FrequencyTouchable = styled.View`
     justify-content: space-between;
 `;
 
+export const FrequencySwitchContainer = styled.View`
+    margin-top: 20px;
+    margin-left: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+`;
+
 export const HomepageDataView = styled.View`
     justify-content: center;
     flex-direction: row;
@@ -221,18 +227,13 @@ export const HomepageDataBox = styled.Pressable`
     margin-top: 25px;
     width: 160px;
     height: 150px;
-    background-color: #383838;
+    background-color: #303030;
     border-radius: 15px;
     margin-horizontal: 10px;
     margin-vertical: 10px;
     align-items: center;
     justify-content: center;
     padding: 2px;
-`;
-
-export const FrequencyContainer = styled.View`
-    justify-content: center;
-    align-items: center;
 `;
 
 export const ShowHabitDataContainer = styled.View`
@@ -249,10 +250,16 @@ export const ShowHabitFrequency = styled.View`
 export const ShowFrequencyContainer = styled.View``;
 
 export const LineBreak = styled.View`
-    margin-left: 15px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+margin-left: 15px;
+margin-top: 20px;
+margin-bottom: 20px
     height: 1px;
+    background-color: #494949;
+    width: 300px;
+`;
+
+export const ToolTipLineBreak = styled.View`
+    height: 0.6px;
     background-color: #494949;
     width: 300px;
 `;
@@ -278,7 +285,7 @@ export const ShowHabitActionsAddContainer = styled.View`
 `;
 
 export const ShowHabitActionsAddButton = styled.TouchableOpacity`
-    width: 100px;
+    width: 70px;
     height: 60px;
     justify-content: center;
     border-radius: 15px;
@@ -296,8 +303,22 @@ export const ShowHabitActionsButtonDelete = styled.TouchableOpacity`
 `;
 
 export const CalendarTextContainer = styled.View`
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between
     margin-top: 25px;
+    padding-horizontal: 13px;
+`;
+
+export const CalendarStatsContainer = styled.View`
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const CalendarLineBreak = styled.View`
+    height: 0.4px;
+    width: 100%;
+    background-color: gray;
 `;
 
 export const VerticalLineBreak = styled.View`
@@ -323,4 +344,30 @@ export const HomepageImageView = styled.View`
 
 export const NoHabitsContainer = styled.View`
     margin-top: 100px;
+`;
+
+export const ToolTipView = styled.View`
+    width: 145px;
+    justify-content: center;
+    align-items: center;
+    align-items: center;
+`;
+
+export const ToolTipActionButton = styled.TouchableOpacity`
+    flex-direction: row;
+    justify-content: space-between
+    padding-vertical: 7px;
+    align-items: center;
+`;
+
+export const ProgressBarContainer = styled.View`
+    margin-left: 15px;
+    margin-top: 15px;
+`;
+
+export const CalendarTimesInfoContainer = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+    padding-horizontal: 15px;
+    margin-bottom: 10px;
 `;

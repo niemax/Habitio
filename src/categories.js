@@ -1,15 +1,15 @@
-import React from 'react';
-import { Feather, IonIcons } from '@expo/vector-icons';
+import { colors } from './utils/colors';
 
 const data = [
     {
         name: 'Wellbeing',
         mainIcon: 'heart',
+        color: colors.error,
         image: require('./assets/flatIcons/healthcare.png'),
         habits: [
             {
                 name: 'Drink Water',
-                habitIcon: require('./assets/flatIcons/water-drop.png'),
+                habitIcon: require('./assets/flatIcons/water.png'),
                 description: 'Keep your energy levels up',
             },
             {
@@ -18,7 +18,7 @@ const data = [
                 description: 'Get Stronger',
             },
             {
-                name: 'Get enough sleep',
+                name: 'Go to bed earlier than normal',
                 habitIcon: require('./assets/flatIcons/enough-sleep.png'),
                 description: 'Be more energetic',
             },
@@ -29,16 +29,19 @@ const data = [
             },
         ],
     },
-    /*  {
-        name: 'Fitness',
-       habits: [
+    {
+        name: 'Productivity',
+        mainIcon: 'book-open',
+        color: '#EBDBB1',
+        image: require('./assets/flatIcons/time-to-market.png'),
+        habits: [
             {
-                name: 'Hit the gym',
-                icon: require('./assets/flatIcons/exercises.png'),
+                name: 'Read a book',
+                habitIcon: require('./assets/flatIcons/storytelling.png'),
+                description: 'Turn up your interest',
             },
-        ], 
-        icon: <Feather name="activity" size={40} color="#467CFB" style={{ marginLeft: 20 }} />,
-    }, */
+        ],
+    },
 ];
 
 export default data;

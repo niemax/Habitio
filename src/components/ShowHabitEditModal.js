@@ -6,7 +6,6 @@ import { colors } from '../utils/colors';
 import { habitBoxShadow, showHabitImageBackground } from '../utils/globalStyles';
 import ColorPalletteModal from './ColorPalletteModal';
 import {
-    CreateHabitHeader,
     FrequencyTouchable,
     HabitDescriptionInput,
     HabitInfoContainer,
@@ -21,36 +20,42 @@ export default function ShowHabitEditModal({
     editHabitModalVisible,
     setEditHabitModalVisible,
     data,
+    onSubmit,
 }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [updatedColor, setUpdatedColor] = useState();
+    const [habitName, setHabitName] = useState('');
     const [colorUpdated, setColorUpdated] = useState(false);
-    const [description, setDescription] = useState('');
+    const [stateDescription, setStateDescription] = useState('');
     const [daysCount, setDaysCount] = useState(0);
     const [timesCount, setTimesCount] = useState(0);
-    const [storageItems, setStorageItems] = useState([]);
     const [loading, setLoading] = useState(false);
     const [selectedDate, setSelectedDate] = useState(data.reminders);
     const [date, setDate] = useState(new Date(1598051730000));
     const [mode, setMode] = useState('time');
+
+    const { name, description, days, times, color } = data;
 
     const updateColor = (color) => {
         setUpdatedColor(color);
         setColorUpdated(true);
     };
 
-    const readData = async () => {
-        try {
-            const habitData = await AsyncStorage?.getItem('@habit');
-            if (habitData != null) {
-                setStorageItems(JSON.parse(habitData));
-            }
-        } catch (e) {
-            console.log(e);
-        }
+    const handleSubmit = () => {
+        setLoading(true);
+        onSubmit(habitName, updatedColor, description, daysCount, timesCount);
+        setTimeout(() => {
+            setLoading(false);
+            setEditHabitModalVisible(false);
+        }, 1500);
     };
+
     useEffect(() => {
-        readData();
+        setHabitName(name);
+        setStateDescription(description);
+        setDaysCount(days);
+        setTimesCount(times);
+        setUpdatedColor(color);
     }, []);
 
     return (
@@ -63,27 +68,30 @@ export default function ShowHabitEditModal({
                     >
                         <Ionicons name="close-circle-sharp" size={34} color="gray" />
                     </TouchableOpacity>
-                    <Text twentyTwo fontFamily="Bold">
+                    <Text twentyTwo fontFamily="Extra">
                         Edit Habit
                     </Text>
-                    <TouchableOpacity onPress={() => setEditHabitModalVisible(true)}>
+                    <TouchableOpacity onPress={handleSubmit}>
                         <Text marginRight="15px" color={colors.mainGreen} fontFamily="SemiBold">
-                            Update
+                            {loading ? (
+                                <ActivityIndicator color={colors.mainGreen} />
+                            ) : (
+                                <Text color={colors.mainGreen}>Update</Text>
+                            )}
                         </Text>
                     </TouchableOpacity>
                 </HomeheaderContainer>
 
                 <Text left twentyTwo fontFamily="SemiBold" marginLeft="15px" marginTop="30px">
-                    {data.name}
+                    {habitName}
                 </Text>
                 <Text left marginLeft="15px" fontFamily="Regular" marginTop="35px">
                     Description
                 </Text>
                 <HabitInfoContainer>
                     <HabitDescriptionInput
-                        blurOnSubmit={true}
                         multiline
-                        placeholder={data.description}
+                        placeholder={stateDescription}
                         placeholderTextColor="white"
                         style={{
                             color: 'white',
@@ -91,7 +99,7 @@ export default function ShowHabitEditModal({
                             fontFamily: 'Bold',
                             ...habitBoxShadow,
                         }}
-                        onChange={(text) => setDescription(text)}
+                        onChange={(text) => setStateDescription(text)}
                     />
                     <HabitUtilityInfoContainer>
                         <Text left marginLeft="15px" fontFamily="Regular">
@@ -104,7 +112,7 @@ export default function ShowHabitEditModal({
                                         width: 35,
                                         height: 35,
                                         borderRadius: '50%',
-                                        backgroundColor: data.color,
+                                        backgroundColor: color,
                                     }}
                                 />
                             ) : (
@@ -129,7 +137,7 @@ export default function ShowHabitEditModal({
                                 <Feather name="minus-circle" size={30} color="gray" />
                             </TouchableOpacity>
                             <Text fontFamily="Bold" twentyEight>
-                                {data.days}
+                                {daysCount}
                             </Text>
                             <TouchableOpacity
                                 onPress={() => daysCount < 7 && setDaysCount(daysCount + 1)}
@@ -140,14 +148,14 @@ export default function ShowHabitEditModal({
                         <FrequencyTouchable>
                             <Text>Times per Day</Text>
                             <TouchableOpacity
-                                onPress={() => daysCount > 1 && setTimesCount(timesCount - 1)}
+                                onPress={() => timesCount > 1 && setTimesCount(timesCount - 1)}
                             >
                                 <Feather name="minus-circle" size={30} color="gray" />
                             </TouchableOpacity>
                             <Text fontFamily="Bold" twentyEight>
-                                {data.times}
+                                {timesCount}
                             </Text>
-                            <TouchableOpacity onPress={() => setTimesCount(data.times + 1)}>
+                            <TouchableOpacity onPress={() => setTimesCount(timesCount + 1)}>
                                 <Feather name="plus-circle" size={30} color="gray" />
                             </TouchableOpacity>
                         </FrequencyTouchable>

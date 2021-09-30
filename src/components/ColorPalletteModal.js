@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Text from '../utils/Text';
-import { View, Modal } from 'react-native';
+import { View, Modal, ScrollView } from 'react-native';
 import { ColorModalContainer, ModalContent } from '../utils/StyledComponents/Styled';
 import { Ionicons } from '@expo/vector-icons';
 import { habitSelectionColors } from '../utils/colors';
@@ -19,31 +19,33 @@ export default function ColorPalletteModal({ modalVisible, setModalVisible, upda
                 <Text marginTop="15px" fontFamily="Bold" twentyEight>
                     Choose a Color
                 </Text>
-                {habitSelectionColors.map((item, index) => (
-                    <View
-                        style={{
-                            flex: 1,
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            flexWrap: 'wrap',
-                            marginTop: 15,
-                        }}
-                    >
-                        <TouchableOpacity
+                <ScrollView>
+                    {habitSelectionColors.map((item, index) => (
+                        <View
                             key={index.toString()}
-                            onPress={() => {
-                                setModalVisible(false);
-                                updateColor(item);
-                            }}
                             style={{
-                                width: 50,
-                                height: 50,
-                                borderRadius: '50%',
-                                backgroundColor: `${item}`,
+                                flex: 1,
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                flexWrap: 'wrap',
+                                marginTop: 15,
                             }}
-                        />
-                    </View>
-                ))}
+                        >
+                            <TouchableOpacity
+                                onPress={() => {
+                                    setModalVisible(false);
+                                    updateColor(item);
+                                }}
+                                style={{
+                                    width: 50,
+                                    height: 50,
+                                    borderRadius: '50%',
+                                    backgroundColor: `${item}`,
+                                }}
+                            />
+                        </View>
+                    ))}
+                </ScrollView>
             </ModalContent>
         </Modal>
     );

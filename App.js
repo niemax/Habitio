@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { StatusBar } from 'react-native';
+import FlashMessage from 'react-native-flash-message';
 import AppLoading from 'expo-app-loading';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
-import MainAppStack from './src/navigation/MainAppNav';
 import * as Font from 'expo-font';
 import { MenuProvider } from 'react-native-popup-menu';
+import MainAppStack from './src/navigation/MainAppNav';
+import HabitProvider from './src/context/HabitProvider';
 
 export default function App() {
     const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -17,6 +18,7 @@ export default function App() {
             Medium: require('./src/assets/font/Raleway-Medium.ttf'),
             SemiBold: require('./src/assets/font/Raleway-SemiBold.ttf'),
             Bold: require('./src/assets/font/Raleway-Bold.ttf'),
+            Extra: require('./src/assets/font/Raleway-ExtraBold.ttf'),
         });
         setFontsLoaded(true);
     }
@@ -28,12 +30,14 @@ export default function App() {
     if (fontsLoaded) {
         return (
             <NavigationContainer>
-                <StatusBar style="light" />
-                <SafeAreaProvider>
-                    <MenuProvider>
-                        <MainAppStack />
-                    </MenuProvider>
-                </SafeAreaProvider>
+                <HabitProvider>
+                    <SafeAreaProvider>
+                        <MenuProvider>
+                            <FlashMessage position="top" />
+                            <MainAppStack />
+                        </MenuProvider>
+                    </SafeAreaProvider>
+                </HabitProvider>
             </NavigationContainer>
         );
     }

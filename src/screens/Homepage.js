@@ -1,11 +1,9 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Feather } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Image, RefreshControl, ScrollView, TouchableOpacity, View } from 'react-native';
 import ShowHabitModal from '../components/ShowHabitModal';
 import { colors } from '../utils/colors';
-import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
-import getCurrentDate from '../utils/helpers/currentDate';
+import Tooltip from 'react-native-walkthrough-tooltip';
 import { haptics } from '../utils/helpers/haptics';
 import {
     HomeheaderContainer,
@@ -13,25 +11,25 @@ import {
     HomepageDataView,
     HomepageImageView,
     HomepageTextContainer,
-    HomepageTimesView,
     MainContainer,
-    NoHabitsContainer,
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
-import { color } from 'react-native-elements/dist/helpers';
+import { useHabits } from '../context/HabitProvider';
+import TooltipBlurView from '../components/TooltipBlurView';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
 export default function Homepage() {
-    const [habitData, setHabitData] = useState({});
-    const [message, setMessage] = useState('');
     const [visibleItem, setVisibleItem] = useState();
     const [refreshing, setRefreshing] = useState(false);
     const [count, setCount] = useState(0);
-    const [toolTipVisible, setToolTipVisible] = useState(false);
+    const [toolTipVisible, setToolTipVisible] = useState();
     const [date, setDate] = useState('');
+
+    const { getHabits, habits } = useHabits();
 
     /*    useEffect(() => {
         const { date } = getCurrentDate();
@@ -41,42 +39,34 @@ export default function Homepage() {
     const getData = async () => {
         const getDate = new Date();
         const currentDay = getDate.getDay();
-        console.log(currentDay);
         try {
-            const result = await AsyncStorage.getItem('@habit');
-            let habits = [];
-            if (result !== null) habits = JSON.parse(result);
+            getHabits();
             habits.map((habit) => {
                 if (currentDay > habit.currentDay) {
                     habit.completed = false;
                 }
                 return habit;
             });
-            setHabitData(habits);
-            console.log(habitData);
         } catch (e) {
             console.error(e);
         }
     };
 
-    const setProgress = (index) => {};
+    useEffect(() => {
+        getData();
+    }, []);
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
         getData();
-        wait(2000).then(() => setRefreshing(false));
-    }, []);
-
-    useEffect(() => {
-        getData();
-        //AsyncStorage.clear();
+        wait(200).then(() => setRefreshing(false));
     }, []);
 
     return (
         <MainContainer>
             <HomeheaderContainer>
                 <HomepageTextContainer>
-                    <Text left twentyEight fontFamily="Bold" marginLeft="15px">
+                    <Text left twentyEight fontFamily="Extra" marginLeft="15px">
                         Dashboard for
                     </Text>
                     <Text
@@ -86,7 +76,7 @@ export default function Homepage() {
                         left
                         marginLeft="15px"
                     >
-                        29. syyskuuta, 2021
+                        1. lokakuuta, 2021
                     </Text>
                 </HomepageTextContainer>
                 <TouchableOpacity>
@@ -105,19 +95,7 @@ export default function Homepage() {
                     Your Habits
                 </Text>
                 <HomepageDataView>
-                    {/*   <NoabitsContainer>
-                    {message && (
-                            <Text marginBottom="55px" fontFamily="SemiBold" twentyEight>
-                                {message}
-                            </Text>
-                            <Image
-                                style={{ height: 215, width: 215 }}
-                                source={require('../assets/flatIcons/healthy-lifestyle.png')}
-                            />
-                            )}
-                            </NoabitsContainer> */}
-
-                    {Object.values(habitData).map((item, index) => {
+                    {Object.values(habits).map((item, index) => {
                         const id = index.toString();
 
                         return (
@@ -129,7 +107,7 @@ export default function Homepage() {
                                 }}
                                 onLongPress={() => {
                                     haptics.selection();
-                                    setToolTipVisible(true);
+                                    setToolTipVisible(id);
                                 }}
                                 style={{
                                     borderBottomWidth: 5,
@@ -138,67 +116,38 @@ export default function Homepage() {
                             >
                                 <Text
                                     marginBottom="15px"
-                                    twentyTwo
                                     color={colors.mainGreen}
                                     fontFamily="SemiBold"
+                                    marginLeft="100px"
                                 >
                                     {item.times > 1 && count}
-                                    {item.times > 1 && (
-                                        <Text
-                                            twentyTwo
-                                            color={colors.mainGreen}
-                                            fontFamily="SemiBold"
-                                        >
-                                            /
-                                        </Text>
-                                    )}
+                                    {item.times > 1 && <Text color={colors.mainGreen}>/</Text>}
                                     {item.times > 1 && item.times}
                                 </Text>
-                                {/*  <Menu
-                                    containerStyle={{ backgroundColor: 'black' }}
-                                    visible={toolTipVisible}
-                                >
-                                    <MenuTrigger text="Select " />
-                                    <MenuOptions>
-                                        <MenuOption
-                                            onSelect={() => alert(`Save`)}
-                                            text={
-                                                !item.completed === true
-                                                    ? 'mark as completed'
-                                                    : 'Not done'
-                                            }
-                                        />
-                                        <MenuOption onSelect={() => alert(`Delete`)}>
-                                            <Text style={{ color: 'red' }}>Delete</Text>
-                                        </MenuOption>
-                                        <MenuOption
-                                            onSelect={() => alert(`Not called`)}
-                                            disabled={true}
-                                            text="Disabled"
-                                        />
-                                    </MenuOptions>
-                                </Menu> */}
-                                <Image style={{ height: 45, width: 45 }} source={item.icon} />
-                                <Text
-                                    fontFamily="SemiBold"
-                                    marginTop="15px"
-                                    twentyTwo
-                                    marginLeft="5px"
-                                >
+                                <Image style={{ height: 50, width: 50 }} source={item.icon} />
+                                <Text fontFamily="SemiBold" marginTop="15px" marginLeft="5px">
                                     {!item.completed ? (
                                         item.name
                                     ) : (
                                         <Text color={colors.mainGreen} twenty fontFamily="Bold">
-                                            Done{' '}
+                                            Done
                                             <Feather
                                                 name="check"
-                                                size={28}
+                                                size={24}
                                                 color={colors.mainGreen}
                                             />
                                         </Text>
                                     )}
                                 </Text>
 
+                                <Tooltip
+                                    isVisible={toolTipVisible === id}
+                                    contentStyle={{ backgroundColor: '#101010', borderRadius: 15 }}
+                                    content={<TooltipBlurView data={item} />}
+                                    placement="center"
+                                    backgroundColor="transparent"
+                                    onClose={() => setToolTipVisible(false)}
+                                />
                                 <ShowHabitModal
                                     data={item}
                                     modalVisible={visibleItem === id}
@@ -210,10 +159,10 @@ export default function Homepage() {
                 </HomepageDataView>
             </ScrollView>
             <HomepageImageView>
-                <Image
+                {/* <Image
                     style={{ width: 100, height: 100 }}
                     source={require('../assets/flatIcons/bonsai.png')}
-                />
+                /> */}
             </HomepageImageView>
         </MainContainer>
     );

@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
-import { Alert, Image, Modal, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Image, Modal, ScrollView, TouchableOpacity, View } from 'react-native';
+import { format } from 'date-fns';
+import Dialog from 'react-native-dialog';
+import * as Progress from 'react-native-progress';
 import { colors } from '../utils/colors';
 import { showHabitImageBackground } from '../utils/globalStyles';
-import Dialog from 'react-native-dialog';
 import {
     HomeheaderContainer,
     LineBreak,
     ModalContent,
+    ProgressBarContainer,
     ShowHabitActionsAddButton,
     ShowHabitActionsAddContainer,
     ShowHabitActionsButton,
@@ -18,23 +21,41 @@ import {
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 import ShowHabitEditModal from './ShowHabitEditModal';
-import { format } from 'date-fns';
 import CalendarModal from './CalendarModal';
 import { haptics } from '../utils/helpers/haptics';
+import { useHabits } from '../context/HabitProvider';
+import { toasts } from '../utils/helpers/toastMethods';
+import { useEffect } from 'react/cjs/react.development';
 
 export default function ShowHabitModal({ modalVisible, setModalVisible, data }) {
     const [editHabitModalVisible, setEditHabitModalVisible] = useState(false);
     const [calendarModalVisible, setCalendarModalVisible] = useState(false);
     const [dialogVisible, setDialogVisible] = useState(false);
-    const [trackCompleted, setTrackCompleted] = useState([]);
     const [completed, setCompleted] = useState(false);
+    const [progress, setProgress] = useState(0);
+    const [progressNumber, setProgressNumber] = useState(0);
+    const [isEdit, setIsEdit] = useState(false);
+
+    const { getHabits, habits, setHabits } = useHabits();
+
+    const handleUpdate = async (habitName, color, description, daysCount, timesCount) => {
+        const newHabits = habits.map((habit) => {
+            if (habit.name === data.name) {
+                habit.name = habitName;
+                habit.color = color;
+                habit.description = description;
+                habit.days = daysCount;
+                habit.times = timesCount;
+            }
+            return habit;
+        });
+        await AsyncStorage.setItem('@habit', JSON.stringify(newHabits));
+    };
 
     const handleDoneToday = async () => {
-        haptics.selection();
+        haptics.success();
         try {
-            const result = await AsyncStorage.getItem('@habit');
-            let habits = [];
-            if (result !== null) habits = JSON.parse(result);
+            getHabits();
 
             const updatedHabits = habits.filter((habit) => {
                 const completedDatesObj = { ...habit.completedDates };
@@ -65,17 +86,20 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data }) 
         } catch (e) {
             console.error(e);
         }
+        setTimeout(() => {
+            setModalVisible(false);
+        }, 1000);
+        setTimeout(() => {
+            toasts.info(data.name, data.color);
+        }, 1200);
 
         setCompleted(true);
     };
 
     const deleteHabit = async () => {
-        const result = await AsyncStorage.getItem('@habits');
-        let habits = [];
-        if (result !== null) habits = JSON.parse(result);
-        const newHabits = habits.filter((habit) => habit.name !== data.name);
         try {
-            await AsyncStorage.setItem('@habit', JSON.stringify(newHabits));
+            const newHabits = data.filter((habit) => habit.name !== data.name);
+            setHabits(newHabits);
             setModalVisible(false);
         } catch (error) {
             console.error(error);
@@ -97,7 +121,12 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data }) 
                         >
                             <Ionicons name="close-circle-sharp" size={34} color="gray" />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setEditHabitModalVisible(true)}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                setIsEdit(true);
+                                setEditHabitModalVisible(true);
+                            }}
+                        >
                             <Text
                                 twenty
                                 marginRight="15px"
@@ -126,6 +155,21 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data }) 
                             {data.name}
                         </Text>
                     </ShowHabitDataContainer>
+                    <ProgressBarContainer>
+                        {data.times > 1 && (
+                            <>
+                                <Progress.Bar
+                                    progress={progress}
+                                    height={3}
+                                    width={350}
+                                    color={data.color}
+                                />
+                                <Text twentyTwo fontFamily="Bold" marginTop="5px">
+                                    {progressNumber} / {data.times}
+                                </Text>
+                            </>
+                        )}
+                    </ProgressBarContainer>
                     <Text marginTop="35px" twenty marginLeft="15px" left fontFamily="Medium">
                         {data.days} times per week
                     </Text>
@@ -137,13 +181,29 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data }) 
                     <ShowHabitActionsAddContainer>
                         {data.times > 1 && (
                             <>
-                                <ShowHabitActionsAddButton style={{ backgroundColor: data.color }}>
-                                    <Text fontFamily="SemiBold" twentyEight>
+                                <ShowHabitActionsAddButton
+                                    onPress={() => {
+                                        progressNumber <= data.times &&
+                                            setProgressNumber(progressNumber - 1);
+                                        setProgress(progress - 0.25);
+                                    }}
+                                    style={{ backgroundColor: data.color }}
+                                >
+                                    <Text fontFamily="Bold" twentyEight>
                                         -1
                                     </Text>
                                 </ShowHabitActionsAddButton>
-                                <ShowHabitActionsAddButton style={{ backgroundColor: data.color }}>
-                                    <Text fontFamily="SemiBold" twentyEight>
+                                <ShowHabitActionsAddButton
+                                    onPress={() => {
+                                        progressNumber <= data.times &&
+                                            setProgressNumber(progressNumber + 1);
+                                        setProgress(
+                                            progress + data.times / data.times / data.times
+                                        );
+                                    }}
+                                    style={{ backgroundColor: data.color }}
+                                >
+                                    <Text fontFamily="Bold" twentyEight>
                                         +1
                                     </Text>
                                 </ShowHabitActionsAddButton>
@@ -157,7 +217,7 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data }) 
                                     Done for Today
                                 </Text>
                             ) : (
-                                <Text color="red">Mark as Undone</Text>
+                                <Text color={colors.error}>Mark as Undone</Text>
                             )}
                         </ShowHabitActionsButton>
                         <ShowHabitActionsButton
@@ -185,6 +245,8 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data }) 
             />
             <ShowHabitEditModal
                 data={data}
+                isEdit={isEdit}
+                onSubmit={handleUpdate}
                 editHabitModalVisible={editHabitModalVisible}
                 setEditHabitModalVisible={setEditHabitModalVisible}
             />
