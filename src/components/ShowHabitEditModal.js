@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { ActivityIndicator, Image, Modal, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Modal, TouchableOpacity, View } from 'react-native';
 import { colors } from '../utils/colors';
-import { habitBoxShadow, showHabitImageBackground } from '../utils/globalStyles';
+import { habitBoxShadow } from '../utils/globalStyles';
 import ColorPalletteModal from './ColorPalletteModal';
 import {
     FrequencyTouchable,

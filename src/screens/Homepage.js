@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Feather } from '@expo/vector-icons';
-import { Image, RefreshControl, ScrollView, TouchableOpacity, View } from 'react-native';
+import * as Notifications from 'expo-notifications';
+import { Image, RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
+import Tooltip from 'react-native-walkthrough-tooltip';
 import ShowHabitModal from '../components/ShowHabitModal';
 import { colors } from '../utils/colors';
-import Tooltip from 'react-native-walkthrough-tooltip';
 import { haptics } from '../utils/helpers/haptics';
 import {
     HomeheaderContainer,
@@ -12,53 +13,51 @@ import {
     HomepageImageView,
     HomepageTextContainer,
     MainContainer,
+    NoHabitsContainer,
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 import { useHabits } from '../context/HabitProvider';
 import TooltipBlurView from '../components/TooltipBlurView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import schedulePushNotification from '../utils/helpers/notification';
+import { noHabitsImageStyle } from '../utils/globalStyles';
 
 const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-export default function Homepage() {
+export default function Homepage({ navigation }) {
     const [visibleItem, setVisibleItem] = useState();
     const [refreshing, setRefreshing] = useState(false);
     const [count, setCount] = useState(0);
     const [toolTipVisible, setToolTipVisible] = useState();
     const [date, setDate] = useState('');
+    const [progress, setProgress] = useState(0);
+    const [progressNumber, setProgressNumber] = useState(0);
 
     const { getHabits, habits } = useHabits();
+
+    const addProgress = (increment) => {
+        setProgressNumber(progressNumber + increment);
+    };
+
+    const extractProgress = (decrement) => {
+        setProgressNumber(progressNumber - decrement);
+    };
 
     /*    useEffect(() => {
         const { date } = getCurrentDate();
         setDate(date);
     }, [date]); */
 
-    const getData = async () => {
-        const getDate = new Date();
-        const currentDay = getDate.getDay();
-        try {
-            getHabits();
-            habits.map((habit) => {
-                if (currentDay > habit.currentDay) {
-                    habit.completed = false;
-                }
-                return habit;
-            });
-        } catch (e) {
-            console.error(e);
-        }
-    };
-
     useEffect(() => {
-        getData();
+        getHabits();
+        //AsyncStorage.removeItem('@habit');
     }, []);
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
-        getData();
+        getHabits();
         wait(200).then(() => setRefreshing(false));
     }, []);
 
@@ -79,7 +78,7 @@ export default function Homepage() {
                         1. lokakuuta, 2021
                     </Text>
                 </HomepageTextContainer>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.push('Settings')}>
                     <Feather
                         name="settings"
                         size={28}
@@ -90,11 +89,27 @@ export default function Homepage() {
             </HomeheaderContainer>
             <ScrollView
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+                style={{ marginBottom: 120, color: colors.mainGreen }}
             >
                 <Text twentyTwo fontFamily="Bold" marginTop="30px" marginLeft="15px" left>
                     Your Habits
                 </Text>
                 <HomepageDataView>
+                    {Object.values(habits).length <= 0 && (
+                        <NoHabitsContainer>
+                            <Text twenty fontFamily="MediumItalic">
+                                No habits yet
+                            </Text>
+                            <Image
+                                source={require('../assets/flatIcons/sloth.png')}
+                                style={noHabitsImageStyle}
+                            />
+                            <Text marginBottom="45px" fontFamily="MediumItalic" marginTop="10px">
+                                Create one below
+                            </Text>
+                            <Feather name="arrow-down" size={90} color="white" />
+                        </NoHabitsContainer>
+                    )}
                     {Object.values(habits).map((item, index) => {
                         const id = index.toString();
 
@@ -120,7 +135,7 @@ export default function Homepage() {
                                     fontFamily="SemiBold"
                                     marginLeft="100px"
                                 >
-                                    {item.times > 1 && count}
+                                    {item.times > 1 && progressNumber}
                                     {item.times > 1 && <Text color={colors.mainGreen}>/</Text>}
                                     {item.times > 1 && item.times}
                                 </Text>
@@ -142,7 +157,10 @@ export default function Homepage() {
 
                                 <Tooltip
                                     isVisible={toolTipVisible === id}
-                                    contentStyle={{ backgroundColor: '#101010', borderRadius: 15 }}
+                                    contentStyle={{
+                                        backgroundColor: '#101010',
+                                        borderRadius: 15,
+                                    }}
                                     content={<TooltipBlurView data={item} />}
                                     placement="center"
                                     backgroundColor="transparent"
@@ -150,6 +168,8 @@ export default function Homepage() {
                                 />
                                 <ShowHabitModal
                                     data={item}
+                                    addProgress={addProgress}
+                                    extractProgress={extractProgress}
                                     modalVisible={visibleItem === id}
                                     setModalVisible={setVisibleItem}
                                 />

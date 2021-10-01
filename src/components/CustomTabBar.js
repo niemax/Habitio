@@ -28,7 +28,7 @@ const CustomTabBar = ({ state, navigation }) => {
                     <TabAddButton
                         onPress={() => {
                             haptics.selection();
-                            navigation.navigate('FirstHabitModal');
+                            navigation.navigate('StartHabitCreation');
                         }}
                     >
                         <Feather name="plus" size={36} color="white" />

@@ -4,11 +4,15 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 const HabitContext = createContext();
 
 const HabitProvider = ({ children }) => {
-    const [habits, setHabits] = useState({});
+    const [habits, setHabits] = useState([]);
 
     const getHabits = async () => {
         const result = await AsyncStorage.getItem('@habit');
         if (result !== null) setHabits(JSON.parse(result));
+    };
+
+    const CRUDHabits = async (props) => {
+        await AsyncStorage.setItem('@habit', JSON.stringify([...habits, props]));
     };
 
     useEffect(() => {
@@ -16,7 +20,7 @@ const HabitProvider = ({ children }) => {
     }, []);
 
     return (
-        <HabitContext.Provider value={{ habits, setHabits, getHabits }}>
+        <HabitContext.Provider value={{ habits, setHabits, getHabits, CRUDHabits }}>
             {children}
         </HabitContext.Provider>
     );

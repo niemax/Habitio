@@ -160,6 +160,10 @@ export const CreateHabitHeader = styled.View`
 
 export const HabitInfoContainer = styled.View`
     flex: 1;
+`;
+
+export const HabitCentered = styled.View`
+    justify-content: center;
     align-items: center;
 `;
 
@@ -170,12 +174,13 @@ export const HabitDescriptionInput = styled.TextInput`
     border-radius: ${radius};
     padding: 15px;
     margin-top: 10px;
+    justify-content: center;
 `;
 
 export const HabitUtilityInfoContainer = styled.View`
     margin-top: 15px;
-    flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    padding-horizontal: 10px;
 `;
 
 export const SelectHabitColorButton = styled.TouchableOpacity`
@@ -188,13 +193,8 @@ export const SelectHabitColorButton = styled.TouchableOpacity`
     border-radius: 15px;
 `;
 
-export const ColorModalContainer = styled.View`
-    flex-direction: row;
-    justify-content: space-evenly;
-`;
-
 export const FrequencyTouchable = styled.View`
-    width: 360px;
+    width: auto;
     height: 60px;
     background-color: #383838;
     border-radius: 15px;
@@ -207,10 +207,10 @@ export const FrequencyTouchable = styled.View`
 
 export const FrequencySwitchContainer = styled.View`
     margin-top: 20px;
-    margin-left: 10px;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    padding-horizontal: 3px;
 `;
 
 export const HomepageDataView = styled.View`
@@ -343,7 +343,9 @@ export const HomepageImageView = styled.View`
 `;
 
 export const NoHabitsContainer = styled.View`
-    margin-top: 100px;
+    margin-top: 70px;
+    justify-content: center;
+    align-items: center;
 `;
 
 export const ToolTipView = styled.View`
@@ -361,8 +363,9 @@ export const ToolTipActionButton = styled.TouchableOpacity`
 `;
 
 export const ProgressBarContainer = styled.View`
-    margin-left: 15px;
-    margin-top: 15px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 7px;
 `;
 
 export const CalendarTimesInfoContainer = styled.View`

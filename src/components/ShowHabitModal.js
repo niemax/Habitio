@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import { Image, Modal, ScrollView, TouchableOpacity, View } from 'react-native';
@@ -25,9 +25,14 @@ import CalendarModal from './CalendarModal';
 import { haptics } from '../utils/helpers/haptics';
 import { useHabits } from '../context/HabitProvider';
 import { toasts } from '../utils/helpers/toastMethods';
-import { useEffect } from 'react/cjs/react.development';
 
-export default function ShowHabitModal({ modalVisible, setModalVisible, data }) {
+export default function ShowHabitModal({
+    modalVisible,
+    setModalVisible,
+    data,
+    addProgress,
+    extractProgress,
+}) {
     const [editHabitModalVisible, setEditHabitModalVisible] = useState(false);
     const [calendarModalVisible, setCalendarModalVisible] = useState(false);
     const [dialogVisible, setDialogVisible] = useState(false);
@@ -160,13 +165,10 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data }) 
                             <>
                                 <Progress.Bar
                                     progress={progress}
-                                    height={3}
-                                    width={350}
+                                    height={5}
+                                    width={150}
                                     color={data.color}
                                 />
-                                <Text twentyTwo fontFamily="Bold" marginTop="5px">
-                                    {progressNumber} / {data.times}
-                                </Text>
                             </>
                         )}
                     </ProgressBarContainer>
@@ -183,9 +185,11 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data }) 
                             <>
                                 <ShowHabitActionsAddButton
                                     onPress={() => {
-                                        progressNumber <= data.times &&
-                                            setProgressNumber(progressNumber - 1);
-                                        setProgress(progress - 0.25);
+                                        setProgress(
+                                            progress >= 0 &&
+                                                progress - data.times / data.times / data.times
+                                        );
+                                        extractProgress(1);
                                     }}
                                     style={{ backgroundColor: data.color }}
                                 >
@@ -195,10 +199,10 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data }) 
                                 </ShowHabitActionsAddButton>
                                 <ShowHabitActionsAddButton
                                     onPress={() => {
-                                        progressNumber <= data.times &&
-                                            setProgressNumber(progressNumber + 1);
+                                        addProgress(1);
                                         setProgress(
-                                            progress + data.times / data.times / data.times
+                                            progress <= data.times &&
+                                                progress + data.times / data.times / data.times
                                         );
                                     }}
                                     style={{ backgroundColor: data.color }}

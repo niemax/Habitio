@@ -15,7 +15,7 @@ import data from '../categories';
 import { habitBoxShadow } from '../utils/globalStyles';
 import { colors } from '../utils/colors';
 
-export default function FirstHabitModal({ navigation }) {
+export default function StartHabitCreation({ navigation }) {
     const [habitName, setHabitName] = useState('');
     const [error, setError] = useState('');
 

@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Modal, View, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useEffect } from 'react';
+import { Modal, Dimensions, TouchableOpacity } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
-import { Ionicons } from '@expo/vector-icons';
 import {
     CalendarHeader,
     CalendarLineBreak,
     CalendarStatsContainer,
     CalendarTextContainer,
     CalendarTimesInfoContainer,
-    CreateHabitHeader,
     ModalContent,
-    VerticalLineBreak,
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 import { colors } from '../utils/colors';

@@ -77,3 +77,9 @@ export const calendarStyles = {
     textDayHeaderFontSize: 14,
     dotColor: 'transparent',
 };
+
+export const noHabitsImageStyle = {
+    width: 150,
+    height: 150,
+    marginTop: 10,
+};

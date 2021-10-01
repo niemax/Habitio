@@ -6,8 +6,8 @@ import Test from '../screens/Test';
 import CustomTabBar from '../components/CustomTabBar';
 import HabitScreen from '../screens/HabitScreen';
 import CreateHabit from '../screens/CreateHabit';
-import FirstHabitModal from '../components/AddGoalModal';
-import ShowHabitModal from '../components/ShowHabitModal';
+import StartHabitCreation from '../screens/StartHabitCreation';
+import Settings from '../screens/Settings';
 
 const Tab = createBottomTabNavigator();
 
@@ -41,9 +41,9 @@ const MainAppStack = () => (
         />
         <Stack.Screen
             screenOptions={{ presentation: 'modal' }}
-            name="FirstHabitModal"
+            name="StartHabitCreation"
             options={{ headerShown: false, gestureEnabled: false }}
-            component={FirstHabitModal}
+            component={StartHabitCreation}
         />
         <Stack.Screen
             name="HabitScreen"
@@ -57,6 +57,14 @@ const MainAppStack = () => (
                 headerShown: false,
             }}
             component={CreateHabit}
+        />
+        <Stack.Screen
+            name="Settings"
+            options={{
+                gestureEnabled: true,
+                headerShown: false,
+            }}
+            component={Settings}
         />
     </Stack.Navigator>
 );
