@@ -2,6 +2,7 @@ export const colors = {
     mainBackground: '#242424',
     mainGreen: '#2EB284',
     error: '#f64141',
+    homepageProgress: '#242424',
 };
 
 export const habitSelectionColors = [

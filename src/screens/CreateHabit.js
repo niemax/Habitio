@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ActivityIndicator, TouchableOpacity, View, Switch, ScrollView } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ColorPalletteModal from '../components/ColorPalletteModal';
 import { colors } from '../utils/colors';
+import * as Notifications from 'expo-notifications';
 import { habitBoxShadow } from '../utils/globalStyles';
 import {
     CreateHabitHeader,
@@ -18,7 +19,6 @@ import {
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 import { useHabits } from '../context/HabitProvider';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import schedulePushNotification from '../utils/helpers/notification';
 
 export default function CreateHabit({ navigation, route }) {
@@ -30,11 +30,9 @@ export default function CreateHabit({ navigation, route }) {
     const [timesCount, setTimesCount] = useState(1);
     const [storageItems, setStorageItems] = useState({});
     const [loading, setLoading] = useState(false);
-    const [selectedDate, setSelectedDate] = useState();
-    const [valueDate, setValueDate] = useState(new Date());
-    const [timeDate, setTimeDate] = useState(new Date());
-    const [specificDate, setSpecificDate] = useState();
-    const [mode, setMode] = useState('time');
+    const [show, setShow] = useState(false);
+    const [specificDate, setSpecificDate] = useState(new Date());
+    const [reminderTime, setReminderTime] = useState(new Date());
     const [isEnabled, setIsEnabled] = useState(false);
     const [isEnabledDate, setIsEnabledDate] = useState(false);
     const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
@@ -51,33 +49,54 @@ export default function CreateHabit({ navigation, route }) {
         setColorUpdated(true);
     };
 
-    const title = 'App-Name';
-    const body = `Time to get active!\n-your daily reminder to complete\n${habitName}`;
-    const data = 'aowjidjioadjioawjioa';
+    const onChangeSpecific = (event, selectedDate) => {
+        const currentDate = selectedDate || specificDate;
+        setShow(Platform.OS === 'ios');
+        setSpecificDate(currentDate);
+    };
+
+    const onChangeReminderTime = (event, selectedDate) => {
+        const currentDate = selectedDate || reminderTime;
+        setShow(Platform.OS === 'ios');
+        setReminderTime(currentDate);
+    };
 
     const handleHabitCreation = async () => {
         setLoading(true);
+        const parsedSpecificDateHours = specificDate.getHours();
+        const parsedSpecificDateMinutes = specificDate.getMinutes();
+        const parsedReminderTimeHours = reminderTime.getHours();
+        const parsedReminderTimeMinutes = reminderTime.getMinutes();
+
+        const content = {
+            title: 'Habitio',
+            body: `Time to be productive! Your daily reminder to ${habitName}`,
+        };
+
+        const trigger = {
+            hour: parsedReminderTimeHours,
+            minute: parsedReminderTimeMinutes,
+        };
 
         const newHabit = {
             name: habitName,
             color: updatedColor,
             icon: habitIcon,
-            currentDay: null,
+            completedDay: null,
             completed: false,
             completedDates: {},
             days: daysCount,
             times: timesCount,
             timesCompleted: 0,
-            specificDate: null || specificDate,
-            reminder: null || selectedDate,
+            specificDate: isEnabledSpecific ? specificDate : null,
+            reminder: isEnabledDate ? reminderTime : null,
             description: description,
             progress: 0,
         };
 
         try {
-            console.log(newHabit);
             CRUDHabits(newHabit);
-            schedulePushNotification(title, body);
+            schedulePushNotification(content, trigger, true);
             setTimeout(() => {
                 setLoading(false);
                 navigation.pop(3);
@@ -145,7 +164,7 @@ export default function CreateHabit({ navigation, route }) {
                             )}
                         </SelectHabitColorButton>
                         <FrequencySwitchContainer>
-                            <Text fontFamily="Regular">Specific date</Text>
+                            <Text fontFamily="Regular">Complete once</Text>
                             <Switch
                                 trackColor={{ false: '#767577', true: colors.mainGreen }}
                                 thumbColor={isEnabledSpecific ? '#f5dd4b' : '#f4f3f4'}
@@ -156,10 +175,13 @@ export default function CreateHabit({ navigation, route }) {
                         </FrequencySwitchContainer>
                         {isEnabledSpecific && (
                             <DateTimePicker
-                                value={valueDate}
+                                testID="dateTimePicker"
+                                value={specificDate}
                                 mode="datetime"
                                 is24Hour="true"
-                                onChange={() => setSpecificDate(valueDate)}
+                                display="default"
+                                themeVariant="dark"
+                                onChange={onChangeSpecific}
                             />
                         )}
                         <FrequencySwitchContainer>
@@ -177,12 +199,14 @@ export default function CreateHabit({ navigation, route }) {
                                 <FrequencyTouchable>
                                     <Text>Days per Week</Text>
                                     <TouchableOpacity
-                                        onPress={() => daysCount > 1 && setDaysCount(daysCount - 1)}
+                                        onPress={() => {
+                                            daysCount > 1 && setDaysCount(daysCount - 1);
+                                        }}
                                     >
                                         <Feather name="minus-circle" size={30} color="gray" />
                                     </TouchableOpacity>
                                     <Text fontFamily="Bold" twentyEight>
-                                        {daysCount}
+                                        {daysCount === 7 ? <Text>Every day</Text> : daysCount}
                                     </Text>
                                     <TouchableOpacity
                                         onPress={() => daysCount < 7 && setDaysCount(daysCount + 1)}
@@ -222,10 +246,11 @@ export default function CreateHabit({ navigation, route }) {
                         </FrequencySwitchContainer>
                         {isEnabledDate && (
                             <DateTimePicker
-                                value={timeDate}
+                                value={reminderTime}
                                 mode="time"
+                                themeVariant="dark"
                                 is24Hour="true"
-                                onChange={() => setSelectedDate(timeDate)}
+                                onChange={onChangeReminderTime}
                             />
                         )}
                     </HabitUtilityInfoContainer>

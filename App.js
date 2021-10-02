@@ -12,17 +12,9 @@ import * as Notifications from 'expo-notifications';
 import MainAppStack from './src/navigation/MainAppNav';
 import HabitProvider from './src/context/HabitProvider';
 
-Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: false,
-        shouldSetBadge: false,
-    }),
-});
-
 export default function App() {
-    const [expoPushToken, setExpoPushToken] = useState('');
-    const [notification, setNotification] = useState(false);
+    const [, , setExpoPushToken] = useState('');
+    const [, , setNotification] = useState(false);
     const notificationListener = useRef();
     const responseListener = useRef();
     const [fontsLoaded, setFontsLoaded] = useState(false);

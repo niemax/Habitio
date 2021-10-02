@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { Image, Modal, ScrollView, TouchableOpacity, View } from 'react-native';
 import { format } from 'date-fns';
@@ -25,25 +24,53 @@ import CalendarModal from './CalendarModal';
 import { haptics } from '../utils/helpers/haptics';
 import { useHabits } from '../context/HabitProvider';
 import { toasts } from '../utils/helpers/toastMethods';
+import schedulePushNotification, {
+    cancelPushNotification,
+    identifier,
+} from '../utils/helpers/notification';
 
 export default function ShowHabitModal({
     modalVisible,
     setModalVisible,
     data,
     addProgress,
+    addProgressBar,
     extractProgress,
+    extractProgressBar,
+    progressNumber,
 }) {
     const [editHabitModalVisible, setEditHabitModalVisible] = useState(false);
     const [calendarModalVisible, setCalendarModalVisible] = useState(false);
     const [dialogVisible, setDialogVisible] = useState(false);
     const [completed, setCompleted] = useState(false);
-    const [progress, setProgress] = useState(0);
-    const [progressNumber, setProgressNumber] = useState(0);
     const [isEdit, setIsEdit] = useState(false);
 
-    const { getHabits, habits, setHabits } = useHabits();
+    const { habits, habitSetter } = useHabits();
 
-    const handleUpdate = async (habitName, color, description, daysCount, timesCount) => {
+    const handleUpdate = async (
+        habitName,
+        color,
+        description,
+        daysCount,
+        timesCount,
+        habitReminderTime,
+        habitSpecificDate
+    ) => {
+        const parsedSpecificDateHours = habitSpecificDate.getHours();
+        const parsedSpecificDateMinutes = habitSpecificDate.getMinutes();
+        const parsedReminderTimeHours = habitReminderTime.getHours();
+        const parsedReminderTimeMinutes = habitReminderTime.getMinutes();
+
+        const content = {
+            title: 'Habitio',
+            body: `Time to be productive! Your daily reminder to ${habitName}`,
+        };
+
+        const trigger = {
+            hour: parsedReminderTimeHours,
+            minute: parsedReminderTimeMinutes,
+        };
+
         const newHabits = habits.map((habit) => {
             if (habit.name === data.name) {
                 habit.name = habitName;
@@ -51,24 +78,26 @@ export default function ShowHabitModal({
                 habit.description = description;
                 habit.days = daysCount;
                 habit.times = timesCount;
+                habit.reminder = habitReminderTime;
+                habit.specificDate = habitSpecificDate;
             }
             return habit;
         });
-        await AsyncStorage.setItem('@habit', JSON.stringify(newHabits));
+        habitSetter(newHabits);
+        cancelPushNotification().then(() => {
+            schedulePushNotification(content, trigger, true);
+        });
     };
 
     const handleDoneToday = async () => {
         haptics.success();
         try {
-            getHabits();
-
             const updatedHabits = habits.filter((habit) => {
                 const completedDatesObj = { ...habit.completedDates };
                 const newDate = format(new Date(), 'yyyy-MM-dd');
                 const day = new Date();
                 const currentDay = day.getDay();
 
-                // example: "Meditate", "Drink Water"
                 completedDatesObj[newDate] = {
                     selected: true,
                     marked: true,
@@ -87,7 +116,7 @@ export default function ShowHabitModal({
 
                 return habit;
             });
-            await AsyncStorage.setItem('@habit', JSON.stringify(updatedHabits));
+            habitSetter(updatedHabits);
         } catch (e) {
             console.error(e);
         }
@@ -101,14 +130,10 @@ export default function ShowHabitModal({
         setCompleted(true);
     };
 
-    const deleteHabit = async () => {
-        try {
-            const newHabits = data.filter((habit) => habit.name !== data.name);
-            setHabits(newHabits);
-            setModalVisible(false);
-        } catch (error) {
-            console.error(error);
-        }
+    const deleteHabit = () => {
+        const newHabits = habits.filter((habit) => habit.name !== data.name);
+        habitSetter(newHabits);
+        setModalVisible(false);
     };
 
     const displayDeleteAlert = () => {
@@ -162,18 +187,21 @@ export default function ShowHabitModal({
                     </ShowHabitDataContainer>
                     <ProgressBarContainer>
                         {data.times > 1 && (
-                            <>
-                                <Progress.Bar
-                                    progress={progress}
-                                    height={5}
-                                    width={150}
-                                    color={data.color}
-                                />
-                            </>
+                            <Text fontFamily="Extra" color={data.color} twentyTwo>
+                                {progressNumber} / {data.times}
+                            </Text>
                         )}
                     </ProgressBarContainer>
                     <Text marginTop="35px" twenty marginLeft="15px" left fontFamily="Medium">
-                        {data.days} times per week
+                        {data.days === 7 ? (
+                            <Text twenty marginLeft="15px" left fontFamily="Medium">
+                                Every day
+                            </Text>
+                        ) : (
+                            <Text twenty marginLeft="15px" left fontFamily="Medium">
+                                {data.days} times weekly
+                            </Text>
+                        )}
                     </Text>
                     <LineBreak />
                     <Text marginLeft="15px" left twenty fontFamily="Medium">
@@ -185,11 +213,9 @@ export default function ShowHabitModal({
                             <>
                                 <ShowHabitActionsAddButton
                                     onPress={() => {
-                                        setProgress(
-                                            progress >= 0 &&
-                                                progress - data.times / data.times / data.times
-                                        );
+                                        haptics.selection();
                                         extractProgress(1);
+                                        extractProgressBar(data.times / data.times / data.times);
                                     }}
                                     style={{ backgroundColor: data.color }}
                                 >
@@ -199,11 +225,9 @@ export default function ShowHabitModal({
                                 </ShowHabitActionsAddButton>
                                 <ShowHabitActionsAddButton
                                     onPress={() => {
+                                        haptics.selection();
                                         addProgress(1);
-                                        setProgress(
-                                            progress <= data.times &&
-                                                progress + data.times / data.times / data.times
-                                        );
+                                        addProgressBar(data.times / data.times / data.times);
                                     }}
                                     style={{ backgroundColor: data.color }}
                                 >

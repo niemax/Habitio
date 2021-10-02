@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { ActivityIndicator, Modal, TouchableOpacity, View, Switch } from 'react-native';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { ActivityIndicator, Modal, TouchableOpacity, View } from 'react-native';
 import { colors } from '../utils/colors';
 import { habitBoxShadow } from '../utils/globalStyles';
 import ColorPalletteModal from './ColorPalletteModal';
 import {
+    FrequencySwitchContainer,
     FrequencyTouchable,
+    HabitCentered,
     HabitDescriptionInput,
     HabitInfoContainer,
     HabitUtilityInfoContainer,
@@ -30,11 +32,17 @@ export default function ShowHabitEditModal({
     const [daysCount, setDaysCount] = useState(0);
     const [timesCount, setTimesCount] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(data.reminders);
-    const [date, setDate] = useState(new Date(1598051730000));
-    const [mode, setMode] = useState('time');
+    const [habitReminderTime, habitSetReminderTime] = useState();
+    const [habitSpecificDate, habitSetSpecificDate] = useState();
+    const [show, setShow] = useState(false);
+    const [isEnabled, setIsEnabled] = useState(false);
+    const [isEnabledDate, setIsEnabledDate] = useState(false);
+    const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
+    const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+    const toggleSwitchDate = () => setIsEnabledDate((previousState) => !previousState);
+    const toggleSwitchSpecific = () => setIsEnabledSpecific((previousState) => !previousState);
 
-    const { name, description, days, times, color } = data;
+    const { name, description, days, times, color, reminder, specificDate } = data;
 
     const updateColor = (color) => {
         setUpdatedColor(color);
@@ -43,11 +51,32 @@ export default function ShowHabitEditModal({
 
     const handleSubmit = () => {
         setLoading(true);
-        onSubmit(habitName, updatedColor, description, daysCount, timesCount);
+        onSubmit(
+            habitName,
+            updatedColor,
+            description,
+            daysCount,
+            timesCount,
+            habitReminderTime,
+            habitSpecificDate
+        );
+
         setTimeout(() => {
             setLoading(false);
             setEditHabitModalVisible(false);
         }, 1500);
+    };
+
+    const onChangeSpecific = (event, selectedDate) => {
+        const currentDate = selectedDate || specificDate;
+        setShow(Platform.OS === 'ios');
+        habitSetSpecificDate(currentDate);
+    };
+
+    const onChangeReminderTime = (event, selectedDate) => {
+        const currentDate = selectedDate || habitReminderTime;
+        setShow(Platform.OS === 'ios');
+        habitSetReminderTime(currentDate);
     };
 
     useEffect(() => {
@@ -56,6 +85,8 @@ export default function ShowHabitEditModal({
         setDaysCount(days);
         setTimesCount(times);
         setUpdatedColor(color);
+        habitSetReminderTime(new Date(reminder));
+        habitSetSpecificDate(new Date(specificDate));
     }, []);
 
     return (
@@ -89,18 +120,20 @@ export default function ShowHabitEditModal({
                     Description
                 </Text>
                 <HabitInfoContainer>
-                    <HabitDescriptionInput
-                        multiline
-                        placeholder={stateDescription}
-                        placeholderTextColor="white"
-                        style={{
-                            color: 'white',
-                            fontSize: 18,
-                            fontFamily: 'Bold',
-                            ...habitBoxShadow,
-                        }}
-                        onChange={(text) => setStateDescription(text)}
-                    />
+                    <HabitCentered>
+                        <HabitDescriptionInput
+                            multiline
+                            placeholder={stateDescription}
+                            placeholderTextColor="white"
+                            style={{
+                                color: 'white',
+                                fontSize: 18,
+                                fontFamily: 'Bold',
+                                ...habitBoxShadow,
+                            }}
+                            onChange={(text) => setStateDescription(text)}
+                        />
+                    </HabitCentered>
                     <HabitUtilityInfoContainer>
                         <Text left marginLeft="15px" fontFamily="Regular">
                             Color
@@ -126,51 +159,97 @@ export default function ShowHabitEditModal({
                                 />
                             )}
                         </SelectHabitColorButton>
-                        <Text left marginLeft="10px" marginTop="30px" fontFamily="Regular">
-                            Choose frequency
-                        </Text>
-                        <FrequencyTouchable>
-                            <Text>Days per Week</Text>
-                            <TouchableOpacity
-                                onPress={() => daysCount > 1 && setDaysCount(daysCount - 1)}
-                            >
-                                <Feather name="minus-circle" size={30} color="gray" />
-                            </TouchableOpacity>
-                            <Text fontFamily="Bold" twentyEight>
-                                {daysCount}
-                            </Text>
-                            <TouchableOpacity
-                                onPress={() => daysCount < 7 && setDaysCount(daysCount + 1)}
-                            >
-                                <Feather name="plus-circle" size={30} color="gray" />
-                            </TouchableOpacity>
-                        </FrequencyTouchable>
-                        <FrequencyTouchable>
-                            <Text>Times per Day</Text>
-                            <TouchableOpacity
-                                onPress={() => timesCount > 1 && setTimesCount(timesCount - 1)}
-                            >
-                                <Feather name="minus-circle" size={30} color="gray" />
-                            </TouchableOpacity>
-                            <Text fontFamily="Bold" twentyEight>
-                                {timesCount}
-                            </Text>
-                            <TouchableOpacity onPress={() => setTimesCount(timesCount + 1)}>
-                                <Feather name="plus-circle" size={30} color="gray" />
-                            </TouchableOpacity>
-                        </FrequencyTouchable>
 
-                        <Text left fontFamily="Bold" twenty marginLeft="10px" marginTop="25px">
-                            Remind me at
-                        </Text>
-                        <DateTimePicker
-                            style={{ marginLeft: 10, marginTop: 8 }}
-                            value={date}
-                            mode={mode}
-                            is24Hour="true"
-                            display="default"
-                            onChange={() => setSelectedDate(date)}
-                        />
+                        <FrequencySwitchContainer>
+                            <Text fontFamily="Regular">Complete once</Text>
+                            <Switch
+                                trackColor={{ false: '#767577', true: colors.mainGreen }}
+                                thumbColor={isEnabledSpecific ? '#f5dd4b' : '#f4f3f4'}
+                                ios_backgroundColor="#3e3e3e"
+                                onValueChange={toggleSwitchSpecific}
+                                value={isEnabledSpecific}
+                            />
+                        </FrequencySwitchContainer>
+                        {isEnabledSpecific && (
+                            <DateTimePicker
+                                testID="dateTimePicker"
+                                value={habitSpecificDate}
+                                mode="datetime"
+                                is24Hour="true"
+                                display="default"
+                                themeVariant="dark"
+                                onChange={onChangeSpecific}
+                            />
+                        )}
+                        <FrequencySwitchContainer>
+                            <Text fontFamily="Regular">Repeat</Text>
+                            <Switch
+                                trackColor={{ false: '#767577', true: colors.mainGreen }}
+                                thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+                                ios_backgroundColor="#3e3e3e"
+                                onValueChange={toggleSwitch}
+                                value={isEnabled}
+                            />
+                        </FrequencySwitchContainer>
+                        {isEnabled && (
+                            <>
+                                <FrequencyTouchable>
+                                    <Text>Days per Week</Text>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            daysCount > 1 && setDaysCount(daysCount - 1);
+                                        }}
+                                    >
+                                        <Feather name="minus-circle" size={30} color="gray" />
+                                    </TouchableOpacity>
+                                    <Text fontFamily="Bold" twentyEight>
+                                        {daysCount === 7 ? <Text>Every day</Text> : daysCount}
+                                    </Text>
+                                    <TouchableOpacity
+                                        onPress={() => daysCount < 7 && setDaysCount(daysCount + 1)}
+                                    >
+                                        <Feather name="plus-circle" size={30} color="gray" />
+                                    </TouchableOpacity>
+                                </FrequencyTouchable>
+                                <FrequencyTouchable>
+                                    <Text>Times per Day</Text>
+                                    <TouchableOpacity
+                                        onPress={() =>
+                                            timesCount > 1 && setTimesCount(timesCount - 1)
+                                        }
+                                    >
+                                        <Feather name="minus-circle" size={30} color="gray" />
+                                    </TouchableOpacity>
+                                    <Text fontFamily="Bold" twentyEight>
+                                        {timesCount}
+                                    </Text>
+                                    <TouchableOpacity onPress={() => setTimesCount(timesCount + 1)}>
+                                        <Feather name="plus-circle" size={30} color="gray" />
+                                    </TouchableOpacity>
+                                </FrequencyTouchable>
+                            </>
+                        )}
+                        <FrequencySwitchContainer>
+                            <Text fontFamily="Regular" twenty>
+                                Reminder
+                            </Text>
+                            <Switch
+                                trackColor={{ false: '#767577', true: colors.mainGreen }}
+                                thumbColor={isEnabledDate ? '#f5dd4b' : '#f4f3f4'}
+                                ios_backgroundColor="#3e3e3e"
+                                onValueChange={toggleSwitchDate}
+                                value={isEnabledDate}
+                            />
+                        </FrequencySwitchContainer>
+                        {isEnabledDate && (
+                            <DateTimePicker
+                                value={habitReminderTime}
+                                mode="time"
+                                themeVariant="dark"
+                                is24Hour="true"
+                                onChange={onChangeReminderTime}
+                            />
+                        )}
                     </HabitUtilityInfoContainer>
                 </HabitInfoContainer>
                 <ColorPalletteModal

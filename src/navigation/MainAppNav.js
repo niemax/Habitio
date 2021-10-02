@@ -8,6 +8,7 @@ import HabitScreen from '../screens/HabitScreen';
 import CreateHabit from '../screens/CreateHabit';
 import StartHabitCreation from '../screens/StartHabitCreation';
 import Settings from '../screens/Settings';
+import SplashScreen from '../screens/AuthScreens/Splash';
 
 const Tab = createBottomTabNavigator();
 
@@ -34,6 +35,11 @@ const Stack = createStackNavigator();
 
 const MainAppStack = () => (
     <Stack.Navigator initialRouteName="SplashScreen">
+        <Stack.Screen
+            name="SplashScreen"
+            options={{ headerShown: false, gestureEnabled: false }}
+            component={SplashScreen}
+        />
         <Stack.Screen
             name="MainTab"
             options={{ headerShown: false, gestureEnabled: false }}

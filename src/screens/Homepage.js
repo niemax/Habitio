@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Feather } from '@expo/vector-icons';
-import * as Notifications from 'expo-notifications';
 import { Image, RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
 import Tooltip from 'react-native-walkthrough-tooltip';
+import * as Progress from 'react-native-progress';
 import ShowHabitModal from '../components/ShowHabitModal';
 import { colors } from '../utils/colors';
 import { haptics } from '../utils/helpers/haptics';
@@ -18,9 +18,8 @@ import {
 import Text from '../utils/Text';
 import { useHabits } from '../context/HabitProvider';
 import TooltipBlurView from '../components/TooltipBlurView';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import schedulePushNotification from '../utils/helpers/notification';
-import { noHabitsImageStyle } from '../utils/globalStyles';
+import { homepageBoxShadow, noHabitsImageStyle } from '../utils/globalStyles';
+import getCurrentDate from '../utils/helpers/currentDate';
 
 const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -29,13 +28,20 @@ const wait = (timeout) => {
 export default function Homepage({ navigation }) {
     const [visibleItem, setVisibleItem] = useState();
     const [refreshing, setRefreshing] = useState(false);
-    const [count, setCount] = useState(0);
     const [toolTipVisible, setToolTipVisible] = useState();
-    const [date, setDate] = useState('');
     const [progress, setProgress] = useState(0);
     const [progressNumber, setProgressNumber] = useState(0);
+    const [date, setDate] = useState();
 
-    const { getHabits, habits } = useHabits();
+    const { habitSetter, getHabits, habits } = useHabits();
+
+    const addProgressBar = (increment) => {
+        setProgress(progress + increment);
+    };
+
+    const extractProgressBar = (decrement) => {
+        setProgress(progress - decrement);
+    };
 
     const addProgress = (increment) => {
         setProgressNumber(progressNumber + increment);
@@ -45,13 +51,30 @@ export default function Homepage({ navigation }) {
         setProgressNumber(progressNumber - decrement);
     };
 
-    /*    useEffect(() => {
+    useEffect(() => {
         const { date } = getCurrentDate();
         setDate(date);
-    }, [date]); */
+    }, [date]);
+
+    const getData = async () => {
+        const getDate = new Date();
+        const currentDay = getDate.getDay();
+        try {
+            getHabits();
+            const checkedHabits = habits.map((habit) => {
+                if (currentDay > habit.currentDay) {
+                    habit.completed = false;
+                }
+                return habit;
+            });
+            habitSetter(checkedHabits);
+        } catch (e) {
+            console.error(e);
+        }
+    };
 
     useEffect(() => {
-        getHabits();
+        getData();
         //AsyncStorage.removeItem('@habit');
     }, []);
 
@@ -75,7 +98,7 @@ export default function Homepage({ navigation }) {
                         left
                         marginLeft="15px"
                     >
-                        1. lokakuuta, 2021
+                        {date}
                     </Text>
                 </HomepageTextContainer>
                 <TouchableOpacity onPress={() => navigation.push('Settings')}>
@@ -124,36 +147,41 @@ export default function Homepage({ navigation }) {
                                     haptics.selection();
                                     setToolTipVisible(id);
                                 }}
-                                style={{
-                                    borderBottomWidth: 5,
-                                    borderBottomColor: `${item.color}`,
-                                }}
+                                style={homepageBoxShadow}
                             >
                                 <Text
                                     marginBottom="15px"
-                                    color={colors.mainGreen}
-                                    fontFamily="SemiBold"
+                                    color={item.color}
+                                    fontFamily="Extra"
                                     marginLeft="100px"
+                                    twenty
                                 >
                                     {item.times > 1 && progressNumber}
-                                    {item.times > 1 && <Text color={colors.mainGreen}>/</Text>}
+                                    {item.times > 1 && <Text color={item.color}>/</Text>}
                                     {item.times > 1 && item.times}
                                 </Text>
                                 <Image style={{ height: 50, width: 50 }} source={item.icon} />
-                                <Text fontFamily="SemiBold" marginTop="15px" marginLeft="5px">
+                                <Text fontFamily="SemiBold" marginTop="6px" marginLeft="5px">
                                     {!item.completed ? (
                                         item.name
                                     ) : (
-                                        <Text color={colors.mainGreen} twenty fontFamily="Bold">
+                                        <Text color={item.color} twenty fontFamily="SemiBold">
                                             Done
-                                            <Feather
-                                                name="check"
-                                                size={24}
-                                                color={colors.mainGreen}
-                                            />
+                                            <Feather name="check" size={24} color="white" />
                                         </Text>
                                     )}
                                 </Text>
+                                {item.times > 1 && (
+                                    <Progress.Bar
+                                        style={{ position: 'absolute', bottom: 1, borderRadius: 0 }}
+                                        progress={progress}
+                                        height={5}
+                                        width={159}
+                                        color={item.color}
+                                        borderColor={colors.homepageProgress}
+                                        borderWidth={0.2}
+                                    />
+                                )}
 
                                 <Tooltip
                                     isVisible={toolTipVisible === id}
@@ -168,6 +196,9 @@ export default function Homepage({ navigation }) {
                                 />
                                 <ShowHabitModal
                                     data={item}
+                                    progressNumber={progressNumber}
+                                    addProgressBar={addProgressBar}
+                                    extractProgressBar={extractProgressBar}
                                     addProgress={addProgress}
                                     extractProgress={extractProgress}
                                     modalVisible={visibleItem === id}

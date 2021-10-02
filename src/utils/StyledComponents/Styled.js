@@ -5,6 +5,12 @@ const { mainBackground, mainGreen } = colors;
 
 const radius = '15px';
 
+export const SplashContainer = styled.View`
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    background-color: ${colors.mainBackground};
+`;
 export const MainContainer = styled.View`
     background-color: ${mainBackground};
     flex: 1;
@@ -228,7 +234,8 @@ export const HomepageDataBox = styled.Pressable`
     width: 160px;
     height: 150px;
     background-color: #303030;
-    border-radius: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
     margin-horizontal: 10px;
     margin-vertical: 10px;
     align-items: center;
