@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { View, Modal, ScrollView, TouchableOpacity } from 'react-native';
 import Text from '../utils/Text';
-import { View, Modal, ScrollView } from 'react-native';
-import { ColorModalContainer, ModalContent } from '../utils/StyledComponents/Styled';
+import { ModalContent } from '../utils/StyledComponents/Styled';
 import { Ionicons } from '@expo/vector-icons';
 import { habitSelectionColors } from '../utils/colors';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function ColorPalletteModal({ modalVisible, setModalVisible, updateColor }) {
     return (
@@ -39,7 +38,7 @@ export default function ColorPalletteModal({ modalVisible, setModalVisible, upda
                                 style={{
                                     width: 50,
                                     height: 50,
-                                    borderRadius: '50%',
+                                    borderRadius: 100,
                                     backgroundColor: `${item}`,
                                 }}
                             />

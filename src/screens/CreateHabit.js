@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { ActivityIndicator, TouchableOpacity, View, Switch, ScrollView } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ColorPalletteModal from '../components/ColorPalletteModal';
 import { colors } from '../utils/colors';
-import * as Notifications from 'expo-notifications';
+import RNPickerSelect from 'react-native-picker-select';
 import { habitBoxShadow } from '../utils/globalStyles';
 import {
     CreateHabitHeader,
@@ -28,21 +28,51 @@ export default function CreateHabit({ navigation, route }) {
     const [description, setDescription] = useState('');
     const [daysCount, setDaysCount] = useState(1);
     const [timesCount, setTimesCount] = useState(1);
-    const [storageItems, setStorageItems] = useState({});
     const [loading, setLoading] = useState(false);
-    const [show, setShow] = useState(false);
     const [specificDate, setSpecificDate] = useState(new Date());
     const [reminderTime, setReminderTime] = useState(new Date());
     const [isEnabled, setIsEnabled] = useState(false);
     const [isEnabledDate, setIsEnabledDate] = useState(false);
     const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
-    const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-    const toggleSwitchDate = () => setIsEnabledDate((previousState) => !previousState);
-    const toggleSwitchSpecific = () => setIsEnabledSpecific((previousState) => !previousState);
+    const [selectedValue, setSelectedValue] = useState();
+
+    const toggleSwitch = () =>
+        !isEnabledSpecific && setIsEnabled((previousState) => !previousState);
+
+    const toggleSwitchDate = () =>
+        !isEnabledSpecific && setIsEnabledDate((previousState) => !previousState);
+
+    const toggleSwitchSpecific = () =>
+        !isEnabledDate && !isEnabled && setIsEnabledSpecific((previousState) => !previousState);
 
     const { CRUDHabits } = useHabits();
 
     const { habitName, habitIcon } = route.params;
+
+    const placeholder = {
+        label: 'Choose...',
+        value: null,
+        color: '#9EA0A4',
+    };
+
+    const content = {
+        title: habitName,
+        body: `Time to be productive! Your daily reminder to ${habitName}`,
+    };
+
+    const contentSpecific = {
+        title: habitName,
+        body: `Reminder for ${habitName}`,
+    };
+
+    const trigger = {
+        hour: reminderTime.getHours(),
+        minute: reminderTime.getMinutes(),
+    };
+
+    const triggerSpecific = {
+        date: specificDate,
+    };
 
     const updateColor = (color) => {
         setUpdatedColor(color);
@@ -51,55 +81,47 @@ export default function CreateHabit({ navigation, route }) {
 
     const onChangeSpecific = (event, selectedDate) => {
         const currentDate = selectedDate || specificDate;
-        setShow(Platform.OS === 'ios');
         setSpecificDate(currentDate);
     };
 
     const onChangeReminderTime = (event, selectedDate) => {
         const currentDate = selectedDate || reminderTime;
-        setShow(Platform.OS === 'ios');
         setReminderTime(currentDate);
     };
 
     const handleHabitCreation = async () => {
         setLoading(true);
-        const parsedSpecificDateHours = specificDate.getHours();
-        const parsedSpecificDateMinutes = specificDate.getMinutes();
-        const parsedReminderTimeHours = reminderTime.getHours();
-        const parsedReminderTimeMinutes = reminderTime.getMinutes();
-
-        const content = {
-            title: 'Habitio',
-            body: `Time to be productive! Your daily reminder to ${habitName}`,
-        };
-
-        const trigger = {
-            hour: parsedReminderTimeHours,
-            minute: parsedReminderTimeMinutes,
-        };
 
         const newHabit = {
             name: habitName,
+            id: Math.floor(Math.random() * 1000),
             color: updatedColor,
             icon: habitIcon,
-            completedDay: null,
-            completed: false,
-            completedDates: {},
-            days: daysCount,
-            times: timesCount,
-            timesCompleted: 0,
+            days: isEnabled ? daysCount : null,
+            times: isEnabled ? timesCount : null,
             specificDate: isEnabledSpecific ? specificDate : null,
             reminder: isEnabledDate ? reminderTime : null,
+            unitValue: selectedValue,
             description: description,
+            completedDay: null,
+            currentDay: 0,
+            completed: false,
+            completedDates: {},
+            timesCompleted: 0,
             progress: 0,
+            notificationId: Math.floor(Math.random() * 1000).toString(),
         };
+
+        const repeats = daysCount > 1 ? true : false;
 
         try {
             CRUDHabits(newHabit);
-            schedulePushNotification(content, trigger, true);
+            if (isEnabledDate) schedulePushNotification(content, trigger, repeats);
+            if (isEnabledSpecific)
+                schedulePushNotification(contentSpecific, triggerSpecific, false);
             setTimeout(() => {
                 setLoading(false);
-                navigation.pop(3);
+                navigation.navigate('MainTab');
             }, 2000);
         } catch (e) {
             console.log(e);
@@ -127,26 +149,28 @@ export default function CreateHabit({ navigation, route }) {
                 <Text left twentyTwo fontFamily="SemiBold" marginLeft="15px" marginTop="30px">
                     {habitName}
                 </Text>
-                <Text left marginLeft="15px" fontFamily="Regular" marginTop="35px">
+                <Text left marginLeft="10px" fontFamily="Regular" marginTop="35px">
                     Description
                 </Text>
                 <HabitInfoContainer>
                     <HabitCentered>
                         <HabitDescriptionInput
                             autoCorrect={false}
-                            multiline
+                            value={description}
+                            multiline={true}
                             placeholder="Habit Description"
-                            placeholderTextColor="white"
+                            placeholderTextColor="gray"
                             style={{
+                                color: 'white',
                                 fontSize: 17,
                                 fontFamily: 'SemiBold',
                                 ...habitBoxShadow,
                             }}
-                            onChange={(text) => setDescription(text)}
+                            onChangeText={(text) => setDescription(text)}
                         />
                     </HabitCentered>
                     <HabitUtilityInfoContainer>
-                        <Text left marginLeft="10px" fontFamily="Regular">
+                        <Text left marginLeft="5px" fontFamily="Regular">
                             Color
                         </Text>
                         <SelectHabitColorButton onPress={() => setModalVisible(true)}>
@@ -164,7 +188,7 @@ export default function CreateHabit({ navigation, route }) {
                             )}
                         </SelectHabitColorButton>
                         <FrequencySwitchContainer>
-                            <Text fontFamily="Regular">Complete once</Text>
+                            <Text fontFamily="Regular">Remind on a specific date</Text>
                             <Switch
                                 trackColor={{ false: '#767577', true: colors.mainGreen }}
                                 thumbColor={isEnabledSpecific ? '#f5dd4b' : '#f4f3f4'}
@@ -215,7 +239,22 @@ export default function CreateHabit({ navigation, route }) {
                                     </TouchableOpacity>
                                 </FrequencyTouchable>
                                 <FrequencyTouchable>
-                                    <Text>Times per Day</Text>
+                                    <RNPickerSelect
+                                        textInputProps={{
+                                            fontSize: 18,
+                                            color: 'white',
+                                            marginTop: 3,
+                                        }}
+                                        placeholder={placeholder}
+                                        onValueChange={(value) => setSelectedValue(value)}
+                                        items={[
+                                            { label: 'Times', value: 'Times' },
+                                            { label: 'Glasses', value: 'Glasses' },
+                                            { label: 'Minutes', value: 'Minutes' },
+                                            { label: 'Hours', value: 'Hours' },
+                                        ]}
+                                    />
+                                    <Text>Per day</Text>
                                     <TouchableOpacity
                                         onPress={() =>
                                             timesCount > 1 && setTimesCount(timesCount - 1)
@@ -233,9 +272,7 @@ export default function CreateHabit({ navigation, route }) {
                             </>
                         )}
                         <FrequencySwitchContainer>
-                            <Text fontFamily="Regular" twenty>
-                                Reminder
-                            </Text>
+                            <Text fontFamily="Regular">Reminder</Text>
                             <Switch
                                 trackColor={{ false: '#767577', true: colors.mainGreen }}
                                 thumbColor={isEnabledDate ? '#f5dd4b' : '#f4f3f4'}

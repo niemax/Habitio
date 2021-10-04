@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { colors } from '../utils/colors';
+import { deleteNotifications } from '../utils/helpers/notification';
 import { MainContainer } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 
@@ -12,6 +13,7 @@ export default function Settings({ navigation }) {
                 onPress={() => {
                     navigation.goBack();
                     AsyncStorage.clear();
+                    deleteNotifications();
                 }}
             >
                 <Text marginTop="100px" color={colors.error} fontFamily="Extra" twentyTwo>

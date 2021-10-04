@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { Ionicons } from '@expo/vector-icons';
 import { Image, Modal, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { format } from 'date-fns';
 import Dialog from 'react-native-dialog';
-import * as Progress from 'react-native-progress';
+import { useHabits } from '../context/HabitProvider';
 import { colors } from '../utils/colors';
 import { showHabitImageBackground } from '../utils/globalStyles';
+import { haptics } from '../utils/helpers/haptics';
+import schedulePushNotification, { cancelPushNotification } from '../utils/helpers/notification';
+import { toasts } from '../utils/helpers/toastMethods';
 import {
     HomeheaderContainer,
     LineBreak,
@@ -19,15 +22,8 @@ import {
     ShowHabitDataContainer,
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
-import ShowHabitEditModal from './ShowHabitEditModal';
 import CalendarModal from './CalendarModal';
-import { haptics } from '../utils/helpers/haptics';
-import { useHabits } from '../context/HabitProvider';
-import { toasts } from '../utils/helpers/toastMethods';
-import schedulePushNotification, {
-    cancelPushNotification,
-    identifier,
-} from '../utils/helpers/notification';
+import ShowHabitEditModal from './ShowHabitEditModal';
 
 export default function ShowHabitModal({
     modalVisible,
@@ -42,13 +38,14 @@ export default function ShowHabitModal({
     const [editHabitModalVisible, setEditHabitModalVisible] = useState(false);
     const [calendarModalVisible, setCalendarModalVisible] = useState(false);
     const [dialogVisible, setDialogVisible] = useState(false);
-    const [completed, setCompleted] = useState(false);
+    const [, , setCompleted] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
 
     const { habits, habitSetter } = useHabits();
 
     const handleUpdate = async (
         habitName,
+        unitValue,
         color,
         description,
         daysCount,
@@ -56,37 +53,53 @@ export default function ShowHabitModal({
         habitReminderTime,
         habitSpecificDate
     ) => {
-        const parsedSpecificDateHours = habitSpecificDate.getHours();
-        const parsedSpecificDateMinutes = habitSpecificDate.getMinutes();
-        const parsedReminderTimeHours = habitReminderTime.getHours();
-        const parsedReminderTimeMinutes = habitReminderTime.getMinutes();
+        const parsedReminderTimeHour = habitReminderTime !== null && habitReminderTime.getHours();
+        const parsedReminderTimeMinute =
+            habitReminderTime !== null && habitReminderTime.getMinutes();
 
         const content = {
             title: 'Habitio',
             body: `Time to be productive! Your daily reminder to ${habitName}`,
         };
 
-        const trigger = {
-            hour: parsedReminderTimeHours,
-            minute: parsedReminderTimeMinutes,
+        const contentSpecific = {
+            title: 'Habitio',
+            body: `Reminder for ${habitName}`,
         };
 
-        const newHabits = habits.map((habit) => {
+        const trigger = {
+            hour: parsedReminderTimeHour,
+            minute: parsedReminderTimeMinute,
+        };
+
+        const triggerSpecific = {
+            date: habitSpecificDate,
+        };
+
+        const repeats = daysCount >= 1 ? true : false;
+
+        cancelPushNotification(data.notificationId).then(() => {
+            console.log(`Successfully removed notification with id: ${data.notificationId}`);
+        });
+
+        if (habitReminderTime !== null) schedulePushNotification(content, trigger, repeats);
+        if (habitSpecificDate !== null)
+            schedulePushNotification(contentSpecific, triggerSpecific, false);
+
+        const newHabits = habits.filter((habit) => {
             if (habit.name === data.name) {
                 habit.name = habitName;
+                habit.unitValue = unitValue;
                 habit.color = color;
                 habit.description = description;
                 habit.days = daysCount;
                 habit.times = timesCount;
-                habit.reminder = habitReminderTime;
-                habit.specificDate = habitSpecificDate;
+                habit.reminder = habitReminderTime !== null ? habitReminderTime : null;
+                habit.specificDate = habitSpecificDate !== null ? habitSpecificDate : null;
             }
             return habit;
         });
         habitSetter(newHabits);
-        cancelPushNotification().then(() => {
-            schedulePushNotification(content, trigger, true);
-        });
     };
 
     const handleDoneToday = async () => {
@@ -131,9 +144,10 @@ export default function ShowHabitModal({
     };
 
     const deleteHabit = () => {
-        const newHabits = habits.filter((habit) => habit.name !== data.name);
+        const newHabits = habits.filter((habit) => habit.id !== data.id);
         habitSetter(newHabits);
         setModalVisible(false);
+        cancelPushNotification(data.notificationId);
     };
 
     const displayDeleteAlert = () => {
@@ -185,6 +199,9 @@ export default function ShowHabitModal({
                             {data.name}
                         </Text>
                     </ShowHabitDataContainer>
+                    <Text marginTop="10px" color="gray">
+                        {data.description}
+                    </Text>
                     <ProgressBarContainer>
                         {data.times > 1 && (
                             <Text fontFamily="Extra" color={data.color} twentyTwo>
@@ -198,15 +215,19 @@ export default function ShowHabitModal({
                                 Every day
                             </Text>
                         ) : (
-                            <Text twenty marginLeft="15px" left fontFamily="Medium">
-                                {data.days} times weekly
-                            </Text>
+                            data.days !== null && (
+                                <Text twenty marginLeft="15px" left fontFamily="Medium">
+                                    {data.days} times weekly
+                                </Text>
+                            )
                         )}
                     </Text>
                     <LineBreak />
-                    <Text marginLeft="15px" left twenty fontFamily="Medium">
-                        {data.times} times per day
-                    </Text>
+                    {data.times !== null && (
+                        <Text marginLeft="15px" left twenty fontFamily="Medium">
+                            {data.times} {data.unitValue} per day
+                        </Text>
+                    )}
                     <LineBreak />
                     <ShowHabitActionsAddContainer>
                         {data.times > 1 && (
@@ -248,12 +269,7 @@ export default function ShowHabitModal({
                                 <Text color={colors.error}>Mark as Undone</Text>
                             )}
                         </ShowHabitActionsButton>
-                        <ShowHabitActionsButton
-                            onPress={() => {
-                                haptics.selection();
-                                setCalendarModalVisible(true);
-                            }}
-                        >
+                        <ShowHabitActionsButton onPress={() => setCalendarModalVisible(true)}>
                             <Text fontFamily="SemiBold" twenty>
                                 Show Details
                             </Text>

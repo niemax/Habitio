@@ -38,7 +38,7 @@ const CustomTabBar = ({ state, navigation }) => {
             {routes.map((route) => (
                 <>
                     <Tab
-                        key={route.key}
+                        key={route.key.toString()}
                         tab={route}
                         onPress={() => handlePress(route.name)}
                         color={renderColor(route.name)}
