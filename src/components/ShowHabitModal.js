@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Image, Modal, ScrollView, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { format } from 'date-fns';
 import Dialog from 'react-native-dialog';
 import { useHabits } from '../context/HabitProvider';
 import { colors } from '../utils/colors';
@@ -17,7 +16,6 @@ import {
     ShowHabitActionsAddButton,
     ShowHabitActionsAddContainer,
     ShowHabitActionsButton,
-    ShowHabitActionsButtonDelete,
     ShowHabitActionsContainer,
     ShowHabitDataContainer,
 } from '../utils/StyledComponents/Styled';
@@ -34,11 +32,12 @@ export default function ShowHabitModal({
     extractProgress,
     extractProgressBar,
     progressNumber,
+    handleDoneToday,
 }) {
     const [editHabitModalVisible, setEditHabitModalVisible] = useState(false);
     const [calendarModalVisible, setCalendarModalVisible] = useState(false);
     const [dialogVisible, setDialogVisible] = useState(false);
-    const [, , setCompleted] = useState(false);
+    const [completed, setCompleted] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
 
     const { habits, habitSetter } = useHabits();
@@ -82,7 +81,8 @@ export default function ShowHabitModal({
             console.log(`Successfully removed notification with id: ${data.notificationId}`);
         });
 
-        if (habitReminderTime !== null) schedulePushNotification(content, trigger, repeats);
+        if (habitReminderTime !== null && daysCount > 1)
+            schedulePushNotification(content, trigger, repeats);
         if (habitSpecificDate !== null)
             schedulePushNotification(contentSpecific, triggerSpecific, false);
 
@@ -102,52 +102,15 @@ export default function ShowHabitModal({
         habitSetter(newHabits);
     };
 
-    const handleDoneToday = async () => {
-        haptics.success();
-        try {
-            const updatedHabits = habits.filter((habit) => {
-                const completedDatesObj = { ...habit.completedDates };
-                const newDate = format(new Date(), 'yyyy-MM-dd');
-                const day = new Date();
-                const currentDay = day.getDay();
-
-                completedDatesObj[newDate] = {
-                    selected: true,
-                    marked: true,
-                    customStyles: {
-                        container: {
-                            backgroundColor: colors.mainGreen,
-                            height: 'auto',
-                        },
-                    },
-                };
-                if (habit.name === data.name) {
-                    habit.currentDay = currentDay;
-                    habit.completed = true;
-                    habit.completedDates = completedDatesObj;
-                }
-
-                return habit;
-            });
-            habitSetter(updatedHabits);
-        } catch (e) {
-            console.error(e);
-        }
-        setTimeout(() => {
-            setModalVisible(false);
-        }, 1000);
-        setTimeout(() => {
-            toasts.info(data.name, data.color);
-        }, 1200);
-
-        setCompleted(true);
-    };
-
-    const deleteHabit = () => {
+    const deleteHabit = (name, color) => {
         const newHabits = habits.filter((habit) => habit.id !== data.id);
         habitSetter(newHabits);
-        setModalVisible(false);
+
         cancelPushNotification(data.notificationId);
+        setTimeout(() => {
+            setModalVisible(false);
+            toasts.error(name, color);
+        }, 1500);
     };
 
     const displayDeleteAlert = () => {
@@ -260,7 +223,14 @@ export default function ShowHabitModal({
                         )}
                     </ShowHabitActionsAddContainer>
                     <ShowHabitActionsContainer>
-                        <ShowHabitActionsButton onPress={handleDoneToday}>
+                        <ShowHabitActionsButton
+                            onPress={() => {
+                                handleDoneToday(data, true);
+                                setTimeout(() => {
+                                    setModalVisible(false);
+                                }, 1000);
+                            }}
+                        >
                             {!data.completed ? (
                                 <Text fontFamily="SemiBold" twenty>
                                     Done for Today
@@ -274,44 +244,53 @@ export default function ShowHabitModal({
                                 Show Details
                             </Text>
                         </ShowHabitActionsButton>
-                        <ShowHabitActionsButtonDelete onPress={displayDeleteAlert}>
-                            <Text fontFamily="Bold" twenty>
+                        <TouchableOpacity onPress={displayDeleteAlert}>
+                            <Text color={colors.error} marginTop="25px" fontFamily="Bold" twenty>
                                 Delete Habit
                             </Text>
-                        </ShowHabitActionsButtonDelete>
+                        </TouchableOpacity>
                     </ShowHabitActionsContainer>
+                    <CalendarModal
+                        data={data}
+                        calendarModalVisible={calendarModalVisible}
+                        setCalendarModalVisible={setCalendarModalVisible}
+                    />
+                    <ShowHabitEditModal
+                        data={data}
+                        isEdit={isEdit}
+                        onSubmit={handleUpdate}
+                        editHabitModalVisible={editHabitModalVisible}
+                        setEditHabitModalVisible={setEditHabitModalVisible}
+                    />
+                    <Dialog.Container
+                        blurStyle={{ backgroundColor: '#191919' }}
+                        footerStyle={{ backgroundColor: '#181818' }}
+                        visible={dialogVisible}
+                    >
+                        <Dialog.Title>
+                            <Text twenty fontFamily="SemiBold">
+                                Delete Habit
+                            </Text>
+                        </Dialog.Title>
+                        <Dialog.Description>
+                            <Text color="gray" fontFamily="Regular">
+                                Do you want to delete this habit? You cannot undo this action.
+                            </Text>
+                        </Dialog.Description>
+                        <Dialog.Button
+                            color={colors.error}
+                            bold
+                            label="Delete"
+                            onPress={() => deleteHabit(data.name, data.color)}
+                        />
+                        <Dialog.Button
+                            label="Cancel"
+                            bold
+                            onPress={() => setDialogVisible(false)}
+                        />
+                    </Dialog.Container>
                 </ScrollView>
             </ModalContent>
-            <CalendarModal
-                data={data}
-                calendarModalVisible={calendarModalVisible}
-                setCalendarModalVisible={setCalendarModalVisible}
-            />
-            <ShowHabitEditModal
-                data={data}
-                isEdit={isEdit}
-                onSubmit={handleUpdate}
-                editHabitModalVisible={editHabitModalVisible}
-                setEditHabitModalVisible={setEditHabitModalVisible}
-            />
-            <Dialog.Container
-                blurStyle={{ backgroundColor: '#191919' }}
-                footerStyle={{ backgroundColor: '#181818' }}
-                visible={dialogVisible}
-            >
-                <Dialog.Title>
-                    <Text twenty fontFamily="SemiBold">
-                        Delete Habit
-                    </Text>
-                </Dialog.Title>
-                <Dialog.Description>
-                    <Text color="gray" fontFamily="Regular">
-                        Do you want to delete this habit? You cannot undo this action.
-                    </Text>
-                </Dialog.Description>
-                <Dialog.Button color={colors.error} bold label="Delete" onPress={deleteHabit} />
-                <Dialog.Button label="Cancel" bold onPress={() => setDialogVisible(false)} />
-            </Dialog.Container>
         </Modal>
     );
 }

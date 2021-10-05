@@ -60,7 +60,7 @@ LocaleConfig.defaultLocale = 'fi';
 const screenWidth = Dimensions.get('window').width;
 
 export default function CalendarModal({ calendarModalVisible, setCalendarModalVisible, data }) {
-    const { completedDates, times, name } = data;
+    const { completedDates, times, name, unitValue } = data;
     const { getHabits } = useHabits();
 
     useEffect(() => {
@@ -93,7 +93,9 @@ export default function CalendarModal({ calendarModalVisible, setCalendarModalVi
                 />
                 <CalendarTimesInfoContainer>
                     <Text>{data.days} days per week</Text>
-                    <Text>{data.times} times per day</Text>
+                    <Text>
+                        {data.times} {unitValue} per day
+                    </Text>
                 </CalendarTimesInfoContainer>
                 <CalendarLineBreak />
                 <CalendarTextContainer>

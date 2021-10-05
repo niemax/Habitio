@@ -40,6 +40,11 @@ const data = [
                 habitIcon: require('./assets/flatIcons/storytelling.png'),
                 description: 'Turn up your interest',
             },
+            {
+                name: 'Take a cold shower',
+                habitIcon: require('./assets/flatIcons/shower.png'),
+                description: 'Benefits yours metabolism and\ncirculation',
+            },
         ],
     },
 ];

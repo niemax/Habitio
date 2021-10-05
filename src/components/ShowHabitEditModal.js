@@ -20,13 +20,17 @@ export default function ShowHabitEditModal({
     const [loading, setLoading] = useState(false);
     const [habitReminderTime, habitSetReminderTime] = useState();
     const [habitSpecificDate, habitSetSpecificDate] = useState();
-    const [show, setShow] = useState(false);
     const [isEnabled, setIsEnabled] = useState(false);
     const [isEnabledDate, setIsEnabledDate] = useState(false);
     const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
-    const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-    const toggleSwitchDate = () => setIsEnabledDate((previousState) => !previousState);
-    const toggleSwitchSpecific = () => setIsEnabledSpecific((previousState) => !previousState);
+    const toggleSwitch = () =>
+        !isEnabledSpecific && setIsEnabled((previousState) => !previousState);
+
+    const toggleSwitchDate = () =>
+        !isEnabledSpecific && setIsEnabledDate((previousState) => !previousState);
+
+    const toggleSwitchSpecific = () =>
+        !isEnabledDate && !isEnabled && setIsEnabledSpecific((previousState) => !previousState);
 
     const { name, unitValue, description, days, times, color, reminder, specificDate } = data;
 
@@ -56,13 +60,11 @@ export default function ShowHabitEditModal({
 
     const onChangeSpecific = (event, selectedDate) => {
         const currentDate = selectedDate || specificDate;
-        setShow(Platform.OS === 'ios');
         habitSetSpecificDate(currentDate);
     };
 
     const onChangeReminderTime = (event, selectedDate) => {
         const currentDate = selectedDate || habitReminderTime;
-        setShow(Platform.OS === 'ios');
         habitSetReminderTime(currentDate);
     };
 

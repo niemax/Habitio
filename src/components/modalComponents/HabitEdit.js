@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Switch, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, ScrollView, Switch, TouchableOpacity, View } from 'react-native';
 import {
     FrequencySwitchContainer,
     FrequencyTouchable,
@@ -20,8 +20,6 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import ColorPalletteModal from '../ColorPalletteModal';
 
 export default function HabitEdit(props) {
-    const { unitValue } = props;
-
     const placeholder = {
         label: props.unitValue,
         value: null,
@@ -51,174 +49,178 @@ export default function HabitEdit(props) {
                 </TouchableOpacity>
             </HomeheaderContainer>
 
-            <Text left twentyTwo fontFamily="SemiBold" marginLeft="15px" marginTop="30px">
-                {props.habitName}
-            </Text>
-            <Text left marginLeft="15px" fontFamily="Regular" marginTop="35px">
-                Description
-            </Text>
-            <HabitInfoContainer>
-                <HabitCentered>
-                    <HabitDescriptionInput
-                        multiline="true"
-                        placeholder={props.stateDescription}
-                        placeholderTextColor="gray"
-                        style={{
-                            color: 'white',
-                            fontSize: 17,
-                            fontFamily: 'Bold',
-                            ...habitBoxShadow,
-                        }}
-                        onChangeText={(text) => props.setStateDescription(text)}
-                    />
-                </HabitCentered>
-                <HabitUtilityInfoContainer>
-                    <Text left marginLeft="15px" fontFamily="Regular">
-                        Color
-                    </Text>
-                    <SelectHabitColorButton onPress={() => props.setModalVisible(true)}>
-                        {!props.colorUpdated ? (
-                            <View
-                                style={{
-                                    width: 35,
-                                    height: 35,
-                                    borderRadius: '50%',
-                                    backgroundColor: props.color,
-                                }}
+            <ScrollView>
+                <Text left twentyTwo fontFamily="SemiBold" marginLeft="15px" marginTop="30px">
+                    {props.habitName}
+                </Text>
+                <Text left marginLeft="15px" fontFamily="Regular" marginTop="35px">
+                    Description
+                </Text>
+                <HabitInfoContainer>
+                    <HabitCentered>
+                        <HabitDescriptionInput
+                            multiline="true"
+                            placeholder={props.stateDescription}
+                            placeholderTextColor="gray"
+                            style={{
+                                color: 'white',
+                                fontSize: 17,
+                                fontFamily: 'Bold',
+                                ...habitBoxShadow,
+                            }}
+                            onChangeText={(text) => props.setStateDescription(text)}
+                        />
+                    </HabitCentered>
+                    <HabitUtilityInfoContainer>
+                        <Text left marginLeft="15px" fontFamily="Regular">
+                            Color
+                        </Text>
+                        <SelectHabitColorButton onPress={() => props.setModalVisible(true)}>
+                            {!props.colorUpdated ? (
+                                <View
+                                    style={{
+                                        width: 35,
+                                        height: 35,
+                                        borderRadius: '50%',
+                                        backgroundColor: props.color,
+                                    }}
+                                />
+                            ) : (
+                                <View
+                                    style={{
+                                        width: 35,
+                                        height: 35,
+                                        borderRadius: '50%',
+                                        backgroundColor: props.updatedColor,
+                                    }}
+                                />
+                            )}
+                        </SelectHabitColorButton>
+
+                        <FrequencySwitchContainer>
+                            <Text fontFamily="Regular">Complete once</Text>
+                            <Switch
+                                trackColor={{ false: '#767577', true: colors.mainGreen }}
+                                thumbColor={props.isEnabledSpecific ? '#f5dd4b' : '#f4f3f4'}
+                                ios_backgroundColor="#3e3e3e"
+                                onValueChange={props.toggleSwitchSpecific}
+                                value={props.isEnabledSpecific}
                             />
-                        ) : (
-                            <View
-                                style={{
-                                    width: 35,
-                                    height: 35,
-                                    borderRadius: '50%',
-                                    backgroundColor: props.updatedColor,
-                                }}
+                        </FrequencySwitchContainer>
+                        {props.isEnabledSpecific && (
+                            <DateTimePicker
+                                testID="dateTimePicker"
+                                value={props.habitSpecificDate}
+                                mode="datetime"
+                                is24Hour="true"
+                                display="default"
+                                themeVariant="dark"
+                                onChange={props.onChangeSpecific}
                             />
                         )}
-                    </SelectHabitColorButton>
-
-                    <FrequencySwitchContainer>
-                        <Text fontFamily="Regular">Complete once</Text>
-                        <Switch
-                            trackColor={{ false: '#767577', true: colors.mainGreen }}
-                            thumbColor={props.isEnabledSpecific ? '#f5dd4b' : '#f4f3f4'}
-                            ios_backgroundColor="#3e3e3e"
-                            onValueChange={props.toggleSwitchSpecific}
-                            value={props.isEnabledSpecific}
-                        />
-                    </FrequencySwitchContainer>
-                    {props.isEnabledSpecific && (
-                        <DateTimePicker
-                            testID="dateTimePicker"
-                            value={props.habitSpecificDate}
-                            mode="datetime"
-                            is24Hour="true"
-                            display="default"
-                            themeVariant="dark"
-                            onChange={props.onChangeSpecific}
-                        />
-                    )}
-                    <FrequencySwitchContainer>
-                        <Text fontFamily="Regular">Repeat</Text>
-                        <Switch
-                            trackColor={{ false: '#767577', true: colors.mainGreen }}
-                            thumbColor={props.isEnabled ? '#f5dd4b' : '#f4f3f4'}
-                            ios_backgroundColor="#3e3e3e"
-                            onValueChange={props.toggleSwitch}
-                            value={props.isEnabled}
-                        />
-                    </FrequencySwitchContainer>
-                    {props.isEnabled && (
-                        <>
-                            <FrequencyTouchable>
-                                <Text>Days per Week</Text>
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        props.daysCount > 1 &&
-                                            props.setDaysCount(props.daysCount - 1);
-                                    }}
-                                >
-                                    <Feather name="minus-circle" size={30} color="gray" />
-                                </TouchableOpacity>
-                                <Text fontFamily="Bold" twentyEight>
-                                    {props.daysCount === 7 ? (
-                                        <Text>Every day</Text>
-                                    ) : (
-                                        props.daysCount
-                                    )}
-                                </Text>
-                                <TouchableOpacity
-                                    onPress={() =>
-                                        props.daysCount < 7 &&
-                                        props.setDaysCount(props.daysCount + 1)
-                                    }
-                                >
-                                    <Feather name="plus-circle" size={30} color="gray" />
-                                </TouchableOpacity>
-                            </FrequencyTouchable>
-                            <FrequencyTouchable>
-                                <RNPickerSelect
-                                    textInputProps={{
-                                        fontSize: 18,
-                                        color: 'white',
-                                        marginTop: 3,
-                                    }}
-                                    placeholder={placeholder}
-                                    onValueChange={(value) => props.setHabitUnitValue(value)}
-                                    items={[
-                                        { label: 'Times', value: 'Times' },
-                                        { label: 'Glasses', value: 'Glasses' },
-                                        { label: 'Minutes', value: 'minutes' },
-                                        { label: 'Hours', value: 'hours' },
-                                    ]}
-                                />
-                                <Text>Per day</Text>
-                                <TouchableOpacity
-                                    onPress={() =>
-                                        props.timesCount > 1 &&
-                                        props.setTimesCount(props.timesCount - 1)
-                                    }
-                                >
-                                    <Feather name="minus-circle" size={30} color="gray" />
-                                </TouchableOpacity>
-                                <Text fontFamily="Bold" twentyEight>
-                                    {props.timesCount}
-                                </Text>
-                                <TouchableOpacity
-                                    onPress={() => props.setTimesCount(props.timesCount + 1)}
-                                >
-                                    <Feather name="plus-circle" size={30} color="gray" />
-                                </TouchableOpacity>
-                            </FrequencyTouchable>
-                        </>
-                    )}
-                    <FrequencySwitchContainer>
-                        <Text fontFamily="Regular">Reminder</Text>
-                        <Switch
-                            trackColor={{ false: '#767577', true: colors.mainGreen }}
-                            thumbColor={props.isEnabledDate ? '#f5dd4b' : '#f4f3f4'}
-                            ios_backgroundColor="#3e3e3e"
-                            onValueChange={props.toggleSwitchDate}
-                            value={props.isEnabledDate}
-                        />
-                    </FrequencySwitchContainer>
-                    {props.isEnabledDate && (
-                        <DateTimePicker
-                            value={props.habitReminderTime}
-                            mode="time"
-                            themeVariant="dark"
-                            is24Hour="true"
-                            onChange={props.onChangeReminderTime}
-                        />
-                    )}
-                </HabitUtilityInfoContainer>
-            </HabitInfoContainer>
-            <ColorPalletteModal
-                updateColor={props.updateColor}
-                modalVisible={props.modalVisible}
-                setModalVisible={props.setModalVisible}
-            />
+                        <FrequencySwitchContainer>
+                            <Text fontFamily="Regular">Repeat</Text>
+                            <Switch
+                                trackColor={{ false: '#767577', true: colors.mainGreen }}
+                                thumbColor={props.isEnabled ? '#f5dd4b' : '#f4f3f4'}
+                                ios_backgroundColor="#3e3e3e"
+                                onValueChange={props.toggleSwitch}
+                                value={props.isEnabled}
+                            />
+                        </FrequencySwitchContainer>
+                        {props.isEnabled && (
+                            <>
+                                <FrequencyTouchable>
+                                    <Text>Days per Week</Text>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            props.daysCount > 1 &&
+                                                props.setDaysCount(props.daysCount - 1);
+                                        }}
+                                    >
+                                        <Feather name="minus-circle" size={30} color="gray" />
+                                    </TouchableOpacity>
+                                    <Text fontFamily="Bold" twentyEight>
+                                        {props.daysCount === 7 ? (
+                                            <Text>Every day</Text>
+                                        ) : (
+                                            props.daysCount
+                                        )}
+                                    </Text>
+                                    <TouchableOpacity
+                                        onPress={() =>
+                                            props.daysCount < 7 &&
+                                            props.setDaysCount(props.daysCount + 1)
+                                        }
+                                    >
+                                        <Feather name="plus-circle" size={30} color="gray" />
+                                    </TouchableOpacity>
+                                </FrequencyTouchable>
+                                <FrequencyTouchable>
+                                    <RNPickerSelect
+                                        textInputProps={{
+                                            fontSize: 18,
+                                            color: 'white',
+                                            marginTop: 3,
+                                        }}
+                                        placeholder={placeholder}
+                                        onValueChange={(value) => props.setHabitUnitValue(value)}
+                                        items={[
+                                            { label: 'times', value: 'times' },
+                                            { label: 'glasses', value: 'glasses' },
+                                            { label: 'minutes', value: 'minutes' },
+                                            { label: 'hours', value: 'hours' },
+                                            { label: 'kilometers', value: 'kilometers' },
+                                            { label: 'bottles', value: 'bottles' },
+                                        ]}
+                                    />
+                                    <Text>Per day</Text>
+                                    <TouchableOpacity
+                                        onPress={() =>
+                                            props.timesCount > 1 &&
+                                            props.setTimesCount(props.timesCount - 1)
+                                        }
+                                    >
+                                        <Feather name="minus-circle" size={30} color="gray" />
+                                    </TouchableOpacity>
+                                    <Text fontFamily="Bold" twentyEight>
+                                        {props.timesCount}
+                                    </Text>
+                                    <TouchableOpacity
+                                        onPress={() => props.setTimesCount(props.timesCount + 1)}
+                                    >
+                                        <Feather name="plus-circle" size={30} color="gray" />
+                                    </TouchableOpacity>
+                                </FrequencyTouchable>
+                            </>
+                        )}
+                        <FrequencySwitchContainer>
+                            <Text fontFamily="Regular">Reminder</Text>
+                            <Switch
+                                trackColor={{ false: '#767577', true: colors.mainGreen }}
+                                thumbColor={props.isEnabledDate ? '#f5dd4b' : '#f4f3f4'}
+                                ios_backgroundColor="#3e3e3e"
+                                onValueChange={props.toggleSwitchDate}
+                                value={props.isEnabledDate}
+                            />
+                        </FrequencySwitchContainer>
+                        {props.isEnabledDate && (
+                            <DateTimePicker
+                                value={props.habitReminderTime}
+                                mode="time"
+                                themeVariant="dark"
+                                is24Hour="true"
+                                onChange={props.onChangeReminderTime}
+                            />
+                        )}
+                    </HabitUtilityInfoContainer>
+                </HabitInfoContainer>
+                <ColorPalletteModal
+                    updateColor={props.updateColor}
+                    modalVisible={props.modalVisible}
+                    setModalVisible={props.setModalVisible}
+                />
+            </ScrollView>
         </ModalContent>
     );
 }

@@ -30,6 +30,6 @@ export const deleteNotifications = async () => {
 
 export const getAllNotifications = async () => {
     await Notifications.getAllScheduledNotificationsAsync().then((notification) => {
-        console.log(notification.length);
+        console.log('Notification length', notification.length);
     });
 };

@@ -5,6 +5,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import ColorPalletteModal from '../components/ColorPalletteModal';
 import { colors } from '../utils/colors';
 import RNPickerSelect from 'react-native-picker-select';
+import { Modalize } from 'react-native-modalize';
 import { habitBoxShadow } from '../utils/globalStyles';
 import {
     CreateHabitHeader,
@@ -20,6 +21,7 @@ import {
 import Text from '../utils/Text';
 import { useHabits } from '../context/HabitProvider';
 import schedulePushNotification from '../utils/helpers/notification';
+import MapModal from '../components/modalComponents/MapModal';
 
 export default function CreateHabit({ navigation, route }) {
     const [modalVisible, setModalVisible] = useState(false);
@@ -34,7 +36,11 @@ export default function CreateHabit({ navigation, route }) {
     const [isEnabled, setIsEnabled] = useState(false);
     const [isEnabledDate, setIsEnabledDate] = useState(false);
     const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
+    const [isEnabledLocation, setIsEnabledLocation] = useState(false);
     const [selectedValue, setSelectedValue] = useState();
+    const [isMapModalVisible, setIsMapModalVisible] = useState(false);
+
+    const modalizeRef = useRef(null);
 
     const toggleSwitch = () =>
         !isEnabledSpecific && setIsEnabled((previousState) => !previousState);
@@ -44,6 +50,15 @@ export default function CreateHabit({ navigation, route }) {
 
     const toggleSwitchSpecific = () =>
         !isEnabledDate && !isEnabled && setIsEnabledSpecific((previousState) => !previousState);
+
+    const toggleSwitchLocation = () =>
+        !isEnabledDate &&
+        !isEnabled &&
+        !isEnabledSpecific &&
+        setIsEnabledLocation((previousState) => {
+            !previousState;
+            modalizeRef.current.open();
+        });
 
     const { CRUDHabits } = useHabits();
 
@@ -146,7 +161,7 @@ export default function CreateHabit({ navigation, route }) {
                 </TouchableOpacity>
             </CreateHabitHeader>
             <ScrollView>
-                <Text left twentyTwo fontFamily="SemiBold" marginLeft="15px" marginTop="30px">
+                <Text left twentyTwo fontFamily="SemiBold" marginLeft="10px" marginTop="30px">
                     {habitName}
                 </Text>
                 <Text left marginLeft="10px" fontFamily="Regular" marginTop="35px">
@@ -187,6 +202,16 @@ export default function CreateHabit({ navigation, route }) {
                                 />
                             )}
                         </SelectHabitColorButton>
+                        <FrequencySwitchContainer>
+                            <Text fontFamily="Regular">Remind at a location</Text>
+                            <Switch
+                                trackColor={{ false: '#767577', true: colors.mainGreen }}
+                                thumbColor={isEnabledLocation ? '#f5dd4b' : '#f4f3f4'}
+                                ios_backgroundColor="#3e3e3e"
+                                onValueChange={toggleSwitchLocation}
+                                value={isEnabledLocation}
+                            />
+                        </FrequencySwitchContainer>
                         <FrequencySwitchContainer>
                             <Text fontFamily="Regular">Remind on a specific date</Text>
                             <Switch
@@ -248,10 +273,12 @@ export default function CreateHabit({ navigation, route }) {
                                         placeholder={placeholder}
                                         onValueChange={(value) => setSelectedValue(value)}
                                         items={[
-                                            { label: 'Times', value: 'Times' },
-                                            { label: 'Glasses', value: 'Glasses' },
-                                            { label: 'Minutes', value: 'Minutes' },
-                                            { label: 'Hours', value: 'Hours' },
+                                            { label: 'times', value: 'times' },
+                                            { label: 'glasses', value: 'glasses' },
+                                            { label: 'minutes', value: 'minutes' },
+                                            { label: 'hours', value: 'hours' },
+                                            { label: 'kilometers', value: 'kilometers' },
+                                            { label: 'bottles', value: 'bottles' },
                                         ]}
                                     />
                                     <Text>Per day</Text>
@@ -297,6 +324,39 @@ export default function CreateHabit({ navigation, route }) {
                     modalVisible={modalVisible}
                     setModalVisible={setModalVisible}
                 />
+                <Modalize
+                    ref={modalizeRef}
+                    closeSnapPointStraightEnabled={false}
+                    scrollViewProps={{ showsVerticalScrollIndicator: false }}
+                    snapPoint={700}
+                    modalStyle={{ backgroundColor: colors.mainBackground, marginTop: 100 }}
+                    HeaderComponent={
+                        <View
+                            style={{
+                                height: 70,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <View
+                                style={{
+                                    justifyContent: 'center',
+                                    backgroundColor: '#181818',
+                                    width: '90%',
+                                    height: 40,
+                                    borderRadius: 15,
+                                    paddingHorizontal: 10,
+                                }}
+                            >
+                                <Text left fontFamily="Bold">
+                                    Search...
+                                </Text>
+                            </View>
+                        </View>
+                    }
+                >
+                    <MapModal />
+                </Modalize>
             </ScrollView>
         </MainContainer>
     );

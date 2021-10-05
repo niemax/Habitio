@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import {
@@ -13,7 +13,6 @@ import { habitBoxShadow } from '../utils/globalStyles';
 
 const HabitScreen = ({ route, navigation }) => {
     const { habitData, habitName, image } = route.params;
-    console.log(habitData);
 
     return (
         <HabitScreenContainer>

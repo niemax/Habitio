@@ -10,10 +10,9 @@ import Text from '../utils/Text';
 import { colors } from '../utils/colors';
 
 export default function TooltipBlurView({ data, handleDoneToday }) {
-    console.log(data);
     return (
         <ToolTipView>
-            <ToolTipActionButton onPress={handleDoneToday}>
+            <ToolTipActionButton onPress={() => handleDoneToday(data)}>
                 {!data.completed ? (
                     <Text sixteen>Done for Today</Text>
                 ) : (

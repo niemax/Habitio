@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { Image, RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import * as Progress from 'react-native-progress';
@@ -20,21 +20,27 @@ import { getCurrentDate } from '../utils/helpers/currentDate';
 import { getAllNotifications } from '../utils/helpers/notification';
 import { homepageBoxShadow, noHabitsImageStyle } from '../utils/globalStyles';
 import ShowHabitModal from './ShowHabitModal';
-import { useNavigation } from '@react-navigation/core';
+import LottieView from 'lottie-react-native';
+import { showMessage } from 'react-native-flash-message';
+import { format } from 'date-fns';
+import { toasts } from '../utils/helpers/toastMethods';
 
 const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-const HomepageData = (props) => {
+const HomepageData = ({ navigation }) => {
     const [visibleItem, setVisibleItem] = useState();
     const [refreshing, setRefreshing] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
     const [toolTipVisible, setToolTipVisible] = useState();
     const [progress, setProgress] = useState(0);
+    const [completed, setCompleted] = useState(false);
     const [progressNumber, setProgressNumber] = useState(0);
+    const [shoot, setShoot] = useState(false);
     const [date, setDate] = useState();
 
-    const navigation = useNavigation();
+    const animation = useRef(null);
 
     const { habitSetter, getHabits, habits } = useHabits();
 
@@ -69,8 +75,49 @@ const HomepageData = (props) => {
         } catch (e) {
             console.error(e);
         }
+        console.log(Object.keys(habits).length);
+    };
+    const handleDoneToday = async (data, completed) => {
+        haptics.success();
+        try {
+            const updatedHabits = habits.filter((habit) => {
+                const completedDatesObj = { ...habit.completedDates };
+                const newDate = format(new Date(), 'yyyy-MM-dd');
+                const day = new Date();
+                const currentDay = day.getDay();
 
-        console.log(habits);
+                completedDatesObj[newDate] = {
+                    selected: true,
+                    marked: true,
+                    customStyles: {
+                        container: {
+                            backgroundColor: colors.mainGreen,
+                            height: 'auto',
+                        },
+                    },
+                };
+                if (habit.name === data.name) {
+                    habit.currentDay = currentDay;
+                    habit.completed = true;
+                    habit.completedDates = completedDatesObj;
+                }
+
+                return habit;
+            });
+            habitSetter(updatedHabits);
+        } catch (e) {
+            console.error(e);
+        }
+        setTimeout(() => {
+            toasts.info(data.name, data.color);
+            animation.current.play(30, 120);
+        }, 1200);
+
+        setTimeout(() => {
+            animation.current.reset();
+        }, 5000);
+
+        setCompleted(completed);
     };
 
     useEffect(() => {
@@ -88,11 +135,18 @@ const HomepageData = (props) => {
 
     return (
         <MainContainer>
+            <LottieView
+                style={{ marginBottom: 250 }}
+                ref={animation}
+                source={require('../assets/lottiejson/lf30_editor_oxsrznpw.json')}
+            />
             <HomeheaderContainer>
                 <HomepageTextContainer>
-                    <Text left twentyEight fontFamily="Extra" marginLeft="15px">
-                        Dashboard for
-                    </Text>
+                    <TouchableOpacity onPress={() => setShoot(true)}>
+                        <Text left twentyEight fontFamily="Extra" marginLeft="15px">
+                            Dashboard for
+                        </Text>
+                    </TouchableOpacity>
                     <Text
                         twenty
                         color={colors.mainGreen}
@@ -117,7 +171,10 @@ const HomepageData = (props) => {
                 style={{ marginBottom: 120, color: colors.mainGreen }}
             >
                 <Text twentyTwo fontFamily="Bold" marginTop="30px" marginLeft="15px" left>
-                    Your Habits
+                    Your Habits{' '}
+                    <Text fontFamily="Medium" color="gray">
+                        ({Object.keys(habits).length})
+                    </Text>
                 </Text>
                 <HomepageDataView>
                     {Object.values(habits).length <= 0 && (
@@ -191,13 +248,19 @@ const HomepageData = (props) => {
                                         backgroundColor: '#101010',
                                         borderRadius: 15,
                                     }}
-                                    content={<TooltipBlurView data={item} />}
+                                    content={
+                                        <TooltipBlurView
+                                            data={item}
+                                            handleDoneToday={handleDoneToday}
+                                        />
+                                    }
                                     placement="center"
                                     backgroundColor="transparent"
                                     onClose={() => setToolTipVisible(false)}
                                 />
                                 <ShowHabitModal
                                     data={item}
+                                    handleDoneToday={handleDoneToday}
                                     progressNumber={progressNumber}
                                     addProgressBar={addProgressBar}
                                     extractProgressBar={extractProgressBar}

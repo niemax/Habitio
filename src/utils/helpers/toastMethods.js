@@ -11,10 +11,33 @@ export const toasts = {
             message: randomWord,
             description: `You completed ${habitName},\nkeep it up!`,
             backgroundColor: color, // background color
-            textStyle: {
-                fontFamily: 'SemiBold',
-                fontSize: 16,
+            titleStyle: {
+                fontFamily: 'Bold',
+                fontSize: 17,
             },
+            textStyle: {
+                fontFamily: 'Medium',
+                fontSize: 15,
+            },
+            floating: 'true',
+            icon: 'success',
+        });
+    },
+    error: (habitName, color) => {
+        showMessage({
+            duration: 3500,
+            description: `${habitName} deleted!`,
+            backgroundColor: color, // background color
+            titleStyle: {
+                fontFamily: 'Bold',
+                fontSize: 17,
+            },
+            textStyle: {
+                fontFamily: 'Medium',
+                fontSize: 15,
+            },
+            floating: 'true',
+            icon: 'success',
         });
     },
 };

@@ -42,14 +42,14 @@ export const TabContainer = styled.View`
 `;
 
 export const TabBarContainer = styled.View`
-    background-color: #161616;
+    background-color: #191919;
     opacity: 0.99;
     justify-content: space-evenly;
     align-items: center;
     width: 92%;
     height: 80px;
     position: absolute;
-    bottom: 20px;
+    bottom: 11px;
     left: 14px;
     flex-direction: row;
     elevation: 0;
@@ -274,6 +274,7 @@ export const ToolTipLineBreak = styled.View`
 export const ShowHabitActionsContainer = styled.View`
     justify-content: center;
     align-items: center;
+    margin-bottom: 45px;
 `;
 
 export const ShowHabitActionsButton = styled.TouchableOpacity`
@@ -381,3 +382,5 @@ export const CalendarTimesInfoContainer = styled.View`
     padding-horizontal: 15px;
     margin-bottom: 10px;
 `;
+
+export const LottieContainer = styled.View``;
