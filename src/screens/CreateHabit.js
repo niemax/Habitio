@@ -7,6 +7,7 @@ import { colors } from '../utils/colors';
 import RNPickerSelect from 'react-native-picker-select';
 import { Modalize } from 'react-native-modalize';
 import { habitBoxShadow } from '../utils/globalStyles';
+import * as Notifications from 'expo-notifications';
 import {
     CreateHabitHeader,
     FrequencySwitchContainer,
@@ -20,7 +21,6 @@ import {
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 import { useHabits } from '../context/HabitProvider';
-import schedulePushNotification from '../utils/helpers/notification';
 import MapModal from '../components/modalComponents/MapModal';
 
 export default function CreateHabit({ navigation, route }) {
@@ -38,7 +38,6 @@ export default function CreateHabit({ navigation, route }) {
     const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
     const [isEnabledLocation, setIsEnabledLocation] = useState(false);
     const [selectedValue, setSelectedValue] = useState();
-    const [isMapModalVisible, setIsMapModalVisible] = useState(false);
 
     const modalizeRef = useRef(null);
 
@@ -68,25 +67,6 @@ export default function CreateHabit({ navigation, route }) {
         label: 'Choose...',
         value: null,
         color: '#9EA0A4',
-    };
-
-    const content = {
-        title: habitName,
-        body: `Time to be productive! Your daily reminder to ${habitName}`,
-    };
-
-    const contentSpecific = {
-        title: habitName,
-        body: `Reminder for ${habitName}`,
-    };
-
-    const trigger = {
-        hour: reminderTime.getHours(),
-        minute: reminderTime.getMinutes(),
-    };
-
-    const triggerSpecific = {
-        date: specificDate,
     };
 
     const updateColor = (color) => {
@@ -125,15 +105,37 @@ export default function CreateHabit({ navigation, route }) {
             timesCompleted: 0,
             progress: 0,
             notificationId: Math.floor(Math.random() * 1000).toString(),
+            diaryInputs: [],
         };
 
-        const repeats = daysCount > 1 ? true : false;
+        const reminderTimeHours = reminderTime.getHours();
+        const reminderTimeMinutes = reminderTime.getMinutes();
 
         try {
             CRUDHabits(newHabit);
-            if (isEnabledDate) schedulePushNotification(content, trigger, repeats);
+            if (isEnabledDate)
+                await Notifications.scheduleNotificationAsync({
+                    content: {
+                        title: habitName,
+                        body: `Time to be productive! Your daily reminder to ${habitName}`,
+                    },
+                    trigger: {
+                        hour: reminderTimeHours,
+                        minute: reminderTimeMinutes,
+                        repeats: true,
+                    },
+                });
             if (isEnabledSpecific)
-                schedulePushNotification(contentSpecific, triggerSpecific, false);
+                await Notifications.scheduleNotificationAsync({
+                    content: {
+                        title: habitName,
+                        body: `Your reminder for ${habitName}`,
+                    },
+                    trigger: {
+                        date: specificDate,
+                        repeats: false,
+                    },
+                });
             setTimeout(() => {
                 setLoading(false);
                 navigation.navigate('MainTab');
@@ -170,6 +172,7 @@ export default function CreateHabit({ navigation, route }) {
                 <HabitInfoContainer>
                     <HabitCentered>
                         <HabitDescriptionInput
+                            keyboardAppearance="dark"
                             autoCorrect={false}
                             value={description}
                             multiline={true}

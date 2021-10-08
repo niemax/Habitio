@@ -45,6 +45,11 @@ const data = [
                 habitIcon: require('./assets/flatIcons/shower.png'),
                 description: 'Benefits yours metabolism and\ncirculation',
             },
+            {
+                name: 'Avoid social media',
+                habitIcon: require('./assets/flatIcons/social-media.png'),
+                description: 'Retain from social media platforms\nfor a moment',
+            },
         ],
     },
 ];

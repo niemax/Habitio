@@ -33,3 +33,42 @@ export const getAllNotifications = async () => {
         console.log('Notification length', notification.length);
     });
 };
+
+export const scheduleOneTimeWeekNotification = async (currentDay) => {
+    switch (currentDay) {
+        case 1:
+            await Notifications.scheduleNotificationAsync({
+                content: {
+                    title: 'Habitio',
+                    body: `Great start to your week! Keep it up for the rest of the week.`,
+                },
+                trigger: {
+                    seconds: 20 * 60,
+                },
+            });
+            break;
+        case 3:
+            await Notifications.scheduleNotificationAsync({
+                content: {
+                    title: 'Habitio',
+                    body: `It's the middle of the week. Keep doing what you're doing, you can do it!`,
+                },
+                trigger: {
+                    seconds: 20 * 60,
+                },
+            });
+            break;
+        case 0:
+            await Notifications.scheduleNotificationAsync({
+                content: {
+                    title: 'Habitio',
+                    body: `Remember also to take time to relax and not worry about habits.`,
+                },
+                trigger: {
+                    seconds: 20 * 60,
+                },
+            });
+            break;
+        default:
+    }
+};

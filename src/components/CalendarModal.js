@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Modal, Dimensions, TouchableOpacity } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
+import moment from 'moment';
 import {
     CalendarHeader,
     CalendarLineBreak,
@@ -9,6 +10,7 @@ import {
     CalendarTimesInfoContainer,
     ModalContent,
 } from '../utils/StyledComponents/Styled';
+
 import Text from '../utils/Text';
 import { colors } from '../utils/colors';
 import { calendarStyles } from '../utils/globalStyles';
@@ -60,12 +62,12 @@ LocaleConfig.defaultLocale = 'fi';
 const screenWidth = Dimensions.get('window').width;
 
 export default function CalendarModal({ calendarModalVisible, setCalendarModalVisible, data }) {
-    const { completedDates, times, name, unitValue } = data;
-    const { getHabits } = useHabits();
+    const { completedDates, times, name, unitValue, diaryInputs } = data;
+    const { getHabits, habits } = useHabits();
 
     useEffect(() => {
         getHabits();
-    }, [data]);
+    }, []);
 
     return (
         <Modal animationType="slide" presentationStyle="pageSheet" visible={calendarModalVisible}>
@@ -112,6 +114,14 @@ export default function CalendarModal({ calendarModalVisible, setCalendarModalVi
                         </Text>
                     </CalendarStatsContainer>
                 </CalendarTextContainer>
+                <CalendarLineBreak />
+                {Object.values(diaryInputs).length > 0
+                    ? Object.values(diaryInputs).map(({ date, input }) => (
+                          <Text fontFamily="Regular">
+                              {date} - {input}
+                          </Text>
+                      ))
+                    : null}
             </ModalContent>
         </Modal>
     );

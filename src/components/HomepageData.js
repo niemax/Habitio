@@ -1,47 +1,53 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { Image, RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
-import Tooltip from 'react-native-walkthrough-tooltip';
-import * as Progress from 'react-native-progress';
 import { colors } from '../utils/colors';
 import { haptics } from '../utils/helpers/haptics';
+import { Feather } from '@expo/vector-icons';
+import { Modalize } from 'react-native-modalize';
+import { useHabits } from '../context/HabitProvider';
 import {
+    AddDiaryModalHeaderContainer,
+    DiaryInput,
     HomeheaderContainer,
-    HomepageDataBox,
     HomepageDataView,
     HomepageTextContainer,
     MainContainer,
     NoHabitsContainer,
 } from '../utils/StyledComponents/Styled';
-import { Feather } from '@expo/vector-icons';
 import Text from '../utils/Text';
-import { useHabits } from '../context/HabitProvider';
-import TooltipBlurView from './TooltipBlurView';
 import { getCurrentDate } from '../utils/helpers/currentDate';
-import { getAllNotifications } from '../utils/helpers/notification';
-import { homepageBoxShadow, noHabitsImageStyle } from '../utils/globalStyles';
-import ShowHabitModal from './ShowHabitModal';
+import {
+    getAllNotifications,
+    scheduleOneTimeWeekNotification,
+} from '../utils/helpers/notification';
+import { habitBoxShadow, noHabitsImageStyle } from '../utils/globalStyles';
 import LottieView from 'lottie-react-native';
-import { showMessage } from 'react-native-flash-message';
 import { format } from 'date-fns';
 import { toasts } from '../utils/helpers/toastMethods';
+import { useNavigation } from '@react-navigation/core';
+import HomeListItem from './HomeListItem';
 
 const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-const HomepageData = ({ navigation }) => {
+const day = new Date();
+const currentDay = day.getDay();
+
+const HomepageData = () => {
     const [visibleItem, setVisibleItem] = useState();
     const [refreshing, setRefreshing] = useState(false);
-    const [modalVisible, setModalVisible] = useState(false);
     const [toolTipVisible, setToolTipVisible] = useState();
     const [progress, setProgress] = useState(0);
     const [completed, setCompleted] = useState(false);
     const [progressNumber, setProgressNumber] = useState(0);
-    const [shoot, setShoot] = useState(false);
     const [date, setDate] = useState();
+    const [diaryInput, setDiaryInput] = useState('');
+
+    const navigation = useNavigation();
 
     const animation = useRef(null);
-
+    const modalizeRef = useRef(null);
     const { habitSetter, getHabits, habits } = useHabits();
 
     const addProgressBar = (increment) => {
@@ -61,8 +67,6 @@ const HomepageData = ({ navigation }) => {
     };
 
     const getData = async () => {
-        const getDate = new Date();
-        const currentDay = getDate.getDay();
         try {
             getHabits();
             const checkedHabits = habits.map((habit) => {
@@ -75,49 +79,75 @@ const HomepageData = ({ navigation }) => {
         } catch (e) {
             console.error(e);
         }
-        console.log(Object.keys(habits).length);
     };
-    const handleDoneToday = async (data, completed) => {
-        haptics.success();
+
+    const diaryInputHandler = (item) => {
+        const diaryInputObj = {
+            date: day,
+            input: diaryInput,
+        };
         try {
             const updatedHabits = habits.filter((habit) => {
-                const completedDatesObj = { ...habit.completedDates };
-                const newDate = format(new Date(), 'yyyy-MM-dd');
-                const day = new Date();
-                const currentDay = day.getDay();
-
-                completedDatesObj[newDate] = {
-                    selected: true,
-                    marked: true,
-                    customStyles: {
-                        container: {
-                            backgroundColor: colors.mainGreen,
-                            height: 'auto',
-                        },
-                    },
-                };
-                if (habit.name === data.name) {
-                    habit.currentDay = currentDay;
-                    habit.completed = true;
-                    habit.completedDates = completedDatesObj;
+                if (habit.name === item.name) {
+                    habit.diaryInputs.push(diaryInputObj);
                 }
-
                 return habit;
             });
             habitSetter(updatedHabits);
         } catch (e) {
             console.error(e);
         }
-        setTimeout(() => {
-            toasts.info(data.name, data.color);
-            animation.current.play(30, 120);
-        }, 1200);
+    };
+    const handleDoneToday = async (data, completed) => {
+        const newDate = format(new Date(), 'yyyy-MM-dd');
 
-        setTimeout(() => {
-            animation.current.reset();
-        }, 5000);
+        haptics.selection();
+        try {
+            const updatedHabits = habits.filter((habit) => {
+                const completedDatesObj = { ...habit.completedDates };
 
-        setCompleted(completed);
+                if (!(newDate in completedDatesObj)) {
+                    completedDatesObj[newDate] = {
+                        selected: true,
+                        marked: true,
+                        customStyles: {
+                            container: {
+                                backgroundColor: colors.mainGreen,
+                                height: 'auto',
+                            },
+                        },
+                    };
+                    if (habit.name === data.name) {
+                        habit.currentDay = currentDay;
+                        habit.completed = true;
+                        habit.completedDates = completedDatesObj;
+                        scheduleOneTimeWeekNotification(currentDay);
+                        setTimeout(() => {
+                            toasts.info(data.name, data.color, modalizeRef);
+                            animation.current.play(30, 120);
+                        }, 1200);
+
+                        setTimeout(() => {
+                            animation.current.reset();
+                        }, 5000);
+                    }
+                    setCompleted(completed);
+                } else {
+                    delete completedDatesObj[newDate];
+                    if (habit.name === data.name) {
+                        habit.currentDay = currentDay;
+                        habit.completed = false;
+                        habit.completedDates = completedDatesObj;
+                    }
+                    haptics.warning();
+                    setCompleted(!completed);
+                }
+                return habit;
+            });
+            habitSetter(updatedHabits);
+        } catch (e) {
+            console.error(e);
+        }
     };
 
     useEffect(() => {
@@ -125,6 +155,7 @@ const HomepageData = ({ navigation }) => {
         const { date } = getCurrentDate();
         setDate(date);
         getAllNotifications();
+        //deleteNotifications();
     }, []);
 
     const onRefresh = useCallback(() => {
@@ -142,7 +173,7 @@ const HomepageData = ({ navigation }) => {
             />
             <HomeheaderContainer>
                 <HomepageTextContainer>
-                    <TouchableOpacity onPress={() => setShoot(true)}>
+                    <TouchableOpacity>
                         <Text left twentyEight fontFamily="Extra" marginLeft="15px">
                             Dashboard for
                         </Text>
@@ -167,7 +198,15 @@ const HomepageData = ({ navigation }) => {
                 </TouchableOpacity>
             </HomeheaderContainer>
             <ScrollView
-                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+                refreshControl={
+                    <RefreshControl
+                        title="Pull to refresh"
+                        tintColor={colors.mainGreen}
+                        titleColor={colors.mainGreen}
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
                 style={{ marginBottom: 120, color: colors.mainGreen }}
             >
                 <Text twentyTwo fontFamily="Bold" marginTop="30px" marginLeft="15px" left>
@@ -192,86 +231,75 @@ const HomepageData = ({ navigation }) => {
                             <Feather name="arrow-down" size={90} color="white" />
                         </NoHabitsContainer>
                     )}
-                    {Object.values(habits).map((item, index) => {
-                        const id = index.toString();
-
-                        return (
-                            <HomepageDataBox
-                                key={id}
-                                onPress={() => {
-                                    setVisibleItem(id);
-                                    haptics.selection();
+                    {Object.values(habits).map((item, index) => (
+                        <>
+                            <HomeListItem
+                                item={item}
+                                index={index.toString()}
+                                modalizeRef={modalizeRef}
+                                handleDoneToday={handleDoneToday}
+                                progressNumber={progressNumber}
+                                addProgressBar={addProgressBar}
+                                extractProgressBar={extractProgressBar}
+                                progress={progress}
+                                addProgress={addProgress}
+                                extractProgress={extractProgress}
+                                visibleItem={visibleItem}
+                                setVisibleItem={setVisibleItem}
+                                completed={completed}
+                                setCompleted={setCompleted}
+                            />
+                            <Modalize
+                                ref={modalizeRef}
+                                data={item}
+                                closeSnapPointStraightEnabled={false}
+                                closeOnOverlayTap="false"
+                                modalTopOffset={200}
+                                keyboardAvoidingBehavior="height"
+                                scrollViewProps={{ showsVerticalScrollIndicator: false }}
+                                snapPoint={430}
+                                modalStyle={{
+                                    backgroundColor: '#202020',
                                 }}
-                                onLongPress={() => {
-                                    haptics.selection();
-                                    setToolTipVisible(id);
-                                }}
-                                style={homepageBoxShadow}
-                            >
-                                <Text
-                                    marginBottom="15px"
-                                    color={item.color}
-                                    fontFamily="Extra"
-                                    marginLeft="100px"
-                                    twenty
-                                >
-                                    {item.times > 1 && progressNumber}
-                                    {item.times > 1 && <Text color={item.color}>/</Text>}
-                                    {item.times > 1 && item.times}
-                                </Text>
-                                <Image style={{ height: 50, width: 50 }} source={item.icon} />
-                                <Text fontFamily="SemiBold" marginTop="6px" marginLeft="5px">
-                                    {!item.completed ? (
-                                        item.name
-                                    ) : (
-                                        <Text color={item.color} twenty fontFamily="SemiBold">
-                                            <Feather name="check" size={24} color="white" />
-                                            Done
+                                HeaderComponent={
+                                    <AddDiaryModalHeaderContainer>
+                                        <Text
+                                            fontFamily="Bold"
+                                            twentyTwo
+                                            left
+                                            marginLeft="10px"
+                                            marginTop="10px"
+                                        >
+                                            How did it go?
                                         </Text>
-                                    )}
-                                </Text>
-                                {item.times > 1 && (
-                                    <Progress.Bar
-                                        style={{ position: 'absolute', bottom: 1, borderRadius: 0 }}
-                                        progress={progress}
-                                        height={5}
-                                        width={159}
-                                        color={item.color}
-                                        borderColor={colors.homepageProgress}
-                                        borderWidth={0.2}
-                                    />
-                                )}
-
-                                <Tooltip
-                                    isVisible={toolTipVisible === id}
-                                    contentStyle={{
-                                        backgroundColor: '#101010',
-                                        borderRadius: 15,
+                                        <TouchableOpacity onPress={() => diaryInputHandler(item)}>
+                                            <Feather
+                                                name="check"
+                                                size={36}
+                                                color={colors.mainGreen}
+                                            />
+                                        </TouchableOpacity>
+                                    </AddDiaryModalHeaderContainer>
+                                }
+                            >
+                                <DiaryInput
+                                    keyboardAppearance="dark"
+                                    autoCorrect={false}
+                                    autoFocus={true}
+                                    multiline={true}
+                                    placeholder="Write a reflection"
+                                    placeholderTextColor="gray"
+                                    style={{
+                                        color: 'white',
+                                        fontSize: 17,
+                                        fontFamily: 'SemiBold',
+                                        ...habitBoxShadow,
                                     }}
-                                    content={
-                                        <TooltipBlurView
-                                            data={item}
-                                            handleDoneToday={handleDoneToday}
-                                        />
-                                    }
-                                    placement="center"
-                                    backgroundColor="transparent"
-                                    onClose={() => setToolTipVisible(false)}
+                                    onChangeText={(diaryText) => setDiaryInput(diaryText)}
                                 />
-                                <ShowHabitModal
-                                    data={item}
-                                    handleDoneToday={handleDoneToday}
-                                    progressNumber={progressNumber}
-                                    addProgressBar={addProgressBar}
-                                    extractProgressBar={extractProgressBar}
-                                    addProgress={addProgress}
-                                    extractProgress={extractProgress}
-                                    modalVisible={visibleItem === id}
-                                    setModalVisible={setVisibleItem}
-                                />
-                            </HomepageDataBox>
-                        );
-                    })}
+                            </Modalize>
+                        </>
+                    ))}
                 </HomepageDataView>
             </ScrollView>
         </MainContainer>

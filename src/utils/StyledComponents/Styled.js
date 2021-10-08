@@ -183,6 +183,15 @@ export const HabitDescriptionInput = styled.TextInput`
     justify-content: center;
 `;
 
+export const DiaryInput = styled.TextInput`
+    height: 120px;
+    background-color: #383838;
+    border-radius: ${radius};
+    padding: 15px;
+    margin-top: 10px;
+    justify-content: center;
+`;
+
 export const HabitUtilityInfoContainer = styled.View`
     margin-top: 15px;
     justify-content: center;
@@ -221,26 +230,18 @@ export const FrequencySwitchContainer = styled.View`
 
 export const HomepageDataView = styled.View`
     justify-content: center;
-    flex-direction: row;
-    flex-wrap: wrap;
-`;
-
-export const HomepageTimesView = styled.View`
-    margin-left: 130px;
+    align-items: center;
 `;
 
 export const HomepageDataBox = styled.Pressable`
-    margin-top: 25px;
-    width: 160px;
-    height: 150px;
+    margin-top: 15px;
+    height: 90px;
+    width: 350px;
     background-color: #303030;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    margin-horizontal: 10px;
-    margin-vertical: 10px;
+    border-radius: 15px;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    padding: 2px;
+    padding-horizontal: 15px;
 `;
 
 export const ShowHabitDataContainer = styled.View`
@@ -356,20 +357,6 @@ export const NoHabitsContainer = styled.View`
     align-items: center;
 `;
 
-export const ToolTipView = styled.View`
-    width: 145px;
-    justify-content: center;
-    align-items: center;
-    align-items: center;
-`;
-
-export const ToolTipActionButton = styled.TouchableOpacity`
-    flex-direction: row;
-    justify-content: space-between
-    padding-vertical: 7px;
-    align-items: center;
-`;
-
 export const ProgressBarContainer = styled.View`
     justify-content: center;
     align-items: center;
@@ -384,3 +371,24 @@ export const CalendarTimesInfoContainer = styled.View`
 `;
 
 export const LottieContainer = styled.View``;
+
+export const AddDiaryModalHeaderContainer = styled.View`
+    height: 70px;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-horizontal: 8px;
+    margin-top: 5px;
+`;
+
+export const LeftAction = styled.View`
+    width: 350px;
+    margin-top: 15px;
+    border-radius: 15px;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const ItemTimesContainer = styled.View`
+    position: absolute;
+    right: 30px;
+`;

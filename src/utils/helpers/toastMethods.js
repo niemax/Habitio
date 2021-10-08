@@ -1,11 +1,12 @@
 import { showMessage } from 'react-native-flash-message';
+import { colors } from '../colors';
 
 const words = ['Awesome!', 'Splendid!', 'Horrendous!', 'Excellent!', 'Great!'];
 
 const randomWord = words[Math.floor(Math.random() * words.length)];
 
 export const toasts = {
-    info: (habitName, color) => {
+    info: (habitName, color, setVisible) => {
         showMessage({
             duration: 3500,
             message: randomWord,
@@ -21,23 +22,20 @@ export const toasts = {
             },
             floating: 'true',
             icon: 'success',
+            onPress: () => setVisible.current?.open(),
         });
     },
-    error: (habitName, color) => {
+    error: (habitName) => {
         showMessage({
-            duration: 3500,
-            description: `${habitName} deleted!`,
-            backgroundColor: color, // background color
+            duration: 4000,
+            message: `${habitName} successfully removed`,
+            backgroundColor: colors.error, // background color
             titleStyle: {
-                fontFamily: 'Bold',
-                fontSize: 17,
-            },
-            textStyle: {
                 fontFamily: 'Medium',
-                fontSize: 15,
+                fontSize: 16,
             },
             floating: 'true',
-            icon: 'success',
+            icon: 'info',
         });
     },
 };

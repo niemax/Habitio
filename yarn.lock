@@ -3475,7 +3475,7 @@ expo-blur@~9.0.3:
   resolved "https://registry.yarnpkg.com/expo-blur/-/expo-blur-9.0.3.tgz#5095b5bd04d000f73b351d0e4736767b86b49bbd"
   integrity sha512-7jMqzo53eg5t9Uc1Tg+yGu9lKL9the4CWAQO0kC6YMhrsDiB13mwOUesC+IScHDTSUKNMGcHI8kN+OmvEWfPig==
 
-expo-constants@11.0.1:
+expo-constants@11.0.1, expo-constants@~11.0.1:
   version "11.0.1"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-11.0.1.tgz#8a33d9702d03289ab68d6de2bbeb2bbc9654734c"
   integrity sha512-yolJSfsNAVmuNDc+NNxBzUKbZRXPM35edoMpv8xdmRBMpOWkRmTdpBIFAYAKCtrGruw2tkIQhnLmCD2aDycvTg==
@@ -6164,6 +6164,11 @@ react-native-dialog@^9.1.0:
   resolved "https://registry.yarnpkg.com/react-native-dialog/-/react-native-dialog-9.1.0.tgz#8a40a81304e48f2792e2656223b04bbfecca849d"
   integrity sha512-/JpNxCXfGPEdYnoDtBrPW0bCIZA13XYhwfQ3vZf4Eth23QX1udlDktdivML6XTlmdgErkuJFqycKXFwGEtAeEQ==
 
+react-native-draggable-flatlist@^2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/react-native-draggable-flatlist/-/react-native-draggable-flatlist-2.6.2.tgz#d1445fd52e75bc4f4ebbd832a8bc4525cebb8302"
+  integrity sha512-0IBS1lgw137FDaDLccUidHXYu/6PbnIO1R0IXYVfxtNOvhFLfJyGOY526vmO72Sf/ch9yayED4+DaQWGBOqNyw==
+
 react-native-dropdown-picker@^5.1.28:
   version "5.1.28"
   resolved "https://registry.yarnpkg.com/react-native-dropdown-picker/-/react-native-dropdown-picker-5.1.28.tgz#c49a898ecff5baaf98770b35645d3fcef6049780"
@@ -6192,6 +6197,11 @@ react-native-iphone-x-helper@^1.3.0, react-native-iphone-x-helper@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
+
+react-native-keyboard-spacer@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-spacer/-/react-native-keyboard-spacer-0.4.1.tgz#46f18a320432098a25ea9fa89f5143dd254d332d"
+  integrity sha1-RvGKMgQyCYol6p+on1FD3SVNMy0=
 
 react-native-maps@0.28.0:
   version "0.28.0"
@@ -6225,6 +6235,11 @@ react-native-popup-menu@^0.15.11:
   version "0.15.11"
   resolved "https://registry.yarnpkg.com/react-native-popup-menu/-/react-native-popup-menu-0.15.11.tgz#df96b1a909ecbba84487821061ce6e29e7c7bb20"
   integrity sha512-f5q2GoDN99bkA24wHiwasaErcdQEgyqYZ8IYuZPOrZNFr66E4rg6f4LElSVBA3EZJTSq5OddVeaOcU340bSTEg==
+
+react-native-portalize@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/react-native-portalize/-/react-native-portalize-1.0.7.tgz#8b3c742a06f863654d526ea1075a8596625f8482"
+  integrity sha512-icqopPh9ZSV+I8C5LlZN9pQJ0OMeBDNqHhP80+qDx0hOGEcsDC09wgjogbEMfJE0GcMDM7PDYtyQkqa9gIqd1g==
 
 react-native-progress@^5.0.0:
   version "5.0.0"
@@ -6274,6 +6289,23 @@ react-native-swipe-gestures@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/react-native-swipe-gestures/-/react-native-swipe-gestures-1.0.5.tgz#a172cb0f3e7478ccd681fd36b8bfbcdd098bde7c"
   integrity sha512-Ns7Bn9H/Tyw278+5SQx9oAblDZ7JixyzeOczcBK8dipQk2pD7Djkcfnf1nB/8RErAmMLL9iXgW0QHqiII8AhKw==
+
+react-native-swipe-list-view@^3.2.9:
+  version "3.2.9"
+  resolved "https://registry.yarnpkg.com/react-native-swipe-list-view/-/react-native-swipe-list-view-3.2.9.tgz#d725c7cdf481dd5df12a00dbfe0120013b5f2e59"
+  integrity sha512-SjAEuHc/D6ovp+RjDUhfNmw6NYOntdT7+GFhfMGfP/BSLMuMWynpzJy9GKQeyB8sI78T6Lzip21TVbongOg1Mw==
+
+react-native-swipeable-item@^1.5.7:
+  version "1.5.7"
+  resolved "https://registry.yarnpkg.com/react-native-swipeable-item/-/react-native-swipeable-item-1.5.7.tgz#3ed3e530ae746316c0a336a1929792b36b02cc7f"
+  integrity sha512-Uz29C0g4jDPZpkywPtbfFcAawJTxJ4ouFU03ni7pw+G8t4fTb1vi6QqDVnlqnlFYXcZcFXqVvn+SwT1elvV2/g==
+
+react-native-swipeable@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-swipeable/-/react-native-swipeable-0.6.0.tgz#0fe551330018b83c754d27f505709a594f554370"
+  integrity sha512-OJUmOtPAZ3s6OHdbmGdGBq3oNZaUFOV81UMQfO2fvIF2cUOMbjUKQCRU7EhijEyufiaMAlSu/VguCRAdLRLk3w==
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-walkthrough-tooltip@^1.3.0:
   version "1.3.0"
