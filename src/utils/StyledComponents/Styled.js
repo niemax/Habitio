@@ -184,9 +184,6 @@ export const HabitDescriptionInput = styled.TextInput`
 `;
 
 export const DiaryInput = styled.TextInput`
-    height: 120px;
-    background-color: #383838;
-    border-radius: ${radius};
     padding: 15px;
     margin-top: 10px;
     justify-content: center;
@@ -231,11 +228,12 @@ export const FrequencySwitchContainer = styled.View`
 export const HomepageDataView = styled.View`
     justify-content: center;
     align-items: center;
+    margin-top: 10px;
 `;
 
 export const HomepageDataBox = styled.Pressable`
-    margin-top: 15px;
-    height: 90px;
+    margin-top: 10px;
+    height: 80px;
     width: 350px;
     background-color: #303030;
     border-radius: 15px;
@@ -322,6 +320,8 @@ export const CalendarStatsContainer = styled.View`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 2px;
+    margin-bottom: 10px;
 `;
 
 export const CalendarLineBreak = styled.View`
@@ -360,7 +360,7 @@ export const NoHabitsContainer = styled.View`
 export const ProgressBarContainer = styled.View`
     justify-content: center;
     align-items: center;
-    margin-top: 7px;
+    margin-top: 5px;
 `;
 
 export const CalendarTimesInfoContainer = styled.View`
@@ -382,7 +382,7 @@ export const AddDiaryModalHeaderContainer = styled.View`
 
 export const LeftAction = styled.View`
     width: 350px;
-    margin-top: 15px;
+    margin-top: 20px;
     border-radius: 15px;
     justify-content: center;
     align-items: center;
@@ -392,3 +392,5 @@ export const ItemTimesContainer = styled.View`
     position: absolute;
     right: 30px;
 `;
+
+export const TextNameAndStatus = styled.View``;

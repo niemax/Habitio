@@ -25,10 +25,10 @@ export const toasts = {
             onPress: () => setVisible.current?.open(),
         });
     },
-    error: (habitName) => {
+    error: () => {
         showMessage({
             duration: 4000,
-            message: `${habitName} successfully removed`,
+            message: `Habit successfully removed`,
             backgroundColor: colors.error, // background color
             titleStyle: {
                 fontFamily: 'Medium',

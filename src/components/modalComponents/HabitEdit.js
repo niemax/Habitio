@@ -53,7 +53,7 @@ export default function HabitEdit(props) {
                 <Text left twentyTwo fontFamily="SemiBold" marginLeft="15px" marginTop="30px">
                     {props.habitName}
                 </Text>
-                <Text left marginLeft="15px" fontFamily="Regular" marginTop="35px">
+                <Text left marginLeft="10px" fontFamily="Regular" marginTop="35px">
                     Description
                 </Text>
                 <HabitInfoContainer>
@@ -72,7 +72,7 @@ export default function HabitEdit(props) {
                         />
                     </HabitCentered>
                     <HabitUtilityInfoContainer>
-                        <Text left marginLeft="15px" fontFamily="Regular">
+                        <Text left marginLeft="7px" fontFamily="Regular">
                             Color
                         </Text>
                         <SelectHabitColorButton onPress={() => props.setModalVisible(true)}>

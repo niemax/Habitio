@@ -5,7 +5,6 @@ import { useHabits } from '../context/HabitProvider';
 import { colors } from '../utils/colors';
 import { showHabitImageBackground } from '../utils/globalStyles';
 import { haptics } from '../utils/helpers/haptics';
-import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
 import * as Notifications from 'expo-notifications';
 import { cancelPushNotification } from '../utils/helpers/notification';
 import { toasts } from '../utils/helpers/toastMethods';
@@ -23,6 +22,7 @@ import {
 import Text from '../utils/Text';
 import CalendarModal from './CalendarModal';
 import ShowHabitEditModal from './ShowHabitEditModal';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 export default function ShowHabitModal({
     modalVisible,
@@ -37,10 +37,14 @@ export default function ShowHabitModal({
 }) {
     const [editHabitModalVisible, setEditHabitModalVisible] = useState(false);
     const [calendarModalVisible, setCalendarModalVisible] = useState(false);
-    const [dialogVisible, setDialogVisible] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
 
     const { habits, habitSetter } = useHabits();
+
+    const config = {
+        velocityThreshold: 1.5,
+        directionalOffsetThreshold: 50,
+    };
 
     const handleUpdate = async (
         habitName,
@@ -107,14 +111,11 @@ export default function ShowHabitModal({
         habitSetter(newHabits);
     };
 
-    const deleteHabit = (name, color) => {
+    const deleteHabit = (name) => {
         const newHabits = habits.filter((habit) => habit.id !== data.id);
-        habitSetter(newHabits);
-
         cancelPushNotification(data.notificationId);
-        setTimeout(() => {
-            setModalVisible(false);
-        }, 1500);
+        setModalVisible(false);
+        habitSetter(newHabits);
         toasts.error(name);
     };
 
@@ -133,7 +134,7 @@ export default function ShowHabitModal({
     };
 
     return (
-        <GestureRecognizer onSwipeDown={() => setModalVisible(false)}>
+        <GestureRecognizer config={config} onSwipeDown={() => setModalVisible(false)}>
             <Modal animationType="slide" presentationStyle="pageSheet" visible={modalVisible}>
                 <ModalContent>
                     <ScrollView>
@@ -170,7 +171,11 @@ export default function ShowHabitModal({
                                         borderRadius: 15,
                                         borderBottomColor: data.color,
                                     }}
-                                    source={data.icon}
+                                    source={
+                                        data.icon
+                                            ? data.icon
+                                            : require('../assets/flatIcons/morning-routine.png')
+                                    }
                                 />
                             </View>
                             {/* {data.description !== '' && <Text>{data.description.toString()}</Text>} */}
@@ -229,7 +234,7 @@ export default function ShowHabitModal({
                                         onPress={() => {
                                             haptics.selection();
                                             addProgress(1);
-                                            addProgressBar(data.times / data.times / data.times);
+                                            addProgressBar(0.1);
                                         }}
                                         style={{ backgroundColor: data.color }}
                                     >
@@ -273,21 +278,20 @@ export default function ShowHabitModal({
                                 </Text>
                             </TouchableOpacity>
                         </ShowHabitActionsContainer>
-
-                        <CalendarModal
-                            data={data}
-                            calendarModalVisible={calendarModalVisible}
-                            setCalendarModalVisible={setCalendarModalVisible}
-                        />
-
-                        <ShowHabitEditModal
-                            data={data}
-                            isEdit={isEdit}
-                            onSubmit={handleUpdate}
-                            editHabitModalVisible={editHabitModalVisible}
-                            setEditHabitModalVisible={setEditHabitModalVisible}
-                        />
                     </ScrollView>
+                    <CalendarModal
+                        data={data}
+                        calendarModalVisible={calendarModalVisible}
+                        setCalendarModalVisible={setCalendarModalVisible}
+                    />
+
+                    <ShowHabitEditModal
+                        data={data}
+                        isEdit={isEdit}
+                        onSubmit={handleUpdate}
+                        editHabitModalVisible={editHabitModalVisible}
+                        setEditHabitModalVisible={setEditHabitModalVisible}
+                    />
                 </ModalContent>
             </Modal>
         </GestureRecognizer>

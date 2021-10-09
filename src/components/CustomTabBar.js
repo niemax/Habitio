@@ -36,15 +36,13 @@ const CustomTabBar = ({ state, navigation }) => {
                 )}
             </TabBarAddContainer>
             {routes.map((route) => (
-                <>
-                    <Tab
-                        key={route.key.toString()}
-                        tab={route}
-                        onPress={() => handlePress(route.name)}
-                        color={renderColor(route.name)}
-                        icon={todayIcon}
-                    />
-                </>
+                <Tab
+                    key={route.key.toString()}
+                    tab={route}
+                    onPress={() => handlePress(route.name)}
+                    color={renderColor(route.name)}
+                    icon={todayIcon}
+                />
             ))}
         </TabBarContainer>
     );

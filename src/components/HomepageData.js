@@ -3,11 +3,8 @@ import { Image, RefreshControl, ScrollView, TouchableOpacity } from 'react-nativ
 import { colors } from '../utils/colors';
 import { haptics } from '../utils/helpers/haptics';
 import { Feather } from '@expo/vector-icons';
-import { Modalize } from 'react-native-modalize';
 import { useHabits } from '../context/HabitProvider';
 import {
-    AddDiaryModalHeaderContainer,
-    DiaryInput,
     HomeheaderContainer,
     HomepageDataView,
     HomepageTextContainer,
@@ -20,7 +17,7 @@ import {
     getAllNotifications,
     scheduleOneTimeWeekNotification,
 } from '../utils/helpers/notification';
-import { habitBoxShadow, noHabitsImageStyle } from '../utils/globalStyles';
+import { noHabitsImageStyle } from '../utils/globalStyles';
 import LottieView from 'lottie-react-native';
 import { format } from 'date-fns';
 import { toasts } from '../utils/helpers/toastMethods';
@@ -37,8 +34,7 @@ const currentDay = day.getDay();
 const HomepageData = () => {
     const [visibleItem, setVisibleItem] = useState();
     const [refreshing, setRefreshing] = useState(false);
-    const [toolTipVisible, setToolTipVisible] = useState();
-    const [progress, setProgress] = useState(0);
+    const [prog, setProg] = useState(0);
     const [completed, setCompleted] = useState(false);
     const [progressNumber, setProgressNumber] = useState(0);
     const [date, setDate] = useState();
@@ -51,11 +47,11 @@ const HomepageData = () => {
     const { habitSetter, getHabits, habits } = useHabits();
 
     const addProgressBar = (increment) => {
-        setProgress(progress + increment);
+        setProg(prog + increment);
     };
 
     const extractProgressBar = (decrement) => {
-        setProgress(progress - decrement);
+        setProg(prog - decrement);
     };
 
     const addProgress = (increment) => {
@@ -72,7 +68,7 @@ const HomepageData = () => {
             const checkedHabits = habits.map((habit) => {
                 if (currentDay > habit.currentDay) {
                     habit.completed = false;
-                } else console.log('false');
+                }
                 return habit;
             });
             habitSetter(checkedHabits);
@@ -88,7 +84,7 @@ const HomepageData = () => {
         };
         try {
             const updatedHabits = habits.filter((habit) => {
-                if (habit.name === item.name) {
+                if (habit.id === item.id) {
                     habit.diaryInputs.push(diaryInputObj);
                 }
                 return habit;
@@ -98,10 +94,11 @@ const HomepageData = () => {
             console.error(e);
         }
     };
+
     const handleDoneToday = async (data, completed) => {
         const newDate = format(new Date(), 'yyyy-MM-dd');
 
-        haptics.selection();
+        haptics.success();
         try {
             const updatedHabits = habits.filter((habit) => {
                 const completedDatesObj = { ...habit.completedDates };
@@ -109,11 +106,11 @@ const HomepageData = () => {
                 if (!(newDate in completedDatesObj)) {
                     completedDatesObj[newDate] = {
                         selected: true,
-                        marked: true,
+                        marked: false,
                         customStyles: {
                             container: {
                                 backgroundColor: colors.mainGreen,
-                                height: 'auto',
+                                height: 33,
                             },
                         },
                     };
@@ -121,6 +118,7 @@ const HomepageData = () => {
                         habit.currentDay = currentDay;
                         habit.completed = true;
                         habit.completedDates = completedDatesObj;
+                        setCompleted(completed);
                         scheduleOneTimeWeekNotification(currentDay);
                         setTimeout(() => {
                             toasts.info(data.name, data.color, modalizeRef);
@@ -131,16 +129,15 @@ const HomepageData = () => {
                             animation.current.reset();
                         }, 5000);
                     }
-                    setCompleted(completed);
                 } else {
                     delete completedDatesObj[newDate];
                     if (habit.name === data.name) {
                         habit.currentDay = currentDay;
                         habit.completed = false;
                         habit.completedDates = completedDatesObj;
+                        setCompleted(!completed);
                     }
                     haptics.warning();
-                    setCompleted(!completed);
                 }
                 return habit;
             });
@@ -237,11 +234,12 @@ const HomepageData = () => {
                                 item={item}
                                 index={index.toString()}
                                 modalizeRef={modalizeRef}
+                                diaryInputHandler={diaryInputHandler}
                                 handleDoneToday={handleDoneToday}
                                 progressNumber={progressNumber}
                                 addProgressBar={addProgressBar}
                                 extractProgressBar={extractProgressBar}
-                                progress={progress}
+                                progress={prog}
                                 addProgress={addProgress}
                                 extractProgress={extractProgress}
                                 visibleItem={visibleItem}
@@ -249,55 +247,6 @@ const HomepageData = () => {
                                 completed={completed}
                                 setCompleted={setCompleted}
                             />
-                            <Modalize
-                                ref={modalizeRef}
-                                data={item}
-                                closeSnapPointStraightEnabled={false}
-                                closeOnOverlayTap="false"
-                                modalTopOffset={200}
-                                keyboardAvoidingBehavior="height"
-                                scrollViewProps={{ showsVerticalScrollIndicator: false }}
-                                snapPoint={430}
-                                modalStyle={{
-                                    backgroundColor: '#202020',
-                                }}
-                                HeaderComponent={
-                                    <AddDiaryModalHeaderContainer>
-                                        <Text
-                                            fontFamily="Bold"
-                                            twentyTwo
-                                            left
-                                            marginLeft="10px"
-                                            marginTop="10px"
-                                        >
-                                            How did it go?
-                                        </Text>
-                                        <TouchableOpacity onPress={() => diaryInputHandler(item)}>
-                                            <Feather
-                                                name="check"
-                                                size={36}
-                                                color={colors.mainGreen}
-                                            />
-                                        </TouchableOpacity>
-                                    </AddDiaryModalHeaderContainer>
-                                }
-                            >
-                                <DiaryInput
-                                    keyboardAppearance="dark"
-                                    autoCorrect={false}
-                                    autoFocus={true}
-                                    multiline={true}
-                                    placeholder="Write a reflection"
-                                    placeholderTextColor="gray"
-                                    style={{
-                                        color: 'white',
-                                        fontSize: 17,
-                                        fontFamily: 'SemiBold',
-                                        ...habitBoxShadow,
-                                    }}
-                                    onChangeText={(diaryText) => setDiaryInput(diaryText)}
-                                />
-                            </Modalize>
                         </>
                     ))}
                 </HomepageDataView>

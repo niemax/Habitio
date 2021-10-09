@@ -1,8 +1,6 @@
 import React from 'react';
-import { Modal, View } from 'react-native';
-import { Modalize } from 'react-native-modalize';
+import { Modal } from 'react-native';
 import Text from '../utils/Text';
-import { colors } from '../utils/colors';
 import { AddDiaryModalHeaderContainer, ModalContent } from '../utils/StyledComponents/Styled';
 
 export default function AddDiaryModal({ modalDiaryVisible, modalizeRef }) {

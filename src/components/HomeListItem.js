@@ -1,18 +1,20 @@
-import React, { useRef } from 'react';
-import { KeyboardAvoidingView, Image } from 'react-native';
+import React, { useRef, useEffect, useState } from 'react';
+import { Image } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { Modalize } from 'react-native-modalize';
 import * as Progress from 'react-native-progress';
 import { Feather } from '@expo/vector-icons';
 import TextStyle from '../utils/Text';
+import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
+import { Modalize } from 'react-native-modalize';
 import { haptics } from '../utils/helpers/haptics';
-import { habitBoxShadow, homepageBoxShadow } from '../utils/globalStyles';
+import { homepageBoxShadow } from '../utils/globalStyles';
 import {
-    DiaryInput,
+    AddDiaryModalHeaderContainer,
     HomepageDataBox,
     HomepageDataView,
     ItemTimesContainer,
     LeftAction,
+    TextNameAndStatus,
 } from '../utils/StyledComponents/Styled';
 import ShowHabitModal from './ShowHabitModal';
 import { colors } from '../utils/colors';
@@ -20,7 +22,6 @@ import { colors } from '../utils/colors';
 export default function HomeListItem({
     item,
     index,
-    modalizeRef,
     handleDoneToday,
     progressNumber,
     addProgressBar,
@@ -30,8 +31,7 @@ export default function HomeListItem({
     extractProgress,
     visibleItem,
     setVisibleItem,
-    completed,
-    setCompleted,
+    modalizeRef,
 }) {
     const LeftActions = () => (
         <LeftAction style={{ backgroundColor: item.completed ? colors.error : colors.mainGreen }}>
@@ -42,10 +42,10 @@ export default function HomeListItem({
             )}
         </LeftAction>
     );
-
     const swipeableRef = useRef(null);
     return (
         <Swipeable
+            key={index}
             ref={swipeableRef}
             onSwipeableLeftOpen={() => {
                 handleDoneToday(item);
@@ -70,38 +70,58 @@ export default function HomeListItem({
                                 : require('../assets/flatIcons/morning-routine.png')
                         }
                     />
-                    <TextStyle marginLeft="25px" fontFamily="SemiBold">
-                        {!item.completed ? (
-                            item.name
-                        ) : (
-                            <TextStyle color={item.color} twenty fontFamily="SemiBold">
-                                <Feather name="check" size={24} color="white" />
+                    <TextNameAndStatus>
+                        <TextStyle left marginLeft="25px" fontFamily="SemiBold">
+                            {item.name}
+                        </TextStyle>
+                        {item.completed ? (
+                            <TextStyle
+                                left
+                                sixteen
+                                marginLeft="25px"
+                                fontFamily="SemiBold"
+                                style={{ opacity: 0.6 }}
+                            >
+                                <Feather name="check" size={18} color={colors.mainGreen} />
                                 Done
                             </TextStyle>
+                        ) : (
+                            <TextStyle
+                                left
+                                marginLeft="25px"
+                                sixteen
+                                fontFamily="SemiBold"
+                                style={{ opacity: 0.6 }}
+                            >
+                                <Feather name="x" size={18} color={colors.error} />
+                                Not done
+                            </TextStyle>
                         )}
-                    </TextStyle>
+                    </TextNameAndStatus>
+
                     <ItemTimesContainer>
-                        <TextStyle color={item.color} marginLeft="10px" fontFamily="Extra" twenty>
+                        <TextStyle color={item.color} marginLeft="10px" fontFamily="Bold" twenty>
                             {item.times > 1 && progressNumber}
                             {item.times > 1 && <TextStyle color={item.color}>/</TextStyle>}
                             {item.times > 1 && item.times}
                         </TextStyle>
+                        <TextStyle fontFamily="Regular">{item.unitValue}</TextStyle>
                     </ItemTimesContainer>
                     {item.times > 1 && (
                         <Progress.Bar
                             style={{
                                 position: 'absolute',
                                 bottom: 1,
-                                borderRadius: 15,
                             }}
                             progress={progress}
-                            height={5}
-                            width={159}
+                            height={4}
+                            width={348}
                             color={item.color}
                             borderColor={colors.homepageProgress}
                             borderWidth={0.2}
                         />
                     )}
+
                     <ShowHabitModal
                         data={item}
                         handleDoneToday={handleDoneToday}
