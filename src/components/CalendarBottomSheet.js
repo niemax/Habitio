@@ -6,7 +6,7 @@ import { Feather } from '@expo/vector-icons';
 import { colors } from '../utils/colors';
 import { habitBoxShadow } from '../utils/globalStyles';
 import { format } from 'date-fns';
-import { TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, TouchableOpacity, View } from 'react-native';
 
 export default function CalendarBottomSheet({
     diaryInput,
@@ -20,12 +20,9 @@ export default function CalendarBottomSheet({
         <ActionSheet
             containerStyle={{
                 backgroundColor: '#141414',
-                height: 460,
-                flex: 1,
+                height: 520,
             }}
-            bounciness={0}
             defaultOverlayOpacity={0.6}
-            keyboardDismissMode="interactive"
             gestureEnabled="true"
             elevation={2}
             ref={sheetRef}
@@ -41,29 +38,30 @@ export default function CalendarBottomSheet({
                 </TouchableOpacity>
             </View>
             <Text left marginLeft="15px" marginTop="15px" fontFamily="SemiBold" twentyTwo>
-                How was it?
+                Add a Note
             </Text>
             <Text left marginLeft="15px" marginTop="10px" sixteen color="gray">
                 <Feather name="check-circle" size={18} color={colors.mainGreen} />
                 {name}
             </Text>
-            <DiaryInput
-                keyboardAppearance="dark"
-                autoCorrect={false}
-                headerAlwaysVisible="true"
-                autoFocus={true}
-                value={diaryInput}
-                multiline={true}
-                placeholder="Write a Reflection"
-                placeholderTextColor="gray"
-                style={{
-                    color: 'white',
-                    fontSize: 17,
-                    fontFamily: 'SemiBold',
-                    ...habitBoxShadow,
-                }}
-                onChangeText={(text) => setDiaryInput(text)}
-            />
+            <KeyboardAvoidingView>
+                <DiaryInput
+                    keyboardAppearance="dark"
+                    autoCorrect={false}
+                    headerAlwaysVisible="true"
+                    autoFocus={true}
+                    value={diaryInput}
+                    placeholder="Write a Reflection"
+                    placeholderTextColor="gray"
+                    style={{
+                        color: 'white',
+                        fontSize: 17,
+                        fontFamily: 'SemiBold',
+                        ...habitBoxShadow,
+                    }}
+                    onChangeText={(text) => setDiaryInput(text)}
+                />
+            </KeyboardAvoidingView>
         </ActionSheet>
     );
 }

@@ -85,7 +85,7 @@ export default function CalendarModal({ calendarModalVisible, setCalendarModalVi
                 <CalendarLineBreak />
                 <CalendarTextContainer>
                     <CalendarStatsContainer>
-                        <Text left>Completions</Text>
+                        <Text>Completions</Text>
                         <Text color={colors.mainGreen} thirtyFour>
                             {Object.keys(completedDates).length}
                         </Text>
@@ -93,7 +93,7 @@ export default function CalendarModal({ calendarModalVisible, setCalendarModalVi
                     <CalendarStatsContainer>
                         <Text>Completion % </Text>
                         <Text color={colors.mainGreen} thirtyFour>
-                            {Object.keys(completedDates.length / times)}
+                            {Object.keys(completedDates).length / times}
                         </Text>
                     </CalendarStatsContainer>
                 </CalendarTextContainer>
@@ -102,6 +102,11 @@ export default function CalendarModal({ calendarModalVisible, setCalendarModalVi
                     <Text left marginLeft="15px" marginTop="10px" marginBottom="10px">
                         Notes
                     </Text>
+                    {Object.values(diaryInputs).length === 0 && (
+                        <Text sixteen fontFamily="MediumItalic">
+                            No notes added yet. Tap on a date to add a note.
+                        </Text>
+                    )}
                     {Object.values(diaryInputs).length > 0
                         ? Object.values(diaryInputs).map(({ date, input }) => (
                               <Text

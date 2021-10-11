@@ -45,9 +45,10 @@ export default function StartHabitCreation({ navigation }) {
             </Text>
             <InputContainer>
                 <HabitInput
+                    keyboardAppearance="dark"
                     clearButtonMode="always"
                     placeholder="Habit name"
-                    placeholderTextColor="white"
+                    placeholderTextColor="gray"
                     style={{
                         color: 'white',
                         fontSize: 18,

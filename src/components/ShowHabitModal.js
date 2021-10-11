@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert, Image, Modal, ScrollView, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useHabits } from '../context/HabitProvider';
@@ -24,19 +24,10 @@ import CalendarModal from './CalendarModal';
 import ShowHabitEditModal from './ShowHabitEditModal';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
-export default function ShowHabitModal({
-    modalVisible,
-    setModalVisible,
-    data,
-    addProgress,
-    addProgressBar,
-    extractProgress,
-    extractProgressBar,
-    progressNumber,
-    handleDoneToday,
-}) {
+export default function ShowHabitModal({ modalVisible, setModalVisible, data, handleDoneToday }) {
     const [editHabitModalVisible, setEditHabitModalVisible] = useState(false);
     const [calendarModalVisible, setCalendarModalVisible] = useState(false);
+    const [prog, setProg] = useState(0);
     const [isEdit, setIsEdit] = useState(false);
 
     const { habits, habitSetter } = useHabits();
@@ -45,6 +36,10 @@ export default function ShowHabitModal({
         velocityThreshold: 1.5,
         directionalOffsetThreshold: 50,
     };
+
+    useEffect(() => {
+        setProg(data.progress);
+    }, []);
 
     const handleUpdate = async (
         habitName,
@@ -179,20 +174,13 @@ export default function ShowHabitModal({
                                 />
                             </View>
                             {/* {data.description !== '' && <Text>{data.description.toString()}</Text>} */}
-                            <Text fontFamily="SemiBold" marginTop="15px" twentyEight>
+                            <Text fontFamily="Bold" marginTop="15px" twentyFour>
                                 {data.name}
                             </Text>
                         </ShowHabitDataContainer>
                         <Text marginTop="10px" color="gray">
                             {data.description}
                         </Text>
-                        <ProgressBarContainer>
-                            {data.times > 1 && (
-                                <Text fontFamily="Extra" color={data.color} twentyTwo>
-                                    {progressNumber} / {data.times}
-                                </Text>
-                            )}
-                        </ProgressBarContainer>
                         <Text marginTop="35px" twenty marginLeft="15px" left fontFamily="Medium">
                             {data.days === 7 ? (
                                 <Text twenty marginLeft="15px" left fontFamily="Medium">
@@ -212,39 +200,8 @@ export default function ShowHabitModal({
                                 {data.times} {data.unitValue} per day
                             </Text>
                         )}
+
                         <LineBreak />
-                        <ShowHabitActionsAddContainer>
-                            {data.times > 1 && (
-                                <>
-                                    <ShowHabitActionsAddButton
-                                        onPress={() => {
-                                            haptics.selection();
-                                            extractProgress(1);
-                                            extractProgressBar(
-                                                data.times / data.times / data.times
-                                            );
-                                        }}
-                                        style={{ backgroundColor: data.color }}
-                                    >
-                                        <Text fontFamily="Bold" twentyEight>
-                                            -1
-                                        </Text>
-                                    </ShowHabitActionsAddButton>
-                                    <ShowHabitActionsAddButton
-                                        onPress={() => {
-                                            haptics.selection();
-                                            addProgress(1);
-                                            addProgressBar(0.1);
-                                        }}
-                                        style={{ backgroundColor: data.color }}
-                                    >
-                                        <Text fontFamily="Bold" twentyEight>
-                                            +1
-                                        </Text>
-                                    </ShowHabitActionsAddButton>
-                                </>
-                            )}
-                        </ShowHabitActionsAddContainer>
                         <ShowHabitActionsContainer>
                             <ShowHabitActionsButton
                                 onPress={() => {

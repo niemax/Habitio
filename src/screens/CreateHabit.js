@@ -5,7 +5,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import ColorPalletteModal from '../components/ColorPalletteModal';
 import { colors } from '../utils/colors';
 import RNPickerSelect from 'react-native-picker-select';
-import { Modalize } from 'react-native-modalize';
+import ActionSheet from 'react-native-actions-sheet';
 import { habitBoxShadow } from '../utils/globalStyles';
 import * as Notifications from 'expo-notifications';
 import {
@@ -21,10 +21,8 @@ import {
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 import { useHabits } from '../context/HabitProvider';
-import MapModal from '../components/modalComponents/MapModal';
 
 export default function CreateHabit({ navigation, route }) {
-    const [modalVisible, setModalVisible] = useState(false);
     const [updatedColor, setUpdatedColor] = useState();
     const [colorUpdated, setColorUpdated] = useState(false);
     const [description, setDescription] = useState('');
@@ -50,16 +48,9 @@ export default function CreateHabit({ navigation, route }) {
     const toggleSwitchSpecific = () =>
         !isEnabledDate && !isEnabled && setIsEnabledSpecific((previousState) => !previousState);
 
-    const toggleSwitchLocation = () =>
-        !isEnabledDate &&
-        !isEnabled &&
-        !isEnabledSpecific &&
-        setIsEnabledLocation((previousState) => {
-            !previousState;
-            modalizeRef.current.open();
-        });
-
     const { CRUDHabits } = useHabits();
+
+    const sheetRef = useRef(null);
 
     const { habitName, habitIcon } = route.params;
 
@@ -173,9 +164,9 @@ export default function CreateHabit({ navigation, route }) {
                     <HabitCentered>
                         <HabitDescriptionInput
                             keyboardAppearance="dark"
+                            multiline={true}
                             autoCorrect={false}
                             value={description}
-                            multiline={true}
                             placeholder="Habit Description"
                             placeholderTextColor="gray"
                             style={{
@@ -191,7 +182,7 @@ export default function CreateHabit({ navigation, route }) {
                         <Text left marginLeft="5px" fontFamily="Regular">
                             Color
                         </Text>
-                        <SelectHabitColorButton onPress={() => setModalVisible(true)}>
+                        <SelectHabitColorButton onPress={() => sheetRef.current.show()}>
                             {!colorUpdated ? (
                                 <Feather name="chevron-down" size={28} color="white" />
                             ) : (
@@ -207,13 +198,6 @@ export default function CreateHabit({ navigation, route }) {
                         </SelectHabitColorButton>
                         <FrequencySwitchContainer>
                             <Text fontFamily="Regular">Remind at a location</Text>
-                            <Switch
-                                trackColor={{ false: '#767577', true: colors.mainGreen }}
-                                thumbColor={isEnabledLocation ? '#f5dd4b' : '#f4f3f4'}
-                                ios_backgroundColor="#3e3e3e"
-                                onValueChange={toggleSwitchLocation}
-                                value={isEnabledLocation}
-                            />
                         </FrequencySwitchContainer>
                         <FrequencySwitchContainer>
                             <Text fontFamily="Regular">Remind on a specific date</Text>
@@ -322,44 +306,22 @@ export default function CreateHabit({ navigation, route }) {
                         )}
                     </HabitUtilityInfoContainer>
                 </HabitInfoContainer>
-                <ColorPalletteModal
-                    updateColor={updateColor}
-                    modalVisible={modalVisible}
-                    setModalVisible={setModalVisible}
-                />
-                <Modalize
-                    ref={modalizeRef}
-                    closeSnapPointStraightEnabled={false}
-                    scrollViewProps={{ showsVerticalScrollIndicator: false }}
-                    snapPoint={700}
-                    modalStyle={{ backgroundColor: colors.mainBackground, marginTop: 100 }}
-                    HeaderComponent={
-                        <View
-                            style={{
-                                height: 70,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <View
-                                style={{
-                                    justifyContent: 'center',
-                                    backgroundColor: '#181818',
-                                    width: '90%',
-                                    height: 40,
-                                    borderRadius: 15,
-                                    paddingHorizontal: 10,
-                                }}
-                            >
-                                <Text left fontFamily="Bold">
-                                    Search...
-                                </Text>
-                            </View>
-                        </View>
-                    }
+                <ActionSheet
+                    containerStyle={{
+                        backgroundColor: '#141414',
+                        height: 220,
+                    }}
+                    defaultOverlayOpacity={0.3}
+                    gestureEnabled="true"
+                    elevation={2}
+                    ref={sheetRef}
                 >
-                    <MapModal />
-                </Modalize>
+                    <ColorPalletteModal
+                        ref={sheetRef}
+                        updateColor={updateColor}
+                        sheetRef={sheetRef}
+                    />
+                </ActionSheet>
             </ScrollView>
         </MainContainer>
     );

@@ -13,18 +13,22 @@ import {
 } from '../../utils/StyledComponents/Styled';
 import RNPickerSelect from 'react-native-picker-select';
 import { Ionicons, Feather } from '@expo/vector-icons';
+import ActionSheet from 'react-native-actions-sheet';
 import Text from '../../utils/Text';
 import { colors } from '../../utils/colors';
 import { habitBoxShadow } from '../../utils/globalStyles';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ColorPalletteModal from '../ColorPalletteModal';
+import { useRef } from 'react';
 
-export default function HabitEdit(props) {
+export default function HabitEditContent(props) {
     const placeholder = {
         label: props.unitValue,
         value: null,
         color: '#9EA0A4',
     };
+
+    const sheetRef = useRef(null);
 
     return (
         <ModalContent>
@@ -50,16 +54,18 @@ export default function HabitEdit(props) {
             </HomeheaderContainer>
 
             <ScrollView>
-                <Text left twentyTwo fontFamily="SemiBold" marginLeft="15px" marginTop="30px">
+                <Text left twentyTwo fontFamily="SemiBold" marginLeft="10px" marginTop="30px">
                     {props.habitName}
                 </Text>
-                <Text left marginLeft="10px" fontFamily="Regular" marginTop="35px">
+                <Text left marginLeft="15px" fontFamily="Regular" marginTop="35px">
                     Description
                 </Text>
                 <HabitInfoContainer>
                     <HabitCentered>
                         <HabitDescriptionInput
-                            multiline="true"
+                            keyboardAppearance="dark"
+                            multiline={true}
+                            autoCorrect={false}
                             placeholder={props.stateDescription}
                             placeholderTextColor="gray"
                             style={{
@@ -75,7 +81,7 @@ export default function HabitEdit(props) {
                         <Text left marginLeft="7px" fontFamily="Regular">
                             Color
                         </Text>
-                        <SelectHabitColorButton onPress={() => props.setModalVisible(true)}>
+                        <SelectHabitColorButton onPress={() => sheetRef.current.show()}>
                             {!props.colorUpdated ? (
                                 <View
                                     style={{
@@ -215,11 +221,18 @@ export default function HabitEdit(props) {
                         )}
                     </HabitUtilityInfoContainer>
                 </HabitInfoContainer>
-                <ColorPalletteModal
-                    updateColor={props.updateColor}
-                    modalVisible={props.modalVisible}
-                    setModalVisible={props.setModalVisible}
-                />
+                <ActionSheet
+                    containerStyle={{
+                        backgroundColor: '#141414',
+                        height: 220,
+                    }}
+                    defaultOverlayOpacity={0.6}
+                    gestureEnabled="true"
+                    elevation={2}
+                    ref={sheetRef}
+                >
+                    <ColorPalletteModal sheetRef={sheetRef} updateColor={props.updateColor} />
+                </ActionSheet>
             </ScrollView>
         </ModalContent>
     );

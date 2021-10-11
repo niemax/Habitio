@@ -46,22 +46,6 @@ const HomepageData = () => {
     const modalizeRef = useRef(null);
     const { habitSetter, getHabits, habits } = useHabits();
 
-    const addProgressBar = (increment) => {
-        setProg(prog + increment);
-    };
-
-    const extractProgressBar = (decrement) => {
-        setProg(prog - decrement);
-    };
-
-    const addProgress = (increment) => {
-        setProgressNumber(progressNumber + increment);
-    };
-
-    const extractProgress = (decrement) => {
-        setProgressNumber(progressNumber - decrement);
-    };
-
     const getData = async () => {
         try {
             getHabits();
@@ -69,6 +53,7 @@ const HomepageData = () => {
                 if (currentDay > habit.currentDay) {
                     habit.completed = false;
                 }
+                setProg(habits.progress);
                 return habit;
             });
             habitSetter(checkedHabits);
@@ -118,7 +103,7 @@ const HomepageData = () => {
                         habit.currentDay = currentDay;
                         habit.completed = true;
                         habit.completedDates = completedDatesObj;
-                        setCompleted(completed);
+                        setCompleted(true);
                         scheduleOneTimeWeekNotification(currentDay);
                         setTimeout(() => {
                             toasts.info(data.name, data.color, modalizeRef);
@@ -135,7 +120,7 @@ const HomepageData = () => {
                         habit.currentDay = currentDay;
                         habit.completed = false;
                         habit.completedDates = completedDatesObj;
-                        setCompleted(!completed);
+                        setCompleted(false);
                     }
                     haptics.warning();
                 }
@@ -204,7 +189,7 @@ const HomepageData = () => {
                         onRefresh={onRefresh}
                     />
                 }
-                style={{ marginBottom: 120, color: colors.mainGreen }}
+                style={{ marginBottom: 90 }}
             >
                 <Text twentyTwo fontFamily="Bold" marginTop="30px" marginLeft="15px" left>
                     Your Habits{' '}
@@ -236,12 +221,6 @@ const HomepageData = () => {
                                 modalizeRef={modalizeRef}
                                 diaryInputHandler={diaryInputHandler}
                                 handleDoneToday={handleDoneToday}
-                                progressNumber={progressNumber}
-                                addProgressBar={addProgressBar}
-                                extractProgressBar={extractProgressBar}
-                                progress={prog}
-                                addProgress={addProgress}
-                                extractProgress={extractProgress}
                                 visibleItem={visibleItem}
                                 setVisibleItem={setVisibleItem}
                                 completed={completed}

@@ -1,5 +1,5 @@
 export const colors = {
-    mainBackground: '#242424',
+    mainBackground: '#252525',
     mainGreen: '#2EB284',
     error: '#f64141',
     homepageProgress: '#242424',

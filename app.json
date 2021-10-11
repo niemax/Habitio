@@ -1,42 +1,47 @@
 {
-    "expo": {
-        "name": "Habitio",
-        "slug": "Habitio",
-        "version": "1.0.0",
-        "orientation": "portrait",
-        "icon": "../goal-buddy/src/assets/brand.png",
-        "splash": {
-            "image": "../goal-buddy/src/assets/brand.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#ffffff"
-        },
-        "updates": {
-            "fallbackToCacheTimeout": 0
-        },
-        "assetBundlePatterns": ["**/*"],
-        "ios": {
-            "supportsTablet": true
-        },
-        "android": {
-            "adaptiveIcon": {
-                "foregroundImage": "../goal-buddy/src/assets/adaptive-icon.png",
-                "backgroundColor": "#FFFFFF"
-            }
-        },
-        "web": {
-            "favicon": "../goal-buddy/src/assets/favicon.png"
-        },
-        "description": "",
-        "plugins": [
-            [
-                "expo-notifications",
-                {
-                    "icon": "./local/path/to/myNotificationIcon.png",
-                    "color": "#ffffff",
-                    "sounds": ["./local/path/to/mySound.wav", "./local/path/to/myOtherSound.wav"],
-                    "mode": "production"
-                }
-            ]
-        ]
-    }
+  "expo": {
+    "name": "Habitio",
+    "slug": "Habitio",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "../goal-buddy/src/assets/brand.png",
+    "splash": {
+      "image": "../goal-buddy/src/assets/brand.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "../goal-buddy/src/assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "web": {
+      "favicon": "../goal-buddy/src/assets/favicon.png"
+    },
+    "description": "",
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./local/path/to/myNotificationIcon.png",
+          "color": "#ffffff",
+          "sounds": [
+            "./local/path/to/mySound.wav",
+            "./local/path/to/myOtherSound.wav"
+          ],
+          "mode": "production"
+        }
+      ]
+    ]
+  }
 }

@@ -33,7 +33,7 @@ export default function App() {
 
     useEffect(() => {
         loadFonts();
-        /*  registerForPushNotificationsAsync().then((token) => setExpoPushToken(token));
+        /*   registerForPushNotificationsAsync().then((token) => setExpoPushToken(token));
 
         notificationListener.current = Notifications.addNotificationReceivedListener(
             (notification) => {

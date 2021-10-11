@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal } from 'react-native';
 import ColorPalletteModal from './ColorPalletteModal';
-import HabitEdit from './modalComponents/HabitEdit';
+import HabitEditContent from './modalComponents/HabitEdit';
 
 export default function ShowHabitEditModal({
     editHabitModalVisible,
@@ -85,7 +85,7 @@ export default function ShowHabitEditModal({
 
     return (
         <Modal animationType="slide" presentationStyle="pageSheet" visible={editHabitModalVisible}>
-            <HabitEdit
+            <HabitEditContent
                 handleSubmit={handleSubmit}
                 setEditHabitModalVisible={setEditHabitModalVisible}
                 editHabitModalVisible={editHabitModalVisible}
@@ -116,11 +116,6 @@ export default function ShowHabitEditModal({
                 updatedColor={updatedColor}
                 colorUpdated={colorUpdated}
                 updateColor={updateColor}
-            />
-            <ColorPalletteModal
-                updateColor={updateColor}
-                modalVisible={modalVisible}
-                setModalVisible={setModalVisible}
             />
         </Modal>
     );
