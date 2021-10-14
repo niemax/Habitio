@@ -26,11 +26,11 @@ export default function HomeListItem({
 }) {
     const [prog, setProg] = useState(0);
     const LeftActions = () => (
-        <LeftAction style={{ backgroundColor: item.completed ? colors.error : colors.mainGreen }}>
+        <LeftAction style={{ backgroundColor: item.completed ? colors.error : item.color }}>
             {item.completed ? (
                 <Feather name="x" size={48} color="white" style={{ marginLeft: 70 }} />
             ) : (
-                <Feather name="check" size={48} color="white" style={{ marginLeft: 70 }} />
+                <Feather name="check" size={42} color="white" style={{ marginLeft: 90 }} />
             )}
         </LeftAction>
     );
@@ -47,7 +47,9 @@ export default function HomeListItem({
                 }}
                 style={{ backgroundColor: item.color }}
             >
-                <Feather name="plus" size={28} color="white" />
+                <TextStyle fontFamily="SemiBold" twentyTwo>
+                    +1
+                </TextStyle>
             </RightAction>
             <RightAction
                 onPress={() => {
@@ -59,8 +61,8 @@ export default function HomeListItem({
                 }}
                 style={{ backgroundColor: item.color, marginRight: 7 }}
             >
-                <TextStyle fontFamily="Bold" twentyEight>
-                    <Feather name="minus" size={28} color="white" />
+                <TextStyle fontFamily="SemiBold" twentyTwo>
+                    -1
                 </TextStyle>
             </RightAction>
             {item.times > 10 && (
@@ -74,7 +76,7 @@ export default function HomeListItem({
                     }}
                     style={{ backgroundColor: item.color, marginRight: 7 }}
                 >
-                    <TextStyle twenty fontFamily="Bold">
+                    <TextStyle twentyTwo fontFamily="SemiBold">
                         +5
                     </TextStyle>
                 </RightAction>
@@ -90,7 +92,7 @@ export default function HomeListItem({
                     }}
                     style={{ backgroundColor: item.color, marginRight: 7 }}
                 >
-                    <TextStyle twenty fontFamily="Bold">
+                    <TextStyle twentyTwo fontFamily="SemiBold">
                         -5
                     </TextStyle>
                 </RightAction>
@@ -101,7 +103,6 @@ export default function HomeListItem({
     const swipeableRef = useRef(null);
     return (
         <Swipeable
-            key={index}
             ref={swipeableRef}
             onSwipeableLeftOpen={() => {
                 handleDoneToday(item);
@@ -112,6 +113,7 @@ export default function HomeListItem({
         >
             <HomepageDataView>
                 <HomepageDataBox
+                    key={index}
                     onPress={() => {
                         setVisibleItem(index);
                         haptics.selection();
@@ -119,7 +121,7 @@ export default function HomeListItem({
                     style={homepageBoxShadow}
                 >
                     <Image
-                        style={{ height: 40, width: 40 }}
+                        style={{ height: 37, width: 37 }}
                         source={
                             item.icon
                                 ? item.icon
@@ -139,7 +141,7 @@ export default function HomeListItem({
                                 fontFamily="Medium"
                                 style={{ opacity: 0.6 }}
                             >
-                                <Feather name="check" size={15} color={colors.mainGreen} />
+                                <Feather name="check" size={15} color={item.color} />
                                 Done
                             </TextStyle>
                         ) : (
@@ -151,7 +153,7 @@ export default function HomeListItem({
                                 fontFamily="Medium"
                                 style={{ opacity: 0.6 }}
                             >
-                                <Feather name="x" size={15} color={colors.error} />
+                                <Feather name="x" size={15} color={item.color} />
                                 Not done
                             </TextStyle>
                         )}

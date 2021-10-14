@@ -34,9 +34,8 @@ const currentDay = day.getDay();
 const HomepageData = () => {
     const [visibleItem, setVisibleItem] = useState();
     const [refreshing, setRefreshing] = useState(false);
-    const [prog, setProg] = useState(0);
+    const [, , setProg] = useState(0);
     const [completed, setCompleted] = useState(false);
-    const [progressNumber, setProgressNumber] = useState(0);
     const [date, setDate] = useState();
     const [diaryInput, setDiaryInput] = useState('');
 
@@ -46,9 +45,13 @@ const HomepageData = () => {
     const modalizeRef = useRef(null);
     const { habitSetter, getHabits, habits } = useHabits();
 
+    useEffect(() => {
+        scheduleOneTimeWeekNotification(currentDay);
+    }, []);
+
     const getData = async () => {
+        getHabits();
         try {
-            getHabits();
             const checkedHabits = habits.map((habit) => {
                 if (currentDay > habit.currentDay) {
                     habit.completed = false;
@@ -80,7 +83,7 @@ const HomepageData = () => {
         }
     };
 
-    const handleDoneToday = async (data, completed) => {
+    const handleDoneToday = async (data) => {
         const newDate = format(new Date(), 'yyyy-MM-dd');
 
         haptics.success();
@@ -90,12 +93,11 @@ const HomepageData = () => {
 
                 if (!(newDate in completedDatesObj)) {
                     completedDatesObj[newDate] = {
-                        selected: true,
                         marked: false,
+                        selected: true,
                         customStyles: {
                             container: {
                                 backgroundColor: colors.mainGreen,
-                                height: 33,
                             },
                         },
                     };
@@ -103,12 +105,19 @@ const HomepageData = () => {
                         habit.currentDay = currentDay;
                         habit.completed = true;
                         habit.completedDates = completedDatesObj;
-                        setCompleted(true);
-                        scheduleOneTimeWeekNotification(currentDay);
-                        setTimeout(() => {
-                            toasts.info(data.name, data.color, modalizeRef);
+                        if (Object.keys(habit.completedDates).length % 3 === 0) {
+                            setTimeout(() => {
+                                toasts.infoAdditional(
+                                    data.name,
+                                    Object.keys(habit.completedDates).length,
+                                    data.color,
+                                    modalizeRef
+                                );
+                            }, 1200);
                             animation.current.play(30, 120);
-                        }, 1200);
+                        } else {
+                            toasts.info(data.name, data.color, modalizeRef);
+                        }
 
                         setTimeout(() => {
                             animation.current.reset();
@@ -120,9 +129,8 @@ const HomepageData = () => {
                         habit.currentDay = currentDay;
                         habit.completed = false;
                         habit.completedDates = completedDatesObj;
-                        setCompleted(false);
+                        haptics.warning();
                     }
-                    haptics.warning();
                 }
                 return habit;
             });
@@ -138,7 +146,7 @@ const HomepageData = () => {
         setDate(date);
         getAllNotifications();
         //deleteNotifications();
-    }, []);
+    }, [currentDay]);
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
@@ -213,20 +221,18 @@ const HomepageData = () => {
                             <Feather name="arrow-down" size={90} color="white" />
                         </NoHabitsContainer>
                     )}
-                    {Object.values(habits).map((item, index) => (
-                        <>
-                            <HomeListItem
-                                item={item}
-                                index={index.toString()}
-                                modalizeRef={modalizeRef}
-                                diaryInputHandler={diaryInputHandler}
-                                handleDoneToday={handleDoneToday}
-                                visibleItem={visibleItem}
-                                setVisibleItem={setVisibleItem}
-                                completed={completed}
-                                setCompleted={setCompleted}
-                            />
-                        </>
+                    {habits.map((item, index) => (
+                        <HomeListItem
+                            item={item}
+                            index={index}
+                            modalizeRef={modalizeRef}
+                            diaryInputHandler={diaryInputHandler}
+                            handleDoneToday={handleDoneToday}
+                            visibleItem={visibleItem}
+                            setVisibleItem={setVisibleItem}
+                            completed={completed}
+                            setCompleted={setCompleted}
+                        />
                     ))}
                 </HomepageDataView>
             </ScrollView>

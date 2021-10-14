@@ -4,17 +4,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { useHabits } from '../context/HabitProvider';
 import { colors } from '../utils/colors';
 import { showHabitImageBackground } from '../utils/globalStyles';
-import { haptics } from '../utils/helpers/haptics';
 import * as Notifications from 'expo-notifications';
 import { cancelPushNotification } from '../utils/helpers/notification';
 import { toasts } from '../utils/helpers/toastMethods';
 import {
+    HabitCentered,
     HomeheaderContainer,
     LineBreak,
     ModalContent,
-    ProgressBarContainer,
-    ShowHabitActionsAddButton,
-    ShowHabitActionsAddContainer,
     ShowHabitActionsButton,
     ShowHabitActionsContainer,
     ShowHabitDataContainer,
@@ -27,8 +24,12 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 export default function ShowHabitModal({ modalVisible, setModalVisible, data, handleDoneToday }) {
     const [editHabitModalVisible, setEditHabitModalVisible] = useState(false);
     const [calendarModalVisible, setCalendarModalVisible] = useState(false);
-    const [prog, setProg] = useState(0);
     const [isEdit, setIsEdit] = useState(false);
+    const [id, setId] = useState('');
+
+    const { notificationId } = data;
+
+    console.log(notificationId);
 
     const { habits, habitSetter } = useHabits();
 
@@ -38,8 +39,37 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data, ha
     };
 
     useEffect(() => {
-        setProg(data.progress);
+        setId(notificationId);
     }, []);
+
+    const scheduleRepeating = async (hours, minutes, name) => {
+        const identifier = await Notifications.scheduleNotificationAsync({
+            content: {
+                title: name,
+                body: `Your daily reminder to ${name}`,
+            },
+            trigger: {
+                hour: hours,
+                minute: minutes,
+                repeats: true,
+            },
+        });
+        setId(identifier);
+    };
+
+    const scheduleOneTime = async (date, name) => {
+        const identifier = await Notifications.scheduleNotificationAsync({
+            content: {
+                title: name,
+                body: `Your reminder for ${name}`,
+            },
+            trigger: {
+                date: date,
+                repeats: false,
+            },
+        });
+        setId(identifier);
+    };
 
     const handleUpdate = async (
         habitName,
@@ -54,43 +84,18 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data, ha
         const parsedReminderTimeHour = habitReminderTime !== null && habitReminderTime.getHours();
         const parsedReminderTimeMinute =
             habitReminderTime !== null && habitReminderTime.getMinutes();
-        /* const parsedSpecificHours = habitSpecificDate !== null && habitSpecificDate.getHours();
-        const parsedSpecificMinutes = habitSpecificDate !== null && habitSpecificDate.getMinutes();
 
-        const currentReminderTimeHours = data.reminderTime?.getHours();
-        const currentReminderTimeMinutes = data.reminderTime?.getMinutes();
-        const currentSpecificTimeHours = data.specificDate?.getHours();
-        const currentSpecificTimeMinutes = data.specificDate?.getMinutes(); */
+        cancelPushNotification(id)
+            .then(() => {
+                console.log(`Succesfully removed notification with id: ${id}`);
+            })
+            .then(() => {
+                if (habitReminderTime !== null && daysCount > 1)
+                    scheduleRepeating(parsedReminderTimeHour, parsedReminderTimeMinute, habitName);
 
-        cancelPushNotification(data.notificationId).then(() => {
-            console.log(`Successfully removed notification with id: ${data.notificationId}`);
-        });
-
-        if (habitReminderTime !== null && daysCount > 1)
-            await Notifications.scheduleNotificationAsync({
-                content: {
-                    title: habitName,
-                    body: `Time to be productive! Your daily reminder to ${habitName}`,
-                },
-                trigger: {
-                    hour: parsedReminderTimeHour,
-                    minute: parsedReminderTimeMinute,
-                    repeats: true,
-                },
+                if (habitSpecificDate !== null) scheduleOneTime(habitSpecificDate, habitName);
             });
-        if (habitSpecificDate !== null)
-            await Notifications.scheduleNotificationAsync({
-                content: {
-                    title: habitName,
-                    body: `Your reminder for ${habitName}`,
-                },
-                trigger: {
-                    date: habitSpecificDate,
-                    repeats: false,
-                },
-            });
-
-        const newHabits = habits.filter((habit) => {
+        const newHabits = habits.map((habit) => {
             if (habit.name === data.name) {
                 habit.name = habitName;
                 habit.unitValue = unitValue;
@@ -100,26 +105,28 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data, ha
                 habit.times = timesCount;
                 habit.reminder = habitReminderTime !== null ? habitReminderTime : null;
                 habit.specificDate = habitSpecificDate !== null ? habitSpecificDate : null;
+                habit.notificationId = id;
             }
             return habit;
         });
+        console.log(newHabits);
         habitSetter(newHabits);
     };
 
-    const deleteHabit = (name) => {
+    const deleteHabit = async () => {
         const newHabits = habits.filter((habit) => habit.id !== data.id);
-        cancelPushNotification(data.notificationId);
-        setModalVisible(false);
         habitSetter(newHabits);
-        toasts.error(name);
+        setModalVisible(false);
+        cancelPushNotification(id);
+        toasts.error();
     };
 
-    const displayDeleteAlert = (data) => {
+    const displayDeleteAlert = () => {
         Alert.alert(
             'Delete Habit',
             'Are you sure you want to delete this habit? Action cannot be undone.',
             [
-                { text: 'OK', onPress: () => deleteHabit(data.name) },
+                { text: 'OK', onPress: () => deleteHabit() },
                 {
                     text: 'Cancel',
                     style: 'cancel',
@@ -160,9 +167,9 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data, ha
                             <View style={showHabitImageBackground}>
                                 <Image
                                     style={{
-                                        width: 90,
-                                        height: 90,
-                                        borderBottomWidth: 10,
+                                        width: 70,
+                                        height: 70,
+                                        borderBottomWidth: 5,
                                         borderRadius: 15,
                                         borderBottomColor: data.color,
                                     }}

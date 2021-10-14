@@ -31,20 +31,21 @@ const HabitScreen = ({ route, navigation }) => {
                     source={image}
                 />
             </ImageContainer>
-            {habitData.map(({ habitIcon, name, data, description }, index) => (
+            {habitData.map(({ habitIcon, name, data, description, color }, index) => (
                 <TouchableOpacity
                     key={index.toString()}
                     onPress={() =>
                         navigation.push('CreateHabit', {
                             habitIcon: habitIcon,
                             habitName: name,
+                            color: color,
                             ...data,
                         })
                     }
                 >
                     <HabitCardsContainer key={index.toString()} style={habitBoxShadow}>
                         <Image
-                            style={{ height: 45, width: 45, marginLeft: 15 }}
+                            style={{ height: 40, width: 40, marginLeft: 15 }}
                             source={habitIcon}
                         />
                         <HabitTextColumnContainer>

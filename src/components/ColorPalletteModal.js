@@ -1,8 +1,6 @@
 import React from 'react';
-import { View, ScrollView, TouchableOpacity } from 'react-native';
-import Text from '../utils/Text';
+import { View, TouchableOpacity } from 'react-native';
 import { ModalContent } from '../utils/StyledComponents/Styled';
-import { Ionicons } from '@expo/vector-icons';
 import { habitSelectionColors } from '../utils/colors';
 
 export default function ColorPalletteModal({ sheetRef, updateColor }) {
@@ -20,6 +18,7 @@ export default function ColorPalletteModal({ sheetRef, updateColor }) {
                     <View key={index.toString()} style={{}}>
                         <TouchableOpacity
                             onPress={() => {
+                                console.log(item);
                                 sheetRef.current.hide();
                                 updateColor(item);
                             }}

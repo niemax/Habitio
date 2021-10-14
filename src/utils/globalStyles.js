@@ -72,7 +72,7 @@ export const calendarStyles = {
     todayTextColor: colors.mainGreen,
     indicatorColor: colors.mainGreen,
     selectedDayBackgroundColor: colors.mainGreen,
-    textDayFontSize: 22,
+    textDayFontSize: 20,
     textMonthFontSize: 20,
     textDayHeaderFontSize: 14,
     dotColor: 'transparent',

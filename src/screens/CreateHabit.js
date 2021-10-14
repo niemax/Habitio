@@ -21,6 +21,7 @@ import {
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 import { useHabits } from '../context/HabitProvider';
+import schedulePushNotification from '../utils/helpers/notification';
 
 export default function CreateHabit({ navigation, route }) {
     const [updatedColor, setUpdatedColor] = useState();
@@ -34,10 +35,8 @@ export default function CreateHabit({ navigation, route }) {
     const [isEnabled, setIsEnabled] = useState(false);
     const [isEnabledDate, setIsEnabledDate] = useState(false);
     const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
-    const [isEnabledLocation, setIsEnabledLocation] = useState(false);
     const [selectedValue, setSelectedValue] = useState();
-
-    const modalizeRef = useRef(null);
+    const [id, setId] = useState();
 
     const toggleSwitch = () =>
         !isEnabledSpecific && setIsEnabled((previousState) => !previousState);
@@ -52,7 +51,7 @@ export default function CreateHabit({ navigation, route }) {
 
     const sheetRef = useRef(null);
 
-    const { habitName, habitIcon } = route.params;
+    const { habitName, habitIcon, color } = route.params;
 
     const placeholder = {
         label: 'Choose...',
@@ -75,13 +74,40 @@ export default function CreateHabit({ navigation, route }) {
         setReminderTime(currentDate);
     };
 
-    const handleHabitCreation = async () => {
-        setLoading(true);
+    const scheduleRepeating = async (hours, minutes) => {
+        const identifier = await Notifications.scheduleNotificationAsync({
+            content: {
+                title: habitName,
+                body: `Time to be productive! Your daily reminder to ${habitName}`,
+            },
+            trigger: {
+                hour: hours,
+                minute: minutes,
+                repeats: true,
+            },
+        });
+        setId(identifier);
+    };
 
+    const scheduleOneTime = async (date) => {
+        let identifier = await Notifications.scheduleNotificationAsync({
+            content: {
+                title: habitName,
+                body: `Time to be productive! Your daily reminder to ${habitName}`,
+            },
+            trigger: {
+                date: date,
+                repeats: false,
+            },
+        });
+        return identifier;
+    };
+
+    const handleHabitCreation = async () => {
         const newHabit = {
             name: habitName,
             id: Math.floor(Math.random() * 1000),
-            color: updatedColor,
+            color: color || updatedColor,
             icon: habitIcon,
             days: isEnabled ? daysCount : null,
             times: isEnabled ? timesCount : null,
@@ -95,45 +121,37 @@ export default function CreateHabit({ navigation, route }) {
             completedDates: {},
             timesCompleted: 0,
             progress: 0,
-            notificationId: Math.floor(Math.random() * 1000).toString(),
             diaryInputs: [],
         };
+        setLoading(true);
 
         const reminderTimeHours = reminderTime.getHours();
         const reminderTimeMinutes = reminderTime.getMinutes();
 
         try {
+            const identifier = await Notifications.scheduleNotificationAsync({
+                content: {
+                    title: habitName,
+                    body: `Time to be productive! Your daily reminder to ${habitName}`,
+                },
+                trigger: {
+                    hour: reminderTimeHours,
+                    minute: reminderTimeMinutes,
+                    repeats: true,
+                },
+            });
+
+            Object.assign(newHabit, { notificationId: identifier });
             CRUDHabits(newHabit);
-            if (isEnabledDate)
-                await Notifications.scheduleNotificationAsync({
-                    content: {
-                        title: habitName,
-                        body: `Time to be productive! Your daily reminder to ${habitName}`,
-                    },
-                    trigger: {
-                        hour: reminderTimeHours,
-                        minute: reminderTimeMinutes,
-                        repeats: true,
-                    },
-                });
-            if (isEnabledSpecific)
-                await Notifications.scheduleNotificationAsync({
-                    content: {
-                        title: habitName,
-                        body: `Your reminder for ${habitName}`,
-                    },
-                    trigger: {
-                        date: specificDate,
-                        repeats: false,
-                    },
-                });
-            setTimeout(() => {
-                setLoading(false);
-                navigation.navigate('MainTab');
-            }, 2000);
-        } catch (e) {
-            console.log(e);
+            console.log(newHabit);
+        } catch (error) {
+            console.error(error);
         }
+
+        setTimeout(() => {
+            setLoading(false);
+            navigation.navigate('MainTab');
+        }, 2000);
     };
 
     return (
@@ -179,12 +197,19 @@ export default function CreateHabit({ navigation, route }) {
                         />
                     </HabitCentered>
                     <HabitUtilityInfoContainer>
-                        <Text left marginLeft="5px" fontFamily="Regular">
+                        <Text left fontFamily="Regular">
                             Color
                         </Text>
                         <SelectHabitColorButton onPress={() => sheetRef.current.show()}>
                             {!colorUpdated ? (
-                                <Feather name="chevron-down" size={28} color="white" />
+                                <View
+                                    style={{
+                                        width: 35,
+                                        height: 35,
+                                        borderRadius: '50%',
+                                        backgroundColor: color,
+                                    }}
+                                />
                             ) : (
                                 <View
                                     style={{
@@ -196,9 +221,7 @@ export default function CreateHabit({ navigation, route }) {
                                 />
                             )}
                         </SelectHabitColorButton>
-                        <FrequencySwitchContainer>
-                            <Text fontFamily="Regular">Remind at a location</Text>
-                        </FrequencySwitchContainer>
+
                         <FrequencySwitchContainer>
                             <Text fontFamily="Regular">Remind on a specific date</Text>
                             <Switch
@@ -309,7 +332,7 @@ export default function CreateHabit({ navigation, route }) {
                 <ActionSheet
                     containerStyle={{
                         backgroundColor: '#141414',
-                        height: 220,
+                        height: 270,
                     }}
                     defaultOverlayOpacity={0.3}
                     gestureEnabled="true"

@@ -8,9 +8,28 @@ const randomWord = words[Math.floor(Math.random() * words.length)];
 export const toasts = {
     info: (habitName, color, setVisible) => {
         showMessage({
+            duration: 4500,
+            message: randomWord,
+            description: `You completed ${habitName}. Keep it up!`,
+            backgroundColor: color, // background color
+            titleStyle: {
+                fontFamily: 'Bold',
+                fontSize: 17,
+            },
+            textStyle: {
+                fontFamily: 'Medium',
+                fontSize: 15,
+            },
+            floating: 'true',
+            icon: 'success',
+            onPress: () => setVisible.current?.open(),
+        });
+    },
+    infoAdditional: (habitName, completedCount, color, setVisible) => {
+        showMessage({
             duration: 3500,
             message: randomWord,
-            description: `You completed ${habitName},\nkeep it up!`,
+            description: `You have completed ${habitName} now ${completedCount} times. Keep it up!`,
             backgroundColor: color, // background color
             titleStyle: {
                 fontFamily: 'Bold',

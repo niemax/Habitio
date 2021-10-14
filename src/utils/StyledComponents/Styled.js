@@ -42,15 +42,16 @@ export const TabContainer = styled.View`
 `;
 
 export const TabBarContainer = styled.View`
-    background-color: #191919;
+    background-color: #141414;
     opacity: 0.99;
     justify-content: space-evenly;
     align-items: center;
-    height: 75px;
+    height: 74px;
     width: 92%;
     position: absolute;
     bottom: 11px;
     left: 14px;
+    right: 14px;
     flex-direction: row;
     elevation: 0;
     border-radius: 15px;
@@ -113,13 +114,14 @@ export const HabitNextButton = styled.TouchableOpacity`
 export const PreDefinedContainer = styled.View`
     justify-content: center;
     align-items: center;
+    margin-bottom: 50px;
 `;
 export const PreDefinedHabitsContainer = styled.View`
     background-color: #383838;
     width: 360px;
     height: 80px;
     border-radius: ${radius};
-    margin-top: 20px;
+    margin-top: 16px;
     flex-direction: row;
     align-items: center;
 `;
@@ -162,7 +164,7 @@ export const CreateHabitHeader = styled.View`
     margin-top: 55px;
     flex-direction: row;
     justify-content: space-between;
-    padding-horizontal: 12px;
+    padding-horizontal: 10px;
 `;
 
 export const HabitInfoContainer = styled.View`
@@ -180,7 +182,7 @@ export const HabitDescriptionInput = styled.TextInput`
     background-color: #383838;
     border-radius: ${radius};
     padding: 15px;
-    margin-top: 10px;
+    margin-top: 13px;
     justify-content: center;
 `;
 
@@ -199,7 +201,7 @@ export const HabitUtilityInfoContainer = styled.View`
 export const SelectHabitColorButton = styled.TouchableOpacity`
     justify-content: center;
     margin-top: 10px;
-    background-color: #191919;
+    background-color: #141414;
     align-items: center;
     height: 70px;
     width: 70px;

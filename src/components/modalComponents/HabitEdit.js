@@ -224,7 +224,7 @@ export default function HabitEditContent(props) {
                 <ActionSheet
                     containerStyle={{
                         backgroundColor: '#141414',
-                        height: 220,
+                        height: 270,
                     }}
                     defaultOverlayOpacity={0.6}
                     gestureEnabled="true"

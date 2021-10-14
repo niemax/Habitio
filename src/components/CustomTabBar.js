@@ -27,7 +27,6 @@ const CustomTabBar = ({ state, navigation }) => {
                 {selected === 'Habits' && (
                     <TabAddButton
                         onPress={() => {
-                            haptics.selection();
                             navigation.navigate('StartHabitCreation');
                         }}
                     >

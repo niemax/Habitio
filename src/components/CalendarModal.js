@@ -21,8 +21,8 @@ const screenWidth = Dimensions.get('window').width;
 export default function CalendarModal({ calendarModalVisible, setCalendarModalVisible, data }) {
     const [diaryInput, setDiaryInput] = useState('');
     const [selectedDay, setSelectedDay] = useState(new Date());
-    const sheetRef = useRef(null);
     const { completedDates, times, name, unitValue, diaryInputs, id } = data;
+    const sheetRef = useRef(null);
     const { habits, habitSetter } = useHabits();
 
     const calendarDayPress = (day) => {
@@ -66,12 +66,11 @@ export default function CalendarModal({ calendarModalVisible, setCalendarModalVi
                 </CalendarHeader>
                 <Calendar
                     style={{
-                        marginTop: 35,
+                        marginTop: 20,
                         height: 340,
                         width: screenWidth,
                     }}
                     theme={calendarStyles}
-                    markingType="custom"
                     firstDay={1}
                     markedDates={completedDates}
                     onDayPress={(day) => calendarDayPress(day)}

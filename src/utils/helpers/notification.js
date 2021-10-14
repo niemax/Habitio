@@ -8,12 +8,12 @@ Notifications.setNotificationHandler({
     }),
 });
 
-export default async function schedulePushNotification(content, trigger, repeats) {
-    await Notifications.scheduleNotificationAsync({
+export default async function schedulePushNotification(content, trigger) {
+    const identifier = await Notifications.scheduleNotificationAsync({
         content: content,
-        trigger: trigger,
-        repeats: repeats,
+        trigger: { trigger, repeats: true },
     });
+    return identifier;
 }
 
 export const cancelPushNotification = async (id) => {
