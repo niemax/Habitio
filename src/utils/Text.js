@@ -21,6 +21,7 @@ const Text = styled.Text`
     fontFamily: ${(props) => props.fontFamily ?? 'SemiBold'};
     color: ${(props) => props.color ?? '#FFF'}
         ${({
+            twelve,
             fifteen,
             sixteen,
             nineteen,
@@ -54,6 +55,9 @@ const Text = styled.Text`
 
                 case fifteen:
                     return `font-size: 15px`;
+
+                case twelve:
+                    return `font-size: 12px`;
 
                 default:
                     return `font-size: 18px`;

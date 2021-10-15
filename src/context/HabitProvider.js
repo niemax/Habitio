@@ -18,6 +18,7 @@ const HabitProvider = ({ children }) => {
 
     const habitSetter = async (props) => {
         await AsyncStorage.setItem('@habit', JSON.stringify(props));
+        setHabits(props);
     };
 
     useEffect(() => {

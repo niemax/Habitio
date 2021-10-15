@@ -1,5 +1,12 @@
 import React, { useRef, useState } from 'react';
-import { ActivityIndicator, TouchableOpacity, View, Switch, ScrollView } from 'react-native';
+import {
+    ActivityIndicator,
+    TouchableOpacity,
+    View,
+    Switch,
+    ScrollView,
+    Platform,
+} from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ColorPalletteModal from '../components/ColorPalletteModal';
@@ -21,7 +28,6 @@ import {
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 import { useHabits } from '../context/HabitProvider';
-import schedulePushNotification from '../utils/helpers/notification';
 
 export default function CreateHabit({ navigation, route }) {
     const [updatedColor, setUpdatedColor] = useState();
@@ -36,7 +42,6 @@ export default function CreateHabit({ navigation, route }) {
     const [isEnabledDate, setIsEnabledDate] = useState(false);
     const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
     const [selectedValue, setSelectedValue] = useState();
-    const [id, setId] = useState();
 
     const toggleSwitch = () =>
         !isEnabledSpecific && setIsEnabled((previousState) => !previousState);
@@ -74,23 +79,8 @@ export default function CreateHabit({ navigation, route }) {
         setReminderTime(currentDate);
     };
 
-    const scheduleRepeating = async (hours, minutes) => {
-        const identifier = await Notifications.scheduleNotificationAsync({
-            content: {
-                title: habitName,
-                body: `Time to be productive! Your daily reminder to ${habitName}`,
-            },
-            trigger: {
-                hour: hours,
-                minute: minutes,
-                repeats: true,
-            },
-        });
-        setId(identifier);
-    };
-
     const scheduleOneTime = async (date) => {
-        let identifier = await Notifications.scheduleNotificationAsync({
+        await Notifications.scheduleNotificationAsync({
             content: {
                 title: habitName,
                 body: `Time to be productive! Your daily reminder to ${habitName}`,
@@ -100,7 +90,6 @@ export default function CreateHabit({ navigation, route }) {
                 repeats: false,
             },
         });
-        return identifier;
     };
 
     const handleHabitCreation = async () => {
@@ -128,25 +117,28 @@ export default function CreateHabit({ navigation, route }) {
         const reminderTimeHours = reminderTime.getHours();
         const reminderTimeMinutes = reminderTime.getMinutes();
 
-        try {
-            const identifier = await Notifications.scheduleNotificationAsync({
-                content: {
-                    title: habitName,
-                    body: `Time to be productive! Your daily reminder to ${habitName}`,
-                },
-                trigger: {
-                    hour: reminderTimeHours,
-                    minute: reminderTimeMinutes,
-                    repeats: true,
-                },
-            });
+        if (isEnabledDate) {
+            try {
+                const identifier = await Notifications.scheduleNotificationAsync({
+                    content: {
+                        title: habitName,
+                        body: `Time to be productive! Your daily reminder to ${habitName}`,
+                    },
+                    trigger: {
+                        hour: reminderTimeHours,
+                        minute: reminderTimeMinutes,
+                        repeats: true,
+                    },
+                });
 
-            Object.assign(newHabit, { notificationId: identifier });
-            CRUDHabits(newHabit);
-            console.log(newHabit);
-        } catch (error) {
-            console.error(error);
+                Object.assign(newHabit, { notificationId: identifier });
+            } catch (error) {
+                console.error(error);
+            }
         }
+
+        if (isEnabledSpecific) scheduleOneTime(specificDate);
+        CRUDHabits(newHabit);
 
         setTimeout(() => {
             setLoading(false);
@@ -182,7 +174,7 @@ export default function CreateHabit({ navigation, route }) {
                     <HabitCentered>
                         <HabitDescriptionInput
                             keyboardAppearance="dark"
-                            multiline={true}
+                            multiline={Platform.OS === 'android' ? false : true}
                             autoCorrect={false}
                             value={description}
                             placeholder="Habit Description"
@@ -206,7 +198,7 @@ export default function CreateHabit({ navigation, route }) {
                                     style={{
                                         width: 35,
                                         height: 35,
-                                        borderRadius: '50%',
+                                        borderRadius: 100,
                                         backgroundColor: color,
                                     }}
                                 />
@@ -215,7 +207,7 @@ export default function CreateHabit({ navigation, route }) {
                                     style={{
                                         width: 35,
                                         height: 35,
-                                        borderRadius: '50%',
+                                        borderRadius: 100,
                                         backgroundColor: updatedColor,
                                     }}
                                 />
@@ -276,7 +268,7 @@ export default function CreateHabit({ navigation, route }) {
                                 <FrequencyTouchable>
                                     <RNPickerSelect
                                         textInputProps={{
-                                            fontSize: 18,
+                                            fontSize: 17,
                                             color: 'white',
                                             marginTop: 3,
                                         }}

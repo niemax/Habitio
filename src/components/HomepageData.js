@@ -34,8 +34,6 @@ const currentDay = day.getDay();
 const HomepageData = () => {
     const [visibleItem, setVisibleItem] = useState();
     const [refreshing, setRefreshing] = useState(false);
-    const [, , setProg] = useState(0);
-    const [completed, setCompleted] = useState(false);
     const [date, setDate] = useState();
     const [diaryInput, setDiaryInput] = useState('');
 
@@ -56,7 +54,6 @@ const HomepageData = () => {
                 if (currentDay > habit.currentDay) {
                     habit.completed = false;
                 }
-                setProg(habits.progress);
                 return habit;
             });
             habitSetter(checkedHabits);
@@ -144,8 +141,6 @@ const HomepageData = () => {
         getData();
         const { date } = getCurrentDate();
         setDate(date);
-        getAllNotifications();
-        //deleteNotifications();
     }, [currentDay]);
 
     const onRefresh = useCallback(() => {
@@ -230,8 +225,7 @@ const HomepageData = () => {
                             handleDoneToday={handleDoneToday}
                             visibleItem={visibleItem}
                             setVisibleItem={setVisibleItem}
-                            completed={completed}
-                            setCompleted={setCompleted}
+                            completed={item.completed}
                         />
                     ))}
                 </HomepageDataView>

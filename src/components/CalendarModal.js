@@ -112,7 +112,7 @@ export default function CalendarModal({ calendarModalVisible, setCalendarModalVi
                                   marginBottom="15px"
                                   marginLeft="15px"
                                   left
-                                  sixteen
+                                  fifteen
                                   fontFamily="Regular"
                               >
                                   {format(new Date(date), 'dd-MM-yyyy')} - {input}

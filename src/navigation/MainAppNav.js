@@ -20,6 +20,7 @@ const MainTab = () => (
             }}
             name="Habits"
             component={Homepage}
+            initialParams={{ icon: 'list' }}
         />
         <Tab.Screen
             options={{
@@ -27,6 +28,7 @@ const MainTab = () => (
             }}
             name="Test"
             component={Test}
+            initialParams={{ icon: 'open-book' }}
         />
     </Tab.Navigator>
 );

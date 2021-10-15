@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, ScrollView, TouchableOpacity } from 'react-native';
+import { Image, ScrollView, TouchableOpacity, View } from 'react-native';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import {
     ButtonContainer,
@@ -59,37 +59,39 @@ export default function StartHabitCreation({ navigation }) {
                 />
             </InputContainer>
 
-            <ScrollView contentContainerStyle={{ height: '100%', marginBottom: 20 }}>
-                <Text left marginLeft="25px" marginTop="10px" color={colors.error}>
-                    {error}
-                </Text>
-                <Text left fontFamily="Regular" marginLeft="25px" marginTop="50px">
-                    Or choose from existing Habits
-                </Text>
-                <PreDefinedContainer style={habitBoxShadow}>
-                    {data.map(({ name, image, mainIcon, habits }, index) => (
-                        <TouchableOpacity
-                            key={index.toString()}
-                            onPress={() =>
-                                navigation.push('HabitScreen', {
-                                    image: image,
-                                    habitName: name,
-                                    habitData: habits,
-                                })
-                            }
-                        >
-                            <PreDefinedHabitsContainer>
-                                <Image
-                                    source={mainIcon}
-                                    style={{ height: 40, width: 40, marginLeft: 20 }}
-                                />
-                                <Text marginLeft="15px" fontFamily="Medium">
-                                    {name}
-                                </Text>
-                            </PreDefinedHabitsContainer>
-                        </TouchableOpacity>
-                    ))}
-                </PreDefinedContainer>
+            <ScrollView>
+                <View style={{ marginBottom: 60 }}>
+                    <Text left marginLeft="25px" marginTop="10px" color={colors.error}>
+                        {error}
+                    </Text>
+                    <Text left fontFamily="Regular" marginLeft="25px" marginTop="50px">
+                        Or choose from existing Habits
+                    </Text>
+                    <PreDefinedContainer style={habitBoxShadow}>
+                        {data.map(({ name, image, mainIcon, habits }, index) => (
+                            <TouchableOpacity
+                                key={index.toString()}
+                                onPress={() =>
+                                    navigation.push('HabitScreen', {
+                                        image: image,
+                                        habitName: name,
+                                        habitData: habits,
+                                    })
+                                }
+                            >
+                                <PreDefinedHabitsContainer>
+                                    <Image
+                                        source={mainIcon}
+                                        style={{ height: 40, width: 40, marginLeft: 20 }}
+                                    />
+                                    <Text marginLeft="15px" fontFamily="Medium">
+                                        {name}
+                                    </Text>
+                                </PreDefinedHabitsContainer>
+                            </TouchableOpacity>
+                        ))}
+                    </PreDefinedContainer>
+                </View>
             </ScrollView>
             <ButtonContainer>
                 <HabitNextButton onPress={handleOwnHabit}>

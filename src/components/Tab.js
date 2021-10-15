@@ -1,14 +1,18 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import Text from '../utils/Text';
 import { TabContainer } from '../utils/StyledComponents/Styled';
-import { Feather } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
+import { colors } from '../utils/colors';
 
 export default function Tab({ color, tab, onPress, icon }) {
     return (
         <TouchableOpacity onPress={onPress}>
             <TabContainer>
-                <Feather name="calendar" size={28} color="white" />
-                <Text style={{ fontSize: 13, color: color }}>{tab.name}</Text>
+                {icon && <Entypo name={icon} size={26} color={color} />}
+                <Text color={color} twelve fontFamily="Medium">
+                    {tab.name}
+                </Text>
             </TabContainer>
         </TouchableOpacity>
     );

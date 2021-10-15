@@ -35,7 +35,7 @@ export default function App() {
         loadFonts();
         registerForPushNotificationsAsync().then((token) => setExpoPushToken(token));
 
-        notificationListener.current = Notifications.addNotificationReceivedListener(
+        /*   notificationListener.current = Notifications.addNotificationReceivedListener(
             (notification) => {
                 setNotification(notification);
             }
@@ -50,7 +50,7 @@ export default function App() {
         return () => {
             Notifications.removeNotificationSubscription(notificationListener.current);
             Notifications.removeNotificationSubscription(responseListener.current);
-        };
+        }; */
     }, []);
 
     if (fontsLoaded) {

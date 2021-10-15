@@ -27,11 +27,11 @@ export const tabBarShadow = {
     shadowColor: '#000',
     shadowOffset: {
         width: 0,
-        height: 5,
+        height: 12,
     },
-    shadowOpacity: 0.36,
-    shadowRadius: 6.68,
-    elevation: 11,
+    shadowOpacity: 0.58,
+    shadowRadius: 16.0,
+    elevation: 24,
 };
 
 export const habitBoxShadow = {
@@ -84,14 +84,18 @@ export const noHabitsImageStyle = {
     marginTop: 10,
 };
 
-export const homepageBoxShadow = {
-    shadowColor: '#000',
-    shadowOffset: {
-        width: 0,
-        height: 2,
-    },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
+export const homepageBoxShadow = {};
 
-    elevation: 4,
+export const tabNavStyle = {
+    activeTintColor: '#03fff7',
+    inactiveTintColor: '#3b3b3b',
+    showLabel: false,
+    position: 'absolute',
+    left: 15,
+    right: 15,
+    height: 75,
+    width: '92%',
+    borderRadius: 15,
+    backgroundColor: '#141414',
+    bottom: 10,
 };

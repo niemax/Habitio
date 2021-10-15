@@ -26,7 +26,7 @@ export default function ColorPalletteModal({ sheetRef, updateColor }) {
                                 margin: 5,
                                 width: 35,
                                 height: 35,
-                                borderRadius: '50%',
+                                borderRadius: 100,
                                 backgroundColor: `${item}`,
                                 marginVertical: 20,
                             }}

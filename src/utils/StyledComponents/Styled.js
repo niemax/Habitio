@@ -39,6 +39,8 @@ export const TabAddButton = styled.TouchableOpacity`
 `;
 export const TabContainer = styled.View`
     padding-horizontal: 140px;
+    justify-content: center;
+    align-items: center;
 `;
 
 export const TabBarContainer = styled.View`
@@ -49,7 +51,7 @@ export const TabBarContainer = styled.View`
     height: 74px;
     width: 92%;
     position: absolute;
-    bottom: 11px;
+    bottom: 13px;
     left: 14px;
     right: 14px;
     flex-direction: row;
@@ -88,7 +90,7 @@ export const InputContainer = styled.View`
 export const HabitInput = styled.TextInput`
     width: 342px;
     height: 60px
-    background-color: #383838;
+    background-color: ${colors.mainBoxes} 
     border-radius: ${radius}; 
     padding: 15px;
 `;
@@ -117,7 +119,7 @@ export const PreDefinedContainer = styled.View`
     margin-bottom: 50px;
 `;
 export const PreDefinedHabitsContainer = styled.View`
-    background-color: #383838;
+    background-color: ${colors.mainBoxes};
     width: 360px;
     height: 80px;
     border-radius: ${radius};
@@ -147,7 +149,7 @@ export const ChevronTextContainer = styled.View`
 `;
 
 export const HabitCardsContainer = styled.View`
-    background-color: #292929;
+    background-color: ${colors.mainBoxes}
     width: 360px;
     height: 80px;
     border-radius: ${radius};
@@ -177,9 +179,9 @@ export const HabitCentered = styled.View`
 `;
 
 export const HabitDescriptionInput = styled.TextInput`
-    width: 370px;
+    width: 360px;
     height: 100px;
-    background-color: #383838;
+    background-color: ${colors.mainBoxes};
     border-radius: ${radius};
     padding: 15px;
     margin-top: 13px;
@@ -211,7 +213,7 @@ export const SelectHabitColorButton = styled.TouchableOpacity`
 export const FrequencyTouchable = styled.View`
     width: auto;
     height: 60px;
-    background-color: #383838;
+    background-color: ${colors.mainBoxes};
     border-radius: 15px;
     padding: 15px;
     margin-top: 10px;
@@ -225,7 +227,6 @@ export const FrequencySwitchContainer = styled.View`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding-horizontal: 3px;
 `;
 
 export const HomepageDataView = styled.View`
@@ -238,7 +239,7 @@ export const HomepageDataBox = styled.Pressable`
     margin-top: 2px;
     height: 75px;
     width: 350px;
-    background-color: #303030;
+    background-color: ${colors.mainBoxes};
     border-radius: ${radius};
     flex-direction: row;
     align-items: center;
@@ -283,7 +284,7 @@ export const ShowHabitActionsContainer = styled.View`
 export const ShowHabitActionsButton = styled.TouchableOpacity`
     width: 350px;
     height: 60px;
-    background-color: #383838;
+    background-color: ${colors.mainBoxes};
     justify-content: center;
     border-radius: 15px;
     padding: 15px;
@@ -297,19 +298,9 @@ export const ShowHabitActionsAddContainer = styled.View`
 
 export const ShowHabitActionsAddButton = styled.TouchableOpacity`
     width: 70px;
-    height: 60px;
+    height: ${colors.mainBoxes};
     justify-content: center;
     border-radius: 15px;
-    margin-top: 10px;
-`;
-
-export const ShowHabitActionsButtonDelete = styled.TouchableOpacity`
-    width: 350px;
-    height: 60px;
-    background-color: #f64141;
-    justify-content: center;
-    border-radius: 15px;
-    padding: 15px;
     margin-top: 10px;
 `;
 
@@ -386,7 +377,7 @@ export const AddDiaryModalHeaderContainer = styled.View`
 
 export const LeftAction = styled.View`
     width: 350px;
-    margin-top: 15px;
+    margin-top: 13px;
     border-radius: 15px;
     justify-content: center;
     align-items: flex-start;
@@ -402,7 +393,7 @@ export const TextNameAndStatus = styled.View``;
 export const RightAction = styled.TouchableOpacity`
     background-color: ${colors.mainGreen};
     width: 70px;
-    margin-top: 20px;
+    margin-top: 13px;
     border-radius: 15px;
     justify-content: center;
     align-items: center;

@@ -57,7 +57,7 @@ export default function HabitEditContent(props) {
                 <Text left twentyTwo fontFamily="SemiBold" marginLeft="10px" marginTop="30px">
                     {props.habitName}
                 </Text>
-                <Text left marginLeft="15px" fontFamily="Regular" marginTop="35px">
+                <Text left marginLeft="10px" fontFamily="Regular" marginTop="35px">
                     Description
                 </Text>
                 <HabitInfoContainer>
@@ -78,7 +78,7 @@ export default function HabitEditContent(props) {
                         />
                     </HabitCentered>
                     <HabitUtilityInfoContainer>
-                        <Text left marginLeft="7px" fontFamily="Regular">
+                        <Text left fontFamily="Regular">
                             Color
                         </Text>
                         <SelectHabitColorButton onPress={() => sheetRef.current.show()}>

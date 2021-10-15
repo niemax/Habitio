@@ -137,7 +137,7 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data, ha
 
     return (
         <GestureRecognizer config={config} onSwipeDown={() => setModalVisible(false)}>
-            <Modal animationType="slide" presentationStyle="pageSheet" visible={modalVisible}>
+            <Modal animationType="fade" presentationStyle="pageSheet" visible={modalVisible}>
                 <ModalContent>
                     <ScrollView>
                         <HomeheaderContainer>

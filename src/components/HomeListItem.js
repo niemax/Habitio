@@ -202,7 +202,7 @@ export default function HomeListItem({
                                 borderBottomRightRadius: 25,
                             }}
                             progress={prog / item.times}
-                            height={3.5}
+                            height={3}
                             width={333}
                             color={item.color}
                             borderColor="transparent"

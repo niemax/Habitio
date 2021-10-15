@@ -7,14 +7,11 @@ import {
     TabBarContainer,
 } from '../utils/StyledComponents/Styled';
 import Tab from './Tab';
-import { haptics } from '../utils/helpers/haptics';
 
 const CustomTabBar = ({ state, navigation }) => {
     const [selected, setSelected] = useState('Habits');
     const { routes } = state;
-    const renderColor = (currentTab) => (currentTab === selected ? '#2eb284' : 'white');
-
-    const todayIcon = <Feather name="calendar" size={24} color="black" />;
+    const renderColor = (currentTab) => (currentTab === selected ? '#2eb284' : 'gray');
 
     const handlePress = (activeTab) => {
         setSelected(activeTab);
@@ -40,7 +37,7 @@ const CustomTabBar = ({ state, navigation }) => {
                     tab={route}
                     onPress={() => handlePress(route.name)}
                     color={renderColor(route.name)}
-                    icon={todayIcon}
+                    icon={route.params.icon}
                 />
             ))}
         </TabBarContainer>
