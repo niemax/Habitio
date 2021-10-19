@@ -11,3 +11,5 @@ export const haptics = {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
     },
 };
+
+export const fuckOffLinter = {};

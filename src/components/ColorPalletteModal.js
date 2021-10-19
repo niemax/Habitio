@@ -15,8 +15,9 @@ export default function ColorPalletteModal({ sheetRef, updateColor }) {
                 }}
             >
                 {habitSelectionColors.map((item, index) => (
-                    <View key={index.toString()} style={{}}>
+                    <View>
                         <TouchableOpacity
+                            key={index.toString()}
                             onPress={() => {
                                 console.log(item);
                                 sheetRef.current.hide();

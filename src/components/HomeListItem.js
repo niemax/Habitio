@@ -5,7 +5,7 @@ import * as Progress from 'react-native-progress';
 import { Feather } from '@expo/vector-icons';
 import TextStyle from '../utils/Text';
 import { haptics } from '../utils/helpers/haptics';
-import { homepageBoxShadow } from '../utils/globalStyles';
+import { homepageBoxShadow, progressBarStyle } from '../utils/globalStyles';
 import {
     HomepageDataBox,
     HomepageDataView,
@@ -16,6 +16,8 @@ import {
 } from '../utils/StyledComponents/Styled';
 import ShowHabitModal from './ShowHabitModal';
 import { colors } from '../utils/colors';
+import ProgressModal from './ProgressModal';
+import { Fragment } from 'react';
 
 export default function HomeListItem({
     item,
@@ -24,6 +26,7 @@ export default function HomeListItem({
     visibleItem,
     setVisibleItem,
 }) {
+    const [progressModalVisible, setProgressModalVisible] = useState(false);
     const [prog, setProg] = useState(0);
     const LeftActions = () => (
         <LeftAction style={{ backgroundColor: item.completed ? colors.error : item.color }}>
@@ -36,7 +39,7 @@ export default function HomeListItem({
     );
 
     const RightActions = () => (
-        <>
+        <Fragment>
             <RightAction
                 onPress={() => {
                     haptics.selection();
@@ -97,15 +100,24 @@ export default function HomeListItem({
                     </TextStyle>
                 </RightAction>
             )}
-        </>
+        </Fragment>
     );
 
     const swipeableRef = useRef(null);
+    const { completedDates, icon, completed, times, color, name, unitValue } = item;
     return (
         <Swipeable
             ref={swipeableRef}
             onSwipeableLeftOpen={() => {
-                handleDoneToday(item);
+                handleDoneToday(item).then(() => {
+                    if (
+                        completed === false &&
+                        Object.keys(completedDates).length % 3 !== 0 &&
+                        Object.keys(completedDates).length !== 0
+                    ) {
+                        setProgressModalVisible(true);
+                    }
+                });
                 swipeableRef.current.close();
             }}
             renderLeftActions={LeftActions}
@@ -122,17 +134,13 @@ export default function HomeListItem({
                 >
                     <Image
                         style={{ height: 37, width: 37 }}
-                        source={
-                            item.icon
-                                ? item.icon
-                                : require('../assets/flatIcons/morning-routine.png')
-                        }
+                        source={icon ? icon : require('../assets/flatIcons/morning-routine.png')}
                     />
                     <TextNameAndStatus>
                         <TextStyle left marginLeft="15px" fontFamily="Medium">
-                            {item.name}
+                            {name}
                         </TextStyle>
-                        {item.completed ? (
+                        {completed ? (
                             <TextStyle
                                 left
                                 fifteen
@@ -141,7 +149,7 @@ export default function HomeListItem({
                                 fontFamily="Medium"
                                 style={{ opacity: 0.6 }}
                             >
-                                <Feather name="check" size={15} color={item.color} />
+                                <Feather name="check" size={15} color={color} />
                                 Done
                             </TextStyle>
                         ) : (
@@ -153,58 +161,52 @@ export default function HomeListItem({
                                 fontFamily="Medium"
                                 style={{ opacity: 0.6 }}
                             >
-                                <Feather name="x" size={15} color={item.color} />
+                                <Feather name="x" size={15} color={color} />
                                 Not done
                             </TextStyle>
                         )}
                     </TextNameAndStatus>
 
                     <ItemTimesContainer>
-                        <TextStyle color={item.color} marginLeft="10px" fontFamily="Bold" twenty>
-                            {item.times > 1 && (
-                                <TextStyle fontFamily="Extra" color={item.color} twenty>
+                        <TextStyle color={color} marginLeft="10px" fontFamily="Bold" twenty>
+                            {times > 1 && (
+                                <TextStyle fontFamily="Extra" color={color} twenty>
                                     {prog}
                                 </TextStyle>
                             )}
-                            {item.times > 1 && (
+                            {times > 1 && (
                                 <TextStyle
                                     fontFamily="Regular"
                                     twenty
-                                    color={item.color}
+                                    color={color}
                                     style={{ opacity: 0.8 }}
                                 >
                                     {''}/{''}
                                 </TextStyle>
                             )}
-                            {item.times > 1 && (
+                            {times > 1 && (
                                 <TextStyle
                                     twenty
                                     fontFamily="Regular"
-                                    color={item.color}
+                                    color={color}
                                     style={{ opacity: 0.8 }}
                                 >
-                                    {item.times}
+                                    {times}
                                 </TextStyle>
                             )}
                         </TextStyle>
 
                         <TextStyle sixteen fontFamily="Medium">
-                            {item.times > 1 && item.unitValue}
+                            {times > 1 && unitValue}
                         </TextStyle>
                     </ItemTimesContainer>
-                    {item.times > 1 && (
+                    {times > 1 && (
                         <Progress.Bar
-                            style={{
-                                position: 'absolute',
-                                bottom: 0,
-                                left: 6,
-                                borderBottomLeftRadius: 25,
-                                borderBottomRightRadius: 25,
-                            }}
-                            progress={prog / item.times}
+                            style={progressBarStyle}
+                            progress={prog / times}
                             height={3}
                             width={333}
-                            color={item.color}
+                            color={color}
                             borderColor="transparent"
                             borderWidth={0.2}
                         />
@@ -215,6 +217,13 @@ export default function HomeListItem({
                         handleDoneToday={handleDoneToday}
                         modalVisible={visibleItem === index}
                         setModalVisible={setVisibleItem}
+                        progressModalVisible={progressModalVisible}
+                        setProgressModalVisible={setProgressModalVisible}
+                    />
+                    <ProgressModal
+                        data={item}
+                        progressModalVisible={progressModalVisible}
+                        setProgressModalVisible={setProgressModalVisible}
                     />
                 </HomepageDataBox>
             </HomepageDataView>

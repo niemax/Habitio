@@ -1,26 +1,12 @@
 import React, { useRef, useState } from 'react';
-import {
-    ActivityIndicator,
-    TouchableOpacity,
-    View,
-    Switch,
-    ScrollView,
-    Platform,
-} from 'react-native';
+import { ActivityIndicator, TouchableOpacity, View, ScrollView } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ColorPalletteModal from '../components/ColorPalletteModal';
 import { colors } from '../utils/colors';
-import RNPickerSelect from 'react-native-picker-select';
 import ActionSheet from 'react-native-actions-sheet';
-import { habitBoxShadow } from '../utils/globalStyles';
-import * as Notifications from 'expo-notifications';
 import {
     CreateHabitHeader,
-    FrequencySwitchContainer,
-    FrequencyTouchable,
-    HabitCentered,
-    HabitDescriptionInput,
     HabitInfoContainer,
     HabitUtilityInfoContainer,
     MainContainer,
@@ -28,6 +14,9 @@ import {
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 import { useHabits } from '../context/HabitProvider';
+import CreateHabitInput from '../components/HabitDescriptionInput';
+import Frequency from '../components/Frequency';
+import handleHabitCreation from '../utils/helpers/createhabitHelpers';
 
 export default function CreateHabit({ navigation, route }) {
     const [updatedColor, setUpdatedColor] = useState();
@@ -42,13 +31,10 @@ export default function CreateHabit({ navigation, route }) {
     const [isEnabledDate, setIsEnabledDate] = useState(false);
     const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
     const [selectedValue, setSelectedValue] = useState();
-
     const toggleSwitch = () =>
         !isEnabledSpecific && setIsEnabled((previousState) => !previousState);
-
     const toggleSwitchDate = () =>
         !isEnabledSpecific && setIsEnabledDate((previousState) => !previousState);
-
     const toggleSwitchSpecific = () =>
         !isEnabledDate && !isEnabled && setIsEnabledSpecific((previousState) => !previousState);
 
@@ -57,12 +43,6 @@ export default function CreateHabit({ navigation, route }) {
     const sheetRef = useRef(null);
 
     const { habitName, habitIcon, color } = route.params;
-
-    const placeholder = {
-        label: 'Choose...',
-        value: null,
-        color: '#9EA0A4',
-    };
 
     const updateColor = (color) => {
         setUpdatedColor(color);
@@ -79,71 +59,24 @@ export default function CreateHabit({ navigation, route }) {
         setReminderTime(currentDate);
     };
 
-    const scheduleOneTime = async (date) => {
-        await Notifications.scheduleNotificationAsync({
-            content: {
-                title: habitName,
-                body: `Time to be productive! Your daily reminder to ${habitName}`,
-            },
-            trigger: {
-                date: date,
-                repeats: false,
-            },
-        });
-    };
-
-    const handleHabitCreation = async () => {
-        const newHabit = {
-            name: habitName,
-            id: Math.floor(Math.random() * 1000),
-            color: color || updatedColor,
-            icon: habitIcon,
-            days: isEnabled ? daysCount : null,
-            times: isEnabled ? timesCount : null,
-            specificDate: isEnabledSpecific ? specificDate : null,
-            reminder: isEnabledDate ? reminderTime : null,
-            unitValue: selectedValue,
-            description: description,
-            completedDay: null,
-            currentDay: 0,
-            completed: false,
-            completedDates: {},
-            timesCompleted: 0,
-            progress: 0,
-            diaryInputs: [],
-        };
-        setLoading(true);
-
-        const reminderTimeHours = reminderTime.getHours();
-        const reminderTimeMinutes = reminderTime.getMinutes();
-
-        if (isEnabledDate) {
-            try {
-                const identifier = await Notifications.scheduleNotificationAsync({
-                    content: {
-                        title: habitName,
-                        body: `Time to be productive! Your daily reminder to ${habitName}`,
-                    },
-                    trigger: {
-                        hour: reminderTimeHours,
-                        minute: reminderTimeMinutes,
-                        repeats: true,
-                    },
-                });
-
-                Object.assign(newHabit, { notificationId: identifier });
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        if (isEnabledSpecific) scheduleOneTime(specificDate);
-        CRUDHabits(newHabit);
-
-        setTimeout(() => {
-            setLoading(false);
-            navigation.navigate('MainTab');
-        }, 2000);
+    const newHabit = {
+        name: habitName,
+        id: Math.floor(Math.random() * 1000),
+        color: color || updatedColor,
+        icon: habitIcon,
+        days: isEnabled ? daysCount : null,
+        times: isEnabled ? timesCount : null,
+        specificDate: isEnabledSpecific ? specificDate : null,
+        reminder: isEnabledDate ? reminderTime : null,
+        unitValue: selectedValue,
+        description: description,
+        completedDay: null,
+        currentDay: 0,
+        completed: false,
+        completedDates: {},
+        timesCompleted: 0,
+        progress: 0,
+        diaryInputs: [],
     };
 
     return (
@@ -155,7 +88,21 @@ export default function CreateHabit({ navigation, route }) {
                 <Text twentyTwo fontFamily="Extra">
                     Create Habit
                 </Text>
-                <TouchableOpacity onPress={handleHabitCreation}>
+                <TouchableOpacity
+                    onPress={() =>
+                        handleHabitCreation(
+                            newHabit,
+                            setLoading,
+                            isEnabledDate,
+                            isEnabledSpecific,
+                            CRUDHabits,
+                            reminderTime,
+                            habitName,
+                            navigation,
+                            specificDate
+                        )
+                    }
+                >
                     {loading ? (
                         <ActivityIndicator color={colors.mainGreen} />
                     ) : (
@@ -171,23 +118,12 @@ export default function CreateHabit({ navigation, route }) {
                     Description
                 </Text>
                 <HabitInfoContainer>
-                    <HabitCentered>
-                        <HabitDescriptionInput
-                            keyboardAppearance="dark"
-                            multiline={Platform.OS === 'android' ? false : true}
-                            autoCorrect={false}
-                            value={description}
-                            placeholder="Habit Description"
-                            placeholderTextColor="gray"
-                            style={{
-                                color: 'white',
-                                fontSize: 17,
-                                fontFamily: 'SemiBold',
-                                ...habitBoxShadow,
-                            }}
-                            onChangeText={(text) => setDescription(text)}
-                        />
-                    </HabitCentered>
+                    <CreateHabitInput
+                        values={description}
+                        actions={{
+                            setValue: (text) => setDescription(text),
+                        }}
+                    />
                     <HabitUtilityInfoContainer>
                         <Text left fontFamily="Regular">
                             Color
@@ -214,102 +150,23 @@ export default function CreateHabit({ navigation, route }) {
                             )}
                         </SelectHabitColorButton>
 
-                        <FrequencySwitchContainer>
-                            <Text fontFamily="Regular">Remind on a specific date</Text>
-                            <Switch
-                                trackColor={{ false: '#767577', true: colors.mainGreen }}
-                                thumbColor={isEnabledSpecific ? '#f5dd4b' : '#f4f3f4'}
-                                ios_backgroundColor="#3e3e3e"
-                                onValueChange={toggleSwitchSpecific}
-                                value={isEnabledSpecific}
-                            />
-                        </FrequencySwitchContainer>
-                        {isEnabledSpecific && (
-                            <DateTimePicker
-                                testID="dateTimePicker"
-                                value={specificDate}
-                                mode="datetime"
-                                is24Hour="true"
-                                display="default"
-                                themeVariant="dark"
-                                onChange={onChangeSpecific}
-                            />
-                        )}
-                        <FrequencySwitchContainer>
-                            <Text fontFamily="Regular">Repeat</Text>
-                            <Switch
-                                trackColor={{ false: '#767577', true: colors.mainGreen }}
-                                thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-                                ios_backgroundColor="#3e3e3e"
-                                onValueChange={toggleSwitch}
-                                value={isEnabled}
-                            />
-                        </FrequencySwitchContainer>
-                        {isEnabled && (
-                            <>
-                                <FrequencyTouchable>
-                                    <Text>Days per Week</Text>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            daysCount > 1 && setDaysCount(daysCount - 1);
-                                        }}
-                                    >
-                                        <Feather name="minus-circle" size={30} color="gray" />
-                                    </TouchableOpacity>
-                                    <Text fontFamily="Bold" twentyEight>
-                                        {daysCount === 7 ? <Text>Every day</Text> : daysCount}
-                                    </Text>
-                                    <TouchableOpacity
-                                        onPress={() => daysCount < 7 && setDaysCount(daysCount + 1)}
-                                    >
-                                        <Feather name="plus-circle" size={30} color="gray" />
-                                    </TouchableOpacity>
-                                </FrequencyTouchable>
-                                <FrequencyTouchable>
-                                    <RNPickerSelect
-                                        textInputProps={{
-                                            fontSize: 17,
-                                            color: 'white',
-                                            marginTop: 3,
-                                        }}
-                                        placeholder={placeholder}
-                                        onValueChange={(value) => setSelectedValue(value)}
-                                        items={[
-                                            { label: 'times', value: 'times' },
-                                            { label: 'glasses', value: 'glasses' },
-                                            { label: 'minutes', value: 'minutes' },
-                                            { label: 'hours', value: 'hours' },
-                                            { label: 'kilometers', value: 'kilometers' },
-                                            { label: 'bottles', value: 'bottles' },
-                                        ]}
-                                    />
-                                    <Text>Per day</Text>
-                                    <TouchableOpacity
-                                        onPress={() =>
-                                            timesCount > 1 && setTimesCount(timesCount - 1)
-                                        }
-                                    >
-                                        <Feather name="minus-circle" size={30} color="gray" />
-                                    </TouchableOpacity>
-                                    <Text fontFamily="Bold" twentyEight>
-                                        {timesCount}
-                                    </Text>
-                                    <TouchableOpacity onPress={() => setTimesCount(timesCount + 1)}>
-                                        <Feather name="plus-circle" size={30} color="gray" />
-                                    </TouchableOpacity>
-                                </FrequencyTouchable>
-                            </>
-                        )}
-                        <FrequencySwitchContainer>
-                            <Text fontFamily="Regular">Reminder</Text>
-                            <Switch
-                                trackColor={{ false: '#767577', true: colors.mainGreen }}
-                                thumbColor={isEnabledDate ? '#f5dd4b' : '#f4f3f4'}
-                                ios_backgroundColor="#3e3e3e"
-                                onValueChange={toggleSwitchDate}
-                                value={isEnabledDate}
-                            />
-                        </FrequencySwitchContainer>
+                        <Frequency
+                            switchStates={{ isEnabledSpecific, isEnabled, isEnabledDate }}
+                            methods={{
+                                toggleSwitchSpecific,
+                                onChangeSpecific,
+                                toggleSwitch,
+                                toggleSwitchDate,
+                            }}
+                            setters={{
+                                setDaysCount,
+                                setSelectedValue,
+                                setTimesCount,
+                            }}
+                            values={{ specificDate, isEnabledSpecific }}
+                            states={{ daysCount, timesCount, selectedValue }}
+                        />
+
                         {isEnabledDate && (
                             <DateTimePicker
                                 value={reminderTime}

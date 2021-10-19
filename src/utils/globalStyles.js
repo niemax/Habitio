@@ -99,3 +99,18 @@ export const tabNavStyle = {
     backgroundColor: '#141414',
     bottom: 10,
 };
+
+export const showHabitImage = {
+    width: 70,
+    height: 70,
+    borderBottomWidth: 5,
+    borderRadius: 15,
+};
+
+export const progressBarStyle = {
+    position: 'absolute',
+    bottom: 0,
+    left: 6,
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius: 25,
+};

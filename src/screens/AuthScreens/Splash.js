@@ -7,7 +7,7 @@ export const SplashLottie = () => {
     return (
         <>
             <Image source={require('../../assets/brand.png')} style={{ width: 300, height: 300 }} />
-            <ActivityIndicator size="small" color={colors.mainGreen} style={{ marginTop: 150 }} />
+            <ActivityIndicator size="small" color={colors.mainGreen} style={{ marginTop: 70 }} />
         </>
     );
 };

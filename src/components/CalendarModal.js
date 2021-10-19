@@ -121,6 +121,7 @@ export default function CalendarModal({ calendarModalVisible, setCalendarModalVi
                         : null}
 
                     <CalendarBottomSheet
+                        data={data}
                         diaryInput={diaryInput}
                         sheetRef={sheetRef}
                         selectedDay={selectedDay}

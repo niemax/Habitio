@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Modal } from 'react-native';
-import ColorPalletteModal from './ColorPalletteModal';
 import HabitEditContent from './modalComponents/HabitEdit';
 
 export default function ShowHabitEditModal({
@@ -55,7 +54,7 @@ export default function ShowHabitEditModal({
         setTimeout(() => {
             setLoading(false);
             setEditHabitModalVisible(false);
-        }, 1500);
+        }, 200);
     };
 
     const onChangeSpecific = (event, selectedDate) => {
@@ -86,36 +85,43 @@ export default function ShowHabitEditModal({
     return (
         <Modal animationType="slide" presentationStyle="pageSheet" visible={editHabitModalVisible}>
             <HabitEditContent
-                handleSubmit={handleSubmit}
-                setEditHabitModalVisible={setEditHabitModalVisible}
-                editHabitModalVisible={editHabitModalVisible}
-                loading={loading}
-                habitName={habitName}
-                unitValue={unitValue}
-                setHabitUnitValue={setHabitUnitValue}
-                stateDescription={stateDescription}
-                setStateDescription={setStateDescription}
-                modalVisible={modalVisible}
-                setModalVisible={setModalVisible}
-                isEnabledSpecific={isEnabledSpecific}
-                toggleSwitchSpecific={toggleSwitchSpecific}
-                habitSpecificDate={habitSpecificDate}
-                isEnabled={isEnabled}
-                toggleSwitch={toggleSwitch}
-                daysCount={daysCount}
-                setDaysCount={setDaysCount}
-                timesCount={timesCount}
-                setTimesCount={setTimesCount}
-                isEnabledDate={isEnabledDate}
-                setIsEnabledDate={setIsEnabledDate}
-                toggleSwitchDate={toggleSwitchDate}
-                habitReminderTime={habitReminderTime}
-                onChangeReminderTime={onChangeReminderTime}
-                onChangeSpecific={onChangeSpecific}
-                color={color}
-                updatedColor={updatedColor}
-                colorUpdated={colorUpdated}
-                updateColor={updateColor}
+                methods={{
+                    handleSubmit,
+                    updateColor,
+                    toggleSwitchSpecific,
+                    toggleSwitch,
+                    toggleSwitchDate,
+                    onChangeSpecific,
+                    onChangeReminderTime,
+                }}
+                setters={{
+                    setEditHabitModalVisible,
+                    setHabitUnitValue,
+                    setStateDescription,
+                    setDaysCount,
+                    setTimesCount,
+                    setIsEnabledDate,
+                    setModalVisible,
+                    habitSetReminderTime,
+                    habitSetSpecificDate,
+                }}
+                states={{
+                    habitName,
+                    loading,
+                    stateDescription,
+                    daysCount,
+                    timesCount,
+                    modalVisible,
+                    isEnabled,
+                    isEnabledDate,
+                    isEnabledSpecific,
+                    habitSpecificDate,
+                    habitReminderTime,
+                    color,
+                    colorUpdated,
+                    updatedColor,
+                    habitUnitValue,
+                }}
             />
         </Modal>
     );

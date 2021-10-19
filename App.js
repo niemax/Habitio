@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Platform } from 'react-native';
+import { Platform, View } from 'react-native';
 import Constants from 'expo-constants';
 import FlashMessage from 'react-native-flash-message';
 import AppLoading from 'expo-app-loading';
@@ -11,6 +11,7 @@ import { MenuProvider } from 'react-native-popup-menu';
 import * as Notifications from 'expo-notifications';
 import MainAppStack from './src/navigation/MainAppNav';
 import HabitProvider from './src/context/HabitProvider';
+import { colors } from './src/utils/colors';
 
 export default function App() {
     const [, , setExpoPushToken] = useState('');
@@ -33,9 +34,9 @@ export default function App() {
 
     useEffect(() => {
         loadFonts();
-        registerForPushNotificationsAsync().then((token) => setExpoPushToken(token));
+        /*  registerForPushNotificationsAsync().then((token) => setExpoPushToken(token));
 
-        /*   notificationListener.current = Notifications.addNotificationReceivedListener(
+        notificationListener.current = Notifications.addNotificationReceivedListener(
             (notification) => {
                 setNotification(notification);
             }
@@ -55,16 +56,18 @@ export default function App() {
 
     if (fontsLoaded) {
         return (
-            <NavigationContainer>
-                <HabitProvider>
-                    <SafeAreaProvider>
-                        <MenuProvider>
-                            <FlashMessage position="top" />
-                            <MainAppStack />
-                        </MenuProvider>
-                    </SafeAreaProvider>
-                </HabitProvider>
-            </NavigationContainer>
+            <View style={{ flex: 1, backgroundColor: colors.mainBackground }}>
+                <NavigationContainer>
+                    <HabitProvider>
+                        <SafeAreaProvider>
+                            <MenuProvider>
+                                <FlashMessage position="top" />
+                                <MainAppStack />
+                            </MenuProvider>
+                        </SafeAreaProvider>
+                    </HabitProvider>
+                </NavigationContainer>
+            </View>
         );
     }
     return <AppLoading />;

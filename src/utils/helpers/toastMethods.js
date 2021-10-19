@@ -6,7 +6,7 @@ const words = ['Awesome!', 'Splendid!', 'Horrendous!', 'Excellent!', 'Great!'];
 const randomWord = words[Math.floor(Math.random() * words.length)];
 
 export const toasts = {
-    info: (habitName, color, setVisible) => {
+    info: (habitName, color) => {
         showMessage({
             duration: 4500,
             message: randomWord,
@@ -22,7 +22,6 @@ export const toasts = {
             },
             floating: 'true',
             icon: 'success',
-            onPress: () => setVisible.current?.open(),
         });
     },
     infoAdditional: (habitName, completedCount, color, setVisible) => {

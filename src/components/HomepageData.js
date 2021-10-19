@@ -1,7 +1,6 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { Image, RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { Image, ScrollView, TouchableOpacity } from 'react-native';
 import { colors } from '../utils/colors';
-import { haptics } from '../utils/helpers/haptics';
 import { Feather } from '@expo/vector-icons';
 import { useHabits } from '../context/HabitProvider';
 import {
@@ -13,29 +12,21 @@ import {
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 import { getCurrentDate } from '../utils/helpers/currentDate';
-import {
-    getAllNotifications,
-    scheduleOneTimeWeekNotification,
-} from '../utils/helpers/notification';
+import { scheduleOneTimeWeekNotification } from '../utils/helpers/notification';
 import { noHabitsImageStyle } from '../utils/globalStyles';
 import LottieView from 'lottie-react-native';
-import { format } from 'date-fns';
-import { toasts } from '../utils/helpers/toastMethods';
 import { useNavigation } from '@react-navigation/core';
 import HomeListItem from './HomeListItem';
-
-const wait = (timeout) => {
-    return new Promise((resolve) => setTimeout(resolve, timeout));
-};
+import handleDoneToday from '../utils/helpers/handleDone';
+import diaryInputHandler from '../utils/helpers/diaryInputHandler';
 
 const day = new Date();
 const currentDay = day.getDay();
 
 const HomepageData = () => {
     const [visibleItem, setVisibleItem] = useState();
-    const [refreshing, setRefreshing] = useState(false);
     const [date, setDate] = useState();
-    const [diaryInput, setDiaryInput] = useState('');
+    const [diaryInput] = useState('');
 
     const navigation = useNavigation();
 
@@ -47,8 +38,9 @@ const HomepageData = () => {
         scheduleOneTimeWeekNotification(currentDay);
     }, []);
 
-    const getData = async () => {
+    useEffect(() => {
         getHabits();
+        console.log(habits);
         try {
             const checkedHabits = habits.map((habit) => {
                 if (currentDay > habit.currentDay) {
@@ -60,93 +52,8 @@ const HomepageData = () => {
         } catch (e) {
             console.error(e);
         }
-    };
-
-    const diaryInputHandler = (item) => {
-        const diaryInputObj = {
-            date: day,
-            input: diaryInput,
-        };
-        try {
-            const updatedHabits = habits.filter((habit) => {
-                if (habit.id === item.id) {
-                    habit.diaryInputs.push(diaryInputObj);
-                }
-                return habit;
-            });
-            habitSetter(updatedHabits);
-        } catch (e) {
-            console.error(e);
-        }
-    };
-
-    const handleDoneToday = async (data) => {
-        const newDate = format(new Date(), 'yyyy-MM-dd');
-
-        haptics.success();
-        try {
-            const updatedHabits = habits.filter((habit) => {
-                const completedDatesObj = { ...habit.completedDates };
-
-                if (!(newDate in completedDatesObj)) {
-                    completedDatesObj[newDate] = {
-                        marked: false,
-                        selected: true,
-                        customStyles: {
-                            container: {
-                                backgroundColor: colors.mainGreen,
-                            },
-                        },
-                    };
-                    if (habit.name === data.name) {
-                        habit.currentDay = currentDay;
-                        habit.completed = true;
-                        habit.completedDates = completedDatesObj;
-                        if (Object.keys(habit.completedDates).length % 3 === 0) {
-                            setTimeout(() => {
-                                toasts.infoAdditional(
-                                    data.name,
-                                    Object.keys(habit.completedDates).length,
-                                    data.color,
-                                    modalizeRef
-                                );
-                            }, 1200);
-                            animation.current.play(30, 120);
-                        } else {
-                            toasts.info(data.name, data.color, modalizeRef);
-                        }
-
-                        setTimeout(() => {
-                            animation.current.reset();
-                        }, 5000);
-                    }
-                } else {
-                    delete completedDatesObj[newDate];
-                    if (habit.name === data.name) {
-                        habit.currentDay = currentDay;
-                        habit.completed = false;
-                        habit.completedDates = completedDatesObj;
-                        haptics.warning();
-                    }
-                }
-                return habit;
-            });
-            habitSetter(updatedHabits);
-        } catch (e) {
-            console.error(e);
-        }
-    };
-
-    useEffect(() => {
-        getData();
         const { date } = getCurrentDate();
         setDate(date);
-    }, [currentDay]);
-
-    const onRefresh = useCallback(() => {
-        setRefreshing(true);
-        getHabits();
-        wait(200).then(() => setRefreshing(false));
     }, []);
 
     return (
@@ -182,18 +89,7 @@ const HomepageData = () => {
                     />
                 </TouchableOpacity>
             </HomeheaderContainer>
-            <ScrollView
-                refreshControl={
-                    <RefreshControl
-                        title="Pull to refresh"
-                        tintColor={colors.mainGreen}
-                        titleColor={colors.mainGreen}
-                        refreshing={refreshing}
-                        onRefresh={onRefresh}
-                    />
-                }
-                style={{ marginBottom: 90 }}
-            >
+            <ScrollView style={{ marginBottom: 90 }}>
                 <Text twentyTwo fontFamily="Bold" marginTop="30px" marginLeft="15px" left>
                     Your Habits{' '}
                     <Text fontFamily="Medium" color="gray">
@@ -201,7 +97,7 @@ const HomepageData = () => {
                     </Text>
                 </Text>
                 <HomepageDataView>
-                    {Object.values(habits).length <= 0 && (
+                    {Object.keys(habits).length <= 0 && (
                         <NoHabitsContainer>
                             <Text twenty fontFamily="MediumItalic">
                                 No habits yet
@@ -221,8 +117,16 @@ const HomepageData = () => {
                             item={item}
                             index={index}
                             modalizeRef={modalizeRef}
-                            diaryInputHandler={diaryInputHandler}
-                            handleDoneToday={handleDoneToday}
+                            handleDoneToday={() =>
+                                handleDoneToday(
+                                    item,
+                                    habits,
+                                    currentDay,
+                                    modalizeRef,
+                                    animation,
+                                    habitSetter
+                                )
+                            }
                             visibleItem={visibleItem}
                             setVisibleItem={setVisibleItem}
                             completed={item.completed}

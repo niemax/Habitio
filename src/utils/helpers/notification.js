@@ -8,17 +8,11 @@ Notifications.setNotificationHandler({
     }),
 });
 
-export default async function schedulePushNotification(content, trigger) {
-    const identifier = await Notifications.scheduleNotificationAsync({
-        content: content,
-        trigger: { trigger, repeats: true },
-    });
-    return identifier;
-}
-
 export const cancelPushNotification = async (id) => {
     try {
-        await Notifications.cancelScheduledNotificationAsync(id);
+        await Notifications.cancelScheduledNotificationAsync(id).then(() => {
+            console.log(`Successfully cancelled notification with id: ${id}`);
+        });
     } catch (error) {
         console.error(error);
     }
@@ -54,7 +48,7 @@ export const scheduleOneTimeWeekNotification = async (currentDay) => {
                     body: `It's the middle of the week. Keep doing what you're doing, you can do it!`,
                 },
                 trigger: {
-                    seconds: 20 * 60,
+                    seconds: 20 * 60 * 60,
                 },
             });
             break;
@@ -62,7 +56,7 @@ export const scheduleOneTimeWeekNotification = async (currentDay) => {
             await Notifications.scheduleNotificationAsync({
                 content: {
                     title: 'Habitio',
-                    body: `Remember also to take time to relax and not worry about habits.`,
+                    body: `Sundays are chill. Be chill yourself too!`,
                 },
                 trigger: {
                     seconds: 20 * 60,
@@ -71,4 +65,69 @@ export const scheduleOneTimeWeekNotification = async (currentDay) => {
             break;
         default:
     }
+};
+
+export const scheduleRepeatingEdit = async (hours, minutes, name) => {
+    const identifier = await Notifications.scheduleNotificationAsync({
+        content: {
+            title: name,
+            body: `Your daily reminder to ${name}`,
+        },
+        trigger: {
+            hour: hours,
+            minute: minutes,
+            repeats: true,
+        },
+    });
+    return { identifier };
+};
+
+export const scheduleOneTimeEdit = async (date, name, setter) => {
+    const identifier = await Notifications.scheduleNotificationAsync({
+        content: {
+            title: name,
+            body: `Your reminder for ${name}`,
+        },
+        trigger: {
+            date: date,
+            repeats: false,
+        },
+    });
+    return { identifier };
+};
+
+export const chRepeating = async (name, hours, minutes, newHabit) => {
+    try {
+        const identifier = await Notifications.scheduleNotificationAsync({
+            content: {
+                title: name,
+                body: `Time to be productive! Your daily reminder to ${name}`,
+            },
+            trigger: {
+                hour: hours,
+                minute: minutes,
+                repeats: true,
+            },
+        });
+
+        Object.assign(newHabit, { notificationId: identifier });
+        return { identifier };
+    } catch (error) {
+        console.error(error);
+    }
+    console.log(newHabit);
+};
+
+export const cHScheduleOneTime = async (name, date) => {
+    const identifier = await Notifications.scheduleNotificationAsync({
+        content: {
+            title: name,
+            body: `Reminder to ${name}`,
+        },
+        trigger: {
+            date: date,
+            repeats: false,
+        },
+    });
+    return { identifier };
 };

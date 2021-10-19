@@ -44,7 +44,7 @@ export const TabContainer = styled.View`
 `;
 
 export const TabBarContainer = styled.View`
-    background-color: #141414;
+    background-color: #191919;
     opacity: 0.99;
     justify-content: space-evenly;
     align-items: center;
@@ -397,4 +397,51 @@ export const RightAction = styled.TouchableOpacity`
     border-radius: 15px;
     justify-content: center;
     align-items: center;
+`;
+
+export const ProgressModalMainView = styled.View`
+    flex: 1;
+    background-color: black;
+    opacity: 0.979;
+`;
+
+export const ProgressModalView = styled.View`
+    margin: 20px;
+    background-color: ${colors.mainGreen};
+    border-radius: ${radius};
+    padding: 10px;
+    align-items: center;
+    height: auto;
+    width: 350px;
+    opacity: 0.979;
+`;
+
+export const ProgressModalCentered = styled.View`
+    flex: 1;
+    background-color: rgba(0, 0, 0, 0.6);
+
+    justify-content: center;
+    align-items: center;
+    margin-top: 22px;
+`;
+
+export const ProgressModalCloseButton = styled.TouchableOpacity`
+    justify-content: center;
+    background-color: transparent;
+    border: 2px;
+    border-color: ${colors.mainBackground};
+    align-items: center;
+    height: 60px;
+    width: 90%;
+    border-radius: 30px;
+    margin-top: 20px;
+`;
+export const ProgressModalShareButton = styled.TouchableOpacity`
+    justify-content: center;
+    background-color: ${colors.mainBoxes};
+    align-items: center;
+    height: 60px;
+    width: 90%;
+    border-radius: 30px;
+    margin-top: 10px;
 `;
