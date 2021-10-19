@@ -17,6 +17,7 @@ import { useHabits } from '../context/HabitProvider';
 import CreateHabitInput from '../components/HabitDescriptionInput';
 import Frequency from '../components/Frequency';
 import handleHabitCreation from '../utils/helpers/createhabitHelpers';
+import { habitColor } from '../utils/globalStyles';
 
 export default function CreateHabit({ navigation, route }) {
     const [updatedColor, setUpdatedColor] = useState();
@@ -132,19 +133,15 @@ export default function CreateHabit({ navigation, route }) {
                             {!colorUpdated ? (
                                 <View
                                     style={{
-                                        width: 35,
-                                        height: 35,
-                                        borderRadius: 100,
                                         backgroundColor: color,
+                                        ...habitColor,
                                     }}
                                 />
                             ) : (
                                 <View
                                     style={{
-                                        width: 35,
-                                        height: 35,
-                                        borderRadius: 100,
                                         backgroundColor: updatedColor,
+                                        ...habitColor,
                                     }}
                                 />
                             )}

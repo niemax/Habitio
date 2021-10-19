@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Modal, Alert, Image } from 'react-native';
+import { Modal, Image } from 'react-native';
 import Text from '../utils/Text';
 import { colors } from '../utils/colors';
 import {
@@ -13,7 +13,7 @@ export default function ProgressModal({ progressModalVisible, setProgressModalVi
     const { name, completedDates } = data;
     return (
         <ProgressModalCentered>
-            <Modal animationType="slide" transparent={true} visible={progressModalVisible}>
+            <Modal animationType="fade" transparent={true} visible={progressModalVisible}>
                 <ProgressModalCentered>
                     <ProgressModalView>
                         <Image
@@ -21,7 +21,7 @@ export default function ProgressModal({ progressModalVisible, setProgressModalVi
                             style={{ height: 140, width: 140, marginBottom: 20 }}
                         />
                         <Text fontFamily="Bold" twentyEight>
-                            Wow. Good job{' '}
+                            Good job,{' '}
                             <Text color="gold" fontFamily="Extra" twentyEight>
                                 Champ!
                             </Text>
@@ -29,17 +29,17 @@ export default function ProgressModal({ progressModalVisible, setProgressModalVi
                         <Text marginTop="50px" fontFamily="Bold" nineteen>
                             {name} completed{'\n'}
                             <Text color="gold" fontFamily="Extra" twentyEight>
-                                {Object.keys(completedDates).length} times!
+                                {Object.keys(completedDates).length} times
                             </Text>
                         </Text>
-                        <Text marginTop="50px" fontFamily="Medium" sixteen>
-                            Aim for the{' '}
-                            <Text fontFamily="Bold" nineteen color="#0FCBFA">
-                                skies!
+                        <Text fontFamily="Extra" marginTop="50px" nineteen color="gold">
+                            Only sky{' '}
+                            <Text fontFamily="Medium" sixteen>
+                                is the limit!
                             </Text>
                         </Text>
                         <ProgressModalShareButton>
-                            <Text fontFamily="SemiBold" twenty>
+                            <Text fontFamily="SemiBold" twenty color={colors.mainGreen}>
                                 Share
                             </Text>
                         </ProgressModalShareButton>
@@ -54,39 +54,3 @@ export default function ProgressModal({ progressModalVisible, setProgressModalVi
         </ProgressModalCentered>
     );
 }
-
-const styles = StyleSheet.create({
-    centeredView: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 22,
-    },
-    modalView: {
-        margin: 20,
-        backgroundColor: colors.mainBackground,
-        borderRadius: 20,
-        padding: 35,
-        alignItems: 'center',
-    },
-    button: {
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2,
-    },
-    buttonOpen: {
-        backgroundColor: '#F194FF',
-    },
-    buttonClose: {
-        backgroundColor: '#2196F3',
-    },
-    textStyle: {
-        color: 'white',
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: 'center',
-    },
-});

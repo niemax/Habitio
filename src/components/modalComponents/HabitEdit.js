@@ -1,26 +1,23 @@
 import React from 'react';
-import { ActivityIndicator, ScrollView, Switch, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, ScrollView, TouchableOpacity, View } from 'react-native';
 import {
-    FrequencySwitchContainer,
-    FrequencyTouchable,
     HabitCentered,
-    HabitDescriptionInput,
     HabitInfoContainer,
     HabitUtilityInfoContainer,
     HomeheaderContainer,
     ModalContent,
     SelectHabitColorButton,
 } from '../../utils/StyledComponents/Styled';
-import RNPickerSelect from 'react-native-picker-select';
-import { Ionicons, Feather } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import ActionSheet from 'react-native-actions-sheet';
 import Text from '../../utils/Text';
 import { colors } from '../../utils/colors';
-import { habitBoxShadow } from '../../utils/globalStyles';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ColorPalletteModal from '../ColorPalletteModal';
 import { useRef } from 'react';
 import Frequency from '../Frequency';
+import CreateHabitInput from '../HabitDescriptionInput';
+import { habitColor } from '../../utils/globalStyles';
 
 export default function HabitEditContent({
     methods: {
@@ -89,19 +86,12 @@ export default function HabitEditContent({
                 </Text>
                 <HabitInfoContainer>
                     <HabitCentered>
-                        <HabitDescriptionInput
-                            keyboardAppearance="dark"
-                            multiline={true}
-                            autoCorrect={false}
+                        <CreateHabitInput
                             placeholder={stateDescription}
-                            placeholderTextColor="gray"
-                            style={{
-                                color: 'white',
-                                fontSize: 17,
-                                fontFamily: 'Bold',
-                                ...habitBoxShadow,
+                            values={stateDescription}
+                            actions={{
+                                setValue: (text) => setStateDescription(text),
                             }}
-                            onChangeText={(text) => setStateDescription(text)}
                         />
                     </HabitCentered>
                     <HabitUtilityInfoContainer>
@@ -112,19 +102,15 @@ export default function HabitEditContent({
                             {!colorUpdated ? (
                                 <View
                                     style={{
-                                        width: 35,
-                                        height: 35,
-                                        borderRadius: '50%',
                                         backgroundColor: color,
+                                        ...habitColor,
                                     }}
                                 />
                             ) : (
                                 <View
                                     style={{
-                                        width: 35,
-                                        height: 35,
-                                        borderRadius: '50%',
                                         backgroundColor: updatedColor,
+                                        ...habitColor,
                                     }}
                                 />
                             )}

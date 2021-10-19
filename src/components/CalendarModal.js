@@ -21,14 +21,16 @@ const screenWidth = Dimensions.get('window').width;
 export default function CalendarModal({ calendarModalVisible, setCalendarModalVisible, data }) {
     const [diaryInput, setDiaryInput] = useState('');
     const [selectedDay, setSelectedDay] = useState(new Date());
-    const { completedDates, times, name, unitValue, diaryInputs, id } = data;
-    const sheetRef = useRef(null);
+
     const { habits, habitSetter } = useHabits();
+    const sheetRef = useRef(null);
+    const { completedDates, times, name, unitValue, diaryInputs, id } = data;
+    const completedLength = Object.keys(completedDates).length;
+    const completionRate = (completedLength / times) * 100;
 
     const calendarDayPress = (day) => {
         sheetRef.current?.show();
         setSelectedDay(day.dateString);
-        console.log(selectedDay);
     };
 
     const handleDiaryInput = () => {
@@ -76,7 +78,11 @@ export default function CalendarModal({ calendarModalVisible, setCalendarModalVi
                     onDayPress={(day) => calendarDayPress(day)}
                 />
                 <CalendarTimesInfoContainer>
-                    <Text>{data.days} days per week</Text>
+                    {data.days === 7 ? (
+                        <Text>Every day</Text>
+                    ) : (
+                        <Text>{data.days} days per week</Text>
+                    )}
                     <Text>
                         {data.times} {unitValue} per day
                     </Text>
@@ -92,7 +98,7 @@ export default function CalendarModal({ calendarModalVisible, setCalendarModalVi
                     <CalendarStatsContainer>
                         <Text>Completion % </Text>
                         <Text color={colors.mainGreen} thirtyFour>
-                            {Object.keys(completedDates).length / times}
+                            {completionRate.toFixed(0)}
                         </Text>
                     </CalendarStatsContainer>
                 </CalendarTextContainer>

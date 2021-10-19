@@ -8,7 +8,7 @@ import { FrequencySwitchContainer, FrequencyTouchable } from '../utils/StyledCom
 import { Feather } from '@expo/vector-icons';
 
 const placeholder = {
-    label: 'Choose...',
+    label: 'Select...',
     value: null,
     color: '#9EA0A4',
 };
@@ -59,6 +59,7 @@ export default function Frequency({
                     <FrequencyTouchable>
                         <Text>Days per Week</Text>
                         <TouchableOpacity
+                            style={{ marginLeft: 30 }}
                             onPress={() => {
                                 daysCount > 1 && setDaysCount(daysCount - 1);
                             }}
@@ -92,6 +93,7 @@ export default function Frequency({
                                 { label: 'hours', value: 'hours' },
                                 { label: 'kilometers', value: 'kilometers' },
                                 { label: 'bottles', value: 'bottles' },
+                                { label: 'pages', value: 'pages' },
                             ]}
                         />
                         <Text>Per day</Text>

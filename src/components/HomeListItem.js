@@ -29,7 +29,7 @@ export default function HomeListItem({
     const [progressModalVisible, setProgressModalVisible] = useState(false);
     const [prog, setProg] = useState(0);
     const LeftActions = () => (
-        <LeftAction style={{ backgroundColor: item.completed ? colors.error : item.color }}>
+        <LeftAction style={{ backgroundColor: item.completed ? colors.error : colors.mainGreen }}>
             {item.completed ? (
                 <Feather name="x" size={48} color="white" style={{ marginLeft: 70 }} />
             ) : (
@@ -50,7 +50,7 @@ export default function HomeListItem({
                 }}
                 style={{ backgroundColor: item.color }}
             >
-                <TextStyle fontFamily="SemiBold" twentyTwo>
+                <TextStyle fontFamily="SemiBold" twentyEight>
                     +1
                 </TextStyle>
             </RightAction>
@@ -64,7 +64,7 @@ export default function HomeListItem({
                 }}
                 style={{ backgroundColor: item.color, marginRight: 7 }}
             >
-                <TextStyle fontFamily="SemiBold" twentyTwo>
+                <TextStyle fontFamily="SemiBold" twentyEight>
                     -1
                 </TextStyle>
             </RightAction>
@@ -79,7 +79,7 @@ export default function HomeListItem({
                     }}
                     style={{ backgroundColor: item.color, marginRight: 7 }}
                 >
-                    <TextStyle twentyTwo fontFamily="SemiBold">
+                    <TextStyle twentyEight fontFamily="SemiBold">
                         +5
                     </TextStyle>
                 </RightAction>
@@ -95,7 +95,7 @@ export default function HomeListItem({
                     }}
                     style={{ backgroundColor: item.color, marginRight: 7 }}
                 >
-                    <TextStyle twentyTwo fontFamily="SemiBold">
+                    <TextStyle twentyEight fontFamily="SemiBold">
                         -5
                     </TextStyle>
                 </RightAction>
@@ -109,19 +109,16 @@ export default function HomeListItem({
         <Swipeable
             ref={swipeableRef}
             onSwipeableLeftOpen={() => {
+                const length = Object.keys(completedDates).length;
                 handleDoneToday(item).then(() => {
-                    if (
-                        completed === false &&
-                        Object.keys(completedDates).length % 3 !== 0 &&
-                        Object.keys(completedDates).length !== 0
-                    ) {
+                    if (length % 2 === 0 && completed === false && length >= 2) {
                         setProgressModalVisible(true);
                     }
                 });
                 swipeableRef.current.close();
             }}
             renderLeftActions={LeftActions}
-            renderRightActions={RightActions}
+            renderRightActions={times > 1 && RightActions}
         >
             <HomepageDataView>
                 <HomepageDataBox
@@ -130,14 +127,13 @@ export default function HomeListItem({
                         setVisibleItem(index);
                         haptics.selection();
                     }}
-                    style={homepageBoxShadow}
                 >
                     <Image
                         style={{ height: 37, width: 37 }}
-                        source={icon ? icon : require('../assets/flatIcons/morning-routine.png')}
+                        source={icon ? icon : require('../assets/flatIcons/activity.png')}
                     />
                     <TextNameAndStatus>
-                        <TextStyle left marginLeft="15px" fontFamily="Medium">
+                        <TextStyle left marginLeft="15px" fontFamily="SemiBold">
                             {name}
                         </TextStyle>
                         {completed ? (
@@ -147,7 +143,7 @@ export default function HomeListItem({
                                 marginTop="5px"
                                 marginLeft="11px"
                                 fontFamily="Medium"
-                                style={{ opacity: 0.6 }}
+                                style={{ opacity: 0.7 }}
                             >
                                 <Feather name="check" size={15} color={color} />
                                 Done
@@ -155,11 +151,11 @@ export default function HomeListItem({
                         ) : (
                             <TextStyle
                                 left
+                                fifteen
                                 marginTop="5px"
                                 marginLeft="12px"
-                                fifteen
                                 fontFamily="Medium"
-                                style={{ opacity: 0.6 }}
+                                style={{ opacity: 0.7 }}
                             >
                                 <Feather name="x" size={15} color={color} />
                                 Not done
@@ -205,7 +201,7 @@ export default function HomeListItem({
                             style={progressBarStyle}
                             progress={prog / times}
                             height={3}
-                            width={333}
+                            width={338}
                             color={color}
                             borderColor="transparent"
                             borderWidth={0.2}

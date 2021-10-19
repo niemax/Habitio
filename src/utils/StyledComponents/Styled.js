@@ -211,7 +211,6 @@ export const SelectHabitColorButton = styled.TouchableOpacity`
 `;
 
 export const FrequencyTouchable = styled.View`
-    width: auto;
     height: 60px;
     background-color: ${colors.mainBoxes};
     border-radius: 15px;
@@ -392,7 +391,7 @@ export const TextNameAndStatus = styled.View``;
 
 export const RightAction = styled.TouchableOpacity`
     background-color: ${colors.mainGreen};
-    width: 70px;
+    width: 75px;
     margin-top: 13px;
     border-radius: 15px;
     justify-content: center;
@@ -419,10 +418,8 @@ export const ProgressModalView = styled.View`
 export const ProgressModalCentered = styled.View`
     flex: 1;
     background-color: rgba(0, 0, 0, 0.6);
-
     justify-content: center;
     align-items: center;
-    margin-top: 22px;
 `;
 
 export const ProgressModalCloseButton = styled.TouchableOpacity`
@@ -434,7 +431,7 @@ export const ProgressModalCloseButton = styled.TouchableOpacity`
     height: 60px;
     width: 90%;
     border-radius: 30px;
-    margin-top: 20px;
+    margin-top: 10px;
 `;
 export const ProgressModalShareButton = styled.TouchableOpacity`
     justify-content: center;
@@ -443,5 +440,5 @@ export const ProgressModalShareButton = styled.TouchableOpacity`
     height: 60px;
     width: 90%;
     border-radius: 30px;
-    margin-top: 10px;
+    margin-top: 15px;
 `;

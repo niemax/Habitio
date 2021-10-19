@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { useHabits } from '../context/HabitProvider';
 import { colors } from '../utils/colors';
-import { showHabitImageBackground } from '../utils/globalStyles';
+import { showHabitImage, showHabitImageBackground } from '../utils/globalStyles';
 import {
     cancelPushNotification,
     scheduleOneTimeEdit,
@@ -20,7 +20,11 @@ import Text from '../utils/Text';
 import ShowHabitEditModal from './ShowHabitEditModal';
 import ShowHabitActions from './ShowHabitActions';
 import deleteHabit from '../utils/helpers/deleteHabit';
-import { setISODay } from 'date-fns';
+
+const config = {
+    velocityThreshold: 1.5,
+    directionalOffsetThreshold: 50,
+};
 
 export default function ShowHabitModal({ modalVisible, setModalVisible, data, handleDoneToday }) {
     const [editHabitModalVisible, setEditHabitModalVisible] = useState(false);
@@ -31,11 +35,6 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data, ha
     const { notificationId, name, color, icon, description, days, times, unitValue } = data;
 
     const { habits, habitSetter } = useHabits();
-
-    const config = {
-        velocityThreshold: 1.5,
-        directionalOffsetThreshold: 50,
-    };
 
     const handleUpdate = async (
         habitName,
@@ -77,7 +76,7 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data, ha
                 habit.times = timesCount;
                 habit.reminder = habitReminderTime !== null ? habitReminderTime : null;
                 habit.specificDate = habitSpecificDate !== null ? habitSpecificDate : null;
-                habit.notificationId = id;
+                habit.notificationId = notificationId;
             }
             return habit;
         });
@@ -141,16 +140,11 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data, ha
                             <View style={showHabitImageBackground}>
                                 <Image
                                     style={{
-                                        width: 70,
-                                        height: 70,
-                                        borderBottomWidth: 5,
-                                        borderRadius: 15,
                                         borderBottomColor: color,
+                                        ...showHabitImage,
                                     }}
                                     source={
-                                        icon
-                                            ? icon
-                                            : require('../assets/flatIcons/morning-routine.png')
+                                        icon ? icon : require('../assets/flatIcons/activity.png')
                                     }
                                 />
                             </View>
@@ -181,7 +175,6 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data, ha
                                 {times} {unitValue} per day
                             </Text>
                         )}
-
                         <LineBreak />
                         <ShowHabitActions
                             states={{ calendarModalVisible }}
@@ -190,7 +183,6 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data, ha
                             data={data}
                         />
                     </ScrollView>
-
                     <ShowHabitEditModal
                         data={data}
                         isEdit={isEdit}

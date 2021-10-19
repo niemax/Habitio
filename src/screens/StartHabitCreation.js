@@ -59,11 +59,11 @@ export default function StartHabitCreation({ navigation }) {
                 />
             </InputContainer>
 
+            <Text left marginLeft="25px" marginTop="10px" color={colors.error}>
+                {error}
+            </Text>
             <ScrollView>
                 <View style={{ marginBottom: 60 }}>
-                    <Text left marginLeft="25px" marginTop="10px" color={colors.error}>
-                        {error}
-                    </Text>
                     <Text left fontFamily="Regular" marginLeft="25px" marginTop="50px">
                         Or choose from existing Habits
                     </Text>

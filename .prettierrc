@@ -1,10 +1,10 @@
 {
-    "printWidth": 100,
-    "tabWidth": 4,
-    "singleQuote": true,
-    "endOfLine": "auto",
-    "editor.codeActionsOnSave": {
-        "source.organizeImports": true,
-        "source.fixAll.eslint": true
-    }
+   "printWidth": 100,
+   "tabWidth": 4,
+   "singleQuote": true,
+   "endOfLine": "auto",
+   "editor.codeActionsOnSave": {
+      "source.organizeImports": true,
+      "source.fixAll.eslint": true
+   }
 }
