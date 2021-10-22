@@ -1,10 +1,10 @@
 import React from 'react';
-import Text from '../utils/Text';
+import Text from '../../utils/Text';
 import ActionSheet from 'react-native-actions-sheet';
-import { DiaryInput } from '../utils/StyledComponents/Styled';
+import { DiaryInput } from '../../utils/StyledComponents/Styled';
 import { Feather } from '@expo/vector-icons';
-import { colors } from '../utils/colors';
-import { habitBoxShadow } from '../utils/globalStyles';
+import { colors } from '../../utils/colors';
+import { habitBoxShadow } from '../../utils/globalStyles';
 import { format } from 'date-fns';
 import { KeyboardAvoidingView, TouchableOpacity, View } from 'react-native';
 

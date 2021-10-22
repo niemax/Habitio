@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import Text from '../utils/Text';
-import { TabContainer } from '../utils/StyledComponents/Styled';
+import Text from '../../utils/Text';
+import { TabContainer } from '../../utils/StyledComponents/Styled';
 import { Entypo } from '@expo/vector-icons';
 
 export default function Tab({ color, tab, onPress, icon }) {

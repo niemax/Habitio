@@ -1,23 +1,20 @@
 import React from 'react';
-import { ActivityIndicator, ScrollView, TouchableOpacity, View } from 'react-native';
+import { ScrollView } from 'react-native';
 import {
     HabitCentered,
     HabitInfoContainer,
     HabitUtilityInfoContainer,
-    HomeheaderContainer,
     ModalContent,
-    SelectHabitColorButton,
 } from '../../utils/StyledComponents/Styled';
-import { Ionicons } from '@expo/vector-icons';
 import ActionSheet from 'react-native-actions-sheet';
 import Text from '../../utils/Text';
-import { colors } from '../../utils/colors';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import ColorPalletteModal from '../ColorPalletteModal';
+import ColorPalletteModal from '../uiComponents/ColorPallette';
 import { useRef } from 'react';
-import Frequency from '../Frequency';
-import CreateHabitInput from '../HabitDescriptionInput';
-import { habitColor } from '../../utils/globalStyles';
+import Frequency from '../uiComponents/Frequency';
+import HabitInput from '../uiComponents/HabitDescriptionInput';
+import HabitColor from '../uiComponents/SelectHabitColorButton';
+import ShowEditHeader from '../uiComponents/ShowEditHeader';
 
 export default function HabitEditContent({
     methods: {
@@ -57,27 +54,11 @@ export default function HabitEditContent({
 
     return (
         <ModalContent>
-            <HomeheaderContainer>
-                <TouchableOpacity
-                    style={{ marginLeft: 5, marginTop: 10 }}
-                    onPress={() => setEditHabitModalVisible(false)}
-                >
-                    <Ionicons name="close-circle-sharp" size={34} color="gray" />
-                </TouchableOpacity>
-                <Text twentyTwo fontFamily="Extra">
-                    Edit Habit
-                </Text>
-                <TouchableOpacity onPress={handleSubmit}>
-                    <Text marginRight="15px" color={colors.mainGreen} fontFamily="SemiBold">
-                        {loading ? (
-                            <ActivityIndicator color={colors.mainGreen} />
-                        ) : (
-                            <Text color={colors.mainGreen}>Update</Text>
-                        )}
-                    </Text>
-                </TouchableOpacity>
-            </HomeheaderContainer>
-
+            <ShowEditHeader
+                setEditHabitModalVisible={setEditHabitModalVisible}
+                handleSubmit={handleSubmit}
+                loading={loading}
+            />
             <ScrollView>
                 <Text left twentyTwo fontFamily="SemiBold" marginLeft="10px" marginTop="30px">
                     {habitName}
@@ -87,7 +68,7 @@ export default function HabitEditContent({
                 </Text>
                 <HabitInfoContainer>
                     <HabitCentered>
-                        <CreateHabitInput
+                        <HabitInput
                             placeholder={stateDescription}
                             values={stateDescription}
                             actions={{
@@ -99,23 +80,12 @@ export default function HabitEditContent({
                         <Text left fontFamily="Regular">
                             Color
                         </Text>
-                        <SelectHabitColorButton onPress={() => sheetRef.current.show()}>
-                            {!colorUpdated ? (
-                                <View
-                                    style={{
-                                        backgroundColor: color,
-                                        ...habitColor,
-                                    }}
-                                />
-                            ) : (
-                                <View
-                                    style={{
-                                        backgroundColor: updatedColor,
-                                        ...habitColor,
-                                    }}
-                                />
-                            )}
-                        </SelectHabitColorButton>
+                        <HabitColor
+                            colorUpdated={colorUpdated}
+                            updatedColor={updatedColor}
+                            color={color}
+                            updateColor={updateColor}
+                        />
 
                         <Frequency
                             switchStates={{ isEnabledSpecific, isEnabled, isEnabledDate }}

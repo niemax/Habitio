@@ -1,25 +1,19 @@
-import React, { useRef, useState } from 'react';
-import { ActivityIndicator, TouchableOpacity, View, ScrollView } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import React, { useState } from 'react';
+import { ScrollView } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import ColorPalletteModal from '../components/ColorPalletteModal';
-import { colors } from '../utils/colors';
-import ActionSheet from 'react-native-actions-sheet';
 import {
-    CreateHabitHeader,
     HabitInfoContainer,
     HabitUtilityInfoContainer,
     MainContainer,
-    SelectHabitColorButton,
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 import { useHabits } from '../context/HabitProvider';
-import CreateHabitInput from '../components/HabitDescriptionInput';
-import Frequency from '../components/Frequency';
-import handleHabitCreation from '../utils/helpers/createhabitHelpers';
-import { habitColor } from '../utils/globalStyles';
+import HabitInput from '../components/uiComponents/HabitDescriptionInput';
+import Frequency from '../components/uiComponents/Frequency';
+import CHHeader from '../components/uiComponents/CreateHabitHeader';
+import HabitColor from '../components/uiComponents/SelectHabitColorButton';
 
-export default function CreateHabit({ navigation, route }) {
+export default function CreateHabit({ route }) {
     const [updatedColor, setUpdatedColor] = useState();
     const [colorUpdated, setColorUpdated] = useState(false);
     const [description, setDescription] = useState('');
@@ -40,8 +34,6 @@ export default function CreateHabit({ navigation, route }) {
         !isEnabledDate && !isEnabled && setIsEnabledSpecific((previousState) => !previousState);
 
     const { CRUDHabits } = useHabits();
-
-    const sheetRef = useRef(null);
 
     const { habitName, habitIcon, color } = route.params;
 
@@ -82,35 +74,17 @@ export default function CreateHabit({ navigation, route }) {
 
     return (
         <MainContainer>
-            <CreateHabitHeader>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Feather name="chevron-left" size={32} color="white" />
-                </TouchableOpacity>
-                <Text twentyTwo fontFamily="Extra">
-                    Create Habit
-                </Text>
-                <TouchableOpacity
-                    onPress={() =>
-                        handleHabitCreation(
-                            newHabit,
-                            setLoading,
-                            isEnabledDate,
-                            isEnabledSpecific,
-                            CRUDHabits,
-                            reminderTime,
-                            habitName,
-                            navigation,
-                            specificDate
-                        )
-                    }
-                >
-                    {loading ? (
-                        <ActivityIndicator color={colors.mainGreen} />
-                    ) : (
-                        <Text color={colors.mainGreen}>Create</Text>
-                    )}
-                </TouchableOpacity>
-            </CreateHabitHeader>
+            <CHHeader
+                newHabit={newHabit}
+                loading={loading}
+                setLoading={setLoading}
+                isEnabledDate={isEnabledDate}
+                isEnabledSpecific={isEnabledSpecific}
+                CRUDHabits={CRUDHabits}
+                reminderTime={reminderTime}
+                habitName={habitName}
+                specificDate={specificDate}
+            />
             <ScrollView>
                 <Text left twentyTwo fontFamily="SemiBold" marginLeft="10px" marginTop="30px">
                     {habitName}
@@ -119,7 +93,7 @@ export default function CreateHabit({ navigation, route }) {
                     Description
                 </Text>
                 <HabitInfoContainer>
-                    <CreateHabitInput
+                    <HabitInput
                         values={description}
                         actions={{
                             setValue: (text) => setDescription(text),
@@ -129,24 +103,12 @@ export default function CreateHabit({ navigation, route }) {
                         <Text left fontFamily="Regular">
                             Color
                         </Text>
-                        <SelectHabitColorButton onPress={() => sheetRef.current.show()}>
-                            {!colorUpdated ? (
-                                <View
-                                    style={{
-                                        backgroundColor: color,
-                                        ...habitColor,
-                                    }}
-                                />
-                            ) : (
-                                <View
-                                    style={{
-                                        backgroundColor: updatedColor,
-                                        ...habitColor,
-                                    }}
-                                />
-                            )}
-                        </SelectHabitColorButton>
-
+                        <HabitColor
+                            colorUpdated={colorUpdated}
+                            updatedColor={updatedColor}
+                            color={color}
+                            updateColor={updateColor}
+                        />
                         <Frequency
                             switchStates={{ isEnabledSpecific, isEnabled, isEnabledDate }}
                             methods={{
@@ -175,22 +137,6 @@ export default function CreateHabit({ navigation, route }) {
                         )}
                     </HabitUtilityInfoContainer>
                 </HabitInfoContainer>
-                <ActionSheet
-                    containerStyle={{
-                        backgroundColor: '#141414',
-                        height: 270,
-                    }}
-                    defaultOverlayOpacity={0.3}
-                    gestureEnabled="true"
-                    elevation={2}
-                    ref={sheetRef}
-                >
-                    <ColorPalletteModal
-                        ref={sheetRef}
-                        updateColor={updateColor}
-                        sheetRef={sheetRef}
-                    />
-                </ActionSheet>
             </ScrollView>
         </MainContainer>
     );

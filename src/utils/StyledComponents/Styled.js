@@ -250,8 +250,6 @@ export const ShowHabitDataContainer = styled.View`
     align-items: center;
 `;
 
-export const ShowHabitHeader = styled.View``;
-
 export const ShowHabitFrequency = styled.View`
     margin-top: 50px;
     flex-direction: row;

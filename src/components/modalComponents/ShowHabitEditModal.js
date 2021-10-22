@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal } from 'react-native';
-import HabitEditContent from './modalComponents/HabitEdit';
+import HabitEditContent from '../../components/modalContentComponents/HabitEdit';
 
 export default function ShowHabitEditModal({
     editHabitModalVisible,

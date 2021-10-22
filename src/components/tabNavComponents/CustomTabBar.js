@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { tabBarShadow } from '../utils/globalStyles';
+import { tabBarShadow } from '../../utils/globalStyles';
 import { Feather } from '@expo/vector-icons';
 import {
     TabAddButton,
     TabBarAddContainer,
     TabBarContainer,
-} from '../utils/StyledComponents/Styled';
-import Tab from './Tab';
+} from '../../utils/StyledComponents/Styled';
+import Tab from '../../components/tabNavComponents/Tab';
 
 const CustomTabBar = ({ state, navigation }) => {
     const [selected, setSelected] = useState('Habits');

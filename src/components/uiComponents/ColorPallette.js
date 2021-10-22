@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { ModalContent } from '../utils/StyledComponents/Styled';
-import { habitSelectionColors as colors } from '../utils/colors';
+import { ModalContent } from '../../utils/StyledComponents/Styled';
+import { habitSelectionColors as colors } from '../../utils/colors';
 
 export default function ColorPalletteModal({ sheetRef, updateColor }) {
     return (

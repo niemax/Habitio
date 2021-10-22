@@ -1,13 +1,13 @@
 import React from 'react';
 import { Modal, Image } from 'react-native';
-import Text from '../utils/Text';
-import { colors } from '../utils/colors';
+import Text from '../../utils/Text';
+import { colors } from '../../utils/colors';
 import {
     ProgressModalCentered,
     ProgressModalCloseButton,
     ProgressModalShareButton,
     ProgressModalView,
-} from '../utils/StyledComponents/Styled';
+} from '../../utils/StyledComponents/Styled';
 
 export default function ProgressModal({ progressModalVisible, setProgressModalVisible, data }) {
     const { name, completedDates } = data;
@@ -17,7 +17,7 @@ export default function ProgressModal({ progressModalVisible, setProgressModalVi
                 <ProgressModalCentered>
                     <ProgressModalView>
                         <Image
-                            source={require('../assets/flatIcons/medal.png')}
+                            source={require('../../assets/flatIcons/medal.png')}
                             style={{ height: 140, width: 140, marginBottom: 20 }}
                         />
                         <Text fontFamily="Bold" twentyEight>

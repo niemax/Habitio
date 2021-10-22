@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Switch, TouchableOpacity } from 'react-native';
-import Text from '../utils/Text';
-import { colors } from '../utils/colors';
+import Text from '../../utils/Text';
+import { colors } from '../../utils/colors';
 import RNPickerSelect from 'react-native-picker-select';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { FrequencySwitchContainer, FrequencyTouchable } from '../utils/StyledComponents/Styled';
+import { FrequencySwitchContainer, FrequencyTouchable } from '../../utils/StyledComponents/Styled';
 import { Feather } from '@expo/vector-icons';
 import { Fragment } from 'react';
 

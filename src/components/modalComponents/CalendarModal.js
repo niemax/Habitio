@@ -1,20 +1,20 @@
 import React, { useRef, useState } from 'react';
-import { Modal, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
+import { Modal, Dimensions, ScrollView } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { format } from 'date-fns';
 import {
-    CalendarHeader,
     CalendarLineBreak,
     CalendarStatsContainer,
     CalendarTextContainer,
     CalendarTimesInfoContainer,
     ModalContent,
-} from '../utils/StyledComponents/Styled';
-import Text from '../utils/Text';
-import { colors } from '../utils/colors';
-import { calendarStyles } from '../utils/globalStyles';
-import { useHabits } from '../context/HabitProvider';
-import CalendarBottomSheet from './CalendarBottomSheet';
+} from '../../utils/StyledComponents/Styled';
+import Text from '../../utils/Text';
+import { colors } from '../../utils/colors';
+import { calendarStyles } from '../../utils/globalStyles';
+import { useHabits } from '../../context/HabitProvider';
+import CalendarBottomSheet from '../uiComponents/CalendarBottomSheet';
+import CalendarHead from '../uiComponents/CalendarHeader';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -55,16 +55,7 @@ export default function CalendarModal({ calendarModalVisible, setCalendarModalVi
     return (
         <Modal animationType="slide" presentationStyle="pageSheet" visible={calendarModalVisible}>
             <ModalContent>
-                <CalendarHeader>
-                    <Text marginLeft="5px" twentyTwo fontFamily="SemiBold">
-                        {name}
-                    </Text>
-                    <TouchableOpacity onPress={() => setCalendarModalVisible(false)}>
-                        <Text marginRight="10px" color={colors.mainGreen} fontFamily="SemiBold">
-                            Done
-                        </Text>
-                    </TouchableOpacity>
-                </CalendarHeader>
+                <CalendarHead name={name} setCalendarModalVisible={setCalendarModalVisible} />
                 <Calendar
                     style={{
                         marginTop: 20,

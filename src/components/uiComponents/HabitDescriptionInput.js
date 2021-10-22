@@ -1,9 +1,8 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { habitBoxShadow } from '../utils/globalStyles';
-import { HabitCentered, HabitDescriptionInput } from '../utils/StyledComponents/Styled';
+import { HabitCentered, HabitDescriptionInput } from '../../utils/StyledComponents/Styled';
 
-const CreateHabitInput = ({ values: { description, stateDescription }, actions: { setValue } }) => (
+const HabitInput = ({ values: { description, stateDescription }, actions: { setValue } }) => (
     <HabitCentered>
         <HabitDescriptionInput
             keyboardAppearance="dark"
@@ -16,11 +15,10 @@ const CreateHabitInput = ({ values: { description, stateDescription }, actions: 
                 color: 'white',
                 fontSize: 17,
                 fontFamily: 'SemiBold',
-                ...habitBoxShadow,
             }}
             onChangeText={setValue}
         />
     </HabitCentered>
 );
 
-export default CreateHabitInput;
+export default HabitInput;

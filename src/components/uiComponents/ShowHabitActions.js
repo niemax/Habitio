@@ -1,12 +1,12 @@
 import React from 'react';
-import Text from '../utils/Text';
+import Text from '../../utils/Text';
 import {
     ShowHabitActionsButton,
     ShowHabitActionsContainer,
-} from '../utils/StyledComponents/Styled';
-import { colors } from '../utils/colors';
+} from '../../utils/StyledComponents/Styled';
+import { colors } from '../../utils/colors';
 import { TouchableOpacity } from 'react-native';
-import CalendarModal from './CalendarModal';
+import CalendarModal from '../../components/modalComponents/CalendarModal';
 
 const ShowHabitActions = ({
     actions: { handleDoneToday, displayDeleteAlert },

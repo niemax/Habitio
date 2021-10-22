@@ -3,12 +3,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Homepage from '../screens/Homepage';
 import Test from '../screens/Test';
-import CustomTabBar from '../components/CustomTabBar';
+import CustomTabBar from '../components/tabNavComponents/CustomTabBar';
 import HabitScreen from '../screens/HabitScreen';
 import CreateHabit from '../screens/CreateHabit';
 import StartHabitCreation from '../screens/StartHabitCreation';
 import Settings from '../screens/Settings';
-import SplashScreen from '../screens/AuthScreens/Splash';
+import Splash from '../screens/Splash';
 
 const Tab = createBottomTabNavigator();
 
@@ -40,7 +40,7 @@ const MainAppStack = () => (
         <Stack.Screen
             name="SplashScreen"
             options={{ headerShown: false, gestureEnabled: false }}
-            component={SplashScreen}
+            component={Splash}
         />
         <Stack.Screen
             name="MainTab"
