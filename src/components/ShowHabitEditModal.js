@@ -22,19 +22,18 @@ export default function ShowHabitEditModal({
     const [isEnabled, setIsEnabled] = useState(false);
     const [isEnabledDate, setIsEnabledDate] = useState(false);
     const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
+
     const toggleSwitch = () =>
         !isEnabledSpecific && setIsEnabled((previousState) => !previousState);
-
     const toggleSwitchDate = () =>
         !isEnabledSpecific && setIsEnabledDate((previousState) => !previousState);
-
     const toggleSwitchSpecific = () =>
         !isEnabledDate && !isEnabled && setIsEnabledSpecific((previousState) => !previousState);
 
     const { name, unitValue, description, days, times, color, reminder, specificDate } = data;
 
-    const updateColor = (color) => {
-        setUpdatedColor(color);
+    const updateColor = (updColor) => {
+        setUpdatedColor(updColor);
         setColorUpdated(true);
     };
 
@@ -50,7 +49,6 @@ export default function ShowHabitEditModal({
             isEnabledDate ? new Date(habitReminderTime) : null,
             isEnabledSpecific ? new Date(habitSpecificDate) : null
         );
-
         setTimeout(() => {
             setLoading(false);
             setEditHabitModalVisible(false);
@@ -67,19 +65,35 @@ export default function ShowHabitEditModal({
         habitSetReminderTime(currentDate);
     };
 
+    const checkSwitchStates = () => {
+        if (reminder !== null) {
+            setIsEnabledDate(true);
+        } else {
+            setIsEnabledDate(false);
+        }
+        if (specificDate !== null) {
+            setIsEnabledSpecific(true);
+        } else {
+            setIsEnabledSpecific(false);
+        }
+        if (days >= 1) {
+            setIsEnabled(true);
+        } else {
+            setIsEnabled(false);
+        }
+    };
+
     useEffect(() => {
+        checkSwitchStates();
+
         setHabitName(name);
         setHabitUnitValue(unitValue);
         setStateDescription(description);
         setDaysCount(days);
         setTimesCount(times);
         setUpdatedColor(color);
-        habitSetReminderTime(new Date(reminder));
-        habitSetSpecificDate(new Date(specificDate));
-
-        reminder !== null ? setIsEnabledDate(true) : setIsEnabledDate(false);
-        specificDate !== null ? setIsEnabledSpecific(true) : setIsEnabledSpecific(false);
-        days >= 1 ? setIsEnabled(true) : setIsEnabled(false);
+        habitSetReminderTime(reminder ? new Date(reminder) : new Date());
+        habitSetSpecificDate(specificDate ? new Date(specificDate) : new Date());
     }, []);
 
     return (
@@ -117,10 +131,10 @@ export default function ShowHabitEditModal({
                     isEnabledSpecific,
                     habitSpecificDate,
                     habitReminderTime,
+                    habitUnitValue,
                     color,
                     colorUpdated,
                     updatedColor,
-                    habitUnitValue,
                 }}
             />
         </Modal>

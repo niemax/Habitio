@@ -21,12 +21,11 @@ const screenWidth = Dimensions.get('window').width;
 export default function CalendarModal({ calendarModalVisible, setCalendarModalVisible, data }) {
     const [diaryInput, setDiaryInput] = useState('');
     const [selectedDay, setSelectedDay] = useState(new Date());
-
     const { habits, habitSetter } = useHabits();
     const sheetRef = useRef(null);
     const { completedDates, times, name, unitValue, diaryInputs, id } = data;
     const completedLength = Object.keys(completedDates).length;
-    const completionRate = (completedLength / times) * 100;
+    const completionRate = ((completedLength / times) * 100) / times;
 
     const calendarDayPress = (day) => {
         sheetRef.current?.show();
@@ -57,7 +56,7 @@ export default function CalendarModal({ calendarModalVisible, setCalendarModalVi
         <Modal animationType="slide" presentationStyle="pageSheet" visible={calendarModalVisible}>
             <ModalContent>
                 <CalendarHeader>
-                    <Text twentyTwo fontFamily="SemiBold">
+                    <Text marginLeft="5px" twentyTwo fontFamily="SemiBold">
                         {name}
                     </Text>
                     <TouchableOpacity onPress={() => setCalendarModalVisible(false)}>
@@ -81,22 +80,22 @@ export default function CalendarModal({ calendarModalVisible, setCalendarModalVi
                     {data.days === 7 ? (
                         <Text>Every day</Text>
                     ) : (
-                        <Text>{data.days} days per week</Text>
+                        <Text marginLeft="5px">{data.days} days per week</Text>
                     )}
-                    <Text>
+                    <Text marginRight="5px">
                         {data.times} {unitValue} per day
                     </Text>
                 </CalendarTimesInfoContainer>
                 <CalendarLineBreak />
                 <CalendarTextContainer>
                     <CalendarStatsContainer>
-                        <Text>Completions</Text>
+                        <Text marginLeft="5px">Completions</Text>
                         <Text color={colors.mainGreen} thirtyFour>
                             {Object.keys(completedDates).length}
                         </Text>
                     </CalendarStatsContainer>
                     <CalendarStatsContainer>
-                        <Text>Completion % </Text>
+                        <Text marginRight="5px">Completion % </Text>
                         <Text color={colors.mainGreen} thirtyFour>
                             {completionRate.toFixed(0)}
                         </Text>
@@ -104,7 +103,7 @@ export default function CalendarModal({ calendarModalVisible, setCalendarModalVi
                 </CalendarTextContainer>
                 <CalendarLineBreak />
                 <ScrollView>
-                    <Text left marginLeft="15px" marginTop="10px" marginBottom="10px">
+                    <Text left marginLeft="20px" marginTop="10px" marginBottom="15px">
                         Notes
                     </Text>
                     {Object.values(diaryInputs).length === 0 && (

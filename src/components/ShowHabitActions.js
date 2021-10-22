@@ -7,7 +7,6 @@ import {
 import { colors } from '../utils/colors';
 import { TouchableOpacity } from 'react-native';
 import CalendarModal from './CalendarModal';
-import ProgressModal from './ProgressModal';
 
 const ShowHabitActions = ({
     actions: { handleDoneToday, displayDeleteAlert },

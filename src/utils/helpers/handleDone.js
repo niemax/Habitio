@@ -4,6 +4,7 @@ import { haptics } from './haptics';
 import { toasts } from './toastMethods';
 
 const handleDoneToday = async (data, habits, currentDay, modalizeRef, animation, habitSetter) => {
+    const { name, color } = data;
     const newDate = format(new Date(), 'yyyy-MM-dd');
 
     haptics.success();
@@ -21,17 +22,16 @@ const handleDoneToday = async (data, habits, currentDay, modalizeRef, animation,
                         },
                     },
                 };
-                if (habit.name === data.name) {
-                    habit.currentDay = currentDay;
+                if (habit.name === name) {
+                    habit.completedDay = currentDay;
                     habit.completed = true;
                     habit.completedDates = completedDatesObj;
                     if (Object.keys(data.completedDates).length % 3 !== 0)
-                        toasts.info(data.name, data.color, modalizeRef);
+                        toasts.info(name, color, modalizeRef);
                 }
             } else {
                 delete completedDatesObj[newDate];
-                if (habit.name === data.name) {
-                    habit.currentDay = currentDay;
+                if (habit.name === name) {
                     habit.completed = false;
                     habit.completedDates = completedDatesObj;
                     haptics.warning();

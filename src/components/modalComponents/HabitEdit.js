@@ -38,7 +38,6 @@ export default function HabitEditContent({
     },
     states: {
         habitName,
-        habitUnitValue,
         loading,
         stateDescription,
         daysCount,
@@ -46,10 +45,12 @@ export default function HabitEditContent({
         isEnabled,
         isEnabledDate,
         isEnabledSpecific,
+        habitSpecificDate,
+        habitReminderTime,
         color,
         colorUpdated,
         updatedColor,
-        habitReminderTime,
+        habitUnitValue,
     },
 }) {
     const sheetRef = useRef(null);
@@ -58,7 +59,7 @@ export default function HabitEditContent({
         <ModalContent>
             <HomeheaderContainer>
                 <TouchableOpacity
-                    style={{ marginLeft: 10, marginTop: 10 }}
+                    style={{ marginLeft: 5, marginTop: 10 }}
                     onPress={() => setEditHabitModalVisible(false)}
                 >
                     <Ionicons name="close-circle-sharp" size={34} color="gray" />
@@ -126,7 +127,13 @@ export default function HabitEditContent({
                             }}
                             setters={{ setDaysCount, setTimesCount, setHabitUnitValue }}
                             values={{ isEnabledSpecific }}
-                            states={{ daysCount, timesCount, habitUnitValue }}
+                            states={{
+                                daysCount,
+                                timesCount,
+                                habitUnitValue,
+                                habitSpecificDate,
+                                habitReminderTime,
+                            }}
                         />
 
                         {isEnabledDate && (

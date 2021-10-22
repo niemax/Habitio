@@ -6,6 +6,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { FrequencySwitchContainer, FrequencyTouchable } from '../utils/StyledComponents/Styled';
 import { Feather } from '@expo/vector-icons';
+import { Fragment } from 'react';
 
 const placeholder = {
     label: 'Select...',
@@ -18,8 +19,10 @@ export default function Frequency({
     methods: { toggleSwitchSpecific, toggleSwitch, toggleSwitchDate, onChangeSpecific },
     setters: { setDaysCount, setSelectedValue, setTimesCount, setHabitUnitValue },
     values: { specificDate, isEnabledSpecific },
-    states: { daysCount, timesCount, habitUnitValue },
+    states: { selectedValue, daysCount, timesCount, habitUnitValue, habitSpecificDate },
 }) {
+    const valueCreateHabit = selectedValue;
+    const valueEditHabit = habitUnitValue;
     return (
         <View>
             <FrequencySwitchContainer>
@@ -35,7 +38,7 @@ export default function Frequency({
             {isEnabledSpecific && (
                 <DateTimePicker
                     testID="dateTimePicker"
-                    value={specificDate}
+                    value={specificDate || habitSpecificDate}
                     mode="datetime"
                     is24Hour="true"
                     display="default"
@@ -55,7 +58,7 @@ export default function Frequency({
                 />
             </FrequencySwitchContainer>
             {isEnabled && (
-                <>
+                <Fragment>
                     <FrequencyTouchable>
                         <Text>Days per Week</Text>
                         <TouchableOpacity
@@ -83,9 +86,10 @@ export default function Frequency({
                                 marginTop: 3,
                             }}
                             placeholder={placeholder}
-                            onValueChange={(value) =>
-                                value ? setSelectedValue(value) : setHabitUnitValue(habitUnitValue)
-                            }
+                            onValueChange={(value) => {
+                                if (valueCreateHabit) setSelectedValue(value);
+                                if (habitUnitValue) setHabitUnitValue(valueEditHabit);
+                            }}
                             items={[
                                 { label: 'times', value: 'times' },
                                 { label: 'glasses', value: 'glasses' },
@@ -109,7 +113,7 @@ export default function Frequency({
                             <Feather name="plus-circle" size={30} color="gray" />
                         </TouchableOpacity>
                     </FrequencyTouchable>
-                </>
+                </Fragment>
             )}
             {isEnabled && (
                 <FrequencySwitchContainer>

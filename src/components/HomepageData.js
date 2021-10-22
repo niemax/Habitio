@@ -13,11 +13,11 @@ import {
 import Text from '../utils/Text';
 import { getCurrentDate } from '../utils/helpers/currentDate';
 import { noHabitsImageStyle } from '../utils/globalStyles';
-import LottieView from 'lottie-react-native';
 import { useNavigation } from '@react-navigation/core';
 import HomeListItem from './HomeListItem';
 import handleDoneToday from '../utils/helpers/handleDone';
-import checkHabitsDate from '../utils/helpers/checkHabitsDate';
+import { getAllNotifications } from '../utils/helpers/notification';
+import checkDateForHabitCompletedReset from '../utils/helpers/checkHabitsDate';
 
 const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -28,16 +28,18 @@ const HomepageData = () => {
     const [refreshing, setRefreshing] = useState(false);
     const [date, setDate] = useState();
     const navigation = useNavigation();
-    const day = new Date();
-    const currentDay = day.getDay();
     const animation = useRef(null);
     const modalizeRef = useRef(null);
     const { habitSetter, getHabits, habits } = useHabits();
 
+    const day = new Date();
+    const currentDay = day.getDay();
+
     useEffect(() => {
-        checkHabitsDate(getHabits, habitSetter, habits, currentDay);
+        checkDateForHabitCompletedReset(getHabits, habitSetter, habits, currentDay);
         const { date } = getCurrentDate();
         setDate(date);
+        getAllNotifications();
     }, [currentDay]);
 
     const onRefresh = useCallback(() => {
@@ -111,7 +113,7 @@ const HomepageData = () => {
                     {habits.map((item, index) => (
                         <HomeListItem
                             item={item}
-                            index={index}
+                            index={index.toString()}
                             modalizeRef={modalizeRef}
                             handleDoneToday={() =>
                                 handleDoneToday(

@@ -111,14 +111,13 @@ export const chRepeating = async (name, hours, minutes, newHabit) => {
         });
 
         Object.assign(newHabit, { notificationId: identifier });
-        return { identifier };
     } catch (error) {
         console.error(error);
     }
     console.log(newHabit);
 };
 
-export const cHScheduleOneTime = async (name, date) => {
+export const cHScheduleOneTime = async (name, date, newHabit) => {
     const identifier = await Notifications.scheduleNotificationAsync({
         content: {
             title: name,
@@ -129,5 +128,5 @@ export const cHScheduleOneTime = async (name, date) => {
             repeats: false,
         },
     });
-    return { identifier };
+    Object.assign(newHabit, { notificationId: identifier });
 };

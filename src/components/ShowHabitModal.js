@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Image, Modal, ScrollView, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import GestureRecognizer from 'react-native-swipe-gestures';
@@ -29,59 +29,11 @@ const config = {
 export default function ShowHabitModal({ modalVisible, setModalVisible, data, handleDoneToday }) {
     const [editHabitModalVisible, setEditHabitModalVisible] = useState(false);
     const [calendarModalVisible, setCalendarModalVisible] = useState(false);
-    const [isEdit, setIsEdit] = useState(false);
-    const [id, setId] = useState();
+    const [id, setId] = useState('');
 
-    const { notificationId, name, color, icon, description, days, times, unitValue } = data;
+    const { notificationId, name, icon, description, days, times, unitValue } = data;
 
     const { habits, habitSetter } = useHabits();
-
-    const handleUpdate = async (
-        habitName,
-        unitValue,
-        color,
-        description,
-        daysCount,
-        timesCount,
-        habitReminderTime,
-        habitSpecificDate
-    ) => {
-        cancelPushNotification(notificationId);
-        const parsedReminderTimeHour = habitReminderTime !== null && habitReminderTime.getHours();
-        const parsedReminderTimeMinute =
-            habitReminderTime !== null && habitReminderTime.getMinutes();
-
-        if (habitReminderTime !== null) {
-            const { identifier } = scheduleRepeatingEdit(
-                parsedReminderTimeHour,
-                parsedReminderTimeMinute,
-                habitName
-            ).then(() => {
-                setId(identifier);
-            });
-        }
-        if (habitSpecificDate !== null) {
-            const { identifier } = scheduleOneTimeEdit(habitSpecificDate, habitName).then(() => {
-                setId(identifier);
-            });
-        }
-
-        const newHabits = habits.filter((habit) => {
-            if (habit.name === name) {
-                habit.name = habitName;
-                habit.unitValue = unitValue;
-                habit.color = color;
-                habit.description = description;
-                habit.days = daysCount;
-                habit.times = timesCount;
-                habit.reminder = habitReminderTime !== null ? habitReminderTime : null;
-                habit.specificDate = habitSpecificDate !== null ? habitSpecificDate : null;
-                habit.notificationId = notificationId;
-            }
-            return habit;
-        });
-        habitSetter(newHabits);
-    };
 
     const displayDeleteAlert = () => {
         Alert.alert(
@@ -122,7 +74,6 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data, ha
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => {
-                                    setIsEdit(true);
                                     setEditHabitModalVisible(true);
                                 }}
                             >
@@ -139,10 +90,7 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data, ha
                         <ShowHabitDataContainer>
                             <View style={showHabitImageBackground}>
                                 <Image
-                                    style={{
-                                        borderBottomColor: color,
-                                        ...showHabitImage,
-                                    }}
+                                    style={showHabitImage}
                                     source={
                                         icon ? icon : require('../assets/flatIcons/activity.png')
                                     }
@@ -185,8 +133,6 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data, ha
                     </ScrollView>
                     <ShowHabitEditModal
                         data={data}
-                        isEdit={isEdit}
-                        onSubmit={handleUpdate}
                         editHabitModalVisible={editHabitModalVisible}
                         setEditHabitModalVisible={setEditHabitModalVisible}
                     />

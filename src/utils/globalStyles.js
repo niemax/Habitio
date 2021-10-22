@@ -41,6 +41,7 @@ export const createHabitColorIndicator = {
 };
 
 export const showHabitImageBackground = {
+    marginTop: 20,
     backgroundColor: '#181818',
     opacity: 0.8,
     justifyContent: 'center',
@@ -48,6 +49,11 @@ export const showHabitImageBackground = {
     width: 100,
     height: 100,
     borderRadius: 15,
+};
+
+export const showHabitImage = {
+    width: 80,
+    height: 80,
 };
 
 export const calendarStyles = {
@@ -87,13 +93,6 @@ export const tabNavStyle = {
     borderRadius: 15,
     backgroundColor: '#141414',
     bottom: 10,
-};
-
-export const showHabitImage = {
-    width: 70,
-    height: 70,
-    borderBottomWidth: 5,
-    borderRadius: 15,
 };
 
 export const progressBarStyle = {

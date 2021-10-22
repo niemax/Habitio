@@ -265,7 +265,7 @@ export const LineBreak = styled.View`
     height: 1px;
     background-color: #494949;
     opacity: 0.3;
-    width: 353px;
+    width: 91%;
 `;
 
 export const ToolTipLineBreak = styled.View`
@@ -303,11 +303,19 @@ export const ShowHabitActionsAddButton = styled.TouchableOpacity`
     margin-top: 10px;
 `;
 
+export const CalendarTimesInfoContainer = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+    padding-horizontal: 15px;
+    margin-bottom: 20px;
+`;
+
 export const CalendarTextContainer = styled.View`
     flex-direction: row;
     justify-content: space-between
-    margin-top: 25px;
+    margin-top: 15px;
     padding-horizontal: 13px;
+    margin-bottom: 5px;
 `;
 
 export const CalendarStatsContainer = styled.View`
@@ -355,13 +363,6 @@ export const ProgressBarContainer = styled.View`
     justify-content: center;
     align-items: center;
     margin-top: 5px;
-`;
-
-export const CalendarTimesInfoContainer = styled.View`
-    flex-direction: row;
-    justify-content: space-between;
-    padding-horizontal: 15px;
-    margin-bottom: 10px;
 `;
 
 export const LottieContainer = styled.View``;

@@ -1,11 +1,11 @@
 import React, { useRef, useState } from 'react';
-import { Image, View } from 'react-native';
+import { Image } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import * as Progress from 'react-native-progress';
 import { Feather } from '@expo/vector-icons';
 import TextStyle from '../utils/Text';
 import { haptics } from '../utils/helpers/haptics';
-import { homepageBoxShadow, progressBarStyle } from '../utils/globalStyles';
+import { progressBarStyle } from '../utils/globalStyles';
 import {
     HomepageDataBox,
     HomepageDataView,
@@ -104,9 +104,10 @@ export default function HomeListItem({
     );
 
     const swipeableRef = useRef(null);
-    const { completedDates, icon, completed, times, color, name, unitValue } = item;
+    const { completedDates, icon, completed, times, color, name, unitValue, id } = item;
     return (
         <Swipeable
+            key={name}
             ref={swipeableRef}
             onSwipeableLeftOpen={() => {
                 const length = Object.keys(completedDates).length;
@@ -122,7 +123,6 @@ export default function HomeListItem({
         >
             <HomepageDataView>
                 <HomepageDataBox
-                    key={index}
                     onPress={() => {
                         setVisibleItem(index);
                         haptics.selection();

@@ -16,8 +16,9 @@ const handleHabitCreation = async (
     const reminderTimeHours = reminderTime.getHours();
     const reminderTimeMinutes = reminderTime.getMinutes();
     if (isEnabledDate) chRepeating(habitName, reminderTimeHours, reminderTimeMinutes, newHabit);
-    if (isEnabledSpecific) cHScheduleOneTime(habitName, specificDate);
+    if (isEnabledSpecific) cHScheduleOneTime(habitName, specificDate, newHabit);
     CRUDHabits(newHabit);
+    console.log(newHabit);
 
     setTimeout(() => {
         setLoading(false);
