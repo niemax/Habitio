@@ -1,6 +1,6 @@
 export const colors = {
-    mainBackground: '#212121',
-    mainBoxes: '#282828',
+    mainBackground: '#282828',
+    mainBoxes: '#303030',
     mainGreen: '#2EB284',
     error: '#EA5B71',
 };
@@ -28,6 +28,6 @@ export const habitSelectionColors = [
     '#FACBEA',
     '#FAF3CB',
     '#FACBD2',
-    '#CBFADB',
+    '#764D00',
     '#D2FACB',
 ];

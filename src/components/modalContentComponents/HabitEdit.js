@@ -6,11 +6,8 @@ import {
     HabitUtilityInfoContainer,
     ModalContent,
 } from '../../utils/StyledComponents/Styled';
-import ActionSheet from 'react-native-actions-sheet';
 import Text from '../../utils/Text';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import ColorPalletteModal from '../uiComponents/ColorPallette';
-import { useRef } from 'react';
 import Frequency from '../uiComponents/Frequency';
 import HabitInput from '../uiComponents/HabitDescriptionInput';
 import HabitColor from '../uiComponents/SelectHabitColorButton';
@@ -35,7 +32,6 @@ export default function HabitEditContent({
     },
     states: {
         habitName,
-        loading,
         stateDescription,
         daysCount,
         timesCount,
@@ -50,14 +46,11 @@ export default function HabitEditContent({
         habitUnitValue,
     },
 }) {
-    const sheetRef = useRef(null);
-
     return (
         <ModalContent>
             <ShowEditHeader
                 setEditHabitModalVisible={setEditHabitModalVisible}
                 handleSubmit={handleSubmit}
-                loading={loading}
             />
             <ScrollView>
                 <Text left twentyTwo fontFamily="SemiBold" marginLeft="10px" marginTop="30px">
@@ -105,7 +98,6 @@ export default function HabitEditContent({
                                 habitReminderTime,
                             }}
                         />
-
                         {isEnabledDate && (
                             <DateTimePicker
                                 value={habitReminderTime}
@@ -117,18 +109,6 @@ export default function HabitEditContent({
                         )}
                     </HabitUtilityInfoContainer>
                 </HabitInfoContainer>
-                <ActionSheet
-                    containerStyle={{
-                        backgroundColor: '#141414',
-                        height: 270,
-                    }}
-                    defaultOverlayOpacity={0.6}
-                    gestureEnabled="true"
-                    elevation={2}
-                    ref={sheetRef}
-                >
-                    <ColorPalletteModal sheetRef={sheetRef} updateColor={updateColor} />
-                </ActionSheet>
             </ScrollView>
         </ModalContent>
     );

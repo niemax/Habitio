@@ -1,6 +1,6 @@
 import React from 'react';
 import Text from '../../utils/Text';
-import { ActivityIndicator, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/core';
 import { colors } from '../../utils/colors';
@@ -9,8 +9,6 @@ import handleHabitCreation from '../../utils/helpers/createhabitHelpers';
 
 export default function CHHeader({
     newHabit,
-    loading,
-    setLoading,
     isEnabledDate,
     isEnabledSpecific,
     CRUDHabits,
@@ -31,7 +29,6 @@ export default function CHHeader({
                 onPress={() =>
                     handleHabitCreation(
                         newHabit,
-                        setLoading,
                         isEnabledDate,
                         isEnabledSpecific,
                         CRUDHabits,
@@ -42,11 +39,7 @@ export default function CHHeader({
                     )
                 }
             >
-                {loading ? (
-                    <ActivityIndicator color={colors.mainGreen} />
-                ) : (
-                    <Text color={colors.mainGreen}>Create</Text>
-                )}
+                <Text color={colors.mainGreen}>Create</Text>
             </TouchableOpacity>
         </CreateHabitHeader>
     );

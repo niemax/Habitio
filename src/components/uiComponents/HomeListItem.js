@@ -4,7 +4,6 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import * as Progress from 'react-native-progress';
 import TextStyle from '../../utils/Text';
 import { haptics } from '../../utils/helpers/haptics';
-import { progressBarStyle } from '../../utils/globalStyles';
 import {
     HomepageDataBox,
     HomepageDataView,
@@ -14,6 +13,7 @@ import ShowHabitModal from '../modalComponents/ShowHabitModal';
 import ProgressModal from '../modalComponents/ProgressModal';
 import { LeftActions, RightActions } from '../uiComponents/SwipeableActions';
 import HabitCompletedStatusText from './HabitCompletedStatusText';
+import { colors } from '../../utils/colors';
 
 export default function HomeListItem({
     item,
@@ -56,7 +56,7 @@ export default function HomeListItem({
                     }}
                 >
                     <Image
-                        style={{ height: 37, width: 37 }}
+                        style={{ height: 30, width: 30 }}
                         source={icon ? icon : require('../../assets/flatIcons/activity.png')}
                     />
                     <HabitCompletedStatusText name={name} completed={completed} color={color} />
@@ -65,7 +65,7 @@ export default function HomeListItem({
                         <TextStyle color={color} marginLeft="10px" fontFamily="Bold" twenty>
                             {times > 1 && (
                                 <TextStyle fontFamily="Extra" color={color} twenty>
-                                    {prog}
+                                    {!completed ? prog : times}
                                 </TextStyle>
                             )}
                             {times > 1 && (
@@ -96,13 +96,19 @@ export default function HomeListItem({
                     </ItemTimesContainer>
                     {times > 1 && (
                         <Progress.Bar
-                            style={progressBarStyle}
-                            progress={prog / times}
-                            height={3}
-                            width={338}
+                            style={{
+                                position: 'absolute',
+                                bottom: 0,
+                                left: 4,
+                                right: 4,
+                                borderBottomRightRadius: 30,
+                                borderBottomLeftRadius: 30,
+                            }}
+                            progress={!completed ? prog / times : 1}
+                            height={4.5}
+                            width={342}
                             color={color}
-                            borderColor="transparent"
-                            borderWidth={0.2}
+                            borderColor={colors.mainBoxes}
                         />
                     )}
 

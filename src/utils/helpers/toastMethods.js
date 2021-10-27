@@ -24,25 +24,6 @@ export const toasts = {
             icon: 'success',
         });
     },
-    infoAdditional: (habitName, completedCount, color, setVisible) => {
-        showMessage({
-            duration: 3500,
-            message: randomWord,
-            description: `You have completed ${habitName} now ${completedCount} times. Keep it up!`,
-            backgroundColor: color, // background color
-            titleStyle: {
-                fontFamily: 'Bold',
-                fontSize: 17,
-            },
-            textStyle: {
-                fontFamily: 'Medium',
-                fontSize: 15,
-            },
-            floating: 'true',
-            icon: 'success',
-            onPress: () => setVisible.current?.open(),
-        });
-    },
     error: () => {
         showMessage({
             duration: 4000,

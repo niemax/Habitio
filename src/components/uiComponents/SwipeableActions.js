@@ -21,9 +21,7 @@ export const RightActions = ({ swipeableRef, prog, setProg, item }) => (
             onPress={() => {
                 haptics.selection();
                 swipeableRef.current.close();
-                setTimeout(() => {
-                    setProg((prevProg) => prevProg + 1);
-                }, 500);
+                setProg((prevProg) => prevProg + 1);
             }}
             style={{ backgroundColor: item.color }}
         >
@@ -35,9 +33,7 @@ export const RightActions = ({ swipeableRef, prog, setProg, item }) => (
             onPress={() => {
                 haptics.selection();
                 swipeableRef.current.close();
-                setTimeout(() => {
-                    prog > 0 && setProg((prevProg) => prevProg - 1);
-                }, 500);
+                prog > 0 && setProg((prevProg) => prevProg - 1);
             }}
             style={{ backgroundColor: item.color, marginRight: 7 }}
         >
@@ -50,9 +46,7 @@ export const RightActions = ({ swipeableRef, prog, setProg, item }) => (
                 onPress={() => {
                     haptics.selection();
                     swipeableRef.current.close();
-                    setTimeout(() => {
-                        prog <= item.times && setProg((prevProg) => prevProg + 5);
-                    }, 500);
+                    prog <= item.times && setProg((prevProg) => prevProg + 5);
                 }}
                 style={{ backgroundColor: item.color, marginRight: 7 }}
             >
@@ -66,9 +60,7 @@ export const RightActions = ({ swipeableRef, prog, setProg, item }) => (
                 onPress={() => {
                     haptics.selection();
                     swipeableRef.current.close();
-                    setTimeout(() => {
-                        prog <= item.times && setProg((prevProg) => prevProg - 5);
-                    }, 500);
+                    prog <= item.times && setProg((prevProg) => prevProg - 5);
                 }}
                 style={{ backgroundColor: item.color, marginRight: 7 }}
             >

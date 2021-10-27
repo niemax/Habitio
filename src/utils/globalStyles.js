@@ -46,14 +46,15 @@ export const showHabitImageBackground = {
     opacity: 0.8,
     justifyContent: 'center',
     alignItems: 'center',
-    width: 100,
-    height: 100,
+    width: 'auto',
+    height: 'auto',
+    padding: 15,
     borderRadius: 15,
 };
 
 export const showHabitImage = {
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
 };
 
 export const calendarStyles = {
@@ -79,7 +80,16 @@ export const noHabitsImageStyle = {
     marginTop: 10,
 };
 
-export const homepageBoxShadow = {};
+export const homepageBoxShadow = {
+    shadowColor: '#000',
+    shadowOffset: {
+        width: 0,
+        height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+};
 
 export const tabNavStyle = {
     activeTintColor: '#03fff7',
@@ -95,16 +105,20 @@ export const tabNavStyle = {
     bottom: 10,
 };
 
-export const progressBarStyle = {
-    position: 'absolute',
-    bottom: 0,
-    left: 6,
-    borderBottomLeftRadius: 25,
-    borderBottomRightRadius: 25,
-};
-
 export const habitColor = {
     width: 35,
     height: 35,
     borderRadius: '50%',
+};
+
+export const showHabitTimerIndicator = {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 10,
+    height: 40,
+    width: 135,
+    backgroundColor: colors.mainBoxes,
+    borderRadius: 15,
+    marginBottom: 20,
 };

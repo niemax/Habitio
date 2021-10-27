@@ -43,7 +43,7 @@ const data = [
             {
                 name: 'Read a book',
                 habitIcon: require('./assets/flatIcons/storytelling.png'),
-                description: 'Relax and learn something new and interesting',
+                description: 'Relax and learn something new\nand interesting',
                 color: '#FA9C0F',
             },
             {
@@ -97,6 +97,20 @@ const data = [
                 habitIcon: require('./assets/flatIcons/travel-journal.png'),
                 description: 'Write down your accomplishments,\nexperiences, and goals',
                 color: '#FA9C0F',
+            },
+        ],
+    },
+    {
+        name: 'Nutrition',
+        mainIcon: require('./assets/flatIcons/dinner.png'),
+        color: '#764D00',
+        image: require('./assets/flatIcons/nutrition.png'),
+        habits: [
+            {
+                name: 'Eat Breakfast',
+                habitIcon: require('./assets/flatIcons/coffee.png'),
+                description: 'Start the day right with the most\nimportant meal of the day',
+                color: '#FF6347',
             },
         ],
     },

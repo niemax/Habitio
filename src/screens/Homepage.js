@@ -1,19 +1,15 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Image, RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
+import { Image, RefreshControl, ScrollView } from 'react-native';
 import { colors } from '../utils/colors';
 import { Feather } from '@expo/vector-icons';
 import { useHabits } from '../context/HabitProvider';
 import {
-    HomeheaderContainer,
     HomepageDataView,
-    HomepageTextContainer,
     MainContainer,
     NoHabitsContainer,
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
-import { getCurrentDate } from '../utils/helpers/currentDate';
 import { noHabitsImageStyle } from '../utils/globalStyles';
-import { useNavigation } from '@react-navigation/core';
 import HomeListItem from '../components/uiComponents/HomeListItem';
 import handleDoneToday from '../utils/helpers/handleDone';
 import { getAllNotifications } from '../utils/helpers/notification';
@@ -35,13 +31,13 @@ const HomepageData = () => {
     const currentDay = day.getDay();
 
     useEffect(() => {
-        checkDateForHabitCompletedReset(getHabits, habitSetter, habits, currentDay);
+        getHabits();
         getAllNotifications();
+        checkDateForHabitCompletedReset(habitSetter, habits, currentDay);
     }, [currentDay]);
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
-        getHabits();
         wait(200).then(() => setRefreshing(false));
     }, []);
 

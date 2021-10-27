@@ -19,11 +19,9 @@ export const HomepageHeader = () => {
     return (
         <HomeheaderContainer>
             <HomepageTextContainer>
-                <TouchableOpacity>
-                    <Text left twentyEight fontFamily="Extra" marginLeft="15px">
-                        Dashboard for
-                    </Text>
-                </TouchableOpacity>
+                <Text left twentyEight fontFamily="Extra" marginLeft="15px">
+                    Dashboard for
+                </Text>
                 <Text twenty color={colors.mainGreen} fontFamily="SemiBold" left marginLeft="15px">
                     {currentDate}
                 </Text>

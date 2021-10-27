@@ -14,19 +14,29 @@ import ShowHabitEditModal from '../../components/modalComponents/ShowHabitEditMo
 import ShowHabitHeader from '../uiComponents/ShowHabitHeader';
 import ShowHabitActions from '../uiComponents/ShowHabitActions';
 import deleteHabit from '../../utils/helpers/deleteHabit';
-import ShowHabitFrequency, { HabitFrequency } from '../uiComponents/HabitFrequency';
+import { HabitFrequency } from '../uiComponents/HabitFrequency';
 
 const config = {
-    velocityThreshold: 1.5,
-    directionalOffsetThreshold: 50,
+    velocityThreshold: 2,
+    directionalOffsetThreshold: 80,
 };
 
 export default function ShowHabitModal({ modalVisible, setModalVisible, data, handleDoneToday }) {
     const [editHabitModalVisible, setEditHabitModalVisible] = useState(false);
     const [calendarModalVisible, setCalendarModalVisible] = useState(false);
-    const [id, setId] = useState('');
 
-    const { notificationId, name, icon, description, days, times, unitValue } = data;
+    const {
+        notificationId,
+        name,
+        icon,
+        description,
+        days,
+        times,
+        unitValue,
+        reminder,
+        specificDate,
+        color,
+    } = data;
 
     const { habits, habitSetter } = useHabits();
 
@@ -120,6 +130,9 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data, ha
                             days={days}
                             times={times}
                             unitValue={unitValue}
+                            reminder={reminder}
+                            specificDate={specificDate}
+                            color={color}
                         />
                         <ShowHabitActions
                             states={{ calendarModalVisible }}

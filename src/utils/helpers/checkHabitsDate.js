@@ -1,15 +1,13 @@
 /**
  * ! check if current day is higher than last completed day -> set habit.completed to false
- * ! to reset for the day.
+ * ! to reset habits for the day.
  *  */
 
-const checkDateForHabitCompletedReset = (getHabits, habitSetter, habits, currentDay) => {
-    getHabits();
+const checkDateForHabitCompletedReset = (habitSetter, habits, currentDay) => {
     try {
         const checkedHabits = habits.map((habit) => {
             if (currentDay > habit.completedDay) {
                 habit.completed = false;
-                getHabits();
             }
             return habit;
         });

@@ -31,9 +31,7 @@
             [
                 "expo-notifications",
                 {
-                    "icon": "./local/path/to/myNotificationIcon.png",
-                    "color": "#ffffff",
-                    "sounds": ["./local/path/to/mySound.wav", "./local/path/to/myOtherSound.wav"],
+                    "icon": "../goal-buddy/src/assets/brand.png",
                     "mode": "production"
                 }
             ]

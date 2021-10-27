@@ -6,7 +6,13 @@ import { Feather } from '@expo/vector-icons';
 export default function HabitCompletedStatusText({ name, completed, color }) {
     return (
         <TextNameAndStatus>
-            <TextStyle left marginLeft="15px" fontFamily="SemiBold">
+            <TextStyle
+                color={completed ? 'gray' : 'white'}
+                left
+                marginLeft="15px"
+                fontFamily="SemiBold"
+                style={{ textDecorationLine: completed && 'line-through' }}
+            >
                 {name}
             </TextStyle>
             {completed ? (

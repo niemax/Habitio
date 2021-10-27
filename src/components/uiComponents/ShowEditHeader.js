@@ -1,11 +1,11 @@
 import React from 'react';
-import { ActivityIndicator, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { HomeheaderContainer } from '../../utils/StyledComponents/Styled';
 import Text from '../../utils/Text';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../../utils/colors';
 
-export const ShowEditHeader = ({ setEditHabitModalVisible, handleSubmit, loading }) => (
+export const ShowEditHeader = ({ setEditHabitModalVisible, handleSubmit }) => (
     <HomeheaderContainer>
         <TouchableOpacity
             style={{ marginLeft: 5, marginTop: 10 }}
@@ -18,11 +18,7 @@ export const ShowEditHeader = ({ setEditHabitModalVisible, handleSubmit, loading
         </Text>
         <TouchableOpacity onPress={handleSubmit}>
             <Text marginRight="15px" color={colors.mainGreen} fontFamily="SemiBold">
-                {loading ? (
-                    <ActivityIndicator color={colors.mainGreen} />
-                ) : (
-                    <Text color={colors.mainGreen}>Update</Text>
-                )}
+                <Text color={colors.mainGreen}>Update</Text>
             </Text>
         </TouchableOpacity>
     </HomeheaderContainer>

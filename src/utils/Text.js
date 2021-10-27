@@ -19,65 +19,67 @@ const Text = styled.Text`
     marginBottom: ${(props) => props.marginBottom ?? 0};
     /* prettier-ignore */
     fontFamily: ${(props) => props.fontFamily ?? 'SemiBold'};
-    color: ${(props) => props.color ?? '#FFF'}
+    color: ${(props) => props.color ?? '#FFF'};
+    /* prettier-ignore */
+    textDecorationLine: ${(props) => props.textDecorationLine ?? 'none'}
         ${({
-            twelve,
-            fifteen,
-            sixteen,
-            nineteen,
-            twenty,
-            twentyFour,
-            twentyEight,
-            thirtyFour,
-            twentyTwo,
-        }) => {
-            switch (true) {
-                case thirtyFour:
-                    return `font-size: 30px`;
+        twelve,
+        fifteen,
+        sixteen,
+        nineteen,
+        twenty,
+        twentyFour,
+        twentyEight,
+        thirtyFour,
+        twentyTwo,
+    }) => {
+        switch (true) {
+            case thirtyFour:
+                return `font-size: 30px`;
 
-                case twentyEight:
-                    return `font-size: 28px`;
+            case twentyEight:
+                return `font-size: 28px`;
 
-                case twentyTwo:
-                    return `font-size: 22px`;
+            case twentyTwo:
+                return `font-size: 22px`;
 
-                case twentyFour:
-                    return `font-size: 24px`;
+            case twentyFour:
+                return `font-size: 24px`;
 
-                case twenty:
-                    return `font-size: 20px`;
+            case twenty:
+                return `font-size: 20px`;
 
-                case nineteen:
-                    return `font-size: 19px`;
+            case nineteen:
+                return `font-size: 19px`;
 
-                case sixteen:
-                    return `font-size: 16px`;
+            case sixteen:
+                return `font-size: 16px`;
 
-                case fifteen:
-                    return `font-size: 15px`;
+            case fifteen:
+                return `font-size: 15px`;
 
-                case twelve:
-                    return `font-size: 12px`;
+            case twelve:
+                return `font-size: 12px`;
 
-                default:
-                    return `font-size: 18px`;
-            }
-        }}
+            default:
+                return `font-size: 18px`;
+        }
+    }}
         ${({ center, right, left }) => {
-            switch (true) {
-                case center:
-                    return `text-align: center`;
+        switch (true) {
+            case center:
+                return `text-align: center`;
 
-                case right:
-                    return `text-align: right`;
+            case right:
+                return `text-align: right`;
 
-                case left:
-                    return `text-align: left`;
+            case left:
+                return `text-align: left`;
 
-                default:
-                    return `text-align: center`;
-            }
-        }};
+            default:
+                return `text-align: center`;
+        }
+    }};
 `;
 
 export default TextStyle;

@@ -11,6 +11,7 @@ export const SplashContainer = styled.View`
     align-items: center;
     background-color: ${colors.mainBackground};
 `;
+
 export const MainContainer = styled.View`
     background-color: ${mainBackground};
     flex: 1;
@@ -44,7 +45,7 @@ export const TabContainer = styled.View`
 `;
 
 export const TabBarContainer = styled.View`
-    background-color: #191919;
+    background-color: #202020;
     opacity: 0.99;
     justify-content: space-evenly;
     align-items: center;
@@ -149,8 +150,8 @@ export const ChevronTextContainer = styled.View`
 `;
 
 export const HabitCardsContainer = styled.View`
-    background-color: ${colors.mainBoxes}
-    width: 360px;
+    background-color: ${colors.mainBoxes};
+    width: 365px;
     height: 80px;
     border-radius: ${radius};
     margin-top: 20px;
@@ -163,7 +164,7 @@ export const HabitTextColumnContainer = styled.View`
 `;
 
 export const CreateHabitHeader = styled.View`
-    margin-top: 55px;
+    margin-top: 43px;
     flex-direction: row;
     justify-content: space-between;
     padding-horizontal: 10px;
@@ -236,7 +237,7 @@ export const HomepageDataView = styled.View`
 
 export const HomepageDataBox = styled.Pressable`
     margin-top: 2px;
-    height: 75px;
+    height: 79px;
     width: 350px;
     background-color: ${colors.mainBoxes};
     border-radius: ${radius};
@@ -264,12 +265,6 @@ export const LineBreak = styled.View`
     background-color: #494949;
     opacity: 0.3;
     width: 91%;
-`;
-
-export const ToolTipLineBreak = styled.View`
-    height: 0.6px;
-    background-color: #494949;
-    width: 300px;
 `;
 
 export const ShowHabitActionsContainer = styled.View`
@@ -320,8 +315,7 @@ export const CalendarStatsContainer = styled.View`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 2px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 `;
 
 export const CalendarLineBreak = styled.View`
@@ -337,7 +331,7 @@ export const VerticalLineBreak = styled.View`
 `;
 
 export const CalendarHeader = styled.View`
-    margin-top: 35px;
+    margin-top: 20px;
     flex-direction: row;
     justify-content: space-between;
     padding-horizontal: 12px;

@@ -21,8 +21,6 @@ export default function Frequency({
     values: { specificDate, isEnabledSpecific },
     states: { selectedValue, daysCount, timesCount, habitUnitValue, habitSpecificDate },
 }) {
-    const valueCreateHabit = selectedValue;
-    const valueEditHabit = habitUnitValue;
     return (
         <View>
             <FrequencySwitchContainer>
@@ -85,10 +83,9 @@ export default function Frequency({
                                 color: 'white',
                                 marginTop: 3,
                             }}
-                            placeholder={placeholder}
+                            placeholder={placeholder || habitUnitValue}
                             onValueChange={(value) => {
-                                if (valueCreateHabit) setSelectedValue(value);
-                                if (habitUnitValue) setHabitUnitValue(valueEditHabit);
+                                setSelectedValue(value);
                             }}
                             items={[
                                 { label: 'times', value: 'times' },

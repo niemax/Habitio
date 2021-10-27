@@ -48,7 +48,6 @@ const MainAppStack = () => (
             component={MainTab}
         />
         <Stack.Screen
-            screenOptions={{ presentation: 'modal' }}
             name="StartHabitCreation"
             options={{ headerShown: false, gestureEnabled: false }}
             component={StartHabitCreation}

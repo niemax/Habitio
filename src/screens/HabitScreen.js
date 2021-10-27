@@ -9,7 +9,6 @@ import {
     ImageContainer,
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
-import { habitBoxShadow } from '../utils/globalStyles';
 
 const HabitScreen = ({ route, navigation }) => {
     const { habitData, habitName, image } = route.params;
@@ -27,7 +26,7 @@ const HabitScreen = ({ route, navigation }) => {
                     </Text>
                 </ChevronTextContainer>
                 <Image
-                    style={{ height: 90, width: 90, marginRight: 20, marginTop: 20 }}
+                    style={{ height: 100, width: 100, marginRight: 20, marginTop: 20 }}
                     source={image}
                 />
             </ImageContainer>
@@ -43,7 +42,7 @@ const HabitScreen = ({ route, navigation }) => {
                         })
                     }
                 >
-                    <HabitCardsContainer key={index.toString()} style={habitBoxShadow}>
+                    <HabitCardsContainer key={index.toString()}>
                         <Image
                             style={{ height: 40, width: 40, marginLeft: 15 }}
                             source={habitIcon}

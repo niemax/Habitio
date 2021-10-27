@@ -6,7 +6,7 @@ import { Feather } from '@expo/vector-icons';
 import { colors } from '../../utils/colors';
 import { habitBoxShadow } from '../../utils/globalStyles';
 import { format } from 'date-fns';
-import { KeyboardAvoidingView, TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, TouchableOpacity, View } from 'react-native';
 
 export default function CalendarBottomSheet({
     diaryInput,
@@ -22,7 +22,7 @@ export default function CalendarBottomSheet({
                 backgroundColor: '#141414',
                 height: 520,
             }}
-            defaultOverlayOpacity={0.6}
+            defaultOverlayOpacity={0.4}
             gestureEnabled="true"
             elevation={2}
             ref={sheetRef}
@@ -50,6 +50,7 @@ export default function CalendarBottomSheet({
                     autoCorrect={false}
                     headerAlwaysVisible="true"
                     autoFocus={true}
+                    multiline={Platform.OS === 'ios' ? true : false}
                     value={diaryInput}
                     placeholder="Write a Reflection"
                     placeholderTextColor="gray"

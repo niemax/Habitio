@@ -12,6 +12,7 @@ import HabitInput from '../components/uiComponents/HabitDescriptionInput';
 import Frequency from '../components/uiComponents/Frequency';
 import CHHeader from '../components/uiComponents/CreateHabitHeader';
 import HabitColor from '../components/uiComponents/SelectHabitColorButton';
+import getWeek from 'date-fns/getWeek';
 
 export default function CreateHabit({ route }) {
     const [updatedColor, setUpdatedColor] = useState();
@@ -19,7 +20,6 @@ export default function CreateHabit({ route }) {
     const [description, setDescription] = useState('');
     const [daysCount, setDaysCount] = useState(1);
     const [timesCount, setTimesCount] = useState(1);
-    const [loading, setLoading] = useState(false);
     const [specificDate, setSpecificDate] = useState(new Date());
     const [reminderTime, setReminderTime] = useState(new Date());
     const [isEnabled, setIsEnabled] = useState(false);
@@ -36,6 +36,8 @@ export default function CreateHabit({ route }) {
     const { CRUDHabits } = useHabits();
 
     const { habitName, habitIcon, color } = route.params;
+
+    const currentWeek = getWeek(new Date());
 
     const updateColor = (color) => {
         setUpdatedColor(color);
@@ -54,7 +56,7 @@ export default function CreateHabit({ route }) {
 
     const newHabit = {
         name: habitName,
-        id: Math.floor(Math.random() * 1000),
+        id: Math.floor(Math.random() * 10000),
         color: color || updatedColor,
         icon: habitIcon,
         days: isEnabled ? daysCount : null,
@@ -64,6 +66,8 @@ export default function CreateHabit({ route }) {
         unitValue: selectedValue,
         description: description,
         completedDay: null,
+        dataCurrentWeek: currentWeek,
+        streak: [],
         currentDay: 0,
         completed: false,
         completedDates: {},
@@ -76,8 +80,6 @@ export default function CreateHabit({ route }) {
         <MainContainer>
             <CHHeader
                 newHabit={newHabit}
-                loading={loading}
-                setLoading={setLoading}
                 isEnabledDate={isEnabledDate}
                 isEnabledSpecific={isEnabledSpecific}
                 CRUDHabits={CRUDHabits}

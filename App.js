@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Platform, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import FlashMessage from 'react-native-flash-message';
 import AppLoading from 'expo-app-loading';
@@ -57,6 +58,7 @@ export default function App() {
     if (fontsLoaded) {
         return (
             <View style={{ flex: 1, backgroundColor: colors.mainBackground }}>
+                <StatusBar style="light" />
                 <NavigationContainer>
                     <HabitProvider>
                         <SafeAreaProvider>
@@ -87,7 +89,6 @@ async function registerForPushNotificationsAsync() {
             return;
         }
         token = (await Notifications.getExpoPushTokenAsync()).data;
-        console.log(token);
     } else {
         alert('Must use physical device for Push Notifications');
     }
