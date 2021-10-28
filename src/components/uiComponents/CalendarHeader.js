@@ -10,7 +10,7 @@ const CalendarHead = ({ name, setCalendarModalVisible }) => (
             {name}
         </Text>
         <TouchableOpacity onPress={() => setCalendarModalVisible(false)}>
-            <Text marginRight="10px" color={colors.mainGreen} fontFamily="SemiBold">
+            <Text nineteen marginRight="10px" color={colors.mainGreen} fontFamily="SemiBold">
                 Done
             </Text>
         </TouchableOpacity>

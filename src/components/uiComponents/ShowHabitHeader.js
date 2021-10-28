@@ -18,7 +18,7 @@ export const ShowHabitHeader = ({ setModalVisible, setEditHabitModalVisible }) =
                 setEditHabitModalVisible(true);
             }}
         >
-            <Text twenty marginRight="15px" color={colors.mainGreen} fontFamily="SemiBold">
+            <Text nineteen marginRight="15px" color={colors.mainGreen} fontFamily="SemiBold">
                 Edit
             </Text>
         </TouchableOpacity>

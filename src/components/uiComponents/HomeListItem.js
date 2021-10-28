@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Image } from 'react-native';
+import { Feather } from '@expo/vector-icons';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import * as Progress from 'react-native-progress';
 import TextStyle from '../../utils/Text';
@@ -25,7 +26,7 @@ export default function HomeListItem({
     const [progressModalVisible, setProgressModalVisible] = useState(false);
     const [prog, setProg] = useState(0);
     const swipeableRef = useRef(null);
-    const { completedDates, icon, completed, times, color, name, unitValue, id } = item;
+    const { completedDates, icon, completed, times, color, name, unitValue } = item;
 
     const renderLeftActions = () => <LeftActions item={item} />;
     const renderRightActions = () => (
@@ -55,10 +56,15 @@ export default function HomeListItem({
                         haptics.selection();
                     }}
                 >
-                    <Image
-                        style={{ height: 30, width: 30 }}
-                        source={icon ? icon : require('../../assets/flatIcons/activity.png')}
-                    />
+                    {icon ? (
+                        <Image style={{ height: 30, width: 30 }} source={icon} />
+                    ) : (
+                        <Feather
+                            name="activity"
+                            size={32}
+                            color={color ? color : colors.mainGreen}
+                        />
+                    )}
                     <HabitCompletedStatusText name={name} completed={completed} color={color} />
 
                     <ItemTimesContainer>

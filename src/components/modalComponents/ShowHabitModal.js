@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Image, Modal, ScrollView, View } from 'react-native';
+import { Feather } from '@expo/vector-icons';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { useHabits } from '../../context/HabitProvider';
 import { showHabitImage, showHabitImageBackground } from '../../utils/globalStyles';
@@ -15,6 +16,7 @@ import ShowHabitHeader from '../uiComponents/ShowHabitHeader';
 import ShowHabitActions from '../uiComponents/ShowHabitActions';
 import deleteHabit from '../../utils/helpers/deleteHabit';
 import { HabitFrequency } from '../uiComponents/HabitFrequency';
+import { colors } from '../../utils/colors';
 
 const config = {
     velocityThreshold: 2,
@@ -27,6 +29,7 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data, ha
 
     const {
         notificationId,
+        id,
         name,
         icon,
         description,
@@ -61,8 +64,8 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data, ha
             scheduleOneTimeEdit(habitSpecificDate, habitName).then(() => {});
         }
 
-        const newHabits = habits.filter((habit) => {
-            if (habit.name === name) {
+        const newHabits = habits.map((habit) => {
+            if (habit.id === id) {
                 habit.name = habitName;
                 habit.unitValue = unitValue;
                 habit.color = color;
@@ -114,12 +117,19 @@ export default function ShowHabitModal({ modalVisible, setModalVisible, data, ha
                     <ScrollView>
                         <ShowHabitDataContainer>
                             <View style={showHabitImageBackground}>
-                                <Image
-                                    style={showHabitImage}
-                                    source={
-                                        icon ? icon : require('../../assets/flatIcons/activity.png')
-                                    }
-                                />
+                                {icon ? (
+                                    <Image
+                                        style={{ height: 30, width: 30 }}
+                                        source={icon}
+                                        style={showHabitImage}
+                                    />
+                                ) : (
+                                    <Feather
+                                        name="activity"
+                                        size={46}
+                                        color={color ? color : colors.mainGreen}
+                                    />
+                                )}
                             </View>
                             <Text fontFamily="Bold" marginTop="15px" twentyFour>
                                 {name}

@@ -39,7 +39,9 @@ export default function CHHeader({
                     )
                 }
             >
-                <Text color={colors.mainGreen}>Create</Text>
+                <Text color={colors.mainGreen} marginRight="10px">
+                    Create
+                </Text>
             </TouchableOpacity>
         </CreateHabitHeader>
     );

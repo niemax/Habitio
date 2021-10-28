@@ -26,8 +26,9 @@ const handleDoneToday = async (data, habits, currentDay, modalizeRef, animation,
                     habit.completedDay = currentDay;
                     habit.completed = true;
                     habit.completedDates = completedDatesObj;
-                    if (Object.keys(completedDates).length % 3 !== 0)
+                    if (Object.keys(completedDates).length % 3 !== 0) {
                         toasts.info(name, color, modalizeRef);
+                    }
                 }
             } else {
                 delete completedDatesObj[newDate];

@@ -164,10 +164,9 @@ export const HabitTextColumnContainer = styled.View`
 `;
 
 export const CreateHabitHeader = styled.View`
-    margin-top: 43px;
+    margin-top: 48px;
     flex-direction: row;
     justify-content: space-between;
-    padding-horizontal: 10px;
 `;
 
 export const HabitInfoContainer = styled.View`

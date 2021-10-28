@@ -54,7 +54,10 @@ export default function StartHabitCreation({ navigation }) {
                         fontSize: 18,
                         fontFamily: 'Bold',
                     }}
-                    onChangeText={(text) => setHabitName(text)}
+                    onChangeText={(text) => {
+                        setError('');
+                        setHabitName(text);
+                    }}
                 />
             </InputContainer>
 

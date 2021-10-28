@@ -19,10 +19,10 @@ export default function CalendarBottomSheet({
     return (
         <ActionSheet
             containerStyle={{
-                backgroundColor: '#141414',
+                backgroundColor: colors.mainBackground,
                 height: 520,
             }}
-            defaultOverlayOpacity={0.4}
+            defaultOverlayOpacity={0.3}
             gestureEnabled="true"
             elevation={2}
             ref={sheetRef}
@@ -31,7 +31,10 @@ export default function CalendarBottomSheet({
                 <Text left marginLeft="15px" color="gray" twenty fontFamily="Medium">
                     {format(new Date(selectedDay), 'dd-MM-yyyy')}
                 </Text>
-                <TouchableOpacity onPress={handleDiaryInput} style={{ marginRight: 15 }}>
+                <TouchableOpacity
+                    onPress={() => diaryInput !== '' && handleDiaryInput()}
+                    style={{ marginRight: 15 }}
+                >
                     <Text color={colors.mainGreen} fontFamily="SemiBold">
                         Done
                     </Text>

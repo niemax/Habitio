@@ -17,8 +17,8 @@ export const ShowEditHeader = ({ setEditHabitModalVisible, handleSubmit }) => (
             Edit Habit
         </Text>
         <TouchableOpacity onPress={handleSubmit}>
-            <Text marginRight="15px" color={colors.mainGreen} fontFamily="SemiBold">
-                <Text color={colors.mainGreen}>Update</Text>
+            <Text marginRight="10px" nineteen color={colors.mainGreen}>
+                Save
             </Text>
         </TouchableOpacity>
     </HomeheaderContainer>

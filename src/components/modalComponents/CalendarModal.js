@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Modal, Dimensions, ScrollView, TouchableOpacity, View } from 'react-native';
 import { Calendar } from 'react-native-calendars';
-import { format } from 'date-fns';
+import { format, getWeek } from 'date-fns';
 import { Entypo } from '@expo/vector-icons';
 import {
     CalendarLineBreak,
@@ -28,12 +28,18 @@ export default function CalendarModal({ calendarModalVisible, setCalendarModalVi
     const [editNoteModalVisible, setEditNoteModalVisible] = useState();
     const { habits, habitSetter, CRUDHabits } = useHabits();
     const sheetRef = useRef(null);
+    const week = getWeek(new Date());
     const { completedDates, days, dataCurrentWeek, name, unitValue, diaryInputs, id } = data;
 
     useEffect(() => {
-        const { completedPercentage } = checkCurrentWeek(dataCurrentWeek, completedDates, days);
+        const { completedPercentage } = checkCurrentWeek(
+            dataCurrentWeek,
+            completedDates,
+            days,
+            data
+        );
         setCompletionRate(completedPercentage);
-    }, [days]);
+    }, [days, week]);
 
     const calendarDayPress = (day) => {
         sheetRef.current?.show();
@@ -151,6 +157,7 @@ export default function CalendarModal({ calendarModalVisible, setCalendarModalVi
                                           setEditNoteModalVisible={setEditNoteModalVisible}
                                           date={date}
                                           id={id}
+                                          currentInput={input}
                                           diaryInputs={diaryInputs}
                                           habitSetter={habitSetter}
                                           data={data}

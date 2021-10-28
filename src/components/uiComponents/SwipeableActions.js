@@ -8,9 +8,9 @@ import { haptics } from '../../utils/helpers/haptics';
 export const LeftActions = ({ item }) => (
     <LeftAction style={{ backgroundColor: item.completed ? colors.error : colors.mainGreen }}>
         {item.completed ? (
-            <Feather name="x" size={48} color="white" style={{ marginLeft: 70 }} />
+            <Feather name="x" size={32} color="white" style={{ marginLeft: 30 }} />
         ) : (
-            <Feather name="check" size={42} color="white" style={{ marginLeft: 90 }} />
+            <Feather name="check" size={32} color="white" style={{ marginLeft: 30 }} />
         )}
     </LeftAction>
 );
