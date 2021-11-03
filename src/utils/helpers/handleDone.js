@@ -3,6 +3,10 @@ import { colors } from '../colors';
 import { haptics } from './haptics';
 import { toasts } from './toastMethods';
 
+/**
+ * ! handle done for today
+ */
+
 const handleDoneToday = async (data, habits, currentDay, habitSetter) => {
     const { id, name, color } = data;
     const newDate = format(new Date(), 'yyyy-MM-dd');

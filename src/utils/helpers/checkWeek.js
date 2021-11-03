@@ -1,5 +1,11 @@
 import { getWeek } from 'date-fns';
 
+/**
+ * ? Checks if the week in the habit data structure
+ * ? is lower than the current real-time week -> set completedPercentage to 0
+ * ? and change data structure week to current week.
+ * ? completedPercentage is tracked based on users weekly completion rate
+ */
 const checkCurrentWeek = (dataCurrentWeek, completedDates, days, data) => {
     const week = getWeek(new Date());
     let completedPercentage;

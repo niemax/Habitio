@@ -1,3 +1,6 @@
+/**
+ * ! handle all operations within notes in calendarModal
+ */
 export const handleDiaryInputEdit = (diaryInputs, id, habitSetter, habits, data, input) => {
     const mappedInputs = diaryInputs.map((diaryInput) => {
         if (diaryInput.id === id) {

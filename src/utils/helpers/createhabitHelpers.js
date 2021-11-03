@@ -1,5 +1,9 @@
 import { chRepeating, cHScheduleOneTime } from './notification';
 
+/**
+ * ! handles the creation of a habit in CreateHabit -> CreateHabitHeader component
+ *
+ */
 const handleHabitCreation = async (
     newHabit,
     isEnabledDate,

@@ -1,5 +1,12 @@
 import { cancelPushNotification, scheduleOneTimeEdit, scheduleRepeatingEdit } from './notification';
 
+/**
+ * ! handle update based on the habit id coming from route.params
+ * ! updates the habit with new arguments and cancels a push notification
+ * ! every time on save. If user has set another notification -> schedule
+ * ! a new one.
+ */
+
 const handleUpdate = async (
     data,
     notificationId,
