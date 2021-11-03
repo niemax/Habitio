@@ -7,11 +7,11 @@ import {
     HomepageDataView,
     MainContainer,
     NoHabitsContainer,
+    TabAddButton,
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 import { noHabitsImageStyle } from '../utils/globalStyles';
 import HomeListItem from '../components/uiComponents/HomeListItem';
-import handleDoneToday from '../utils/helpers/handleDone';
 import { getAllNotifications } from '../utils/helpers/notification';
 import checkDateForHabitCompletedReset from '../utils/helpers/checkHabitsDate';
 import HomepageHeader from '../components/uiComponents/HomepageHeader';
@@ -20,10 +20,8 @@ const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-const HomepageData = () => {
-    const [visibleItem, setVisibleItem] = useState();
+const HomepageData = ({ navigation }) => {
     const [refreshing, setRefreshing] = useState(false);
-    const animation = useRef(null);
     const modalizeRef = useRef(null);
     const { habitSetter, getHabits, habits } = useHabits();
 
@@ -83,23 +81,15 @@ const HomepageData = () => {
                             item={item}
                             index={index.toString()}
                             modalizeRef={modalizeRef}
-                            handleDoneToday={() =>
-                                handleDoneToday(
-                                    item,
-                                    habits,
-                                    currentDay,
-                                    modalizeRef,
-                                    animation,
-                                    habitSetter
-                                )
-                            }
-                            visibleItem={visibleItem}
-                            setVisibleItem={setVisibleItem}
                             completed={item.completed}
+                            completedDay={currentDay}
                         />
                     ))}
                 </HomepageDataView>
             </ScrollView>
+            <TabAddButton onPress={() => navigation.navigate('StartHabitCreation')}>
+                <Feather name="plus" size={36} color="white" />
+            </TabAddButton>
         </MainContainer>
     );
 };

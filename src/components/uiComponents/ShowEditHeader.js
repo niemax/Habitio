@@ -4,24 +4,25 @@ import { HomeheaderContainer } from '../../utils/StyledComponents/Styled';
 import Text from '../../utils/Text';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../../utils/colors';
+import { useNavigation } from '@react-navigation/core';
 
-export const ShowEditHeader = ({ setEditHabitModalVisible, handleSubmit }) => (
-    <HomeheaderContainer>
-        <TouchableOpacity
-            style={{ marginLeft: 5, marginTop: 10 }}
-            onPress={() => setEditHabitModalVisible(false)}
-        >
-            <Ionicons name="close-circle-sharp" size={34} color="gray" />
-        </TouchableOpacity>
-        <Text twentyTwo fontFamily="Extra">
-            Edit Habit
-        </Text>
-        <TouchableOpacity onPress={handleSubmit}>
-            <Text marginRight="10px" nineteen color={colors.mainGreen}>
-                Save
+export const ShowEditHeader = ({ handleUpdate }) => {
+    const navigation = useNavigation();
+    return (
+        <HomeheaderContainer>
+            <TouchableOpacity style={{ marginLeft: 5 }} onPress={() => navigation.pop()}>
+                <Ionicons name="close-circle-sharp" size={32} color="gray" />
+            </TouchableOpacity>
+            <Text twentyTwo fontFamily="Extra">
+                Edit Habit
             </Text>
-        </TouchableOpacity>
-    </HomeheaderContainer>
-);
+            <TouchableOpacity onPress={handleUpdate}>
+                <Text marginRight="10px" nineteen color={colors.mainGreen}>
+                    Save
+                </Text>
+            </TouchableOpacity>
+        </HomeheaderContainer>
+    );
+};
 
 export default ShowEditHeader;

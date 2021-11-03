@@ -67,7 +67,7 @@ export const scheduleOneTimeWeekNotification = async (currentDay) => {
     }
 };
 
-export const scheduleRepeatingEdit = async (hours, minutes, name) => {
+export const scheduleRepeatingEdit = async (hours, minutes, name, habits, data) => {
     const identifier = await Notifications.scheduleNotificationAsync({
         content: {
             title: name,
@@ -79,10 +79,14 @@ export const scheduleRepeatingEdit = async (hours, minutes, name) => {
             repeats: true,
         },
     });
-    return { identifier };
+    habits.map((habit) => {
+        if (habit.id === data.id) {
+            habit.notificationId = identifier;
+        }
+    });
 };
 
-export const scheduleOneTimeEdit = async (date, name, setter) => {
+export const scheduleOneTimeEdit = async (date, name, habits, data) => {
     const identifier = await Notifications.scheduleNotificationAsync({
         content: {
             title: name,
@@ -93,7 +97,11 @@ export const scheduleOneTimeEdit = async (date, name, setter) => {
             repeats: false,
         },
     });
-    return { identifier };
+    habits.map((habit) => {
+        if (habit.id === data.id) {
+            habit.notificationId = identifier;
+        }
+    });
 };
 
 export const chRepeating = async (name, hours, minutes, newHabit) => {
@@ -101,7 +109,7 @@ export const chRepeating = async (name, hours, minutes, newHabit) => {
         const identifier = await Notifications.scheduleNotificationAsync({
             content: {
                 title: name,
-                body: `Time to be productive! Your daily reminder to ${name}`,
+                body: `Your daily reminder to ${name}`,
             },
             trigger: {
                 hour: hours,

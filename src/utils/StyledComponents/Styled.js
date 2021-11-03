@@ -1,5 +1,8 @@
+import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import { colors } from '../colors';
+
+const deviceWidth = Dimensions.get('window').width;
 
 const { mainBackground, mainGreen } = colors;
 
@@ -30,8 +33,11 @@ export const HomepageTextContainer = styled.View`
 `;
 
 export const TabAddButton = styled.TouchableOpacity`
-    height: 60px;
-    width: 60px;
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    height: 70px;
+    width: 70px;
     justify-content: center;
     align-items: center;
     background-color: green;
@@ -74,7 +80,11 @@ export const TextInputContainer = styled.View`
     align-items: center;
 `;
 
-export const ModalView = styled.View``;
+export const ModalView = styled.View`
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+`;
 
 export const ModalContent = styled.View`
     flex: 1;
@@ -89,7 +99,7 @@ export const InputContainer = styled.View`
 `;
 
 export const HabitInput = styled.TextInput`
-    width: 342px;
+    width: ${deviceWidth - 50}px
     height: 60px
     background-color: ${colors.mainBoxes} 
     border-radius: ${radius}; 
@@ -106,7 +116,7 @@ export const ButtonContainer = styled.View`
 `;
 
 export const HabitNextButton = styled.TouchableOpacity`
-    width: 350px;
+    width: ${deviceWidth - 40}px
     height: 60px;
     background-color: ${mainGreen};
     justify-content: center;
@@ -121,7 +131,7 @@ export const PreDefinedContainer = styled.View`
 `;
 export const PreDefinedHabitsContainer = styled.View`
     background-color: ${colors.mainBoxes};
-    width: 360px;
+    width: ${deviceWidth - 20}px
     height: 80px;
     border-radius: ${radius};
     margin-top: 16px;
@@ -151,7 +161,7 @@ export const ChevronTextContainer = styled.View`
 
 export const HabitCardsContainer = styled.View`
     background-color: ${colors.mainBoxes};
-    width: 365px;
+    width: ${deviceWidth - 20}px;
     height: 80px;
     border-radius: ${radius};
     margin-top: 20px;
@@ -179,7 +189,7 @@ export const HabitCentered = styled.View`
 `;
 
 export const HabitDescriptionInput = styled.TextInput`
-    width: 360px;
+    width: ${deviceWidth - 30}px
     height: 100px;
     background-color: ${colors.mainBoxes};
     border-radius: ${radius};
@@ -237,7 +247,7 @@ export const HomepageDataView = styled.View`
 export const HomepageDataBox = styled.Pressable`
     margin-top: 2px;
     height: 79px;
-    width: 350px;
+    width: ${deviceWidth - 24}px;
     background-color: ${colors.mainBoxes};
     border-radius: ${radius};
     flex-direction: row;
@@ -273,7 +283,7 @@ export const ShowHabitActionsContainer = styled.View`
 `;
 
 export const ShowHabitActionsButton = styled.TouchableOpacity`
-    width: 350px;
+    width: ${deviceWidth - 30}px;
     height: 60px;
     background-color: ${colors.mainBoxes};
     justify-content: center;
@@ -433,4 +443,17 @@ export const ProgressModalShareButton = styled.TouchableOpacity`
     width: 90%;
     border-radius: 30px;
     margin-top: 15px;
+`;
+
+export const DateTimePickerView = styled.View`
+    flex: 1;
+    margin-top: 10px;
+    justify-content: flex-end;
+`;
+
+export const HabitHeaderLineBreak = styled.View`
+    height: 0.4px;
+    width: 100%;
+    background-color: gray;
+    margin-top: 10px;
 `;

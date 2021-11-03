@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { ScrollView, View } from 'react-native';
 import {
     HabitInfoContainer,
     HabitUtilityInfoContainer,
@@ -22,9 +21,11 @@ export default function CreateHabit({ route }) {
     const [timesCount, setTimesCount] = useState(1);
     const [specificDate, setSpecificDate] = useState(new Date());
     const [reminderTime, setReminderTime] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
     const [isEnabled, setIsEnabled] = useState(false);
     const [isEnabledDate, setIsEnabledDate] = useState(false);
     const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
+    const [isEnabledEndDate, setIsEnabledEndDate] = useState(false);
     const [selectedValue, setSelectedValue] = useState();
     const toggleSwitch = () =>
         !isEnabledSpecific && setIsEnabled((previousState) => !previousState);
@@ -32,8 +33,7 @@ export default function CreateHabit({ route }) {
         !isEnabledSpecific && setIsEnabledDate((previousState) => !previousState);
     const toggleSwitchSpecific = () =>
         !isEnabledDate && !isEnabled && setIsEnabledSpecific((previousState) => !previousState);
-
-    const { CRUDHabits } = useHabits();
+    const toggleSwitchEndDate = () => setIsEnabledEndDate((previousState) => !previousState);
 
     const { habitName, habitIcon, color } = route.params;
 
@@ -54,6 +54,11 @@ export default function CreateHabit({ route }) {
         setReminderTime(currentDate);
     };
 
+    const onChangeEndDate = (event, selectedDate) => {
+        const currentDate = selectedDate || reminderTime;
+        setEndDate(currentDate);
+    };
+
     const newHabit = {
         name: habitName,
         id: Math.floor(Math.random() * 10000),
@@ -63,6 +68,7 @@ export default function CreateHabit({ route }) {
         times: isEnabled ? timesCount : null,
         specificDate: isEnabledSpecific ? specificDate : null,
         reminder: isEnabledDate ? reminderTime : null,
+        endDate: isEnabledEndDate ? endDate : null,
         unitValue: selectedValue,
         description: description,
         completedDay: null,
@@ -82,63 +88,63 @@ export default function CreateHabit({ route }) {
                 newHabit={newHabit}
                 isEnabledDate={isEnabledDate}
                 isEnabledSpecific={isEnabledSpecific}
-                CRUDHabits={CRUDHabits}
                 reminderTime={reminderTime}
                 habitName={habitName}
                 specificDate={specificDate}
             />
             <ScrollView>
-                <Text left twentyTwo fontFamily="SemiBold" marginLeft="10px" marginTop="30px">
-                    {habitName}
-                </Text>
-                <Text left marginLeft="10px" fontFamily="Regular" marginTop="35px">
-                    Description
-                </Text>
-                <HabitInfoContainer>
-                    <HabitInput
-                        values={description}
-                        actions={{
-                            setValue: (text) => setDescription(text),
-                        }}
-                    />
-                    <HabitUtilityInfoContainer>
-                        <Text left fontFamily="Regular">
-                            Color
-                        </Text>
-                        <HabitColor
-                            colorUpdated={colorUpdated}
-                            updatedColor={updatedColor}
-                            color={color}
-                            updateColor={updateColor}
-                        />
-                        <Frequency
-                            switchStates={{ isEnabledSpecific, isEnabled, isEnabledDate }}
-                            methods={{
-                                toggleSwitchSpecific,
-                                onChangeSpecific,
-                                toggleSwitch,
-                                toggleSwitchDate,
+                <View style={{ marginBottom: 40 }}>
+                    <Text left twentyTwo fontFamily="Bold" marginLeft="10px" marginTop="30px">
+                        {habitName}
+                    </Text>
+                    <Text left marginLeft="10px" fontFamily="Regular" marginTop="35px">
+                        Description
+                    </Text>
+                    <HabitInfoContainer>
+                        <HabitInput
+                            values={description}
+                            actions={{
+                                setValue: (text) => setDescription(text),
                             }}
-                            setters={{
-                                setDaysCount,
-                                setSelectedValue,
-                                setTimesCount,
-                            }}
-                            values={{ specificDate, isEnabledSpecific }}
-                            states={{ daysCount, timesCount, selectedValue }}
                         />
-
-                        {isEnabledDate && (
-                            <DateTimePicker
-                                value={reminderTime}
-                                mode="time"
-                                themeVariant="dark"
-                                is24Hour="true"
-                                onChange={onChangeReminderTime}
+                        <HabitUtilityInfoContainer>
+                            <Text left fontFamily="Medium">
+                                Color
+                            </Text>
+                            <HabitColor
+                                colorUpdated={colorUpdated}
+                                updatedColor={updatedColor}
+                                color={color}
+                                updateColor={updateColor}
                             />
-                        )}
-                    </HabitUtilityInfoContainer>
-                </HabitInfoContainer>
+                            <Frequency
+                                switchStates={{
+                                    isEnabledSpecific,
+                                    isEnabled,
+                                    isEnabledDate,
+                                    isEnabledEndDate,
+                                }}
+                                methods={{
+                                    toggleSwitchSpecific,
+                                    onChangeSpecific,
+                                    onChangeReminderTime,
+                                    onChangeEndDate,
+                                    toggleSwitch,
+                                    toggleSwitchDate,
+                                    toggleSwitchEndDate,
+                                }}
+                                setters={{
+                                    setDaysCount,
+                                    setSelectedValue,
+                                    setTimesCount,
+                                    setIsEnabledEndDate,
+                                }}
+                                values={{ specificDate, reminderTime, endDate }}
+                                states={{ daysCount, timesCount }}
+                            />
+                        </HabitUtilityInfoContainer>
+                    </HabitInfoContainer>
+                </View>
             </ScrollView>
         </MainContainer>
     );

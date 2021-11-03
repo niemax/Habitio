@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { View } from 'react-native';
 import ActionSheet from 'react-native-actions-sheet';
+import { colors } from '../../utils/colors';
 import { habitColor } from '../../utils/globalStyles';
 import { SelectHabitColorButton } from '../../utils/StyledComponents/Styled';
 import ColorPalletteModal from './ColorPallette';
@@ -26,11 +27,11 @@ export default function HabitColor({ colorUpdated, updatedColor, updateColor, co
             )}
             <ActionSheet
                 containerStyle={{
-                    backgroundColor: '#141414',
+                    backgroundColor: colors.mainBackground,
                     height: 270,
+                    borderRadius: 35,
                 }}
                 defaultOverlayOpacity={0.3}
-                gestureEnabled="true"
                 elevation={2}
                 ref={sheetRef}
             >

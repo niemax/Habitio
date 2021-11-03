@@ -10,11 +10,12 @@ const checkCurrentWeek = (dataCurrentWeek, completedDates, days, data) => {
     if (week > dataCurrentWeek) {
         completedPercentage = 0;
         data.dataCurrentWeek = week;
-    } else if (week === dataCurrentWeek) {
+    }
+
+    if (week === dataCurrentWeek) {
         completedPercentage = completionRate;
     }
 
-    console.log(data);
     return { completedPercentage };
 };
 

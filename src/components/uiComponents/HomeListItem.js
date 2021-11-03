@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import Modal from 'react-native-modal';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import * as Progress from 'react-native-progress';
 import TextStyle from '../../utils/Text';
@@ -15,19 +16,18 @@ import ProgressModal from '../modalComponents/ProgressModal';
 import { LeftActions, RightActions } from '../uiComponents/SwipeableActions';
 import HabitCompletedStatusText from './HabitCompletedStatusText';
 import { colors } from '../../utils/colors';
+import { progressBar } from '../../utils/globalStyles';
+import { useNavigation } from '@react-navigation/core';
+import handleDoneToday from '../../utils/helpers/handleDone';
+import { useHabits } from '../../context/HabitProvider';
 
-export default function HomeListItem({
-    item,
-    index,
-    handleDoneToday,
-    visibleItem,
-    setVisibleItem,
-}) {
+export default function HomeListItem({ item, completedDay }) {
     const [progressModalVisible, setProgressModalVisible] = useState(false);
     const [prog, setProg] = useState(0);
     const swipeableRef = useRef(null);
     const { completedDates, icon, completed, times, color, name, unitValue } = item;
-
+    const navigation = useNavigation();
+    const { habits, habitSetter } = useHabits();
     const renderLeftActions = () => <LeftActions item={item} />;
     const renderRightActions = () => (
         <RightActions swipeableRef={swipeableRef} prog={prog} setProg={setProg} item={item} />
@@ -38,9 +38,9 @@ export default function HomeListItem({
             key={name}
             ref={swipeableRef}
             onSwipeableLeftOpen={() => {
-                const length = Object.keys(completedDates).length;
-                handleDoneToday(item).then(() => {
-                    if (length % 2 === 0 && completed === false && length >= 2) {
+                const { length } = Object.keys(completedDates);
+                handleDoneToday(item, habits, completedDay, habitSetter).then(() => {
+                    if (length % 5 === 0 && completed === false && length > 1) {
                         setProgressModalVisible(true);
                     }
                 });
@@ -52,7 +52,9 @@ export default function HomeListItem({
             <HomepageDataView>
                 <HomepageDataBox
                     onPress={() => {
-                        setVisibleItem(index);
+                        navigation.navigate('ShowHabitModal', {
+                            data: item,
+                        });
                         haptics.selection();
                     }}
                 >
@@ -102,30 +104,15 @@ export default function HomeListItem({
                     </ItemTimesContainer>
                     {times > 1 && (
                         <Progress.Bar
-                            style={{
-                                position: 'absolute',
-                                bottom: 0,
-                                left: 4,
-                                right: 4,
-                                borderBottomRightRadius: 30,
-                                borderBottomLeftRadius: 30,
-                            }}
+                            style={progressBar}
                             progress={!completed ? prog / times : 1}
-                            height={4.5}
-                            width={342}
+                            height={5}
+                            width={346}
                             color={color}
                             borderColor={colors.mainBoxes}
                         />
                     )}
 
-                    <ShowHabitModal
-                        data={item}
-                        handleDoneToday={handleDoneToday}
-                        modalVisible={visibleItem === index}
-                        setModalVisible={setVisibleItem}
-                        progressModalVisible={progressModalVisible}
-                        setProgressModalVisible={setProgressModalVisible}
-                    />
                     <ProgressModal
                         data={item}
                         progressModalVisible={progressModalVisible}

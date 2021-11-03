@@ -21,10 +21,13 @@ export default function CalendarBottomSheet({
             containerStyle={{
                 backgroundColor: colors.mainBackground,
                 height: 520,
+                borderRadius: 30,
             }}
             defaultOverlayOpacity={0.3}
             gestureEnabled="true"
             elevation={2}
+            bounciness={0}
+            extraScroll={80}
             ref={sheetRef}
         >
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -36,17 +39,20 @@ export default function CalendarBottomSheet({
                     style={{ marginRight: 15 }}
                 >
                     <Text color={colors.mainGreen} fontFamily="SemiBold">
-                        Done
+                        Save
                     </Text>
                 </TouchableOpacity>
             </View>
             <Text left marginLeft="15px" marginTop="15px" fontFamily="SemiBold" twentyTwo>
                 Add a Note
             </Text>
-            <Text left marginLeft="15px" marginTop="10px" sixteen color="gray">
-                <Feather name="check-circle" size={18} color={colors.mainGreen} />
-                {name}
-            </Text>
+            <View style={{ flexDirection: 'row', marginTop: 20, marginLeft: 15 }}>
+                <Feather name="check" size={18} color={colors.mainGreen} />
+                <Text left marginLeft="2px" sixteen color="gray">
+                    {name}
+                </Text>
+            </View>
+
             <KeyboardAvoidingView>
                 <DiaryInput
                     keyboardAppearance="dark"

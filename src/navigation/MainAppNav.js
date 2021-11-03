@@ -1,5 +1,10 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+    CardStyleInterpolators,
+    createStackNavigator,
+    TransitionPresets,
+    TransitionSpecs,
+} from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Homepage from '../screens/Homepage';
 import Test from '../screens/Test';
@@ -9,8 +14,13 @@ import CreateHabit from '../screens/CreateHabit';
 import StartHabitCreation from '../screens/StartHabitCreation';
 import Settings from '../screens/Settings';
 import Splash from '../screens/Splash';
+import ShowHabitModal from '../components/modalComponents/ShowHabitModal';
+import ShowHabitEditModal from '../components/modalComponents/ShowHabitEditModal';
+import CalendarModal from '../components/modalComponents/CalendarModal';
 
-const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+/* const Tab = createBottomTabNavigator();
+
 
 const MainTab = () => (
     <Tab.Navigator initialRouteName="Homepage" tabBar={(props) => <CustomTabBar {...props} />}>
@@ -22,6 +32,7 @@ const MainTab = () => (
             component={Homepage}
             initialParams={{ icon: 'list' }}
         />
+
         <Tab.Screen
             options={{
                 headerShown: false,
@@ -31,48 +42,35 @@ const MainTab = () => (
             initialParams={{ icon: 'open-book' }}
         />
     </Tab.Navigator>
-);
-
-const Stack = createStackNavigator();
+); */
 
 const MainAppStack = () => (
-    <Stack.Navigator initialRouteName="SplashScreen">
-        <Stack.Screen
-            name="SplashScreen"
-            options={{ headerShown: false, gestureEnabled: false }}
-            component={Splash}
-        />
-        <Stack.Screen
-            name="MainTab"
-            options={{ headerShown: false, gestureEnabled: false }}
-            component={MainTab}
-        />
-        <Stack.Screen
-            name="StartHabitCreation"
-            options={{ headerShown: false, gestureEnabled: false }}
-            component={StartHabitCreation}
-        />
-        <Stack.Screen
-            name="HabitScreen"
-            options={{ headerShown: false, gestureEnabled: true }}
-            component={HabitScreen}
-        />
-        <Stack.Screen
-            name="CreateHabit"
-            options={{
-                gestureEnabled: true,
+    <Stack.Navigator
+        mode="modal"
+        initialRouteName="Homepage"
+        screenOptions={{
+            headerShown: false,
+            gestureEnabled: true,
+            ...TransitionPresets.DefaultTransition,
+        }}
+    >
+        <Stack.Screen name="Homepage" component={Homepage} />
+        <Stack.Screen name="StartHabitCreation" component={StartHabitCreation} />
+        <Stack.Screen name="HabitScreen" component={HabitScreen} />
+        <Stack.Screen name="CreateHabit" component={CreateHabit} />
+        <Stack.Screen name="Settings" component={Settings} />
+        <Stack.Group
+            screenOptions={{
                 headerShown: false,
-            }}
-            component={CreateHabit}
-        />
-        <Stack.Screen
-            name="Settings"
-            options={{
                 gestureEnabled: true,
-                headerShown: false,
+                cardOverlayEnabled: true,
+                ...TransitionPresets.ModalPresentationIOS,
             }}
-            component={Settings}
-        />
+        >
+            <Stack.Screen name="ShowHabitModal" component={ShowHabitModal} />
+            <Stack.Screen name="ShowHabitEditModal" component={ShowHabitEditModal} />
+            <Stack.Screen name="CalendarModal" component={CalendarModal} />
+        </Stack.Group>
     </Stack.Navigator>
 );
 

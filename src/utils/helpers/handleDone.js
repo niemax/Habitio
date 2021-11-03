@@ -3,13 +3,13 @@ import { colors } from '../colors';
 import { haptics } from './haptics';
 import { toasts } from './toastMethods';
 
-const handleDoneToday = async (data, habits, currentDay, modalizeRef, animation, habitSetter) => {
-    const { id, name, color, completedDates } = data;
+const handleDoneToday = async (data, habits, currentDay, habitSetter) => {
+    const { id, name, color } = data;
     const newDate = format(new Date(), 'yyyy-MM-dd');
 
     haptics.success();
     try {
-        const updatedHabits = habits.filter((habit) => {
+        const updatedHabits = habits.map((habit) => {
             const completedDatesObj = { ...habit.completedDates };
 
             if (!(newDate in completedDatesObj)) {
@@ -26,9 +26,7 @@ const handleDoneToday = async (data, habits, currentDay, modalizeRef, animation,
                     habit.completedDay = currentDay;
                     habit.completed = true;
                     habit.completedDates = completedDatesObj;
-                    if (Object.keys(completedDates).length % 3 !== 0) {
-                        toasts.info(name, color, modalizeRef);
-                    }
+                    toasts.info(name, color);
                 }
             } else {
                 delete completedDatesObj[newDate];
@@ -40,7 +38,6 @@ const handleDoneToday = async (data, habits, currentDay, modalizeRef, animation,
             }
             return habit;
         });
-        console.log(updatedHabits);
         habitSetter(updatedHabits);
     } catch (e) {
         console.error(e);

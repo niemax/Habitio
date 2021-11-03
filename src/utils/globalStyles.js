@@ -115,10 +115,34 @@ export const showHabitTimerIndicator = {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 10,
+    marginLeft: 15,
     height: 40,
-    width: 135,
+    width: 125,
     backgroundColor: colors.mainBoxes,
     borderRadius: 15,
     marginBottom: 20,
+};
+
+export const colorPalletteView = {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+};
+
+export const colorPalletteColor = {
+    margin: 5,
+    width: 32,
+    height: 32,
+    borderRadius: 100,
+    marginVertical: 20,
+};
+
+export const progressBar = {
+    position: 'absolute',
+    bottom: 0,
+    left: 2,
+    right: 2,
+    borderBottomRightRadius: 30,
+    borderBottomLeftRadius: 30,
 };

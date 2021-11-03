@@ -2,18 +2,12 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { ModalContent } from '../../utils/StyledComponents/Styled';
 import { habitSelectionColors as colors } from '../../utils/colors';
+import { colorPalletteColor, colorPalletteView } from '../../utils/globalStyles';
 
 export default function ColorPalletteModal({ sheetRef, updateColor }) {
     return (
         <ModalContent>
-            <View
-                style={{
-                    flexWrap: 'wrap',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: 20,
-                }}
-            >
+            <View style={colorPalletteView}>
                 {colors.map((item, index) => (
                     <View key={index.toString()}>
                         <TouchableOpacity
@@ -23,12 +17,8 @@ export default function ColorPalletteModal({ sheetRef, updateColor }) {
                                 updateColor(item);
                             }}
                             style={{
-                                margin: 5,
-                                width: 35,
-                                height: 35,
-                                borderRadius: 100,
-                                backgroundColor: `${item}`,
-                                marginVertical: 20,
+                                backgroundColor: item,
+                                ...colorPalletteColor,
                             }}
                         />
                     </View>

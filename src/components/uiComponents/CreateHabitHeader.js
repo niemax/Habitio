@@ -6,16 +6,17 @@ import { useNavigation } from '@react-navigation/core';
 import { colors } from '../../utils/colors';
 import { CreateHabitHeader } from '../../utils/StyledComponents/Styled';
 import handleHabitCreation from '../../utils/helpers/createhabitHelpers';
+import { useHabits } from '../../context/HabitProvider';
 
 export default function CHHeader({
     newHabit,
     isEnabledDate,
     isEnabledSpecific,
-    CRUDHabits,
     reminderTime,
     habitName,
     specificDate,
 }) {
+    const { CRUDHabits } = useHabits();
     const navigation = useNavigation();
     return (
         <CreateHabitHeader>

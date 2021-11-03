@@ -1,6 +1,8 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 import { HabitCentered, HabitDescriptionInput } from '../../utils/StyledComponents/Styled';
+
+const { width } = Dimensions.get('window');
 
 const HabitInput = ({ values: { description, stateDescription }, actions: { setValue } }) => (
     <HabitCentered>
@@ -15,6 +17,7 @@ const HabitInput = ({ values: { description, stateDescription }, actions: { setV
                 color: 'white',
                 fontSize: 17,
                 fontFamily: 'SemiBold',
+                width: width - 15,
             }}
             onChangeText={setValue}
         />

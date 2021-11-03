@@ -6,47 +6,31 @@ import {
 } from '../../utils/StyledComponents/Styled';
 import { colors } from '../../utils/colors';
 import { TouchableOpacity } from 'react-native';
-import CalendarModal from '../modalComponents/CalendarModal';
+import { useNavigation } from '@react-navigation/core';
+import handleDoneToday from '../../utils/helpers/handleDone';
 
-const ShowHabitActions = ({
-    actions: { handleDoneToday, displayDeleteAlert },
-    setters: { setModalVisible, setCalendarModalVisible },
-    states: { calendarModalVisible },
-    data,
-}) => (
-    <ShowHabitActionsContainer>
-        <ShowHabitActionsButton
-            onPress={() => {
-                handleDoneToday(data, true);
-                setTimeout(() => {
-                    setModalVisible(false);
-                }, 500);
-            }}
-        >
-            {!data.completed ? (
+const ShowHabitActions = ({ actions: { displayDeleteAlert }, data }) => {
+    const navigation = useNavigation();
+    return (
+        <ShowHabitActionsContainer>
+            <ShowHabitActionsButton
+                onPress={() =>
+                    navigation.navigate('CalendarModal', {
+                        data: { ...data },
+                    })
+                }
+            >
                 <Text fontFamily="SemiBold" twenty>
-                    Done for Today
+                    Show Details
                 </Text>
-            ) : (
-                <Text color={colors.error}>Mark as Undone</Text>
-            )}
-        </ShowHabitActionsButton>
-        <ShowHabitActionsButton onPress={() => setCalendarModalVisible(true)}>
-            <Text fontFamily="SemiBold" twenty>
-                Show Details
-            </Text>
-        </ShowHabitActionsButton>
-        <TouchableOpacity onPress={displayDeleteAlert}>
-            <Text color={colors.error} marginTop="25px" fontFamily="Bold" twenty>
-                Delete Habit
-            </Text>
-        </TouchableOpacity>
-        <CalendarModal
-            data={data}
-            calendarModalVisible={calendarModalVisible}
-            setCalendarModalVisible={setCalendarModalVisible}
-        />
-    </ShowHabitActionsContainer>
-);
+            </ShowHabitActionsButton>
+            <TouchableOpacity onPress={displayDeleteAlert}>
+                <Text color={colors.error} marginTop="25px" fontFamily="Bold" twenty>
+                    Delete Habit
+                </Text>
+            </TouchableOpacity>
+        </ShowHabitActionsContainer>
+    );
+};
 
 export default ShowHabitActions;

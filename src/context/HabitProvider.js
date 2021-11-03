@@ -9,16 +9,27 @@ const HabitProvider = ({ children }) => {
     const getHabits = async () => {
         const result = await AsyncStorage.getItem('@habit');
         if (result !== null) setHabits(JSON.parse(result));
+        console.log(habits);
     };
 
     const CRUDHabits = async (props) => {
-        await AsyncStorage.setItem('@habit', JSON.stringify([...habits, props]));
-        setHabits([...habits, props]);
+        try {
+            await AsyncStorage.setItem('@habit', JSON.stringify([...habits, props]));
+            setHabits([...habits, props]);
+            console.log(habits);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     const habitSetter = async (props) => {
-        await AsyncStorage.setItem('@habit', JSON.stringify(props));
-        setHabits(props);
+        try {
+            await AsyncStorage.setItem('@habit', JSON.stringify(props));
+            setHabits(props);
+            console.log(habits);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     useEffect(() => {

@@ -8,6 +8,7 @@ import {
     CalendarStatsContainer,
     CalendarTextContainer,
     CalendarTimesInfoContainer,
+    HabitHeaderLineBreak,
     ModalContent,
 } from '../../utils/StyledComponents/Styled';
 import Text from '../../utils/Text';
@@ -18,10 +19,11 @@ import CalendarBottomSheet from '../uiComponents/CalendarBottomSheet';
 import CalendarHead from '../uiComponents/CalendarHeader';
 import EditNoteModal from './EditNoteModal';
 import checkCurrentWeek from '../../utils/helpers/checkWeek';
+import { useNavigation } from '@react-navigation/core';
 
 const screenWidth = Dimensions.get('window').width;
 
-export default function CalendarModal({ calendarModalVisible, setCalendarModalVisible, data }) {
+export default function CalendarModal({ route }) {
     const [diaryInput, setDiaryInput] = useState('');
     const [selectedDay, setSelectedDay] = useState(new Date());
     const [completionRate, setCompletionRate] = useState(0);
@@ -29,7 +31,9 @@ export default function CalendarModal({ calendarModalVisible, setCalendarModalVi
     const { habits, habitSetter, CRUDHabits } = useHabits();
     const sheetRef = useRef(null);
     const week = getWeek(new Date());
+    const { data } = route.params;
     const { completedDates, days, dataCurrentWeek, name, unitValue, diaryInputs, id } = data;
+    const navigation = useNavigation();
 
     useEffect(() => {
         const { completedPercentage } = checkCurrentWeek(
@@ -68,116 +72,111 @@ export default function CalendarModal({ calendarModalVisible, setCalendarModalVi
     };
 
     return (
-        <Modal animationType="slide" presentationStyle="pageSheet" visible={calendarModalVisible}>
-            <ModalContent>
-                <CalendarHead name={name} setCalendarModalVisible={setCalendarModalVisible} />
-                <ScrollView>
-                    <Calendar
-                        style={{
-                            marginTop: 20,
-                            height: 340,
-                            width: screenWidth,
-                        }}
-                        theme={calendarStyles}
-                        firstDay={1}
-                        markedDates={completedDates}
-                        onDayPress={(day) => calendarDayPress(day)}
-                    />
-                    <CalendarTimesInfoContainer>
-                        {data.days === 7 ? (
-                            <Text>Every day</Text>
-                        ) : (
-                            <Text>{data.days} days per week</Text>
-                        )}
-                        <Text marginRight="5px">
-                            {data.times} {unitValue} per day
-                        </Text>
-                    </CalendarTimesInfoContainer>
-                    <CalendarLineBreak />
-                    <CalendarTextContainer>
-                        <CalendarStatsContainer>
-                            <Text color={colors.mainGreen} thirtyFour>
-                                {Object.keys(completedDates).length}
-                            </Text>
-                            <Text marginLeft="5px" fifteen marginTop="5px">
-                                Completions
-                            </Text>
-                        </CalendarStatsContainer>
-                        <CalendarStatsContainer>
-                            <Text color={colors.mainGreen} thirtyFour>
-                                {completionRate.toFixed(0)}%
-                            </Text>
-                            <Text marginRight="5px" fifteen marginTop="5px">
-                                Completion rate{' '}
-                            </Text>
-                        </CalendarStatsContainer>
-                    </CalendarTextContainer>
-                    <CalendarLineBreak />
-                    <Text left marginLeft="20px" marginTop="10px" marginBottom="15px">
-                        Notes
-                    </Text>
-                    {Object.values(diaryInputs).length === 0 && (
-                        <View
-                            style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <Text sixteen fontFamily="MediumItalic" color="gray">
-                                No notes added yet. Tap on a date to add a note.
-                            </Text>
-                            <Entypo
-                                name="pencil"
-                                size={62}
-                                color={colors.mainGreen}
-                                style={{ marginTop: 30 }}
-                            />
-                        </View>
+        <ModalContent>
+            <CalendarHead name={name} />
+            <HabitHeaderLineBreak />
+            <ScrollView>
+                <Calendar
+                    style={{
+                        marginTop: 20,
+                        height: 340,
+                        width: screenWidth,
+                    }}
+                    theme={calendarStyles}
+                    firstDay={1}
+                    markedDates={completedDates}
+                    onDayPress={(day) => calendarDayPress(day)}
+                />
+                <CalendarTimesInfoContainer>
+                    {data.days === 7 ? (
+                        <Text>Every day</Text>
+                    ) : (
+                        <Text>{data.days} days per week</Text>
                     )}
-                    {Object.values(diaryInputs).length > 0
-                        ? Object.values(diaryInputs).map(({ date, input, id }, index) => {
-                              return (
-                                  <>
-                                      <TouchableOpacity
-                                          key={index.toString()}
-                                          onPress={() => setEditNoteModalVisible(index)}
+                    <Text marginRight="5px">
+                        {data.times} {unitValue} per day
+                    </Text>
+                </CalendarTimesInfoContainer>
+                <CalendarLineBreak />
+                <CalendarTextContainer>
+                    <CalendarStatsContainer>
+                        <Text color={colors.mainGreen} thirtyFour>
+                            {Object.keys(completedDates).length}
+                        </Text>
+                        <Text marginLeft="5px" fifteen marginTop="5px">
+                            Completions
+                        </Text>
+                    </CalendarStatsContainer>
+                    <CalendarStatsContainer>
+                        <Text color={colors.mainGreen} thirtyFour>
+                            {completionRate.toFixed(0)}%
+                        </Text>
+                        <Text marginRight="5px" fifteen marginTop="5px">
+                            Completion rate{' '}
+                        </Text>
+                    </CalendarStatsContainer>
+                </CalendarTextContainer>
+                <CalendarLineBreak />
+                <Text left marginLeft="20px" marginTop="10px" marginBottom="15px">
+                    Notes
+                </Text>
+                {Object.values(diaryInputs).length === 0 && (
+                    <View
+                        style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Text sixteen fontFamily="MediumItalic" color="gray">
+                            No notes added yet. Tap on a date to add a note.
+                        </Text>
+                        <Entypo
+                            name="pencil"
+                            size={62}
+                            color={colors.mainGreen}
+                            style={{ marginTop: 30 }}
+                        />
+                    </View>
+                )}
+                {Object.values(diaryInputs).length > 0
+                    ? Object.values(diaryInputs).map(({ date, input, id }, index) => {
+                          return (
+                              <View key={index}>
+                                  <TouchableOpacity onPress={() => setEditNoteModalVisible(index)}>
+                                      <Text
+                                          marginBottom="15px"
+                                          marginLeft="15px"
+                                          left
+                                          fifteen
+                                          fontFamily="Regular"
                                       >
-                                          <Text
-                                              marginBottom="15px"
-                                              marginLeft="15px"
-                                              left
-                                              fifteen
-                                              fontFamily="Regular"
-                                          >
-                                              {format(new Date(date), 'dd-MM-yyyy')} - {input}
-                                          </Text>
-                                      </TouchableOpacity>
-                                      <EditNoteModal
-                                          editNoteModalVisible={editNoteModalVisible === index}
-                                          setEditNoteModalVisible={setEditNoteModalVisible}
-                                          date={date}
-                                          id={id}
-                                          currentInput={input}
-                                          diaryInputs={diaryInputs}
-                                          habitSetter={habitSetter}
-                                          data={data}
-                                      />
-                                  </>
-                              );
-                          })
-                        : null}
+                                          {format(new Date(date), 'dd-MM-yyyy')} - {input}
+                                      </Text>
+                                  </TouchableOpacity>
+                                  <EditNoteModal
+                                      editNoteModalVisible={editNoteModalVisible === index}
+                                      setEditNoteModalVisible={setEditNoteModalVisible}
+                                      date={date}
+                                      id={id}
+                                      currentInput={input}
+                                      diaryInputs={diaryInputs}
+                                      data={data}
+                                  />
+                              </View>
+                          );
+                      })
+                    : null}
 
-                    <CalendarBottomSheet
-                        data={data}
-                        diaryInput={diaryInput}
-                        sheetRef={sheetRef}
-                        selectedDay={selectedDay}
-                        name={name}
-                        setDiaryInput={setDiaryInput}
-                        handleDiaryInput={handleDiaryInput}
-                    />
-                </ScrollView>
-            </ModalContent>
-        </Modal>
+                <CalendarBottomSheet
+                    data={data}
+                    diaryInput={diaryInput}
+                    sheetRef={sheetRef}
+                    selectedDay={selectedDay}
+                    name={name}
+                    setDiaryInput={setDiaryInput}
+                    handleDiaryInput={handleDiaryInput}
+                />
+            </ScrollView>
+        </ModalContent>
     );
 }

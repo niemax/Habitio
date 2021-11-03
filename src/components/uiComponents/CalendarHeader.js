@@ -3,18 +3,22 @@ import { TouchableOpacity } from 'react-native';
 import Text from '../../utils/Text';
 import { colors } from '../../utils/colors';
 import { CalendarHeader } from '../../utils/StyledComponents/Styled';
+import { useNavigation } from '@react-navigation/core';
 
-const CalendarHead = ({ name, setCalendarModalVisible }) => (
-    <CalendarHeader>
-        <Text marginLeft="5px" twentyTwo fontFamily="SemiBold">
-            {name}
-        </Text>
-        <TouchableOpacity onPress={() => setCalendarModalVisible(false)}>
-            <Text nineteen marginRight="10px" color={colors.mainGreen} fontFamily="SemiBold">
-                Done
+const CalendarHead = ({ name }) => {
+    const navigation = useNavigation();
+    return (
+        <CalendarHeader>
+            <Text marginLeft="5px" twenty fontFamily="SemiBold">
+                {name}
             </Text>
-        </TouchableOpacity>
-    </CalendarHeader>
-);
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text nineteen marginRight="10px" color={colors.mainGreen} fontFamily="SemiBold">
+                    Done
+                </Text>
+            </TouchableOpacity>
+        </CalendarHeader>
+    );
+};
 
 export default CalendarHead;

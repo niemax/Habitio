@@ -16,7 +16,7 @@ const handleHabitCreation = async (
     if (isEnabledSpecific) cHScheduleOneTime(habitName, specificDate, newHabit);
     CRUDHabits(newHabit);
     console.log(newHabit);
-    navigation.navigate('MainTab');
+    navigation.navigate('Homepage');
 };
 
 export default handleHabitCreation;

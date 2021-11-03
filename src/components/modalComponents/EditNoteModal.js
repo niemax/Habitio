@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Alert, Modal, TouchableOpacity, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, Feather } from '@expo/vector-icons';
+import { format } from 'date-fns';
 import Text from '../../utils/Text';
 import { CalendarHeader, DiaryInput, ModalContent } from '../../utils/StyledComponents/Styled';
 import { colors } from '../../utils/colors';
@@ -27,7 +28,10 @@ export default function EditNoteModal({
             [
                 {
                     text: 'OK',
-                    onPress: () => deleteDiaryInput(id, habits, diaryInputs, data, habitSetter),
+                    onPress: () => {
+                        deleteDiaryInput(id, habits, diaryInputs, data, habitSetter);
+                        setEditNoteModalVisible(false);
+                    },
                 },
                 {
                     text: 'Cancel',
@@ -47,10 +51,13 @@ export default function EditNoteModal({
                     <TouchableOpacity onPress={() => setEditNoteModalVisible(false)}>
                         <Ionicons name="close-circle-sharp" size={34} color="gray" />
                     </TouchableOpacity>
-                    <Text left marginLeft="10px" fontFamily="Bold" twentyTwo>
-                        {date}
+                    <Text left fontFamily="Bold" twentyTwo color="gray">
+                        {format(new Date(date), 'dd-MM-yyyy')}
                     </Text>
-                    <View style={{ flexDirection: 'column' }}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <TouchableOpacity onPress={displayDeleteAlert}>
+                            <Feather name="trash" size={26} color={colors.error} />
+                        </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => {
                                 handleDiaryInputEdit(
@@ -64,17 +71,16 @@ export default function EditNoteModal({
                                 setEditNoteModalVisible(false);
                             }}
                         >
-                            <Text color={colors.mainGreen} fontFamily="SemiBold">
-                                Save
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => displayDeleteAlert()}>
-                            <Text color={colors.error} marginTop="20px" fontFamily="SemiBold">
-                                Delete
-                            </Text>
+                            <Feather
+                                name="check"
+                                size={32}
+                                color={colors.mainGreen}
+                                style={{ marginLeft: 15 }}
+                            />
                         </TouchableOpacity>
                     </View>
                 </CalendarHeader>
+
                 <TouchableOpacity
                     onPress={() => {
                         setCurrInput('');
@@ -84,7 +90,7 @@ export default function EditNoteModal({
                     <Text
                         left
                         marginLeft="15px"
-                        marginTop="10px"
+                        marginTop="50px"
                         fontFamily="Bold"
                         color={colors.mainGreen}
                     >

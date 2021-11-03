@@ -13,7 +13,7 @@ export const Splash = () => (
 export default function SplashScreen({ navigation }) {
     useEffect(() => {
         setTimeout(() => {
-            navigation.navigate('MainTab');
+            navigation.navigate('Homepage');
         }, 2000);
     }, []);
 
