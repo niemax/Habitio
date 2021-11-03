@@ -6,7 +6,6 @@ import {
     MainContainer,
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
-import { useHabits } from '../context/HabitProvider';
 import HabitInput from '../components/uiComponents/HabitDescriptionInput';
 import Frequency from '../components/uiComponents/Frequency';
 import CHHeader from '../components/uiComponents/CreateHabitHeader';

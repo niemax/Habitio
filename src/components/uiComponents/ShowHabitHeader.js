@@ -10,7 +10,7 @@ export const ShowHabitHeader = ({ data }) => {
     const navigation = useNavigation();
     return (
         <HomeheaderContainer>
-            <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => navigation.pop()}>
+            <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => navigation.goBack()}>
                 <Ionicons name="close-circle-sharp" size={32} color="gray" />
             </TouchableOpacity>
             <TouchableOpacity

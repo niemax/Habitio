@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-native-modal';
-import HabitEditContent from '../../components/modalContentComponents/HabitEdit';
+import HabitEditContent from '../modalContentComponents/HabitEdit';
 import { useHabits } from '../../context/HabitProvider';
 import handleUpdate from '../../utils/helpers/handleUpdate';
 
@@ -112,7 +112,18 @@ export default function ShowHabitEditModal({ route }) {
         habitSetReminderTime(reminder ? new Date(reminder) : new Date());
         habitSetSpecificDate(specificDate ? new Date(specificDate) : new Date());
         habitSetEndDate(endDate ? new Date(endDate) : new Date());
-    }, []);
+    }, [
+        checkSwitchStates,
+        color,
+        days,
+        description,
+        endDate,
+        name,
+        reminder,
+        specificDate,
+        times,
+        unitValue,
+    ]);
 
     return (
         <HabitEditContent

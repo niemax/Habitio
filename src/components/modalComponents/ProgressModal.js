@@ -13,7 +13,7 @@ export default function ProgressModal({ progressModalVisible, setProgressModalVi
     const { name, completedDates } = data;
     return (
         <ProgressModalCentered>
-            <Modal animationType="fade" transparent={true} visible={progressModalVisible}>
+            <Modal animationType="fade" transparent visible={progressModalVisible}>
                 <ProgressModalCentered>
                     <ProgressModalView>
                         <Image

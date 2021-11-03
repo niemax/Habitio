@@ -15,6 +15,7 @@ import HomeListItem from '../components/uiComponents/HomeListItem';
 import { getAllNotifications } from '../utils/helpers/notification';
 import checkDateForHabitCompletedReset from '../utils/helpers/checkHabitsDate';
 import HomepageHeader from '../components/uiComponents/HomepageHeader';
+import SplashScreen from './Splash';
 
 const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -22,8 +23,7 @@ const wait = (timeout) => {
 
 const HomepageData = ({ navigation }) => {
     const [refreshing, setRefreshing] = useState(false);
-    const modalizeRef = useRef(null);
-    const { habitSetter, getHabits, habits } = useHabits();
+    const { getHabits, habits } = useHabits();
 
     const day = new Date();
     const currentDay = day.getDay();
@@ -31,8 +31,7 @@ const HomepageData = ({ navigation }) => {
     useEffect(() => {
         getHabits();
         getAllNotifications();
-        checkDateForHabitCompletedReset(habitSetter, habits, currentDay);
-    }, [currentDay]);
+    }, []);
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
@@ -76,11 +75,10 @@ const HomepageData = ({ navigation }) => {
                             <Feather name="arrow-down" size={90} color="white" />
                         </NoHabitsContainer>
                     )}
-                    {habits.map((item, index) => (
+                    {habits?.map((item, index) => (
                         <HomeListItem
                             item={item}
                             index={index.toString()}
-                            modalizeRef={modalizeRef}
                             completed={item.completed}
                             completedDay={currentDay}
                         />

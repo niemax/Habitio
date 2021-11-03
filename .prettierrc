@@ -1,10 +1,7 @@
 {
-   "printWidth": 100,
-   "tabWidth": 4,
-   "singleQuote": true,
-   "endOfLine": "auto",
-   "editor.codeActionsOnSave": {
-      "source.organizeImports": true,
-      "source.fixAll.eslint": true
-   }
+    "printWidth": 100,
+    "semi": true,
+    "singleQuote": true,
+    "tabWidth": 4,
+    "trailingComma": "es5"
 }

@@ -36,7 +36,7 @@ export default function App() {
 
     useEffect(() => {
         loadFonts();
-        /*   registerForPushNotificationsAsync().then((token) => setExpoPushToken(token));
+        registerForPushNotificationsAsync().then((token) => setExpoPushToken(token));
 
         notificationListener.current = Notifications.addNotificationReceivedListener(
             (notification) => {
@@ -53,7 +53,7 @@ export default function App() {
         return () => {
             Notifications.removeNotificationSubscription(notificationListener.current);
             Notifications.removeNotificationSubscription(responseListener.current);
-        }; */
+        };
     }, []);
 
     if (fontsLoaded) {

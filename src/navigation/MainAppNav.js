@@ -17,6 +17,7 @@ import Splash from '../screens/Splash';
 import ShowHabitModal from '../components/modalComponents/ShowHabitModal';
 import ShowHabitEditModal from '../components/modalComponents/ShowHabitEditModal';
 import CalendarModal from '../components/modalComponents/CalendarModal';
+import SplashScreen from '../screens/Splash';
 
 const Stack = createStackNavigator();
 /* const Tab = createBottomTabNavigator();

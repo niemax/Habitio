@@ -24,7 +24,6 @@ export default function ShowHabitModal({ route, navigation }) {
     const { data } = route.params;
     const {
         notificationId,
-        id,
         name,
         icon,
         description,
@@ -68,7 +67,7 @@ export default function ShowHabitModal({ route, navigation }) {
         <ModalContent>
             <ShowHabitHeader data={data} />
             <HabitHeaderLineBreak />
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ marginTop: 10 }}>
                 <ShowHabitDataContainer>
                     <View style={showHabitImageBackground}>
                         {icon ? (
@@ -78,11 +77,7 @@ export default function ShowHabitModal({ route, navigation }) {
                                 style={showHabitImage}
                             />
                         ) : (
-                            <Feather
-                                name="activity"
-                                size={46}
-                                color={color ? color : colors.mainGreen}
-                            />
+                            <Feather name="activity" size={46} color={color || colors.mainGreen} />
                         )}
                     </View>
                     <Text fontFamily="Bold" marginTop="15px" twentyFour>
