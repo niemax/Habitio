@@ -19,7 +19,6 @@ import CalendarBottomSheet from '../uiComponents/CalendarBottomSheet';
 import CalendarHead from '../uiComponents/CalendarHeader';
 import EditNoteModal from './EditNoteModal';
 import checkCurrentWeek from '../../utils/helpers/checkWeek';
-import { useNavigation } from '@react-navigation/core';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -28,19 +27,19 @@ export default function CalendarModal({ route }) {
     const [selectedDay, setSelectedDay] = useState(new Date());
     const [completionRate, setCompletionRate] = useState(0);
     const [editNoteModalVisible, setEditNoteModalVisible] = useState();
-    const { habits, habitSetter, CRUDHabits } = useHabits();
+    const { habits, habitSetter } = useHabits();
     const sheetRef = useRef(null);
     const week = getWeek(new Date());
     const { data } = route.params;
     const { completedDates, days, dataCurrentWeek, name, unitValue, diaryInputs, id } = data;
-    const navigation = useNavigation();
 
     useEffect(() => {
         const { completedPercentage } = checkCurrentWeek(
             dataCurrentWeek,
             completedDates,
             days,
-            data
+            data,
+            setCompletionRate
         );
         setCompletionRate(completedPercentage);
     }, [days, week]);
@@ -109,7 +108,7 @@ export default function CalendarModal({ route }) {
                     </CalendarStatsContainer>
                     <CalendarStatsContainer>
                         <Text color={colors.mainGreen} thirtyFour>
-                            {completionRate.toFixed(0)}%
+                            {completionRate?.toFixed(0)}%
                         </Text>
                         <Text marginRight="5px" fifteen marginTop="5px">
                             Completion rate{' '}

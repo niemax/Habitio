@@ -1,6 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import checkDateForHabitCompletedReset from '../utils/helpers/checkHabitsDate';
 
 const HabitContext = createContext();
 const day = new Date();
@@ -8,21 +7,6 @@ const currentDay = day.getDay();
 
 const HabitProvider = ({ children }) => {
     const [habits, setHabits] = useState([]);
-
-    const checkHabits = async () => {
-        try {
-            const checkedHabits = habits.map((habit) => {
-                if (currentDay > habit.completedDay) {
-                    habit.completed = false;
-                }
-                return habit;
-            });
-            await AsyncStorage.setItem('@habit', JSON.stringify(checkedHabits));
-            setHabits(checkedHabits);
-        } catch (e) {
-            console.error(e);
-        }
-    };
 
     const getHabits = async () => {
         try {
@@ -38,7 +22,6 @@ const HabitProvider = ({ children }) => {
                 });
                 setHabits(mappedHabits);
             }
-            console.log(habits);
         } catch (error) {
             console.error(error);
         }
@@ -48,7 +31,6 @@ const HabitProvider = ({ children }) => {
         try {
             await AsyncStorage.setItem('@habit', JSON.stringify([...habits, props]));
             setHabits([...habits, props]);
-            console.log(habits);
         } catch (error) {
             console.error(error);
         }
@@ -58,7 +40,6 @@ const HabitProvider = ({ children }) => {
         try {
             await AsyncStorage.setItem('@habit', JSON.stringify(props));
             setHabits(props);
-            console.log(habits);
         } catch (error) {
             console.error(error);
         }
@@ -69,9 +50,7 @@ const HabitProvider = ({ children }) => {
     }, []);
 
     return (
-        <HabitContext.Provider
-            value={{ habits, habitSetter, getHabits, setHabits, CRUDHabits, checkHabits }}
-        >
+        <HabitContext.Provider value={{ habits, habitSetter, getHabits, setHabits, CRUDHabits }}>
             {children}
         </HabitContext.Provider>
     );

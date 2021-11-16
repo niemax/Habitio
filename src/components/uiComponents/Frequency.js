@@ -8,6 +8,7 @@ import {
     DateTimePickerView,
     FrequencySwitchContainer,
     FrequencyTouchable,
+    HabitHeaderLineBreak,
 } from '../../utils/StyledComponents/Styled';
 import { Feather } from '@expo/vector-icons';
 import { Fragment } from 'react';
@@ -44,19 +45,19 @@ export default function Frequency({
                     value={isEnabledSpecific}
                 />
             </FrequencySwitchContainer>
-            {isEnabledSpecific && (
-                <DateTimePickerView>
+            <HabitHeaderLineBreak />
+            <DateTimePickerView>
+                {isEnabledSpecific && (
                     <DateTimePicker
                         testID="dateTimePicker"
                         value={specificDate || habitSpecificDate}
                         mode="datetime"
                         is24Hour="true"
-                        display="default"
                         themeVariant="dark"
                         onChange={onChangeSpecific}
                     />
-                </DateTimePickerView>
-            )}
+                )}
+            </DateTimePickerView>
 
             <FrequencySwitchContainer>
                 <Text fontFamily="Regular">Goal</Text>
@@ -68,9 +69,10 @@ export default function Frequency({
                     value={isEnabled}
                 />
             </FrequencySwitchContainer>
+            <HabitHeaderLineBreak />
 
             {isEnabled && (
-                <Fragment>
+                <>
                     <FrequencyTouchable>
                         <Text>Days per week</Text>
                         <TouchableOpacity
@@ -122,8 +124,9 @@ export default function Frequency({
                             <Feather name="plus-circle" size={30} color="gray" />
                         </TouchableOpacity>
                     </FrequencyTouchable>
-                </Fragment>
+                </>
             )}
+
             <FrequencySwitchContainer>
                 <Text fontFamily="Regular">End date</Text>
                 <Switch
@@ -134,6 +137,7 @@ export default function Frequency({
                     value={isEnabledEndDate}
                 />
             </FrequencySwitchContainer>
+            <HabitHeaderLineBreak />
             {isEnabledEndDate && (
                 <DateTimePickerView>
                     <DateTimePicker

@@ -18,9 +18,7 @@ const checkCurrentWeek = (dataCurrentWeek, completedDates, days, data) => {
         data.dataCurrentWeek = week;
     }
 
-    if (week === dataCurrentWeek) {
-        completedPercentage = completionRate;
-    }
+    completedPercentage = completionRate;
 
     return { completedPercentage };
 };

@@ -1,4 +1,7 @@
+import { Dimensions } from 'react-native';
 import { colors } from './colors';
+
+const deviceWidth = Dimensions.get('window').width;
 
 export const textInputStyling = {
     color: '#FFF',
@@ -108,7 +111,7 @@ export const tabNavStyle = {
 export const habitColor = {
     width: 35,
     height: 35,
-    borderRadius: '50%',
+    borderRadius: 50,
 };
 
 export const showHabitTimerIndicator = {
@@ -141,8 +144,8 @@ export const colorPalletteColor = {
 export const progressBar = {
     position: 'absolute',
     bottom: 0,
-    left: 2,
-    right: 2,
+    left: 3,
+    right: 3,
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
 };

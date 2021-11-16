@@ -205,9 +205,12 @@ export const DiaryInput = styled.TextInput`
 `;
 
 export const HabitUtilityInfoContainer = styled.View`
-    margin-top: 15px;
+    background-color: ${colors.mainBoxes};
+    border-radius: ${radius};
+    margin-top: 25px;
     justify-content: center;
     padding-horizontal: 10px;
+    padding-vertical: 20px;
 `;
 
 export const SelectHabitColorButton = styled.TouchableOpacity`
@@ -222,7 +225,7 @@ export const SelectHabitColorButton = styled.TouchableOpacity`
 
 export const FrequencyTouchable = styled.View`
     height: 60px;
-    background-color: ${colors.mainBoxes};
+    background-color: ${colors.mainBackground};
     border-radius: 15px;
     padding: 15px;
     margin-top: 10px;
@@ -446,14 +449,13 @@ export const ProgressModalShareButton = styled.TouchableOpacity`
 `;
 
 export const DateTimePickerView = styled.View`
-    flex: 1;
     margin-top: 10px;
-    justify-content: flex-end;
 `;
 
 export const HabitHeaderLineBreak = styled.View`
     height: 0.4px;
     width: 100%;
     background-color: gray;
+    opacity: 0.3;
     margin-top: 10px;
 `;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TextStyle from '../../utils/Text';
 import { TextNameAndStatus } from '../../utils/StyledComponents/Styled';
 import { Feather } from '@expo/vector-icons';

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Image, RefreshControl, ScrollView } from 'react-native';
 import { colors } from '../utils/colors';
 import { Feather } from '@expo/vector-icons';
@@ -12,7 +12,6 @@ import {
 import Text from '../utils/Text';
 import { noHabitsImageStyle } from '../utils/globalStyles';
 import HomeListItem from '../components/uiComponents/HomeListItem';
-import { getAllNotifications } from '../utils/helpers/notification';
 import checkDateForHabitCompletedReset from '../utils/helpers/checkHabitsDate';
 import HomepageHeader from '../components/uiComponents/HomepageHeader';
 import SplashScreen from './Splash';
@@ -30,11 +29,11 @@ const HomepageData = ({ navigation }) => {
 
     useEffect(() => {
         getHabits();
-        getAllNotifications();
     }, []);
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
+        getHabits();
         wait(200).then(() => setRefreshing(false));
     }, []);
 
@@ -51,7 +50,7 @@ const HomepageData = ({ navigation }) => {
                         onRefresh={onRefresh}
                     />
                 }
-                style={{ marginBottom: 90 }}
+                style={{ marginBottom: 10 }}
             >
                 <Text twentyTwo fontFamily="Bold" marginTop="30px" marginLeft="15px" left>
                     Your Habits{' '}
@@ -75,7 +74,7 @@ const HomepageData = ({ navigation }) => {
                             <Feather name="arrow-down" size={90} color="white" />
                         </NoHabitsContainer>
                     )}
-                    {habits?.map((item, index) => (
+                    {habits.map((item, index) => (
                         <HomeListItem
                             item={item}
                             index={index.toString()}

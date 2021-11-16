@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { Image } from 'react-native';
+import { Dimensions, Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import Modal from 'react-native-modal';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import * as Progress from 'react-native-progress';
 import TextStyle from '../../utils/Text';
@@ -11,7 +10,6 @@ import {
     HomepageDataView,
     ItemTimesContainer,
 } from '../../utils/StyledComponents/Styled';
-import ShowHabitModal from '../modalComponents/ShowHabitModal';
 import ProgressModal from '../modalComponents/ProgressModal';
 import { LeftActions, RightActions } from '../uiComponents/SwipeableActions';
 import HabitCompletedStatusText from './HabitCompletedStatusText';
@@ -25,27 +23,31 @@ export default function HomeListItem({ item, completedDay }) {
     const [progressModalVisible, setProgressModalVisible] = useState(false);
     const [prog, setProg] = useState(0);
     const swipeableRef = useRef(null);
+
     const { completedDates, icon, completed, times, color, name, unitValue } = item;
+
     const navigation = useNavigation();
     const { habits, habitSetter } = useHabits();
+
     const renderLeftActions = () => <LeftActions item={item} />;
     const renderRightActions = () => (
         <RightActions swipeableRef={swipeableRef} prog={prog} setProg={setProg} item={item} />
     );
 
+    const handleSwipeLeft = () => {
+        const { length } = Object.keys(completedDates);
+        handleDoneToday(item, habits, completedDay, habitSetter);
+        if (length % 5 === 0 && completed === false && length > 1) {
+            setProgressModalVisible(true);
+        }
+        swipeableRef.current.close();
+    };
+
     return (
         <Swipeable
             key={name}
             ref={swipeableRef}
-            onSwipeableLeftOpen={() => {
-                const { length } = Object.keys(completedDates);
-                handleDoneToday(item, habits, completedDay, habitSetter).then(() => {
-                    if (length % 5 === 0 && completed === false && length > 1) {
-                        setProgressModalVisible(true);
-                    }
-                });
-                swipeableRef.current.close();
-            }}
+            onSwipeableLeftOpen={handleSwipeLeft}
             renderLeftActions={renderLeftActions}
             renderRightActions={times > 1 && renderRightActions}
         >
@@ -67,7 +69,12 @@ export default function HomeListItem({ item, completedDay }) {
                             color={color ? color : colors.mainGreen}
                         />
                     )}
-                    <HabitCompletedStatusText name={name} completed={completed} color={color} />
+                    <HabitCompletedStatusText
+                        name={name}
+                        completed={completed}
+                        color={color}
+                        data={item}
+                    />
 
                     <ItemTimesContainer>
                         <TextStyle color={color} marginLeft="10px" fontFamily="Bold" twenty>
@@ -107,7 +114,7 @@ export default function HomeListItem({ item, completedDay }) {
                             style={progressBar}
                             progress={!completed ? prog / times : 1}
                             height={5}
-                            width={346}
+                            width={Dimensions.get('window').width - 31}
                             color={color}
                             borderColor={colors.mainBoxes}
                         />
