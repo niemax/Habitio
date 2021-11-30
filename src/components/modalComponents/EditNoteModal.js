@@ -5,7 +5,10 @@ import { format } from 'date-fns';
 import Text from '../../utils/Text';
 import { CalendarHeader, DiaryInput, ModalContent } from '../../utils/StyledComponents/Styled';
 import { colors } from '../../utils/colors';
-import { deleteDiaryInput, handleDiaryInputEdit } from '../../utils/helpers/handleDiaryInputDelete';
+import {
+    handleDiaryInputDelete,
+    handleDiaryInputEdit,
+} from '../../utils/helpers/handleDiaryInputDelete';
 import { useHabits } from '../../context/HabitProvider';
 
 export default function EditNoteModal({
@@ -29,7 +32,7 @@ export default function EditNoteModal({
                 {
                     text: 'OK',
                     onPress: () => {
-                        deleteDiaryInput(id, habits, diaryInputs, data, habitSetter);
+                        handleDiaryInputDelete(id, habits, diaryInputs, data, habitSetter);
                         setEditNoteModalVisible(false);
                     },
                 },

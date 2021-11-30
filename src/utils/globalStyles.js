@@ -1,8 +1,6 @@
 import { Dimensions } from 'react-native';
 import { colors } from './colors';
 
-const deviceWidth = Dimensions.get('window').width;
-
 export const textInputStyling = {
     color: '#FFF',
     fontSize: 20,

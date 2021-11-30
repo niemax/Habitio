@@ -1,3 +1,5 @@
+import { toasts } from './toastMethods';
+
 /**
  * ! handle all operations within notes in calendarModal
  */
@@ -16,9 +18,10 @@ export const handleDiaryInputEdit = (diaryInputs, id, habitSetter, habits, data,
         return habit;
     });
     habitSetter(newHabits);
+    toasts.note_edit('Note successfully edited.');
 };
 
-export const deleteDiaryInput = (id, habits, diaryInputs, data, habitSetter) => {
+export const handleDiaryInputDelete = (id, habits, diaryInputs, data, habitSetter) => {
     const filtered = diaryInputs.filter((inp) => inp.id !== id);
     const newHabits = habits.map((habit) => {
         if (habit.id === data.id) {
@@ -27,6 +30,5 @@ export const deleteDiaryInput = (id, habits, diaryInputs, data, habitSetter) => 
         return habit;
     });
     habitSetter(newHabits);
+    toasts.error('Note successfully deleted.');
 };
-
-// code

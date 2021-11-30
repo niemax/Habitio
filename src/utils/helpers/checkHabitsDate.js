@@ -3,7 +3,7 @@
  * ! to reset habits for the day.
  *  */
 
-const checkDateForHabitCompletedReset = (habits) => {
+const checkDateForHabitCompletedReset = (habits, set) => {
     const day = new Date();
     const currentDay = day.getDay();
     try {
@@ -13,6 +13,7 @@ const checkDateForHabitCompletedReset = (habits) => {
             }
             return habit;
         });
+        set(checkedHabits);
     } catch (e) {
         console.error(e);
     }

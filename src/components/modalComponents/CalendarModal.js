@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Modal, Dimensions, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Dimensions, ScrollView, TouchableOpacity, View } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { format, getWeek } from 'date-fns';
 import { Entypo } from '@expo/vector-icons';
@@ -20,16 +20,16 @@ import CalendarHead from '../uiComponents/CalendarHeader';
 import EditNoteModal from './EditNoteModal';
 import checkCurrentWeek from '../../utils/helpers/checkWeek';
 
-const screenWidth = Dimensions.get('window').width;
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function CalendarModal({ route }) {
     const [diaryInput, setDiaryInput] = useState('');
     const [selectedDay, setSelectedDay] = useState(new Date());
     const [completionRate, setCompletionRate] = useState(0);
     const [editNoteModalVisible, setEditNoteModalVisible] = useState();
+
     const { habits, habitSetter } = useHabits();
     const sheetRef = useRef(null);
-    const week = getWeek(new Date());
     const { data } = route.params;
     const { completedDates, days, dataCurrentWeek, name, unitValue, diaryInputs, id } = data;
 
@@ -38,11 +38,10 @@ export default function CalendarModal({ route }) {
             dataCurrentWeek,
             completedDates,
             days,
-            data,
-            setCompletionRate
+            data
         );
         setCompletionRate(completedPercentage);
-    }, [days, week]);
+    }, [days]);
 
     const calendarDayPress = (day) => {
         sheetRef.current?.show();
@@ -79,7 +78,7 @@ export default function CalendarModal({ route }) {
                     style={{
                         marginTop: 20,
                         height: 340,
-                        width: screenWidth,
+                        width: SCREEN_WIDTH,
                     }}
                     theme={calendarStyles}
                     firstDay={1}

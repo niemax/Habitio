@@ -37,6 +37,19 @@ export const toasts = {
             icon: 'info',
         });
     },
+    note_edit: () => {
+        showMessage({
+            duration: 4000,
+            message: `Note successfully edited.`,
+            backgroundColor: colors.mainGreen, // background color
+            titleStyle: {
+                fontFamily: 'Medium',
+                fontSize: 16,
+            },
+            floating: 'true',
+            icon: 'info',
+        });
+    },
 };
 
 export const fuckOffLinter = {};

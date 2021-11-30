@@ -14,28 +14,28 @@ import { noHabitsImageStyle } from '../utils/globalStyles';
 import HomeListItem from '../components/uiComponents/HomeListItem';
 import checkDateForHabitCompletedReset from '../utils/helpers/checkHabitsDate';
 import HomepageHeader from '../components/uiComponents/HomepageHeader';
-import SplashScreen from './Splash';
 
-const wait = (timeout) => {
-    return new Promise((resolve) => setTimeout(resolve, timeout));
-};
+const wait = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
 
 const HomepageData = ({ navigation }) => {
     const [refreshing, setRefreshing] = useState(false);
-    const { getHabits, habits } = useHabits();
+    const { getHabits, habits, setHabits } = useHabits();
 
     const day = new Date();
     const currentDay = day.getDay();
 
     useEffect(() => {
         getHabits();
-    }, []);
+        checkDateForHabitCompletedReset(habits, setHabits);
+    }, [currentDay]);
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
         getHabits();
         wait(200).then(() => setRefreshing(false));
     }, []);
+
+    const HABITS_LENGTH = Object.keys(habits).length;
 
     return (
         <MainContainer>
@@ -55,7 +55,7 @@ const HomepageData = ({ navigation }) => {
                 <Text twentyTwo fontFamily="Bold" marginTop="30px" marginLeft="15px" left>
                     Your Habits{' '}
                     <Text fontFamily="Medium" color="gray">
-                        ({Object.keys(habits).length})
+                        ({HABITS_LENGTH})
                     </Text>
                 </Text>
                 <HomepageDataView>
