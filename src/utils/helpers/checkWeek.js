@@ -1,4 +1,4 @@
-import { getWeek } from 'date-fns';
+import { getCurrentWeek } from './currentDate';
 
 /**
  * ? Checks if the week in the habit data structure
@@ -6,19 +6,22 @@ import { getWeek } from 'date-fns';
  * ? and change data structure week to current week.
  * ? completedPercentage is tracked based on users weekly completion rate
  */
+
+const calculateCompletionRate = (completedAmount, amountOfDays) => {
+    const completedLength = Object.keys(completedAmount).length;
+    const rate = (completedLength / amountOfDays) * 100;
+    return rate;
+};
+
 const checkCurrentWeek = (dataCurrentWeek, completedDates, days, data) => {
-    const week = getWeek(new Date());
     let completedPercentage;
 
-    const completedLength = Object.keys(completedDates).length;
-    const completionRate = (completedLength / days) * 100;
-
-    if (week > dataCurrentWeek) {
+    if (getCurrentWeek() > dataCurrentWeek) {
         completedPercentage = 0;
-        data.dataCurrentWeek = week;
+        data.dataCurrentWeek = getCurrentWeek();
     }
 
-    completedPercentage = completionRate;
+    completedPercentage = calculateCompletionRate(completedDates, days);
 
     return { completedPercentage };
 };

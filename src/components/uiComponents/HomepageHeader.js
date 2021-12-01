@@ -5,14 +5,14 @@ import { TouchableOpacity } from 'react-native';
 import { colors } from '../../utils/colors';
 import { Feather } from '@expo/vector-icons';
 import { HomeheaderContainer, HomepageTextContainer } from '../../utils/StyledComponents/Styled';
-import { getCurrentDate } from '../../utils/helpers/currentDate';
+import { getCurrentDateFormatted } from '../../utils/helpers/currentDate';
 
 export const HomepageHeader = () => {
     const [currentDate, setCurrentDate] = useState();
     const navigation = useNavigation();
 
     useEffect(() => {
-        const { date } = getCurrentDate();
+        const { date } = getCurrentDateFormatted();
         setCurrentDate(date);
     }, []);
 

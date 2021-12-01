@@ -1,6 +1,5 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useState, useEffect } from 'react';
-import Modal from 'react-native-modal';
 import HabitEditContent from '../../components/modalContentComponents/HabitEdit';
 import { useHabits } from '../../context/HabitProvider';
 import handleUpdate from '../../utils/helpers/handleUpdate';

@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
-import { Alert, Image, Modal, ScrollView, View } from 'react-native';
+import React from 'react';
+import { Alert, Image, ScrollView, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useHabits } from '../../context/HabitProvider';
 import { showHabitImage, showHabitImageBackground } from '../../utils/globalStyles';
-import {
-    cancelPushNotification,
-    scheduleOneTimeEdit,
-    scheduleRepeatingEdit,
-} from '../../utils/helpers/notification';
+import { cancelPushNotification } from '../../utils/helpers/notification';
 import {
     HabitHeaderLineBreak,
     ModalContent,

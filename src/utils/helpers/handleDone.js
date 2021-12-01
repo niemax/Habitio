@@ -1,5 +1,5 @@
-import { format } from 'date-fns';
 import { colors } from '../colors';
+import { getCurrentDateFormattedForCalendarComponent } from './currentDate';
 import { haptics } from './haptics';
 import { toasts } from './toastMethods';
 
@@ -9,15 +9,14 @@ import { toasts } from './toastMethods';
 
 const handleDoneToday = async (data, habits, currentDay, habitSetter) => {
     const { id, name, color } = data;
-    const newDate = format(new Date(), 'yyyy-MM-dd');
+    const getCalendarDate = getCurrentDateFormattedForCalendarComponent();
 
-    haptics.success();
     try {
         const updatedHabits = habits.map((habit) => {
             const completedDatesObj = { ...habit.completedDates };
 
-            if (!(newDate in completedDatesObj)) {
-                completedDatesObj[newDate] = {
+            if (!(getCalendarDate in completedDatesObj)) {
+                completedDatesObj[getCalendarDate] = {
                     marked: false,
                     selected: true,
                     customStyles: {
@@ -31,9 +30,10 @@ const handleDoneToday = async (data, habits, currentDay, habitSetter) => {
                     habit.completed = true;
                     habit.completedDates = completedDatesObj;
                     toasts.info(name, color);
+                    haptics.success();
                 }
             } else {
-                delete completedDatesObj[newDate];
+                delete completedDatesObj[getCalendarDate];
                 if (habit.id === id) {
                     habit.completed = false;
                     habit.completedDates = completedDatesObj;

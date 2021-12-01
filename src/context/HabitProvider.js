@@ -2,11 +2,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const HabitContext = createContext();
-const day = new Date();
-const currentDay = day.getDay();
-
 const HabitProvider = ({ children }) => {
     const [habits, setHabits] = useState([]);
+
+    const day = new Date();
+    const currentDay = day.getDay();
 
     const getHabits = async () => {
         try {
@@ -47,7 +47,7 @@ const HabitProvider = ({ children }) => {
 
     useEffect(() => {
         getHabits();
-    }, []);
+    }, [currentDay]);
 
     return (
         <HabitContext.Provider value={{ habits, habitSetter, getHabits, setHabits, CRUDHabits }}>

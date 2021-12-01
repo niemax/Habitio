@@ -7,6 +7,19 @@ import { cancelPushNotification, scheduleOneTimeEdit, scheduleRepeatingEdit } fr
  * ! a new one.
  */
 
+const checkReminderTimeForNullValuesAndParse = (reminderTime) => {
+    const parsedHour = reminderTime !== null && reminderTime.getHours();
+    const parsedMin = reminderTime !== null && reminderTime.getMinutes();
+
+    return { parsedHour, parsedMin };
+};
+
+const scheduleRepeatingNotificationIfTimeIsNotNull = (time, habitName, habits, data) => {
+    const { parsedHour, parsedMin } = checkReminderTimeForNullValuesAndParse(time);
+
+    scheduleRepeatingEdit(parsedHour, parsedMin, habitName, habits, data);
+};
+
 const handleUpdate = async (
     data,
     notificationId,
@@ -24,21 +37,11 @@ const handleUpdate = async (
 ) => {
     const { id } = data;
     cancelPushNotification(notificationId);
-    const parsedReminderTimeHour = habitReminderTime !== null && habitReminderTime.getHours();
-    const parsedReminderTimeMinute = habitReminderTime !== null && habitReminderTime.getMinutes();
 
-    if (habitReminderTime !== null) {
-        scheduleRepeatingEdit(
-            parsedReminderTimeHour,
-            parsedReminderTimeMinute,
-            habitName,
-            habits,
-            data
-        );
-    }
-    if (habitSpecificDate !== null) {
-        scheduleOneTimeEdit(habitSpecificDate, habitName, habits, data);
-    }
+    scheduleRepeatingNotificationIfTimeIsNotNull(habitReminderTime, habitName, habits, data);
+
+    if (habitSpecificDate !== null) scheduleOneTimeEdit(habitSpecificDate, habitName, habits, data);
+
     const newHabits = habits.map((habit) => {
         if (habit.id === id) {
             habit.name = habitName;

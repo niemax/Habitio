@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Dimensions, ScrollView, TouchableOpacity, View } from 'react-native';
 import { Calendar } from 'react-native-calendars';
-import { format, getWeek } from 'date-fns';
 import { Entypo } from '@expo/vector-icons';
 import {
     CalendarLineBreak,
@@ -19,6 +18,7 @@ import CalendarBottomSheet from '../uiComponents/CalendarBottomSheet';
 import CalendarHead from '../uiComponents/CalendarHeader';
 import EditNoteModal from './EditNoteModal';
 import checkCurrentWeek from '../../utils/helpers/checkWeek';
+import { formatDateForInputModal } from '../../utils/helpers/currentDate';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -107,7 +107,7 @@ export default function CalendarModal({ route }) {
                     </CalendarStatsContainer>
                     <CalendarStatsContainer>
                         <Text color={colors.mainGreen} thirtyFour>
-                            {completionRate?.toFixed(0)}%
+                            {completionRate.toFixed(0)}%
                         </Text>
                         <Text marginRight="5px" fifteen marginTop="5px">
                             Completion rate{' '}
@@ -136,35 +136,30 @@ export default function CalendarModal({ route }) {
                         />
                     </View>
                 )}
-                {Object.values(diaryInputs).length > 0
-                    ? Object.values(diaryInputs).map(({ date, input, id }, index) => {
-                          return (
-                              <View key={index}>
-                                  <TouchableOpacity onPress={() => setEditNoteModalVisible(index)}>
-                                      <Text
-                                          marginBottom="15px"
-                                          marginLeft="15px"
-                                          left
-                                          fifteen
-                                          fontFamily="Regular"
-                                      >
-                                          {format(new Date(date), 'dd-MM-yyyy')} - {input}
-                                      </Text>
-                                  </TouchableOpacity>
-                                  <EditNoteModal
-                                      editNoteModalVisible={editNoteModalVisible === index}
-                                      setEditNoteModalVisible={setEditNoteModalVisible}
-                                      date={date}
-                                      id={id}
-                                      currentInput={input}
-                                      diaryInputs={diaryInputs}
-                                      data={data}
-                                  />
-                              </View>
-                          );
-                      })
-                    : null}
-
+                {Object.values(diaryInputs)?.map(({ date, input, id }, index) => (
+                    <View key={index}>
+                        <TouchableOpacity onPress={() => setEditNoteModalVisible(index)}>
+                            <Text
+                                marginBottom="15px"
+                                marginLeft="15px"
+                                left
+                                fifteen
+                                fontFamily="Regular"
+                            >
+                                {formatDateForInputModal(date)} - {input}
+                            </Text>
+                        </TouchableOpacity>
+                        <EditNoteModal
+                            editNoteModalVisible={editNoteModalVisible === index}
+                            setEditNoteModalVisible={setEditNoteModalVisible}
+                            date={date}
+                            id={id}
+                            currentInput={input}
+                            diaryInputs={diaryInputs}
+                            data={data}
+                        />
+                    </View>
+                ))}
                 <CalendarBottomSheet
                     data={data}
                     diaryInput={diaryInput}

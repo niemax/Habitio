@@ -83,6 +83,7 @@ export const scheduleRepeatingEdit = async (hours, minutes, name, habits, data) 
         if (habit.id === data.id) {
             habit.notificationId = identifier;
         }
+        return habit;
     });
 };
 
@@ -101,6 +102,7 @@ export const scheduleOneTimeEdit = async (date, name, habits, data) => {
         if (habit.id === data.id) {
             habit.notificationId = identifier;
         }
+        return habit;
     });
 };
 
