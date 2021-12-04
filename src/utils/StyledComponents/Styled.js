@@ -249,13 +249,11 @@ export const HomepageDataView = styled.View`
 
 export const HomepageDataBox = styled.Pressable`
     margin-top: 2px;
-    height: 79px;
-    width: ${deviceWidth - 24}px;
-    background-color: ${colors.mainBoxes};
-    border-radius: ${radius};
-    flex-direction: row;
-    align-items: center;
+    height: 80px;
     padding-horizontal: 15px;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 `;
 
 export const ShowHabitDataContainer = styled.View`
