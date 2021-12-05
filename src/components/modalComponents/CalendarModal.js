@@ -110,12 +110,12 @@ export default function CalendarModal({ route }) {
                             {completionRate.toFixed(0)}%
                         </Text>
                         <Text marginRight="5px" fifteen marginTop="5px">
-                            Completion rate{' '}
+                            Weekly rate
                         </Text>
                     </CalendarStatsContainer>
                 </CalendarTextContainer>
                 <CalendarLineBreak />
-                <Text left marginLeft="20px" marginTop="10px" marginBottom="15px">
+                <Text left marginLeft="17px" marginTop="10px" marginBottom="15px">
                     Notes
                 </Text>
                 {Object.values(diaryInputs).length === 0 && (
@@ -136,8 +136,8 @@ export default function CalendarModal({ route }) {
                         />
                     </View>
                 )}
-                {Object.values(diaryInputs)?.map(({ date, input, id }, index) => (
-                    <View key={index}>
+                {Object.values(diaryInputs)?.map(({ date, input, id }) => (
+                    <View key={id}>
                         <TouchableOpacity onPress={() => setEditNoteModalVisible(index)}>
                             <Text
                                 marginBottom="15px"

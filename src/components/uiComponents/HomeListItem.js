@@ -21,7 +21,6 @@ import DoneCheckBox from './DoneCheckBox';
 
 export default function HomeListItem({ item, completedDay }) {
     const [progressModalVisible, setProgressModalVisible] = useState(false);
-    const [prog, setProg] = useState(0);
     const [inputText, setInputText] = useState(0);
     const [visible, setVisible] = useState(false);
     const { icon, completed, times, progress, color, name, unitValue, id } = item;
@@ -31,9 +30,9 @@ export default function HomeListItem({ item, completedDay }) {
     const handleProgress = (operand) => {
         const mapped = habits.map((habit) => {
             if (habit.id === id) {
-                if (operand === '+') {
+                if (operand === '+' && progress < times) {
                     habit.progress += Number(inputText);
-                } else {
+                } else if (operand === '-') {
                     habit.progress -= Number(inputText);
                 }
             }
@@ -43,19 +42,6 @@ export default function HomeListItem({ item, completedDay }) {
         setVisible(false);
         setInputText('');
     };
-
-    /*  const handleProgressIncrement = () => {
-        const mapped = habits.map((habit) => {
-            if (habit.id === id) {
-                habit.progress += Number(inputText);
-            }
-            return habit;
-        });
-        setProg(prog + Number(inputText));
-        habitSetter(mapped);
-        setVisible(false);
-        setInputText('');
-    }; */
 
     return (
         <HomepageDataView>
@@ -128,7 +114,7 @@ export default function HomeListItem({ item, completedDay }) {
                         style={progressBar}
                         progress={!completed ? progress / times : 1}
                         height={3}
-                        width={Dimensions.get('window').width - 10}
+                        width={Dimensions.get('window').width}
                         color={color}
                         borderColor="transparent"
                     />
