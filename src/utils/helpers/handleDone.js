@@ -3,10 +3,6 @@ import { getCurrentDateFormattedForCalendarComponent } from './currentDate';
 import { haptics } from './haptics';
 import { toasts } from './toastMethods';
 
-/**
- * ! handle done for today
- */
-
 const handleDoneToday = async (data, habits, currentDay, habitSetter) => {
     const { id, name, color } = data;
     const getCalendarDate = getCurrentDateFormattedForCalendarComponent();

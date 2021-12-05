@@ -4,15 +4,12 @@ import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import FlashMessage from 'react-native-flash-message';
 import AppLoading from 'expo-app-loading';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font';
-import { MenuProvider } from 'react-native-popup-menu';
 import * as Notifications from 'expo-notifications';
-import MainAppStack from './src/navigation/MainAppNav';
 import HabitProvider from './src/context/HabitProvider';
-import { colors } from './src/utils/colors';
 import Main from './src/navigation/MainAppNav';
 
 export default function App() {
@@ -63,10 +60,8 @@ export default function App() {
                 <NavigationContainer>
                     <HabitProvider>
                         <SafeAreaProvider>
-                            <MenuProvider>
-                                <FlashMessage position="top" />
-                                <Main />
-                            </MenuProvider>
+                            <FlashMessage position="top" />
+                            <Main />
                         </SafeAreaProvider>
                     </HabitProvider>
                 </NavigationContainer>

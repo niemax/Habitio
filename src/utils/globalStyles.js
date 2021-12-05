@@ -1,4 +1,3 @@
-import { Dimensions } from 'react-native';
 import { colors } from './colors';
 
 export const textInputStyling = {
@@ -87,8 +86,8 @@ export const homepageBoxShadow = {
         width: 0,
         height: 1,
     },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
+    shadowOpacity: 0.12,
+    shadowRadius: 1.22,
     elevation: 3,
 };
 

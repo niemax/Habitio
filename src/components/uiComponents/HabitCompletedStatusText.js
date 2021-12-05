@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import TextStyle from '../../utils/Text';
 import { TextNameAndStatus } from '../../utils/StyledComponents/Styled';
 import { Feather } from '@expo/vector-icons';
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
 export default function HabitCompletedStatusText({ name, completed, color }) {
     return (

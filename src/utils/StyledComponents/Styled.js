@@ -129,6 +129,7 @@ export const PreDefinedContainer = styled.View`
     align-items: center;
     margin-bottom: 50px;
 `;
+
 export const PreDefinedHabitsContainer = styled.View`
     background-color: ${colors.mainBoxes};
     width: ${deviceWidth - 20}px
@@ -385,7 +386,7 @@ export const LeftAction = styled.View`
     align-items: flex-start;
 `;
 
-export const ItemTimesContainer = styled.View`
+export const ItemTimesContainer = styled.TouchableOpacity`
     position: absolute;
     right: 30px;
 `;

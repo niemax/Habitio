@@ -76,7 +76,6 @@ export default function CreateHabit({ route }) {
         currentDay: 0,
         completed: false,
         completedDates: {},
-        timesCompleted: 0,
         progress: 0,
         diaryInputs: [],
     };

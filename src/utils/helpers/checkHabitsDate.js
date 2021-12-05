@@ -10,6 +10,7 @@ const checkDateForHabitCompletedReset = (habits, set) => {
         const checkedHabits = habits.map((habit) => {
             if (getCurrentDayNumber() > habit.completedDay) {
                 habit.completed = false;
+                habit.progress = 0;
             }
             return habit;
         });
