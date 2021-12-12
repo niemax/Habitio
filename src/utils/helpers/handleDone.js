@@ -1,5 +1,5 @@
 import { colors } from '../colors';
-import { getCurrentDateFormattedForCalendarComponent } from './currentDate';
+import { getCurrentDateFormattedForCalendarComponent } from './dateHelpers';
 import { haptics } from './haptics';
 import { toasts } from './toastMethods';
 

@@ -8,7 +8,7 @@ import {
     ModalContent,
 } from '../../utils/StyledComponents/Styled';
 import Text from '../../utils/Text';
-import Frequency from '../uiComponents/Frequency';
+import Frequency from '../uiComponents/ChooseFrequency';
 import HabitInput from '../uiComponents/HabitDescriptionInput';
 import HabitColor from '../uiComponents/SelectHabitColorButton';
 import ShowEditHeader from '../uiComponents/ShowEditHeader';
@@ -85,7 +85,6 @@ export default function HabitEditContent({
                                 color={color}
                                 updateColor={updateColor}
                             />
-
                             <Frequency
                                 switchStates={{
                                     isEnabledSpecific,

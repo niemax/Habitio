@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Alert, Modal, TouchableOpacity, View } from 'react-native';
 import { Ionicons, Feather } from '@expo/vector-icons';
-import { format } from 'date-fns';
 import Text from '../../utils/Text';
 import { CalendarHeader, DiaryInput, ModalContent } from '../../utils/StyledComponents/Styled';
 import { colors } from '../../utils/colors';
@@ -10,6 +9,7 @@ import {
     handleDiaryInputEdit,
 } from '../../utils/helpers/handleDiaryInputDelete';
 import { useHabits } from '../../context/HabitProvider';
+import { formatDateForInputModal } from '../../utils/helpers/dateHelpers';
 
 export default function EditNoteModal({
     editNoteModalVisible,
@@ -55,7 +55,7 @@ export default function EditNoteModal({
                         <Ionicons name="close-circle-sharp" size={34} color="gray" />
                     </TouchableOpacity>
                     <Text left fontFamily="Bold" twentyTwo color="gray">
-                        {format(new Date(date), 'dd-MM-yyyy')}
+                        {formatDateForInputModal(date)}
                     </Text>
                     <View style={{ flexDirection: 'row' }}>
                         <TouchableOpacity onPress={displayDeleteAlert}>

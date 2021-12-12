@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native';
 import { colors } from '../../utils/colors';
 import { Feather } from '@expo/vector-icons';
 import { HomeheaderContainer, HomepageTextContainer } from '../../utils/StyledComponents/Styled';
-import { getCurrentDateFormatted } from '../../utils/helpers/currentDate';
+import { getCurrentDateFormatted } from '../../utils/helpers/dateHelpers';
 
 export const HomepageHeader = () => {
     const [currentDate, setCurrentDate] = useState();

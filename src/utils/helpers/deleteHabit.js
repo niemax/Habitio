@@ -1,11 +1,10 @@
 import { toasts } from './toastMethods';
 
-const deleteHabit = (id, habits, habitSetter, cancelPushNotification, data, navigation) => {
+const deleteHabit = (id, habits, habitSetter, cancelPushNotification, data) => {
     const newHabits = habits.filter((habit) => habit.id !== data.id);
     habitSetter(newHabits);
     cancelPushNotification(id);
-    navigation.goBack();
-    toasts.error();
+    toasts.error('Habit', 'deleted');
 };
 
 export default deleteHabit;

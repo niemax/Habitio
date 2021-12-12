@@ -11,7 +11,6 @@ import {
     HabitHeaderLineBreak,
 } from '../../utils/StyledComponents/Styled';
 import { Feather } from '@expo/vector-icons';
-import { Fragment } from 'react';
 
 export default function Frequency({
     switchStates: { isEnabled, isEnabledDate, isEnabledSpecific, isEnabledEndDate },
@@ -78,7 +77,9 @@ export default function Frequency({
                         <TouchableOpacity
                             style={{ marginLeft: 30 }}
                             onPress={() => {
-                                daysCount > 1 && setDaysCount(daysCount - 1);
+                                if (daysCount > 1) {
+                                    setDaysCount(daysCount - 1);
+                                }
                             }}
                         >
                             <Feather name="minus-circle" size={30} color="gray" />
@@ -87,7 +88,11 @@ export default function Frequency({
                             {daysCount === 7 ? <Text>Every day</Text> : daysCount}
                         </Text>
                         <TouchableOpacity
-                            onPress={() => daysCount < 7 && setDaysCount(daysCount + 1)}
+                            onPress={() => {
+                                if (daysCount < 7) {
+                                    setDaysCount(daysCount + 1);
+                                }
+                            }}
                         >
                             <Feather name="plus-circle" size={30} color="gray" />
                         </TouchableOpacity>
@@ -113,7 +118,11 @@ export default function Frequency({
                         />
                         <Text>Per day</Text>
                         <TouchableOpacity
-                            onPress={() => timesCount > 1 && setTimesCount(timesCount - 1)}
+                            onPress={() => {
+                                if (timesCount > 1) {
+                                    setTimesCount(timesCount - 1);
+                                }
+                            }}
                         >
                             <Feather name="minus-circle" size={30} color="gray" />
                         </TouchableOpacity>

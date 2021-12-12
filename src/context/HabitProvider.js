@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { getCurrentDayNumber } from '../utils/helpers/currentDate';
+import { getCurrentDayNumber } from '../utils/helpers/dateHelpers';
 
 const HabitContext = createContext();
 const HabitProvider = ({ children }) => {

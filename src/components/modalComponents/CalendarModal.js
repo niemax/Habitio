@@ -18,7 +18,7 @@ import CalendarBottomSheet from '../uiComponents/CalendarBottomSheet';
 import CalendarHead from '../uiComponents/CalendarHeader';
 import EditNoteModal from './EditNoteModal';
 import checkCurrentWeek from '../../utils/helpers/checkWeek';
-import { formatDateForInputModal } from '../../utils/helpers/currentDate';
+import { formatDateForInputModal } from '../../utils/helpers/dateHelpers';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -28,10 +28,10 @@ export default function CalendarModal({ route }) {
     const [completionRate, setCompletionRate] = useState(0);
     const [editNoteModalVisible, setEditNoteModalVisible] = useState();
 
-    const { habits, habitSetter } = useHabits();
-    const sheetRef = useRef(null);
     const { data } = route.params;
     const { completedDates, days, dataCurrentWeek, name, unitValue, diaryInputs, id } = data;
+    const { habits, habitSetter } = useHabits();
+    const sheetRef = useRef(null);
 
     useEffect(() => {
         const { completedPercentage } = checkCurrentWeek(
@@ -136,7 +136,7 @@ export default function CalendarModal({ route }) {
                         />
                     </View>
                 )}
-                {Object.values(diaryInputs)?.map(({ date, input, id }) => (
+                {Object.values(diaryInputs)?.map(({ date, input, id }, index) => (
                     <View key={id}>
                         <TouchableOpacity onPress={() => setEditNoteModalVisible(index)}>
                             <Text

@@ -1,4 +1,4 @@
-import { getCurrentWeek } from './currentDate';
+import { getCurrentWeek } from './dateHelpers';
 
 /**
  * ? Checks if the week in the habit data structure

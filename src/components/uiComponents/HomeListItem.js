@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Dimensions, Image, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress';
 import TextStyle from '../../utils/Text';
 import { haptics } from '../../utils/helpers/haptics';
 import {
+    AddProgressPreDefinedButton,
     HomepageDataBox,
     HomepageDataView,
     ItemTimesContainer,
@@ -21,7 +22,7 @@ import DoneCheckBox from './DoneCheckBox';
 
 export default function HomeListItem({ item, completedDay }) {
     const [progressModalVisible, setProgressModalVisible] = useState(false);
-    const [inputText, setInputText] = useState(0);
+    const [inputText, setInputText] = useState();
     const [visible, setVisible] = useState(false);
     const { icon, completed, times, progress, color, name, unitValue, id } = item;
     const navigation = useNavigation();
@@ -34,6 +35,8 @@ export default function HomeListItem({ item, completedDay }) {
                     habit.progress += Number(inputText);
                 } else if (operand === '-') {
                     habit.progress -= Number(inputText);
+                } else {
+                    habit.progress += operand;
                 }
             }
             return habit;
@@ -76,32 +79,30 @@ export default function HomeListItem({ item, completedDay }) {
                         data={item}
                     />
                 </View>
-                <ItemTimesContainer onPress={() => setVisible(true)}>
+                <ItemTimesContainer onPress={() => !completed && setVisible(true)}>
                     <TextStyle color={color} marginLeft="10px" fontFamily="Bold" twenty>
                         {times > 1 && (
-                            <TextStyle fontFamily="Extra" color={color} twenty>
-                                {progress}
-                            </TextStyle>
-                        )}
-                        {times > 1 && (
-                            <TextStyle
-                                fontFamily="Regular"
-                                twenty
-                                color={color}
-                                style={{ opacity: 0.8 }}
-                            >
-                                {''}/{''}
-                            </TextStyle>
-                        )}
-                        {times > 1 && (
-                            <TextStyle
-                                twenty
-                                fontFamily="Regular"
-                                color={color}
-                                style={{ opacity: 0.8 }}
-                            >
-                                {times}
-                            </TextStyle>
+                            <Fragment>
+                                <TextStyle fontFamily="Extra" color={color} twenty>
+                                    {!completed ? progress : times}
+                                </TextStyle>
+                                <TextStyle
+                                    fontFamily="Regular"
+                                    twenty
+                                    color={color}
+                                    style={{ opacity: 0.8 }}
+                                >
+                                    /
+                                </TextStyle>
+                                <TextStyle
+                                    twenty
+                                    fontFamily="Regular"
+                                    color={color}
+                                    style={{ opacity: 0.8 }}
+                                >
+                                    {times}
+                                </TextStyle>
+                            </Fragment>
                         )}
                     </TextStyle>
 
@@ -114,12 +115,12 @@ export default function HomeListItem({ item, completedDay }) {
                         style={progressBar}
                         progress={!completed ? progress / times : 1}
                         height={3}
-                        width={Dimensions.get('window').width}
+                        width={Dimensions.get('window').width - 10}
                         color={color}
                         borderColor="transparent"
                     />
                 )}
-                <Dialog.Container visible={visible}>
+                <Dialog.Container onBackdropPress={() => setVisible(false)} visible={visible}>
                     <Dialog.Title>Add Progress</Dialog.Title>
                     <Dialog.Input
                         autoFocus={true}
@@ -127,9 +128,25 @@ export default function HomeListItem({ item, completedDay }) {
                         keyboardType="numeric"
                         onChangeText={(text) => setInputText(text)}
                     />
-                    <Dialog.Button label="Cancel" onPress={() => setVisible(false)} />
-                    <Dialog.Button label="-" onPress={() => handleProgress('-')} />
-                    <Dialog.Button label="+" onPress={() => handleProgress('+')} />
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-evenly',
+                            marginBottom: 10,
+                        }}
+                    >
+                        <AddProgressPreDefinedButton onPress={() => handleProgress(1)}>
+                            <TextStyle>+1</TextStyle>
+                        </AddProgressPreDefinedButton>
+                        <AddProgressPreDefinedButton onPress={() => handleProgress(2)}>
+                            <TextStyle>+2</TextStyle>
+                        </AddProgressPreDefinedButton>
+                        <AddProgressPreDefinedButton onPress={() => handleProgress(4)}>
+                            <TextStyle>+4</TextStyle>
+                        </AddProgressPreDefinedButton>
+                    </View>
+                    <Dialog.Button bold label="-" onPress={() => handleProgress('-')} />
+                    <Dialog.Button bold label="+" onPress={() => handleProgress('+')} />
                 </Dialog.Container>
                 <ProgressModal
                     data={item}

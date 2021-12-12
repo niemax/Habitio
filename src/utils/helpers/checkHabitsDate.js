@@ -1,4 +1,4 @@
-import { getCurrentDayNumber } from './currentDate';
+import { getCurrentDayNumber } from './dateHelpers';
 
 /**
  * ! check if current day is higher than last completed day -> set habit.completed to false

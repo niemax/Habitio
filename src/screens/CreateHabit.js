@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 import { ScrollView, View } from 'react-native';
-import {
-    HabitInfoContainer,
-    HabitUtilityInfoContainer,
-    MainContainer,
-} from '../utils/StyledComponents/Styled';
+import { HabitUtilityInfoContainer, MainContainer } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 import HabitInput from '../components/uiComponents/HabitDescriptionInput';
-import Frequency from '../components/uiComponents/Frequency';
+import Frequency from '../components/uiComponents/ChooseFrequency';
 import CHHeader from '../components/uiComponents/CreateHabitHeader';
 import HabitColor from '../components/uiComponents/SelectHabitColorButton';
-import getWeek from 'date-fns/getWeek';
+import { getCurrentWeek } from '../utils/helpers/dateHelpers';
 
 export default function CreateHabit({ route }) {
     const [updatedColor, setUpdatedColor] = useState();
@@ -36,7 +32,7 @@ export default function CreateHabit({ route }) {
 
     const { habitName, habitIcon, color } = route.params;
 
-    const currentWeek = getWeek(new Date());
+    const currentWeek = getCurrentWeek();
 
     const updateColor = (color) => {
         setUpdatedColor(color);
@@ -63,8 +59,8 @@ export default function CreateHabit({ route }) {
         id: Math.floor(Math.random() * 10000),
         color: color || updatedColor,
         icon: habitIcon,
-        days: isEnabled ? daysCount : null,
-        times: isEnabled ? timesCount : null,
+        days: isEnabled ? daysCount : 0,
+        times: isEnabled ? timesCount : 0,
         specificDate: isEnabledSpecific ? specificDate : null,
         reminder: isEnabledDate ? reminderTime : null,
         endDate: isEnabledEndDate ? endDate : null,
@@ -72,7 +68,6 @@ export default function CreateHabit({ route }) {
         description: description,
         completedDay: null,
         dataCurrentWeek: currentWeek,
-        streak: [],
         currentDay: 0,
         completed: false,
         completedDates: {},
@@ -98,7 +93,7 @@ export default function CreateHabit({ route }) {
                     <Text left marginLeft="10px" fontFamily="Regular" marginTop="35px">
                         Description
                     </Text>
-                    <HabitInfoContainer>
+                    <View style={{ flex: 1 }}>
                         <HabitInput
                             values={description}
                             actions={{
@@ -141,7 +136,7 @@ export default function CreateHabit({ route }) {
                                 states={{ daysCount, timesCount }}
                             />
                         </HabitUtilityInfoContainer>
-                    </HabitInfoContainer>
+                    </View>
                 </View>
             </ScrollView>
         </MainContainer>

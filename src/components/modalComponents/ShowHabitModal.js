@@ -4,16 +4,12 @@ import { Feather } from '@expo/vector-icons';
 import { useHabits } from '../../context/HabitProvider';
 import { showHabitImage, showHabitImageBackground } from '../../utils/globalStyles';
 import { cancelPushNotification } from '../../utils/helpers/notification';
-import {
-    HabitHeaderLineBreak,
-    ModalContent,
-    ShowHabitDataContainer,
-} from '../../utils/StyledComponents/Styled';
+import { HabitHeaderLineBreak, ModalContent } from '../../utils/StyledComponents/Styled';
 import Text from '../../utils/Text';
 import ShowHabitHeader from '../uiComponents/ShowHabitHeader';
 import ShowHabitActions from '../uiComponents/ShowHabitActions';
 import deleteHabit from '../../utils/helpers/deleteHabit';
-import { HabitFrequency } from '../uiComponents/HabitFrequency';
+import { HabitInfo } from '../uiComponents/HabitInfo';
 import { colors } from '../../utils/colors';
 
 export default function ShowHabitModal({ route, navigation }) {
@@ -34,6 +30,11 @@ export default function ShowHabitModal({ route, navigation }) {
 
     const { habits, habitSetter } = useHabits();
 
+    const deleteHabitAndNavigateBack = () => {
+        deleteHabit(notificationId, habits, habitSetter, cancelPushNotification, data);
+        navigation.goBack();
+    };
+
     const displayDeleteAlert = () => {
         Alert.alert(
             'Delete Habit',
@@ -41,15 +42,7 @@ export default function ShowHabitModal({ route, navigation }) {
             [
                 {
                     text: 'OK',
-                    onPress: () =>
-                        deleteHabit(
-                            notificationId,
-                            habits,
-                            habitSetter,
-                            cancelPushNotification,
-                            data,
-                            navigation
-                        ),
+                    onPress: () => deleteHabitAndNavigateBack(),
                 },
                 {
                     text: 'Cancel',
@@ -64,7 +57,7 @@ export default function ShowHabitModal({ route, navigation }) {
             <ShowHabitHeader data={data} />
             <HabitHeaderLineBreak />
             <ScrollView contentContainerStyle={{ marginTop: 10 }}>
-                <ShowHabitDataContainer>
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <View style={showHabitImageBackground}>
                         {icon ? (
                             <Image
@@ -79,8 +72,11 @@ export default function ShowHabitModal({ route, navigation }) {
                     <Text fontFamily="Bold" marginTop="15px" twentyFour>
                         {name}
                     </Text>
-                </ShowHabitDataContainer>
-                <HabitFrequency
+                    <Text marginTop="10px" marginBottom="10px" color="gray">
+                        {description}
+                    </Text>
+                </View>
+                <HabitInfo
                     description={description}
                     days={days}
                     times={times}

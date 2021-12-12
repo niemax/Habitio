@@ -11,7 +11,6 @@ const HabitInput = ({ values: { description, stateDescription }, actions: { setV
             multiline={Platform.OS === 'android' ? false : true}
             autoCorrect={false}
             value={description || stateDescription}
-            placeholder="Habit description"
             placeholderTextColor="gray"
             style={{
                 color: 'white',

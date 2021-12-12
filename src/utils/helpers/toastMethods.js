@@ -24,10 +24,10 @@ export const toasts = {
             icon: 'success',
         });
     },
-    error: () => {
+    error: (keyword, verb) => {
         showMessage({
             duration: 4000,
-            message: `Habit successfully removed`,
+            message: `${keyword} successfully ${verb}`,
             backgroundColor: colors.error, // background color
             titleStyle: {
                 fontFamily: 'Medium',

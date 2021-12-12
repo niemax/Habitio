@@ -20,3 +20,7 @@ export const formatDateForInputModal = (date) => {
     const formattedDate = format(new Date(date), 'dd-MM-yyyy');
     return formattedDate;
 };
+
+export const formatDateForHabitEndDate = (date) => format(new Date(date), 'PP');
+
+export const formatDateForHabitInfoReminder = (date) => format(new Date(date), 'p');

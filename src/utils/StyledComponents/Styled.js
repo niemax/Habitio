@@ -257,11 +257,6 @@ export const HomepageDataBox = styled.Pressable`
     align-items: center;
 `;
 
-export const ShowHabitDataContainer = styled.View`
-    justify-content: center;
-    align-items: center;
-`;
-
 export const ShowHabitFrequency = styled.View`
     margin-top: 50px;
     flex-direction: row;
@@ -312,6 +307,7 @@ export const CalendarTimesInfoContainer = styled.View`
     justify-content: space-between;
     padding-horizontal: 15px;
     margin-bottom: 20px;
+    margin-top: 20px;
 `;
 
 export const CalendarTextContainer = styled.View`
@@ -457,4 +453,13 @@ export const HabitHeaderLineBreak = styled.View`
     background-color: gray;
     opacity: 0.3;
     margin-top: 10px;
+`;
+
+export const AddProgressPreDefinedButton = styled.TouchableOpacity`
+    background-color: ${colors.mainGreen};
+    height: 30px;
+    width: 60px;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
 `;

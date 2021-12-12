@@ -30,5 +30,5 @@ export const handleDiaryInputDelete = (id, habits, diaryInputs, data, habitSette
         return habit;
     });
     habitSetter(newHabits);
-    toasts.error('Note successfully deleted.');
+    toasts.error('Note', 'deleted');
 };

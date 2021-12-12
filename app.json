@@ -8,7 +8,7 @@
         "splash": {
             "image": "../goal-buddy/src/assets/brand.png",
             "resizeMode": "contain",
-            "backgroundColor": "#ffffff"
+            "backgroundColor": "#282828"
         },
         "updates": {
             "fallbackToCacheTimeout": 0

@@ -141,7 +141,7 @@ export const colorPalletteColor = {
 export const progressBar = {
     position: 'absolute',
     bottom: 0,
-    left: 3,
+    left: 5,
     right: 3,
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
