@@ -12,22 +12,20 @@ import {
 import Text from '../utils/Text';
 import { noHabitsImageStyle } from '../utils/globalStyles';
 import HomeListItem from '../components/uiComponents/HomeListItem';
-import checkDateForHabitCompletedReset from '../utils/helpers/checkHabitsDate';
 import HomepageHeader from '../components/uiComponents/HomepageHeader';
+import { getCurrentDay } from '../utils/helpers/dateHelpers';
 
 const wait = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
 
 const HomepageData = ({ navigation }) => {
     const [refreshing, setRefreshing] = useState(false);
-    const { getHabits, habits, setHabits } = useHabits();
+    const { getHabits, habits } = useHabits();
 
-    const day = new Date();
-    const currentDay = day.getDay();
+    const getDate = getCurrentDay();
 
     useEffect(() => {
         getHabits();
-        checkDateForHabitCompletedReset(habits, setHabits);
-    }, [currentDay]);
+    }, [getDate]);
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
@@ -79,7 +77,7 @@ const HomepageData = ({ navigation }) => {
                             item={item}
                             index={index.toString()}
                             completed={item.completed}
-                            completedDay={currentDay}
+                            completedDay={getCurrentDay()}
                         />
                     ))}
                 </HomepageDataView>

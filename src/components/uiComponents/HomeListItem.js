@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { Dimensions, Image, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress';
@@ -16,7 +16,6 @@ import Dialog from 'react-native-dialog';
 import { colors } from '../../utils/colors';
 import { progressBar } from '../../utils/globalStyles';
 import { useNavigation } from '@react-navigation/core';
-import handleDoneToday from '../../utils/helpers/handleDone';
 import { useHabits } from '../../context/HabitProvider';
 import DoneCheckBox from './DoneCheckBox';
 
@@ -28,7 +27,7 @@ export default function HomeListItem({ item, completedDay }) {
     const navigation = useNavigation();
     const { habits, habitSetter } = useHabits();
 
-    const handleProgress = (operand) => {
+    const handleHabitProgress = (operand) => {
         const mapped = habits.map((habit) => {
             if (habit.id === id) {
                 if (operand === '+' && progress < times) {
@@ -49,7 +48,6 @@ export default function HomeListItem({ item, completedDay }) {
     return (
         <HomepageDataView>
             <HomepageDataBox
-                onLongPress={() => handleDoneToday(item, habits, completedDay, habitSetter)}
                 onPress={() => {
                     navigation.navigate('ShowHabitModal', {
                         data: item,
@@ -82,7 +80,7 @@ export default function HomeListItem({ item, completedDay }) {
                 <ItemTimesContainer onPress={() => !completed && setVisible(true)}>
                     <TextStyle color={color} marginLeft="10px" fontFamily="Bold" twenty>
                         {times > 1 && (
-                            <Fragment>
+                            <>
                                 <TextStyle fontFamily="Extra" color={color} twenty>
                                     {!completed ? progress : times}
                                 </TextStyle>
@@ -102,7 +100,7 @@ export default function HomeListItem({ item, completedDay }) {
                                 >
                                     {times}
                                 </TextStyle>
-                            </Fragment>
+                            </>
                         )}
                     </TextStyle>
 
@@ -135,18 +133,18 @@ export default function HomeListItem({ item, completedDay }) {
                             marginBottom: 10,
                         }}
                     >
-                        <AddProgressPreDefinedButton onPress={() => handleProgress(1)}>
+                        <AddProgressPreDefinedButton onPress={() => handleHabitProgress(1)}>
                             <TextStyle>+1</TextStyle>
                         </AddProgressPreDefinedButton>
-                        <AddProgressPreDefinedButton onPress={() => handleProgress(2)}>
+                        <AddProgressPreDefinedButton onPress={() => handleHabitProgress(2)}>
                             <TextStyle>+2</TextStyle>
                         </AddProgressPreDefinedButton>
-                        <AddProgressPreDefinedButton onPress={() => handleProgress(4)}>
+                        <AddProgressPreDefinedButton onPress={() => handleHabitProgress(4)}>
                             <TextStyle>+4</TextStyle>
                         </AddProgressPreDefinedButton>
                     </View>
-                    <Dialog.Button bold label="-" onPress={() => handleProgress('-')} />
-                    <Dialog.Button bold label="+" onPress={() => handleProgress('+')} />
+                    <Dialog.Button bold label="-" onPress={() => handleHabitProgress('-')} />
+                    <Dialog.Button bold label="+" onPress={() => handleHabitProgress('+')} />
                 </Dialog.Container>
                 <ProgressModal
                     data={item}

@@ -51,8 +51,32 @@ const HabitProvider = ({ children }) => {
         getHabits();
     }, [currentDay]);
 
+    const checkDateForHabitCompletedReset = () => {
+        try {
+            const checkedHabits = habits.map((habit) => {
+                if (getCurrentDayNumber() > habit.completedDay) {
+                    habit.completed = false;
+                    habit.progress = 0;
+                }
+                return habit;
+            });
+            habitSetter(checkedHabits);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
     return (
-        <HabitContext.Provider value={{ habits, habitSetter, getHabits, setHabits, CRUDHabits }}>
+        <HabitContext.Provider
+            value={{
+                habits,
+                habitSetter,
+                getHabits,
+                setHabits,
+                CRUDHabits,
+                checkDateForHabitCompletedReset,
+            }}
+        >
             {children}
         </HabitContext.Provider>
     );
