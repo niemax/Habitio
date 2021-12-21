@@ -21,15 +21,9 @@ const HomepageData = ({ navigation }) => {
     const [refreshing, setRefreshing] = useState(false);
     const { getHabits, habits } = useHabits();
 
-    const getDate = getCurrentDay();
-
-    useEffect(() => {
-        getHabits();
-    }, [getDate]);
-
     const onRefresh = useCallback(() => {
-        setRefreshing(true);
         getHabits();
+        setRefreshing(true);
         wait(200).then(() => setRefreshing(false));
     }, []);
 

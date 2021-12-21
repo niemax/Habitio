@@ -6,9 +6,6 @@ const HabitContext = createContext();
 const HabitProvider = ({ children }) => {
     const [habits, setHabits] = useState([]);
 
-    const day = new Date();
-    const currentDay = day.getDay();
-
     const getHabits = async () => {
         try {
             const result = await AsyncStorage.getItem('@habit');
@@ -18,7 +15,6 @@ const HabitProvider = ({ children }) => {
                 const mappedHabits = parsedResult.map((habit) => {
                     if (getCurrentDayNumber() > habit.completedDay) {
                         habit.completed = false;
-                        habit.progress = 0;
                     }
                     return habit;
                 });
@@ -47,9 +43,11 @@ const HabitProvider = ({ children }) => {
         }
     };
 
+    const dayNumberNow = getCurrentDayNumber();
+
     useEffect(() => {
         getHabits();
-    }, [currentDay]);
+    }, [dayNumberNow]);
 
     const checkDateForHabitCompletedReset = () => {
         try {
