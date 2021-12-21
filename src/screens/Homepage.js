@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Image, RefreshControl, ScrollView } from 'react-native';
 import { colors } from '../utils/colors';
 import { Feather } from '@expo/vector-icons';

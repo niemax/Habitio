@@ -15,6 +15,7 @@ const HabitProvider = ({ children }) => {
                 const mappedHabits = parsedResult.map((habit) => {
                     if (getCurrentDayNumber() > habit.completedDay) {
                         habit.completed = false;
+                        habit.progress = 0;
                     }
                     return habit;
                 });
@@ -59,8 +60,8 @@ const HabitProvider = ({ children }) => {
                 return habit;
             });
             habitSetter(checkedHabits);
-        } catch (e) {
-            console.error(e);
+        } catch (error) {
+            console.error(error);
         }
     };
 
