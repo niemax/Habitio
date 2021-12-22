@@ -1,18 +1,18 @@
 import { colors } from '../colors';
-import { getCurrentDateFormattedForCalendarComponent } from './dateHelpers';
+import { getCurrentDateFormattedForCalendarComponent, getCurrentDay } from './dateHelpers';
 import { haptics } from './haptics';
 import { toasts } from './toastMethods';
 
-const handleDoneToday = (data, habits, currentDay, habitSetter) => {
+const handleDoneToday = (data, habits, habitSetter) => {
     const { id, name, color } = data;
-    const getCalendarDate = getCurrentDateFormattedForCalendarComponent();
+    const getCalendarDateString = getCurrentDateFormattedForCalendarComponent();
 
     try {
         const updatedHabits = habits.map((habit) => {
             const completedDatesObj = { ...habit.completedDates };
 
-            if (!(getCalendarDate in completedDatesObj)) {
-                completedDatesObj[getCalendarDate] = {
+            if (!(getCalendarDateString in completedDatesObj)) {
+                completedDatesObj[getCalendarDateString] = {
                     marked: false,
                     selected: true,
                     customStyles: {
@@ -22,14 +22,14 @@ const handleDoneToday = (data, habits, currentDay, habitSetter) => {
                     },
                 };
                 if (habit.id === id) {
-                    habit.completedDay = currentDay;
+                    habit.completedDay = getCurrentDay();
                     habit.completed = true;
                     habit.completedDates = completedDatesObj;
                     toasts.info(name, color);
                     haptics.success();
                 }
             } else {
-                delete completedDatesObj[getCalendarDate];
+                delete completedDatesObj[getCalendarDateString];
                 if (habit.id === id) {
                     habit.completed = false;
                     habit.completedDates = completedDatesObj;

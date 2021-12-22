@@ -9,7 +9,7 @@ const CalendarHead = ({ name }) => {
     const navigation = useNavigation();
     return (
         <CalendarHeader>
-            <Text marginLeft="5px" twenty fontFamily="Extra">
+            <Text marginLeft="5px" nineteen fontFamily="Bold">
                 {name}
             </Text>
             <TouchableOpacity onPress={() => navigation.goBack()}>
