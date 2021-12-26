@@ -26,7 +26,7 @@ export default function CalendarModal({ route }) {
     const [diaryInput, setDiaryInput] = useState('');
     const [selectedDay, setSelectedDay] = useState(new Date());
     const [completionRate, setCompletionRate] = useState(0);
-    const [editNoteModalVisible, setEditNoteModalVisible] = useState();
+    const [editNoteModalVisible, setEditNoteModalVisible] = useState(false);
 
     const { data } = route.params;
     const { completedDates, days, dataCurrentWeek, name, unitValue, diaryInputs, id } = data;

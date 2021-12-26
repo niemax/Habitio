@@ -1,8 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { getCurrentDayNumber } from '../utils/helpers/dateHelpers';
+import { getCurrentDay } from '../utils/helpers/dateHelpers';
 
 const HabitContext = createContext();
+
 const HabitProvider = ({ children }) => {
     const [habits, setHabits] = useState([]);
 
@@ -13,7 +14,7 @@ const HabitProvider = ({ children }) => {
                 const parsedResult = JSON.parse(result);
 
                 const mappedHabits = parsedResult.map((habit) => {
-                    if (getCurrentDayNumber() > habit.completedDay) {
+                    if (getCurrentDay() > habit.completedDay) {
                         habit.completed = false;
                         habit.progress = 0;
                     }
@@ -44,16 +45,16 @@ const HabitProvider = ({ children }) => {
         }
     };
 
-    const dayNumberNow = getCurrentDayNumber();
+    const dayNumberNow = getCurrentDay();
 
     useEffect(() => {
         getHabits();
-    }, [dayNumberNow]);
+    }, []);
 
     const checkDateForHabitCompletedReset = () => {
         try {
             const checkedHabits = habits.map((habit) => {
-                if (getCurrentDayNumber() > habit.completedDay) {
+                if (getCurrentDay() > habit.completedDay) {
                     habit.completed = false;
                     habit.progress = 0;
                 }

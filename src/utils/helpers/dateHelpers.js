@@ -13,11 +13,6 @@ export const getCurrentDateFormattedForCalendarComponent = (
 
 export const getCurrentWeek = () => getWeek(new Date());
 
-export const getCurrentDayNumber = () => {
-    const date = new Date();
-    return date.getDay();
-};
-
 export const formatDateForInputModal = (date) => {
     const formattedDate = format(new Date(date), 'dd-MM-yyyy');
     return formattedDate;

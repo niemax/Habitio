@@ -31,6 +31,7 @@ const handleDoneToday = (data, habits, habitSetter) => {
             } else {
                 delete completedDatesObj[getCalendarDateString];
                 if (habit.id === id) {
+                    habit.completedDay = null;
                     habit.completed = false;
                     habit.completedDates = completedDatesObj;
                     haptics.warning();

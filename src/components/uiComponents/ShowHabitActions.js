@@ -7,7 +7,6 @@ import {
 import { colors } from '../../utils/colors';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
-import handleDoneToday from '../../utils/helpers/handleDone';
 
 const ShowHabitActions = ({ actions: { displayDeleteAlert }, data }) => {
     const navigation = useNavigation();
@@ -16,7 +15,7 @@ const ShowHabitActions = ({ actions: { displayDeleteAlert }, data }) => {
             <ShowHabitActionsButton
                 onPress={() =>
                     navigation.navigate('CalendarModal', {
-                        data: { ...data },
+                        data: data,
                     })
                 }
             >

@@ -22,8 +22,8 @@ const HomepageData = ({ navigation }) => {
     const { getHabits, habits } = useHabits();
 
     const onRefresh = useCallback(() => {
-        getHabits();
         setRefreshing(true);
+        getHabits();
         wait(200).then(() => setRefreshing(false));
     }, []);
 
@@ -66,10 +66,10 @@ const HomepageData = ({ navigation }) => {
                             <Feather name="arrow-down" size={90} color="white" />
                         </NoHabitsContainer>
                     )}
-                    {habits.map((item, index) => (
+                    {habits.map((item) => (
                         <HomeListItem
                             item={item}
-                            index={index.toString()}
+                            index={item.id}
                             completed={item.completed}
                             completedDay={getCurrentDay()}
                         />
