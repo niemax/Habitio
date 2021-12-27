@@ -21,7 +21,7 @@ export default function CHHeader({
     return (
         <CreateHabitHeader>
             <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Feather name="chevron-left" size={32} color="white" />
+                <Feather name="chevron-left" size={30} color="white" />
             </TouchableOpacity>
             <Text twentyTwo fontFamily="Extra">
                 Create Habit

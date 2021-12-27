@@ -19,7 +19,7 @@ import { useNavigation } from '@react-navigation/core';
 import { useHabits } from '../../context/HabitProvider';
 import DoneCheckBox from './DoneCheckBox';
 
-export default function HomeListItem({ item, completedDay }) {
+export default function HomeListItem({ item }) {
     const [progressModalVisible, setProgressModalVisible] = useState(false);
     const [inputText, setInputText] = useState();
     const [visible, setVisible] = useState(false);
@@ -56,7 +56,7 @@ export default function HomeListItem({ item, completedDay }) {
                 }}
             >
                 <View>
-                    <DoneCheckBox item={item} completedDay={completedDay} />
+                    <DoneCheckBox item={item} />
                 </View>
                 <View style={{ marginLeft: 2 }}>
                     {icon ? (

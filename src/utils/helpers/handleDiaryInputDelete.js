@@ -18,7 +18,6 @@ export const handleDiaryInputEdit = (diaryInputs, id, habitSetter, habits, data,
         return habit;
     });
     habitSetter(newHabits);
-    toasts.note_edit('Note successfully edited.');
 };
 
 export const handleDiaryInputDelete = (id, habits, diaryInputs, data, habitSetter) => {
@@ -30,5 +29,4 @@ export const handleDiaryInputDelete = (id, habits, diaryInputs, data, habitSette
         return habit;
     });
     habitSetter(newHabits);
-    toasts.error('Note', 'deleted');
 };

@@ -67,12 +67,7 @@ const HomepageData = ({ navigation }) => {
                         </NoHabitsContainer>
                     )}
                     {habits.map((item) => (
-                        <HomeListItem
-                            item={item}
-                            index={item.id}
-                            completed={item.completed}
-                            completedDay={getCurrentDay()}
-                        />
+                        <HomeListItem item={item} index={item.id} completed={item.completed} />
                     ))}
                 </HomepageDataView>
             </ScrollView>

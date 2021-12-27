@@ -62,7 +62,7 @@ export const calendarStyles = {
     textDayFontFamily: 'Regular',
     arrowColor: colors.mainGreen,
     textMonthFontFamily: 'Medium',
-    textDayHeaderFontFamily: 'SemiBold',
+    textDayHeaderFontFamily: 'Bold',
     monthTextColor: 'white',
     dayTextColor: 'white',
     todayTextColor: colors.mainGreen,

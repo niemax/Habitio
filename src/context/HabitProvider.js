@@ -17,6 +17,7 @@ const HabitProvider = ({ children }) => {
                     if (getCurrentDay() > habit.completedDay) {
                         habit.completed = false;
                         habit.progress = 0;
+                        habit.completedDay = getCurrentDay();
                     }
                     return habit;
                 });
@@ -45,26 +46,9 @@ const HabitProvider = ({ children }) => {
         }
     };
 
-    const dayNumberNow = getCurrentDay();
-
     useEffect(() => {
         getHabits();
     }, []);
-
-    const checkDateForHabitCompletedReset = () => {
-        try {
-            const checkedHabits = habits.map((habit) => {
-                if (getCurrentDay() > habit.completedDay) {
-                    habit.completed = false;
-                    habit.progress = 0;
-                }
-                return habit;
-            });
-            habitSetter(checkedHabits);
-        } catch (error) {
-            console.error(error);
-        }
-    };
 
     return (
         <HabitContext.Provider
@@ -74,7 +58,6 @@ const HabitProvider = ({ children }) => {
                 getHabits,
                 setHabits,
                 CRUDHabits,
-                checkDateForHabitCompletedReset,
             }}
         >
             {children}

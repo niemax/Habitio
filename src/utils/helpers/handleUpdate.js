@@ -36,7 +36,7 @@ const handleUpdate = async (
     endDate
 ) => {
     const { id } = data;
-    cancelPushNotification(notificationId);
+    if (notificationId !== undefined) cancelPushNotification(notificationId);
 
     scheduleRepeatingNotificationIfTimeIsNotNull(habitReminderTime, habitName, habits, data);
 

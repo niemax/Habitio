@@ -12,17 +12,13 @@ const CalendarStats = ({ completedDates, completionRate }) => (
             <Text color={colors.mainGreen} thirtyFour>
                 {Object.keys(completedDates).length}
             </Text>
-            <Text marginLeft="5px" fifteen marginTop="5px">
-                Completions
-            </Text>
+            <Text marginTop="5px">Completions</Text>
         </CalendarStatsContainer>
         <CalendarStatsContainer>
             <Text color={colors.mainGreen} thirtyFour>
                 {completionRate.toFixed(0)}%
             </Text>
-            <Text marginRight="5px" fifteen marginTop="5px">
-                Current rate
-            </Text>
+            <Text marginTop="5px">Current rate</Text>
         </CalendarStatsContainer>
     </CalendarTimesInfoContainer>
 );

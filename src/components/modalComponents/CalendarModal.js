@@ -4,8 +4,6 @@ import { Calendar } from 'react-native-calendars';
 import { Entypo } from '@expo/vector-icons';
 import {
     CalendarLineBreak,
-    CalendarStatsContainer,
-    CalendarTextContainer,
     HabitHeaderLineBreak,
     ModalContent,
 } from '../../utils/StyledComponents/Styled';
@@ -66,8 +64,8 @@ export default function CalendarModal({ route }) {
                 return habit;
             });
             habitSetter(updatedHabits);
-        } catch (e) {
-            console.error(e);
+        } catch (error) {
+            console.error(error);
         }
         sheetRef.current?.hide();
         setDiaryInput('');
@@ -80,7 +78,7 @@ export default function CalendarModal({ route }) {
             <ScrollView>
                 <Calendar
                     style={{
-                        marginTop: 20,
+                        marginTop: 15,
                         height: 340,
                         width: SCREEN_WIDTH,
                     }}

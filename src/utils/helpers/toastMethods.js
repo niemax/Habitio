@@ -11,7 +11,7 @@ export const toasts = {
             duration: 4500,
             message: randomWord,
             description: `You completed ${habitName}. Keep it up!`,
-            backgroundColor: color, // background color
+            backgroundColor: color,
             titleStyle: {
                 fontFamily: 'Bold',
                 fontSize: 17,
@@ -28,7 +28,7 @@ export const toasts = {
         showMessage({
             duration: 4000,
             message: `${keyword} successfully ${verb}`,
-            backgroundColor: colors.error, // background color
+            backgroundColor: colors.error,
             titleStyle: {
                 fontFamily: 'Medium',
                 fontSize: 16,
@@ -41,7 +41,7 @@ export const toasts = {
         showMessage({
             duration: 4000,
             message: `Note successfully edited.`,
-            backgroundColor: colors.mainGreen, // background color
+            backgroundColor: colors.mainGreen,
             titleStyle: {
                 fontFamily: 'Medium',
                 fontSize: 16,

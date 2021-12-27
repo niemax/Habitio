@@ -43,7 +43,6 @@ const handleHabitCreation = async (
     if (checkIfSpecificDateisEnabled(isEnabledSpecific)) {
         cHScheduleOneTime(habitName, specificDate, newHabit);
     }
-    console.log(newHabit);
     CRUDHabits(newHabit);
     navigation.navigate('Homepage');
 };
