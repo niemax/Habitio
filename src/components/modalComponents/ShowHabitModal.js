@@ -3,7 +3,6 @@ import { Alert, Image, ScrollView, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useHabits } from '../../context/HabitProvider';
 import { showHabitImage, showHabitImageBackground } from '../../utils/globalStyles';
-import { cancelPushNotification } from '../../utils/helpers/notification';
 import { HabitHeaderLineBreak, ModalContent } from '../../utils/StyledComponents/Styled';
 import Text from '../../utils/Text';
 import ShowHabitHeader from '../uiComponents/ShowHabitHeader';
@@ -31,7 +30,7 @@ export default function ShowHabitModal({ route, navigation }) {
     const { habits, habitSetter } = useHabits();
 
     const deleteHabitAndNavigateBack = () => {
-        deleteHabit(notificationId, habits, habitSetter, cancelPushNotification, data);
+        deleteHabit(notificationId, habits, habitSetter, data);
         navigation.goBack();
     };
 

@@ -6,7 +6,6 @@ import {
     CalendarLineBreak,
     CalendarStatsContainer,
     CalendarTextContainer,
-    CalendarTimesInfoContainer,
     HabitHeaderLineBreak,
     ModalContent,
 } from '../../utils/StyledComponents/Styled';
@@ -18,7 +17,12 @@ import CalendarBottomSheet from '../uiComponents/CalendarBottomSheet';
 import CalendarHead from '../uiComponents/CalendarHeader';
 import EditNoteModal from './EditNoteModal';
 import checkCurrentWeek from '../../utils/helpers/checkWeek';
-import { formatDateForInputModal } from '../../utils/helpers/dateHelpers';
+import {
+    formatDateForInputModal,
+    getCurrentDateFormattedForCalendarComponent,
+} from '../../utils/helpers/dateHelpers';
+import CalendarFrequency from '../uiComponents/CalendarFrequency';
+import CalendarStats from '../uiComponents/CalendarStats';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -29,7 +33,7 @@ export default function CalendarModal({ route }) {
     const [editNoteModalVisible, setEditNoteModalVisible] = useState(false);
 
     const { data } = route.params;
-    const { completedDates, days, dataCurrentWeek, name, unitValue, diaryInputs, id } = data;
+    const { completedDates, days, dataCurrentWeek, name, times, unitValue, diaryInputs, id } = data;
     const { habits, habitSetter } = useHabits();
     const sheetRef = useRef(null);
 
@@ -82,38 +86,14 @@ export default function CalendarModal({ route }) {
                     }}
                     theme={calendarStyles}
                     firstDay={1}
+                    hideExtraDays={true}
+                    maxDate={getCurrentDateFormattedForCalendarComponent()}
                     markedDates={completedDates}
                     onDayPress={(day) => calendarDayPress(day)}
                 />
-                <CalendarTimesInfoContainer>
-                    {data.days === 7 ? (
-                        <Text>Every day</Text>
-                    ) : (
-                        <Text>{data.days} days per week</Text>
-                    )}
-                    <Text marginRight="5px">
-                        {data.times} {unitValue} per day
-                    </Text>
-                </CalendarTimesInfoContainer>
+                <CalendarFrequency days={days} times={times} unitValue={unitValue} />
                 <CalendarLineBreak />
-                <CalendarTextContainer>
-                    <CalendarStatsContainer>
-                        <Text color={colors.mainGreen} thirtyFour>
-                            {Object.keys(completedDates).length}
-                        </Text>
-                        <Text marginLeft="5px" fifteen marginTop="5px">
-                            Completions
-                        </Text>
-                    </CalendarStatsContainer>
-                    <CalendarStatsContainer>
-                        <Text color={colors.mainGreen} thirtyFour>
-                            {completionRate.toFixed(0)}%
-                        </Text>
-                        <Text marginRight="5px" fifteen marginTop="5px">
-                            Weekly rate
-                        </Text>
-                    </CalendarStatsContainer>
-                </CalendarTextContainer>
+                <CalendarStats completedDates={completedDates} completionRate={completionRate} />
                 <CalendarLineBreak />
                 <Text left marginLeft="17px" marginTop="10px" marginBottom="15px">
                     Notes

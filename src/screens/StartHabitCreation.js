@@ -13,7 +13,6 @@ import {
 import Text from '../utils/Text';
 import data from '../categories';
 import { colors } from '../utils/colors';
-import { homepageBoxShadow } from '../utils/globalStyles';
 
 export default function StartHabitCreation({ navigation }) {
     const [habitName, setHabitName] = useState('');
@@ -69,7 +68,7 @@ export default function StartHabitCreation({ navigation }) {
                     <Text left fontFamily="Regular" marginLeft="25px" marginTop="50px">
                         Or choose from existing Habits
                     </Text>
-                    <PreDefinedContainer style={homepageBoxShadow}>
+                    <PreDefinedContainer>
                         {data.map(({ name, image, mainIcon, habits }, index) => (
                             <TouchableOpacity
                                 key={index.toString()}

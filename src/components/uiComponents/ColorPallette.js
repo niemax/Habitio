@@ -12,8 +12,7 @@ export default function ColorPalletteModal({ sheetRef, updateColor }) {
                     <View key={index.toString()}>
                         <TouchableOpacity
                             onPress={() => {
-                                console.log(item);
-                                sheetRef.current.hide();
+                                sheetRef.current?.hide();
                                 updateColor(item);
                             }}
                             style={{

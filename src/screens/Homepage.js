@@ -35,7 +35,7 @@ const HomepageData = ({ navigation }) => {
             <ScrollView
                 refreshControl={
                     <RefreshControl
-                        title="Pull to refresh"
+                        title="Release to refresh"
                         tintColor={colors.mainGreen}
                         titleColor={colors.mainGreen}
                         refreshing={refreshing}

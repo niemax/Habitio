@@ -22,6 +22,7 @@ export default function CreateHabit({ route }) {
     const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
     const [isEnabledEndDate, setIsEnabledEndDate] = useState(false);
     const [selectedValue, setSelectedValue] = useState();
+
     const toggleSwitch = () =>
         !isEnabledSpecific && setIsEnabled((previousState) => !previousState);
     const toggleSwitchDate = () =>

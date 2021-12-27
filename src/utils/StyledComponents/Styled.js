@@ -207,7 +207,7 @@ export const DiaryInput = styled.TextInput`
 
 export const HabitUtilityInfoContainer = styled.View`
     background-color: ${colors.mainBoxes};
-    border-radius: ${radius};
+    border-radius: 8px;
     margin-top: 25px;
     justify-content: center;
     padding-horizontal: 10px;
@@ -307,7 +307,6 @@ export const CalendarTimesInfoContainer = styled.View`
     justify-content: space-between;
     padding-horizontal: 15px;
     margin-bottom: 20px;
-    margin-top: 20px;
 `;
 
 export const CalendarTextContainer = styled.View`
@@ -322,12 +321,11 @@ export const CalendarStatsContainer = styled.View`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 15px;
+    margin-top: 15px;
 `;
 
 export const CalendarLineBreak = styled.View`
-    height: 0.4px;
-    width: 100%;
+    height: 0.3px;
     background-color: gray;
 `;
 
@@ -456,10 +454,10 @@ export const HabitHeaderLineBreak = styled.View`
 `;
 
 export const AddProgressPreDefinedButton = styled.TouchableOpacity`
-    background-color: ${colors.mainGreen};
+    background-color: #eaeaea;
     height: 30px;
-    width: 60px;
-    border-radius: 10px;
+    width: 55px;
+    border-radius: 5px;
     justify-content: center;
     align-items: center;
 `;

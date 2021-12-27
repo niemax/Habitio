@@ -30,9 +30,9 @@ const HabitScreen = ({ route, navigation }) => {
                     source={image}
                 />
             </ImageContainer>
-            {habitData.map(({ habitIcon, name, data, description, color }, index) => (
+            {habitData.map(({ habitIcon, name, data, description, color }) => (
                 <TouchableOpacity
-                    key={index.toString()}
+                    key={name}
                     onPress={() =>
                         navigation.push('CreateHabit', {
                             habitIcon: habitIcon,

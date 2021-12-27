@@ -6,6 +6,7 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 export default function DoneCheckBox({ item }) {
     const { habitSetter, habits } = useHabits();
     const { color, completed } = item;
+    const data = item;
 
     return (
         <BouncyCheckbox
@@ -15,7 +16,7 @@ export default function DoneCheckBox({ item }) {
             iconStyle={{ borderColor: '#404040', borderRadius: 10 }}
             bounceFriction={2}
             isChecked={completed}
-            onPress={() => handleDoneToday(item, habits, habitSetter)}
+            onPress={() => handleDoneToday(data, habits, habitSetter)}
         />
     );
 }

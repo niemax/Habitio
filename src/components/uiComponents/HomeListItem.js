@@ -134,13 +134,19 @@ export default function HomeListItem({ item, completedDay }) {
                         }}
                     >
                         <AddProgressPreDefinedButton onPress={() => handleHabitProgress(1)}>
-                            <TextStyle>+1</TextStyle>
+                            <TextStyle twentyTwo color={colors.mainGreen}>
+                                +1
+                            </TextStyle>
                         </AddProgressPreDefinedButton>
                         <AddProgressPreDefinedButton onPress={() => handleHabitProgress(2)}>
-                            <TextStyle>+2</TextStyle>
+                            <TextStyle twentyTwo color={colors.mainGreen}>
+                                +2
+                            </TextStyle>
                         </AddProgressPreDefinedButton>
                         <AddProgressPreDefinedButton onPress={() => handleHabitProgress(4)}>
-                            <TextStyle>+4</TextStyle>
+                            <TextStyle twentyTwo color={colors.mainGreen}>
+                                +4
+                            </TextStyle>
                         </AddProgressPreDefinedButton>
                     </View>
                     <Dialog.Button bold label="-" onPress={() => handleHabitProgress('-')} />
