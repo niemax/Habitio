@@ -36,34 +36,34 @@ export default function StartHabitCreation({ navigation }) {
             >
                 <Ionicons name="close-circle-sharp" size={34} color="gray" />
             </TouchableOpacity>
-            <Text left marginLeft="25px" thirtyFour fontFamily="Extra" marginTop="20px">
-                Add a habit
-            </Text>
-            <Text left fontFamily="Regular" marginLeft="25px" marginTop="25px">
-                Create your own Habit
-            </Text>
-            <InputContainer>
-                <HabitInput
-                    keyboardAppearance="dark"
-                    clearButtonMode="always"
-                    placeholder="Habit name"
-                    placeholderTextColor="gray"
-                    style={{
-                        color: 'white',
-                        fontSize: 18,
-                        fontFamily: 'Bold',
-                    }}
-                    onChangeText={(text) => {
-                        setError('');
-                        setHabitName(text);
-                    }}
-                />
-            </InputContainer>
-
-            <Text left marginLeft="25px" marginTop="10px" color={colors.error}>
-                {error}
-            </Text>
             <ScrollView>
+                <Text left marginLeft="25px" thirtyFour fontFamily="Extra" marginTop="20px">
+                    Add a habit
+                </Text>
+                <Text left fontFamily="Regular" marginLeft="25px" marginTop="25px">
+                    Create your own Habit
+                </Text>
+                <InputContainer>
+                    <HabitInput
+                        keyboardAppearance="dark"
+                        clearButtonMode="always"
+                        placeholder="Habit name"
+                        placeholderTextColor="gray"
+                        style={{
+                            color: 'white',
+                            fontSize: 18,
+                            fontFamily: 'Bold',
+                        }}
+                        onChangeText={(text) => {
+                            setError('');
+                            setHabitName(text);
+                        }}
+                    />
+                </InputContainer>
+
+                <Text left marginLeft="25px" marginTop="10px" color={colors.error}>
+                    {error}
+                </Text>
                 <View style={{ marginBottom: 60 }}>
                     <Text left fontFamily="Regular" marginLeft="25px" marginTop="50px">
                         Or choose from existing Habits

@@ -18,7 +18,9 @@ const CalendarStats = ({ completedDates, completionRate }) => (
             <Text color={colors.mainGreen} thirtyFour>
                 {completionRate.toFixed(0)}%
             </Text>
-            <Text marginTop="5px">Current rate</Text>
+            <Text marginTop="5px" sixteen>
+                Current rate
+            </Text>
         </CalendarStatsContainer>
     </CalendarTimesInfoContainer>
 );

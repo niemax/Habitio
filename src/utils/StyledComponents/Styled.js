@@ -12,7 +12,7 @@ export const SplashContainer = styled.View`
     flex: 1;
     justify-content: center;
     align-items: center;
-    background-color: ${colors.mainBackground};
+    background-color: ;
 `;
 
 export const MainContainer = styled.View`
@@ -152,7 +152,7 @@ export const ImageContainer = styled.View`
     justify-content: space-between;
     flex-direction: row;
     align-items: center
-    background-color: #141414;
+    background-color: #191919;
 `;
 
 export const ChevronTextContainer = styled.View`
@@ -305,7 +305,7 @@ export const ShowHabitActionsAddButton = styled.TouchableOpacity`
 export const CalendarTimesInfoContainer = styled.View`
     flex-direction: row;
     justify-content: space-between;
-    padding-horizontal: 15px;
+    padding-horizontal: 18px;
     margin-bottom: 20px;
 `;
 
@@ -313,7 +313,6 @@ export const CalendarTextContainer = styled.View`
     flex-direction: row;
     justify-content: space-between
     margin-top: 15px;
-    padding-horizontal: 13px;
     margin-bottom: 5px;
 `;
 
@@ -321,7 +320,7 @@ export const CalendarStatsContainer = styled.View`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 15px;
+    margin-top: 10px;
 `;
 
 export const CalendarLineBreak = styled.View`

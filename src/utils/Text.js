@@ -19,7 +19,7 @@ const Text = styled.Text`
     marginBottom: ${(props) => props.marginBottom ?? 0};
     /* prettier-ignore */
     fontFamily: ${(props) => props.fontFamily ?? 'SemiBold'};
-    color: ${(props) => props.color ?? '#FFF'};
+    color: ${(props) => props.color ?? 'white'};
     /* prettier-ignore */
     textDecorationLine: ${(props) => props.textDecorationLine ?? 'none'}
         ${({

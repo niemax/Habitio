@@ -1,6 +1,6 @@
 export const colors = {
-    mainBackground: '#282828',
-    mainBoxes: '#303030',
+    mainBackground: '#1B1F21',
+    mainBoxes: '#1E2529',
     mainGreen: '#2EB284',
     error: '#EA5B71',
 };

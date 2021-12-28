@@ -1,26 +1,21 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Dimensions, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Dimensions, ScrollView } from 'react-native';
 import { Calendar } from 'react-native-calendars';
-import { Entypo } from '@expo/vector-icons';
 import {
     CalendarLineBreak,
     HabitHeaderLineBreak,
     ModalContent,
 } from '../../utils/StyledComponents/Styled';
 import Text from '../../utils/Text';
-import { colors } from '../../utils/colors';
 import { calendarStyles } from '../../utils/globalStyles';
 import { useHabits } from '../../context/HabitProvider';
 import CalendarBottomSheet from '../uiComponents/CalendarBottomSheet';
 import CalendarHead from '../uiComponents/CalendarHeader';
-import EditNoteModal from './EditNoteModal';
 import checkCurrentWeek from '../../utils/helpers/checkWeek';
-import {
-    formatDateForInputModal,
-    getCurrentDateFormattedForCalendarComponent,
-} from '../../utils/helpers/dateHelpers';
+import { getCurrentDateFormattedForCalendarComponent } from '../../utils/helpers/dateHelpers';
 import CalendarFrequency from '../uiComponents/CalendarFrequency';
 import CalendarStats from '../uiComponents/CalendarStats';
+import Notes from '../uiComponents/Notes';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -96,48 +91,12 @@ export default function CalendarModal({ route }) {
                 <Text left marginLeft="17px" marginTop="10px" marginBottom="15px">
                     Notes
                 </Text>
-                {Object.values(diaryInputs).length === 0 && (
-                    <View
-                        style={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Text sixteen fontFamily="MediumItalic" color="gray">
-                            No notes added yet. Tap on a date to add a note.
-                        </Text>
-                        <Entypo
-                            name="pencil"
-                            size={62}
-                            color={colors.mainGreen}
-                            style={{ marginTop: 30 }}
-                        />
-                    </View>
-                )}
-                {Object.values(diaryInputs)?.map(({ date, input, id }, index) => (
-                    <View key={id}>
-                        <TouchableOpacity onPress={() => setEditNoteModalVisible(index)}>
-                            <Text
-                                marginBottom="15px"
-                                marginLeft="15px"
-                                left
-                                fifteen
-                                fontFamily="Regular"
-                            >
-                                {formatDateForInputModal(date)} - {input}
-                            </Text>
-                        </TouchableOpacity>
-                        <EditNoteModal
-                            editNoteModalVisible={editNoteModalVisible === index}
-                            setEditNoteModalVisible={setEditNoteModalVisible}
-                            date={date}
-                            id={id}
-                            currentInput={input}
-                            diaryInputs={diaryInputs}
-                            data={data}
-                        />
-                    </View>
-                ))}
+                <Notes
+                    notes={diaryInputs}
+                    editNoteModalVisible={editNoteModalVisible}
+                    setEditNoteModalVisible={setEditNoteModalVisible}
+                    data={data}
+                />
                 <CalendarBottomSheet
                     data={data}
                     diaryInput={diaryInput}
