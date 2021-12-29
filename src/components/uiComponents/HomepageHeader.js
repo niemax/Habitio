@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/core';
 import Text from '../../utils/Text';
-import { TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
 import { colors } from '../../utils/colors';
 import { Feather } from '@expo/vector-icons';
 import { HomeheaderContainer, HomepageTextContainer } from '../../utils/StyledComponents/Styled';
 import { getCurrentDateFormatted } from '../../utils/helpers/dateHelpers';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-export const HomepageHeader = ({ name }) => {
+export const HomepageHeader = ({ name, loading }) => {
     const [currentDate, setCurrentDate] = useState();
     const navigation = useNavigation();
 
@@ -27,7 +28,18 @@ export const HomepageHeader = ({ name }) => {
                         </Text>
                     ) : (
                         <Text twentyEight fontFamily="Extra" color={colors.mainGreen}>
-                            Stranger
+                            {!loading ? (
+                                <SkeletonPlaceholder.Item
+                                    highlightColor="#F2F8FC"
+                                    backgroundColor="gray"
+                                    speed={1000}
+                                    width={60}
+                                    height={30}
+                                    borderRadius={6}
+                                />
+                            ) : (
+                                'Stranger'
+                            )}
                         </Text>
                     )}
                 </Text>

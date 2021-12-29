@@ -13,7 +13,7 @@ export const NameAlert = ({ namePromptVisible, setNamePromptVisible, setName }) 
 
     return (
         <Dialog.Container visible={namePromptVisible}>
-            <Dialog.Title>Hello, welcome to Habitio. 🥳 What should I call you?</Dialog.Title>
+            <Dialog.Title>Hello, welcome to Habitio 🥳 What should I call you?</Dialog.Title>
             <Dialog.Input
                 autoFocus={true}
                 placeholder="Your Name"

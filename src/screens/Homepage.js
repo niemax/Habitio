@@ -22,6 +22,7 @@ const HomepageData = ({ navigation }) => {
     const [refreshing, setRefreshing] = useState(false);
     const [namePromptVisible, setNamePromptVisible] = useState(false);
     const [name, setName] = useState('');
+    const [loading, setLoading] = useState(false);
     const { habits } = useHabits();
 
     const onRefresh = useCallback(() => {
@@ -30,6 +31,7 @@ const HomepageData = ({ navigation }) => {
     }, []);
 
     const tryToFetchName = async () => {
+        setLoading(true);
         try {
             const result = await AsyncStorage.getItem('@name');
             if (result !== null) {
@@ -40,6 +42,7 @@ const HomepageData = ({ navigation }) => {
         } catch (error) {
             console.error(error);
         }
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -53,7 +56,7 @@ const HomepageData = ({ navigation }) => {
 
     return (
         <MainContainer>
-            <HomepageHeader name={name} />
+            <HomepageHeader name={name} loading={loading} />
             <NameAlert
                 namePromptVisible={namePromptVisible}
                 setNamePromptVisible={setNamePromptVisible}
