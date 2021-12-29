@@ -20,7 +20,7 @@ import Notes from '../uiComponents/Notes';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function CalendarModal({ route }) {
-    const [diaryInput, setDiaryInput] = useState('');
+    const [noteInput, setNoteInput] = useState('');
     const [selectedDay, setSelectedDay] = useState(new Date());
     const [completionRate, setCompletionRate] = useState(0);
     const [editNoteModalVisible, setEditNoteModalVisible] = useState(false);
@@ -45,16 +45,16 @@ export default function CalendarModal({ route }) {
         setSelectedDay(day.dateString);
     };
 
-    const handleDiaryInput = () => {
-        const diaryInputObj = {
+    const handleNoteInput = () => {
+        const noteInputObj = {
             date: selectedDay,
-            input: diaryInput,
+            input: noteInput,
             id: Math.floor(Math.random() * 10000),
         };
         try {
             const updatedHabits = habits.map((habit) => {
                 if (habit.id === id) {
-                    habit.diaryInputs.push(diaryInputObj);
+                    habit.diaryInputs.push(noteInputObj);
                 }
                 return habit;
             });
@@ -63,7 +63,7 @@ export default function CalendarModal({ route }) {
             console.error(error);
         }
         sheetRef.current?.hide();
-        setDiaryInput('');
+        setNoteInput('');
     };
 
     return (
@@ -88,7 +88,7 @@ export default function CalendarModal({ route }) {
                 <CalendarLineBreak />
                 <CalendarStats completedDates={completedDates} completionRate={completionRate} />
                 <CalendarLineBreak />
-                <Text left marginLeft="17px" marginTop="10px" marginBottom="15px">
+                <Text sixteen left marginLeft="17px" marginTop="10px" marginBottom="15px">
                     Notes
                 </Text>
                 <Notes
@@ -99,12 +99,12 @@ export default function CalendarModal({ route }) {
                 />
                 <CalendarBottomSheet
                     data={data}
-                    diaryInput={diaryInput}
+                    noteInput={noteInput}
                     sheetRef={sheetRef}
                     selectedDay={selectedDay}
                     name={name}
-                    setDiaryInput={setDiaryInput}
-                    handleDiaryInput={handleDiaryInput}
+                    setNoteInput={setNoteInput}
+                    handleNoteInput={handleNoteInput}
                 />
             </ScrollView>
         </ModalContent>

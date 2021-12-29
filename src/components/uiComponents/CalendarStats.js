@@ -12,7 +12,9 @@ const CalendarStats = ({ completedDates, completionRate }) => (
             <Text color={colors.mainGreen} thirtyFour>
                 {Object.keys(completedDates).length}
             </Text>
-            <Text marginTop="5px">Completions</Text>
+            <Text marginTop="5px" sixteen>
+                Completions
+            </Text>
         </CalendarStatsContainer>
         <CalendarStatsContainer>
             <Text color={colors.mainGreen} thirtyFour>

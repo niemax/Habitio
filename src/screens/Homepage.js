@@ -13,7 +13,6 @@ import Text from '../utils/Text';
 import { noHabitsImageStyle } from '../utils/globalStyles';
 import HomeListItem from '../components/uiComponents/HomeListItem';
 import HomepageHeader from '../components/uiComponents/HomepageHeader';
-import { getCurrentDay } from '../utils/helpers/dateHelpers';
 
 const wait = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
 
@@ -23,7 +22,6 @@ const HomepageData = ({ navigation }) => {
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
-        getHabits();
         wait(200).then(() => setRefreshing(false));
     }, []);
 

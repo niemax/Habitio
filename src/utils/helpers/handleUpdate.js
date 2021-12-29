@@ -35,7 +35,6 @@ const handleUpdate = async (
     habitSpecificDate,
     endDate
 ) => {
-    const { id } = data;
     if (notificationId !== undefined) cancelPushNotification(notificationId);
 
     scheduleRepeatingNotificationIfTimeIsNotNull(habitReminderTime, habitName, habits, data);
@@ -43,7 +42,7 @@ const handleUpdate = async (
     if (habitSpecificDate !== null) scheduleOneTimeEdit(habitSpecificDate, habitName, habits, data);
 
     const newHabits = habits.map((habit) => {
-        if (habit.id === id) {
+        if (habit.id === data.id) {
             habit.name = habitName;
             habit.unitValue = unitValue;
             habit.color = color;

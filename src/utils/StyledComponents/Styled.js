@@ -324,8 +324,10 @@ export const CalendarStatsContainer = styled.View`
 `;
 
 export const CalendarLineBreak = styled.View`
-    height: 0.3px;
-    background-color: gray;
+    height: 1px;
+    background-color: #494949;
+    opacity: 0.3;
+    width: 100%;
 `;
 
 export const VerticalLineBreak = styled.View`

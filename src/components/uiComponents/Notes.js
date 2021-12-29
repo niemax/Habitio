@@ -32,7 +32,6 @@ const Notes = ({ notes, editNoteModalVisible, setEditNoteModalVisible, data }) =
                     <Text fontFamily="Extra" left marginLeft="15px" marginBottom="3px">
                         {formatDateForInputModal(date)}
                     </Text>
-
                     <Text marginBottom="15px" marginLeft="15px" left fifteen fontFamily="Regular">
                         {input}
                     </Text>
