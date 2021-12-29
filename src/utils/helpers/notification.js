@@ -34,35 +34,15 @@ export const scheduleOneTimeWeekNotification = async (currentDay) => {
             await Notifications.scheduleNotificationAsync({
                 content: {
                     title: 'Habitio',
-                    body: `Great start to your week! Keep it up for the rest of the week.`,
+                    body: `New week, new fresh start! Get in champ! 💪`,
                 },
                 trigger: {
-                    seconds: 20 * 60,
+                    seconds: 10,
+                    repeats: true,
                 },
             });
             break;
-        case 3:
-            await Notifications.scheduleNotificationAsync({
-                content: {
-                    title: 'Habitio',
-                    body: `It's the middle of the week. Keep doing what you're doing, you can do it!`,
-                },
-                trigger: {
-                    seconds: 20 * 60 * 60,
-                },
-            });
-            break;
-        case 0:
-            await Notifications.scheduleNotificationAsync({
-                content: {
-                    title: 'Habitio',
-                    body: `Sundays are chill. Be chill yourself too!`,
-                },
-                trigger: {
-                    seconds: 20 * 60,
-                },
-            });
-            break;
+
         default:
     }
 };

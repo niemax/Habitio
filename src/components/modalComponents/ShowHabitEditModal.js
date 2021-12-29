@@ -1,5 +1,5 @@
-import { useNavigation } from '@react-navigation/core';
 import React, { useState, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/core';
 import HabitEditContent from '../../components/modalContentComponents/HabitEdit';
 import { useHabits } from '../../context/HabitProvider';
 import handleUpdate from '../../utils/helpers/handleUpdate';
@@ -20,6 +20,7 @@ export default function ShowHabitEditModal({ route }) {
     const [isEnabledDate, setIsEnabledDate] = useState(false);
     const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
     const [isEnabledEndDate, setIsEnabledEndDate] = useState(false);
+
     const toggleSwitch = () =>
         !isEnabledSpecific && setIsEnabled((previousState) => !previousState);
     const toggleSwitchDate = () =>
@@ -28,6 +29,7 @@ export default function ShowHabitEditModal({ route }) {
         !isEnabledDate && !isEnabled && setIsEnabledSpecific((previousState) => !previousState);
     const toggleSwitchEndDate = () => setIsEnabledEndDate((previousState) => !previousState);
     const navigation = useNavigation();
+
     const { data } = route.params;
     const {
         notificationId,

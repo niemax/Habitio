@@ -49,7 +49,7 @@ export default function CalendarModal({ route }) {
         const noteInputObj = {
             date: selectedDay,
             input: noteInput,
-            id: Math.floor(Math.random() * 10000),
+            id: Math.floor(Math.random() * 100000),
         };
         try {
             const updatedHabits = habits.map((habit) => {

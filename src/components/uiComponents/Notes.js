@@ -29,7 +29,13 @@ const Notes = ({ notes, editNoteModalVisible, setEditNoteModalVisible, data }) =
         {Object.values(notes).map(({ date, input, id }, index) => (
             <View key={id}>
                 <TouchableOpacity onPress={() => setEditNoteModalVisible(index)}>
-                    <Text fontFamily="Extra" left marginLeft="15px" marginBottom="3px">
+                    <Text
+                        fontFamily="Bold"
+                        color={colors.mainGreen}
+                        left
+                        marginLeft="15px"
+                        marginBottom="3px"
+                    >
                         {formatDateForInputModal(date)}
                     </Text>
                     <Text marginBottom="15px" marginLeft="15px" left fifteen fontFamily="Regular">

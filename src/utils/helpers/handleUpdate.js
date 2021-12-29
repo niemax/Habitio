@@ -37,10 +37,6 @@ const handleUpdate = async (
 ) => {
     if (notificationId !== undefined) cancelPushNotification(notificationId);
 
-    scheduleRepeatingNotificationIfTimeIsNotNull(habitReminderTime, habitName, habits, data);
-
-    if (habitSpecificDate !== null) scheduleOneTimeEdit(habitSpecificDate, habitName, habits, data);
-
     const newHabits = habits.map((habit) => {
         if (habit.id === data.id) {
             habit.name = habitName;
@@ -55,6 +51,10 @@ const handleUpdate = async (
         }
         return habit;
     });
+
+    scheduleRepeatingNotificationIfTimeIsNotNull(habitReminderTime, habitName, habits, data);
+
+    if (habitSpecificDate !== null) scheduleOneTimeEdit(habitSpecificDate, habitName, habits, data);
 
     habitSetter(newHabits);
 };

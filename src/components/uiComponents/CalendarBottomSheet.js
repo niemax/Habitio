@@ -22,7 +22,7 @@ export default function CalendarBottomSheet({
                 containerStyle={{
                     backgroundColor: colors.mainBackground,
                     height: 520,
-                    borderRadius: 30,
+                    borderRadius: 10,
                 }}
                 defaultOverlayOpacity={0.3}
                 gestureEnabled="true"

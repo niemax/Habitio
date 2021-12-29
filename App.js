@@ -11,6 +11,8 @@ import * as Font from 'expo-font';
 import * as Notifications from 'expo-notifications';
 import HabitProvider from './src/context/HabitProvider';
 import Main from './src/navigation/MainAppNav';
+import { scheduleOneTimeWeekNotification } from './src/utils/helpers/notification';
+import { getCurrentDay } from './src/utils/helpers/dateHelpers';
 
 export default function App() {
     const [, , setExpoPushToken] = useState('');
@@ -30,6 +32,12 @@ export default function App() {
         });
         setFontsLoaded(true);
     }
+
+    const currentDay = getCurrentDay();
+
+    useEffect(() => {
+        scheduleOneTimeWeekNotification(currentDay);
+    }, []);
 
     useEffect(() => {
         loadFonts();

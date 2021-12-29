@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Image, RefreshControl, ScrollView } from 'react-native';
 import { colors } from '../utils/colors';
 import { Feather } from '@expo/vector-icons';
@@ -13,23 +13,52 @@ import Text from '../utils/Text';
 import { noHabitsImageStyle } from '../utils/globalStyles';
 import HomeListItem from '../components/uiComponents/HomeListItem';
 import HomepageHeader from '../components/uiComponents/HomepageHeader';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import NameAlert from '../components/uiComponents/nameAlert';
 
 const wait = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
 
 const HomepageData = ({ navigation }) => {
     const [refreshing, setRefreshing] = useState(false);
-    const { getHabits, habits } = useHabits();
+    const [namePromptVisible, setNamePromptVisible] = useState(false);
+    const [name, setName] = useState('');
+    const { habits } = useHabits();
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
         wait(200).then(() => setRefreshing(false));
     }, []);
 
+    const tryToFetchName = async () => {
+        try {
+            const result = await AsyncStorage.getItem('@name');
+            if (result !== null) {
+                setName(result);
+            } else {
+                setNamePromptVisible(true);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            tryToFetchName();
+        }, 1000);
+        return () => clearTimeout(timeout);
+    }, []);
+
     const HABITS_LENGTH = Object.keys(habits).length;
 
     return (
         <MainContainer>
-            <HomepageHeader />
+            <HomepageHeader name={name} />
+            <NameAlert
+                namePromptVisible={namePromptVisible}
+                setNamePromptVisible={setNamePromptVisible}
+                setName={setName}
+            />
             <ScrollView
                 refreshControl={
                     <RefreshControl

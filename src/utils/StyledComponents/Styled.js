@@ -6,7 +6,7 @@ const deviceWidth = Dimensions.get('window').width;
 
 const { mainBackground, mainGreen } = colors;
 
-const radius = '15px';
+const radius = '10px';
 
 export const SplashContainer = styled.View`
     flex: 1;
@@ -455,7 +455,6 @@ export const HabitHeaderLineBreak = styled.View`
 `;
 
 export const AddProgressPreDefinedButton = styled.TouchableOpacity`
-    background-color: #eaeaea;
     height: 30px;
     width: 55px;
     border-radius: 5px;
