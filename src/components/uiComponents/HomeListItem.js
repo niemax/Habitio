@@ -134,17 +134,17 @@ export default function HomeListItem({ item }) {
                         }}
                     >
                         <AddProgressPreDefinedButton onPress={() => handleHabitProgress(1)}>
-                            <TextStyle fontFamily="Regular" twentyEight>
+                            <TextStyle fontFamily="Medium" twentyTwo>
                                 +1
                             </TextStyle>
                         </AddProgressPreDefinedButton>
                         <AddProgressPreDefinedButton onPress={() => handleHabitProgress(2)}>
-                            <TextStyle fontFamily="Regular" twentyEight>
+                            <TextStyle fontFamily="Medium" twentyTwo>
                                 +2
                             </TextStyle>
                         </AddProgressPreDefinedButton>
                         <AddProgressPreDefinedButton onPress={() => handleHabitProgress(4)}>
-                            <TextStyle fontFamily="Regular" twentyEight>
+                            <TextStyle fontFamily="Medium" twentyTwo>
                                 +4
                             </TextStyle>
                         </AddProgressPreDefinedButton>

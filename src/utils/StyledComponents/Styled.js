@@ -6,14 +6,7 @@ const deviceWidth = Dimensions.get('window').width;
 
 const { mainBackground, mainGreen } = colors;
 
-const radius = '10px';
-
-export const SplashContainer = styled.View`
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    background-color: ;
-`;
+const radius = '8px';
 
 export const MainContainer = styled.View`
     background-color: ${mainBackground};
@@ -125,9 +118,7 @@ export const HabitNextButton = styled.TouchableOpacity`
 `;
 
 export const PreDefinedContainer = styled.View`
-    justify-content: center;
     align-items: center;
-    margin-bottom: 50px;
 `;
 
 export const PreDefinedHabitsContainer = styled.View`
@@ -135,7 +126,7 @@ export const PreDefinedHabitsContainer = styled.View`
     width: ${deviceWidth - 20}px
     height: 80px;
     border-radius: ${radius};
-    margin-top: 16px;
+    margin-top: 10px;
     flex-direction: row;
     align-items: center;
 `;
@@ -165,7 +156,7 @@ export const HabitCardsContainer = styled.View`
     width: ${deviceWidth - 20}px;
     height: 80px;
     border-radius: ${radius};
-    margin-top: 20px;
+    margin-top: 10px;
     flex-direction: row;
     align-items: center;
 `;
@@ -227,7 +218,7 @@ export const SelectHabitColorButton = styled.TouchableOpacity`
 export const FrequencyTouchable = styled.View`
     height: 60px;
     background-color: ${colors.mainBackground};
-    border-radius: 15px;
+    border-radius: ${radius};
     padding: 15px;
     margin-top: 10px;
     flex-direction: row;
@@ -284,7 +275,7 @@ export const ShowHabitActionsButton = styled.TouchableOpacity`
     height: 60px;
     background-color: ${colors.mainBoxes};
     justify-content: center;
-    border-radius: 15px;
+    border-radius: ${radius}
     padding: 15px;
     margin-top: 10px;
 `;

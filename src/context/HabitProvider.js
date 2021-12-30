@@ -14,7 +14,15 @@ const HabitProvider = ({ children }) => {
             const result = await AsyncStorage.getItem('@habit');
             if (result !== null) {
                 const parsedResult = JSON.parse(result);
-                setHabits(parsedResult);
+                const mappedHabits = parsedResult.map((habit) => {
+                    if (currentDay > habit.completedDay) {
+                        habit.completed = false;
+                        habit.progress = 0;
+                        habit.completedDay = currentDay;
+                    }
+                    return habit;
+                });
+                setHabits(mappedHabits);
             }
         } catch (error) {
             console.error(error);
@@ -39,24 +47,8 @@ const HabitProvider = ({ children }) => {
         }
     };
 
-    const checkDayForHabitReset = () => {
-        const mappedHabits = habits.map((habit) => {
-            if (getCurrentDay() > habit.completedDay) {
-                habit.completed = false;
-                habit.progress = 0;
-                habit.completedDay = currentDay;
-            }
-            return habit;
-        });
-        setHabits(mappedHabits);
-    };
-
     useEffect(() => {
         getHabits();
-    }, []);
-
-    useEffect(() => {
-        checkDayForHabitReset();
     }, [currentDay]);
 
     return (

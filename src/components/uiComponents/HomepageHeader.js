@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/core';
 import Text from '../../utils/Text';
-import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
+import { getHours } from 'date-fns';
+import { ActivityIndicator, TouchableOpacity } from 'react-native';
 import { colors } from '../../utils/colors';
 import { Feather } from '@expo/vector-icons';
 import { HomeheaderContainer, HomepageTextContainer } from '../../utils/StyledComponents/Styled';
@@ -17,13 +18,44 @@ export const HomepageHeader = ({ name, loading }) => {
         setCurrentDate(date);
     }, []);
 
+    const hourNow = getHours(new Date());
+
+    const renderAppropriateGreeting = () => {
+        let greetingText;
+
+        if (hourNow >= 0 && hourNow < 12) {
+            greetingText = (
+                <Text left twentyEight fontFamily="Bold">
+                    Morning
+                </Text>
+            );
+        } else if (hourNow >= 12 && hourNow < 15) {
+            greetingText = (
+                <Text left twentyEight fontFamily="Bold">
+                    Afternoon
+                </Text>
+            );
+        } else {
+            greetingText = (
+                <Text left twentyEight fontFamily="Bold">
+                    Evening
+                </Text>
+            );
+        }
+        return greetingText;
+    };
+
+    useEffect(() => {
+        renderAppropriateGreeting();
+    }, [hourNow]);
+
     return (
         <HomeheaderContainer>
             <HomepageTextContainer>
-                <Text left twentyEight fontFamily="Bold" marginLeft="15px">
-                    Hello,{' '}
+                <Text marginLeft="15px">
+                    {renderAppropriateGreeting()},{' '}
                     {name ? (
-                        <Text color={colors.mainGreen} left twentyEight fontFamily="Extra">
+                        <Text color={colors.mainGreen} twentyEight fontFamily="Extra">
                             {name}!
                         </Text>
                     ) : (
@@ -34,18 +66,14 @@ export const HomepageHeader = ({ name, loading }) => {
                                     backgroundColor="gray"
                                     speed={1000}
                                     width={60}
-                                    height={30}
+                                    height={20}
                                     borderRadius={6}
                                 />
                             ) : (
-                                'Stranger'
+                                ''
                             )}
                         </Text>
                     )}
-                </Text>
-                <View style={{ marginTop: 20 }} />
-                <Text left twenty fontFamily="Extra" marginLeft="15px">
-                    Dashboard for
                 </Text>
                 <Text
                     eighteen

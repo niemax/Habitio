@@ -74,6 +74,13 @@ export default function Frequency({
                 <>
                     <FrequencyTouchable>
                         <Text>Days per week</Text>
+                        <Text fontFamily="Extra" twentyEight color={colors.mainGreen}>
+                            {daysCount === 7 ? (
+                                <Text color={colors.mainGreen}>Every day</Text>
+                            ) : (
+                                daysCount
+                            )}
+                        </Text>
                         <TouchableOpacity
                             style={{ marginLeft: 30 }}
                             onPress={() => {
@@ -84,9 +91,6 @@ export default function Frequency({
                         >
                             <Feather name="minus-circle" size={30} color="gray" />
                         </TouchableOpacity>
-                        <Text fontFamily="Bold" twentyEight>
-                            {daysCount === 7 ? <Text>Every day</Text> : daysCount}
-                        </Text>
                         <TouchableOpacity
                             onPress={() => {
                                 if (daysCount < 7) {
@@ -116,7 +120,10 @@ export default function Frequency({
                                 { label: 'pages', value: 'pages' },
                             ]}
                         />
-                        <Text>Per day</Text>
+                        <Text>per day</Text>
+                        <Text fontFamily="Extra" twentyEight color={colors.mainGreen}>
+                            {timesCount}
+                        </Text>
                         <TouchableOpacity
                             onPress={() => {
                                 if (timesCount > 1) {
@@ -126,9 +133,6 @@ export default function Frequency({
                         >
                             <Feather name="minus-circle" size={30} color="gray" />
                         </TouchableOpacity>
-                        <Text fontFamily="Bold" twentyEight>
-                            {timesCount}
-                        </Text>
                         <TouchableOpacity onPress={() => setTimesCount(timesCount + 1)}>
                             <Feather name="plus-circle" size={30} color="gray" />
                         </TouchableOpacity>

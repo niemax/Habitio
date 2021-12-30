@@ -17,8 +17,16 @@ export const ShowEditHeader = ({ handleUpdate }) => {
                 Edit Habit
             </Text>
             <TouchableOpacity onPress={handleUpdate}>
-                <Text marginRight="10px" nineteen color={colors.mainGreen}>
-                    Save
+                <Text
+                    style={{
+                        textDecorationLine: 'underline',
+                        textUnderlineOffset: 0,
+                    }}
+                    marginRight="10px"
+                    nineteen
+                    color={colors.mainGreen}
+                >
+                    Update
                 </Text>
             </TouchableOpacity>
         </HomeheaderContainer>
