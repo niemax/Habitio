@@ -71,6 +71,7 @@ export default function CreateHabit({ route }) {
         completedDay: null,
         dataCurrentWeek: currentWeek,
         completed: false,
+        calendarDone: false,
         completedDates: {},
         progress: 0,
         diaryInputs: [],

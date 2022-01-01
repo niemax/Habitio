@@ -6,7 +6,7 @@ const deviceWidth = Dimensions.get('window').width;
 
 const { mainBackground, mainGreen } = colors;
 
-const radius = '8px';
+const radius = '10px';
 
 export const MainContainer = styled.View`
     background-color: ${mainBackground};

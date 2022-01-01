@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Image, RefreshControl, ScrollView } from 'react-native';
+import { Image, RefreshControl, ScrollView, View } from 'react-native';
 import { colors } from '../utils/colors';
 import { Feather } from '@expo/vector-icons';
 import { useHabits } from '../context/HabitProvider';
@@ -11,6 +11,7 @@ import {
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 import { noHabitsImageStyle } from '../utils/globalStyles';
+import ContentLoader, { Rect } from 'react-content-loader/native';
 import HomeListItem from '../components/uiComponents/HomeListItem';
 import HomepageHeader from '../components/uiComponents/HomepageHeader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -22,8 +23,8 @@ const HomepageData = ({ navigation }) => {
     const [refreshing, setRefreshing] = useState(false);
     const [namePromptVisible, setNamePromptVisible] = useState(false);
     const [name, setName] = useState('');
-    const [loading, setLoading] = useState(false);
-    const { habits } = useHabits();
+    const [loading, setLoading] = useState(true);
+    const { habits, habitsLoading } = useHabits();
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
@@ -96,9 +97,27 @@ const HomepageData = ({ navigation }) => {
                             <Feather name="arrow-down" size={90} color="white" />
                         </NoHabitsContainer>
                     )}
-                    {habits.map((item) => (
-                        <HomeListItem item={item} index={item.id} completed={item.completed} />
-                    ))}
+                    {habitsLoading &&
+                        Array.from(Array(HABITS_LENGTH)).map((_, index) => (
+                            <View key={index.toString()}>
+                                <ContentLoader
+                                    height={100}
+                                    width={350}
+                                    speed={2}
+                                    backgroundColor={'#333'}
+                                    foregroundColor={'#999'}
+                                    viewBox="0 0 280 70"
+                                >
+                                    <Rect x="0" y="5" rx="10" ry="10" width="30" height="30" />
+                                    <Rect x="40" y="15" rx="5" ry="4" width="90%" height="20" />
+                                    <Rect x="40" y="00" rx="10" ry="0" width="40" height="6" />
+                                </ContentLoader>
+                            </View>
+                        ))}
+                    {!habitsLoading &&
+                        habits.map((item) => (
+                            <HomeListItem item={item} index={item.id} completed={item.completed} />
+                        ))}
                 </HomepageDataView>
             </ScrollView>
             <TabAddButton onPress={() => navigation.navigate('StartHabitCreation')}>

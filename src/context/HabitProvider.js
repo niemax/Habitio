@@ -6,10 +6,12 @@ const HabitContext = createContext();
 
 const HabitProvider = ({ children }) => {
     const [habits, setHabits] = useState([]);
+    const [habitsLoading, setHabitsLoading] = useState(true);
 
     const currentDay = getCurrentDay();
 
     const getHabits = async () => {
+        if (habits) setHabitsLoading(true);
         try {
             const result = await AsyncStorage.getItem('@habit');
             if (result !== null) {
@@ -23,6 +25,9 @@ const HabitProvider = ({ children }) => {
                     return habit;
                 });
                 setHabits(mappedHabits);
+                setTimeout(() => {
+                    setHabitsLoading(false);
+                }, 2000);
             }
         } catch (error) {
             console.error(error);
@@ -55,6 +60,7 @@ const HabitProvider = ({ children }) => {
         <HabitContext.Provider
             value={{
                 habits,
+                habitsLoading,
                 habitSetter,
                 getHabits,
                 setHabits,

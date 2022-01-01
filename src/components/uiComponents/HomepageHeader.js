@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/core';
 import Text from '../../utils/Text';
 import { getHours } from 'date-fns';
-import { ActivityIndicator, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { colors } from '../../utils/colors';
 import { Feather } from '@expo/vector-icons';
 import { HomeheaderContainer, HomepageTextContainer } from '../../utils/StyledComponents/Styled';
+import ContentLoader, { Rect } from 'react-content-loader/native';
 import { getCurrentDateFormatted } from '../../utils/helpers/dateHelpers';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 export const HomepageHeader = ({ name, loading }) => {
     const [currentDate, setCurrentDate] = useState();
@@ -60,15 +60,17 @@ export const HomepageHeader = ({ name, loading }) => {
                         </Text>
                     ) : (
                         <Text twentyEight fontFamily="Extra" color={colors.mainGreen}>
-                            {!loading ? (
-                                <SkeletonPlaceholder.Item
-                                    highlightColor="#F2F8FC"
-                                    backgroundColor="gray"
-                                    speed={1000}
-                                    width={60}
-                                    height={20}
-                                    borderRadius={6}
-                                />
+                            {loading ? (
+                                <ContentLoader
+                                    height={40}
+                                    width={40}
+                                    speed={2}
+                                    backgroundColor={'#333'}
+                                    foregroundColor={'#999'}
+                                    viewBox="0 0 280 70"
+                                >
+                                    <Rect x="0" y="15" rx="20" ry="10" width="400" height="180" />
+                                </ContentLoader>
                             ) : (
                                 ''
                             )}
