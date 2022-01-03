@@ -14,7 +14,7 @@ import CalendarHead from '../uiComponents/CalendarHeader';
 import checkCurrentWeek from '../../utils/helpers/checkWeek';
 import { getCurrentDateFormattedForCalendarComponent } from '../../utils/helpers/dateHelpers';
 import CalendarFrequency from '../uiComponents/CalendarFrequency';
-import ActionSheet from 'react-native-actionsheet';
+import ActionSheet from '@alessiocancian/react-native-actionsheet';
 import CalendarStats from '../uiComponents/CalendarStats';
 import Notes from '../uiComponents/Notes';
 import { handleDoneOtherDay } from '../../utils/helpers/handleDone';
@@ -24,13 +24,13 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 export default function CalendarModal({ route }) {
     const [noteInput, setNoteInput] = useState('');
     const [selectedDay, setSelectedDay] = useState(new Date());
-    const [calendarDate, setCalendarDate] = useState(null);
     const [completionRate, setCompletionRate] = useState(0);
     const [editNoteModalVisible, setEditNoteModalVisible] = useState(false);
+    const [bottomSheetVisible, setBottomSheetVisible] = useState();
+    const { habits, habitSetter } = useHabits();
 
     const { data } = route.params;
     const { completedDates, days, dataCurrentWeek, name, times, unitValue, diaryInputs, id } = data;
-    const { habits, habitSetter } = useHabits();
 
     const sheetRef = useRef(null);
     const actionSheetRef = useRef(null);
@@ -46,12 +46,13 @@ export default function CalendarModal({ route }) {
     }, [days]);
 
     const calendarDayPress = (day) => {
-        setCalendarDate(day.dateString);
+        setSelectedDay(day.dateString);
+        setBottomSheetVisible(true);
     };
 
     useEffect(() => {
-        actionSheetRef.current?.show();
-    }, [calendarDate]);
+        if (bottomSheetVisible) actionSheetRef.current.show();
+    }, [selectedDay]);
 
     const handleNoteInput = () => {
         const noteInputObj = {
@@ -114,17 +115,18 @@ export default function CalendarModal({ route }) {
                     setNoteInput={setNoteInput}
                     handleNoteInput={handleNoteInput}
                 />
+                <ActionSheet
+                    ref={actionSheetRef}
+                    title={` ${selectedDay} - Select an action`}
+                    options={['Completion', 'Add a note', 'Cancel']}
+                    cancelButtonIndex={2}
+                    userInterfaceStyle="dark"
+                    onPress={(index) => {
+                        if (index === 0) handleDoneOtherDay(selectedDay, data, habits, habitSetter);
+                        if (index === 1) sheetRef.current.show();
+                    }}
+                />
             </ScrollView>
-            <ActionSheet
-                ref={actionSheetRef}
-                title={` ${calendarDate} - Select an action`}
-                options={[`Completion`, 'Add a note', 'Cancel']}
-                cancelButtonIndex={2}
-                onPress={(index) => {
-                    if (index === 1) sheetRef.current.show();
-                    if (index === 0) handleDoneOtherDay(calendarDate, data, habits, habitSetter);
-                }}
-            />
         </ModalContent>
     );
 }

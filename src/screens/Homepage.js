@@ -19,19 +19,20 @@ import NameAlert from '../components/uiComponents/nameAlert';
 
 const wait = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
 
-const HomepageData = ({ navigation }) => {
+const Homepage = ({ navigation }) => {
     const [refreshing, setRefreshing] = useState(false);
     const [namePromptVisible, setNamePromptVisible] = useState(false);
     const [name, setName] = useState('');
     const [loading, setLoading] = useState(true);
-    const { habits, habitsLoading } = useHabits();
+    const { habits, getHabits, habitsLoading } = useHabits();
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
+        getHabits();
         wait(200).then(() => setRefreshing(false));
     }, []);
 
-    const tryToFetchName = async () => {
+    const fetchName = async () => {
         setLoading(true);
         try {
             const result = await AsyncStorage.getItem('@name');
@@ -48,7 +49,7 @@ const HomepageData = ({ navigation }) => {
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            tryToFetchName();
+            fetchName();
         }, 1000);
         return () => clearTimeout(timeout);
     }, []);
@@ -99,24 +100,24 @@ const HomepageData = ({ navigation }) => {
                     )}
                     {habitsLoading &&
                         Array.from(Array(HABITS_LENGTH)).map((_, index) => (
-                            <View key={index.toString()}>
+                            <View key={index.toString()} style={{ marginTop: 20 }}>
                                 <ContentLoader
-                                    height={100}
+                                    height={80}
                                     width={350}
                                     speed={2}
-                                    backgroundColor={'#333'}
-                                    foregroundColor={'#999'}
-                                    viewBox="0 0 280 70"
+                                    backgroundColor="#333"
+                                    foregroundColor="#999"
+                                    viewBox="0 0 340 60"
                                 >
                                     <Rect x="0" y="5" rx="10" ry="10" width="30" height="30" />
-                                    <Rect x="40" y="15" rx="5" ry="4" width="90%" height="20" />
+                                    <Rect x="40" y="15" rx="5" ry="4" width="100%" height="20" />
                                     <Rect x="40" y="00" rx="10" ry="0" width="40" height="6" />
                                 </ContentLoader>
                             </View>
                         ))}
                     {!habitsLoading &&
-                        habits.map((item) => (
-                            <HomeListItem item={item} index={item.id} completed={item.completed} />
+                        habits?.map((item) => (
+                            <HomeListItem item={item} completed={item.completed} />
                         ))}
                 </HomepageDataView>
             </ScrollView>
@@ -127,4 +128,4 @@ const HomepageData = ({ navigation }) => {
     );
 };
 
-export default HomepageData;
+export default Homepage;

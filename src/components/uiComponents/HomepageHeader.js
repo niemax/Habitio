@@ -62,14 +62,14 @@ export const HomepageHeader = ({ name, loading }) => {
                         <Text twentyEight fontFamily="Extra" color={colors.mainGreen}>
                             {loading ? (
                                 <ContentLoader
-                                    height={40}
+                                    height={20}
                                     width={40}
                                     speed={2}
                                     backgroundColor={'#333'}
                                     foregroundColor={'#999'}
                                     viewBox="0 0 280 70"
                                 >
-                                    <Rect x="0" y="15" rx="20" ry="10" width="400" height="180" />
+                                    <Rect x="0" y="15" rx="20" ry="10" width="400" height="200" />
                                 </ContentLoader>
                             ) : (
                                 ''
@@ -84,7 +84,7 @@ export const HomepageHeader = ({ name, loading }) => {
                     left
                     marginLeft="15px"
                 >
-                    {currentDate}
+                    Dashboard for {currentDate}
                 </Text>
             </HomepageTextContainer>
             <TouchableOpacity onPress={() => navigation.navigate('Settings')}>

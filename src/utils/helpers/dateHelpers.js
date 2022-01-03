@@ -3,7 +3,7 @@ import moment from 'moment';
 
 export const getCurrentDay = (day = new Date()) => day.getDay();
 
-export const getCurrentDateFormatted = (date = moment().format('dddd, MMMM Do')) => {
+export const getCurrentDateFormatted = (date = moment().format('ddd, ll')) => {
     return { date };
 };
 

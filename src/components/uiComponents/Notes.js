@@ -26,33 +26,41 @@ const Notes = ({ notes, editNoteModalVisible, setEditNoteModalVisible, data }) =
                 />
             </View>
         )}
-        {Object.values(notes).map(({ date, input, id }, index) => (
-            <View key={id}>
-                <TouchableOpacity onPress={() => setEditNoteModalVisible(index)}>
-                    <Text
-                        fontFamily="Bold"
-                        color={colors.mainGreen}
-                        left
-                        marginLeft="15px"
-                        marginBottom="3px"
-                    >
-                        {formatDateForInputModal(date)}
-                    </Text>
-                    <Text marginBottom="15px" marginLeft="15px" left fifteen fontFamily="Regular">
-                        {input}
-                    </Text>
-                </TouchableOpacity>
-                <EditNoteModal
-                    editNoteModalVisible={editNoteModalVisible === index}
-                    setEditNoteModalVisible={setEditNoteModalVisible}
-                    date={date}
-                    id={id}
-                    currentInput={input}
-                    diaryInputs={notes}
-                    data={data}
-                />
-            </View>
-        ))}
+        {Object.values(notes)
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .map(({ date, input, id }, index) => (
+                <View key={id}>
+                    <TouchableOpacity onPress={() => setEditNoteModalVisible(index)}>
+                        <Text
+                            fontFamily="Bold"
+                            color={colors.mainGreen}
+                            left
+                            marginLeft="15px"
+                            marginBottom="3px"
+                        >
+                            {formatDateForInputModal(date)}
+                        </Text>
+                        <Text
+                            marginBottom="15px"
+                            marginLeft="15px"
+                            left
+                            fifteen
+                            fontFamily="Regular"
+                        >
+                            {input}
+                        </Text>
+                    </TouchableOpacity>
+                    <EditNoteModal
+                        editNoteModalVisible={editNoteModalVisible === index}
+                        setEditNoteModalVisible={setEditNoteModalVisible}
+                        date={date}
+                        id={id}
+                        currentInput={input}
+                        diaryInputs={notes}
+                        data={data}
+                    />
+                </View>
+            ))}
     </>
 );
 

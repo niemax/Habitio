@@ -298,6 +298,7 @@ export const CalendarTimesInfoContainer = styled.View`
     justify-content: space-between;
     padding-horizontal: 18px;
     margin-bottom: 20px;
+    margin-top: 25px;
 `;
 
 export const CalendarTextContainer = styled.View`

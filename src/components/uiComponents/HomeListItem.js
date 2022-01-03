@@ -19,7 +19,7 @@ import { useNavigation } from '@react-navigation/core';
 import { useHabits } from '../../context/HabitProvider';
 import DoneCheckBox from './DoneCheckBox';
 
-export default function HomeListItem({ item }) {
+export default function HomeListItem({ item, index }) {
     const [progressModalVisible, setProgressModalVisible] = useState(false);
     const [inputText, setInputText] = useState();
     const [visible, setVisible] = useState(false);

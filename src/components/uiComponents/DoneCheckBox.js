@@ -1,7 +1,7 @@
 import React from 'react';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { useHabits } from '../../context/HabitProvider';
 import handleDoneToday from '../../utils/helpers/handleDone';
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
 export default function DoneCheckBox({ item }) {
     const { habitSetter, habits } = useHabits();
