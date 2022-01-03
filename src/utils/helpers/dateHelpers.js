@@ -4,7 +4,7 @@ import moment from 'moment';
 export const getCurrentDay = (day = new Date()) => day.getDay();
 
 export const getCurrentDateFormatted = (d = moment().format('ddd, ll')) => {
-    return { date };
+    return { d };
 };
 
 export const getCurrentDateFormattedForCalendarComponent = (

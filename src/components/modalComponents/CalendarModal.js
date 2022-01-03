@@ -74,9 +74,9 @@ export default function CalendarModal({ route }) {
             <CalendarHead name={name} />
             <HabitHeaderLineBreak />
             <ScrollView>
+                <CalendarStats completedDates={completedDates} completionRate={completionRate} />
                 <Calendar
                     style={{
-                        marginTop: 15,
                         height: 340,
                         width: SCREEN_WIDTH,
                     }}
@@ -89,7 +89,6 @@ export default function CalendarModal({ route }) {
                 />
                 <CalendarFrequency days={days} times={times} unitValue={unitValue} />
                 <CalendarLineBreak />
-                <CalendarStats completedDates={completedDates} completionRate={completionRate} />
                 <CalendarLineBreak />
                 <Text sixteen left marginLeft="17px" marginTop="10px" marginBottom="15px">
                     Notes

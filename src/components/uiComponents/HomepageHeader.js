@@ -14,8 +14,8 @@ export const HomepageHeader = ({ name, loading }) => {
     const navigation = useNavigation();
 
     useEffect(() => {
-        const { date } = getCurrentDateFormatted();
-        setCurrentDate(date);
+        const { d } = getCurrentDateFormatted();
+        setCurrentDate(d);
     }, []);
 
     const hourNow = getHours(new Date());

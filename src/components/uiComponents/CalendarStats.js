@@ -4,12 +4,15 @@ import {
     CalendarStatsContainer,
     CalendarTimesInfoContainer,
 } from '../../utils/StyledComponents/Styled';
+import { FontAwesome5, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import Text from '../../utils/Text';
+import { formatDateForHabitEndDate } from '../../utils/helpers/dateHelpers';
 
 const CalendarStats = ({ completedDates, completionRate }) => (
     <CalendarTimesInfoContainer>
         <CalendarStatsContainer>
-            <Text color={colors.mainGreen} thirtyFour>
+            <MaterialCommunityIcons name="chart-arc" size={28} color={colors.mainGreen} />
+            <Text twentyEight fontFamily="Bold" marginTop="8px" color={colors.mainGreen}>
                 {Object.keys(completedDates).length}
             </Text>
             <Text marginTop="5px" sixteen>
@@ -17,7 +20,14 @@ const CalendarStats = ({ completedDates, completionRate }) => (
             </Text>
         </CalendarStatsContainer>
         <CalendarStatsContainer>
-            <Text color={colors.mainGreen} thirtyFour>
+            <Feather name="calendar" size={24} color={colors.mainGreen} />
+            <Text marginTop="5px" sixteen fontFamily="Extra">
+                {formatDateForHabitEndDate(new Date())}
+            </Text>
+        </CalendarStatsContainer>
+        <CalendarStatsContainer>
+            <MaterialCommunityIcons name="progress-check" size={24} color={colors.mainGreen} />
+            <Text twentyEight fontFamily="Extra" marginTop="8px" color={colors.mainGreen}>
                 {completionRate.toFixed(0)}%
             </Text>
             <Text marginTop="5px" sixteen>
