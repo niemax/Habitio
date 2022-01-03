@@ -44,7 +44,6 @@ export default function Frequency({
                     value={isEnabledSpecific}
                 />
             </FrequencySwitchContainer>
-            <HabitHeaderLineBreak />
             <DateTimePickerView>
                 {isEnabledSpecific && (
                     <DateTimePicker
@@ -68,7 +67,6 @@ export default function Frequency({
                     value={isEnabled}
                 />
             </FrequencySwitchContainer>
-            <HabitHeaderLineBreak />
 
             {isEnabled && (
                 <>
@@ -150,7 +148,6 @@ export default function Frequency({
                     value={isEnabledEndDate}
                 />
             </FrequencySwitchContainer>
-            <HabitHeaderLineBreak />
             {isEnabledEndDate && (
                 <DateTimePickerView>
                     <DateTimePicker

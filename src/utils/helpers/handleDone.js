@@ -13,13 +13,7 @@ const handleDoneToday = (data, habits, habitSetter) => {
 
             if (!(getCalendarDateString in completedDatesObj)) {
                 completedDatesObj[getCalendarDateString] = {
-                    marked: false,
                     selected: true,
-                    customStyles: {
-                        container: {
-                            backgroundColor: colors.mainGreen,
-                        },
-                    },
                 };
                 if (habit.id === id) {
                     habit.completedDay = getCurrentDay();

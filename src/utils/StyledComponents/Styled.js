@@ -298,11 +298,12 @@ export const CalendarFrequencyContainer = styled.View`
     justify-content: space-between;
     padding-horizontal: 18px;
     margin-bottom: 20px;
-    margin-top: 15px;
+    margin-top: 25px;
 `;
 
 export const CalendarTimesInfoContainer = styled.View`
     background-color: ${colors.mainBoxes};
+    opacity: 0.9
     flex-direction: row;
     justify-content: space-between;
     align-items: baseline;
@@ -461,4 +462,12 @@ export const AddProgressButton = styled.TouchableOpacity`
     height: 30px;
     justify-content: space-between;
     margin-top: 9px;
+`;
+
+export const PopableLineBreak = styled.View`
+    background-color: gray;
+    margin-top: 3px;
+    opacity: 0.3;
+    height: 1px;
+    width: 100%;
 `;

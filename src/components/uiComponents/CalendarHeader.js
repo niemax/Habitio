@@ -5,7 +5,7 @@ import { colors } from '../../utils/colors';
 import { CalendarHeader } from '../../utils/StyledComponents/Styled';
 import { useNavigation } from '@react-navigation/core';
 
-const CalendarHead = ({ name }) => {
+const CalendarHead = ({ name, color }) => {
     const navigation = useNavigation();
     return (
         <CalendarHeader>
@@ -13,7 +13,7 @@ const CalendarHead = ({ name }) => {
                 {name}
             </Text>
             <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text nineteen marginRight="10px" color={colors.mainGreen} fontFamily="SemiBold">
+                <Text nineteen marginRight="10px" color={color} fontFamily="SemiBold">
                     Done
                 </Text>
             </TouchableOpacity>

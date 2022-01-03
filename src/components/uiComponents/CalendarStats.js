@@ -8,11 +8,11 @@ import { FontAwesome5, Feather, MaterialCommunityIcons } from '@expo/vector-icon
 import Text from '../../utils/Text';
 import { formatDateForHabitEndDate } from '../../utils/helpers/dateHelpers';
 
-const CalendarStats = ({ completedDates, completionRate }) => (
+const CalendarStats = ({ completedDates, completionRate, color }) => (
     <CalendarTimesInfoContainer>
         <CalendarStatsContainer>
-            <MaterialCommunityIcons name="chart-arc" size={28} color={colors.mainGreen} />
-            <Text twentyEight fontFamily="Bold" marginTop="8px" color={colors.mainGreen}>
+            <MaterialCommunityIcons name="chart-arc" size={28} color={color} />
+            <Text twentyEight fontFamily="Bold" marginTop="15px" color={color}>
                 {Object.keys(completedDates).length}
             </Text>
             <Text marginTop="5px" sixteen>
@@ -20,14 +20,14 @@ const CalendarStats = ({ completedDates, completionRate }) => (
             </Text>
         </CalendarStatsContainer>
         <CalendarStatsContainer>
-            <Feather name="calendar" size={24} color={colors.mainGreen} />
-            <Text marginTop="5px" sixteen fontFamily="Extra">
+            <Feather name="calendar" size={28} color={color} />
+            <Text marginTop="5px" sixteen fontFamily="Bold">
                 {formatDateForHabitEndDate(new Date())}
             </Text>
         </CalendarStatsContainer>
         <CalendarStatsContainer>
-            <MaterialCommunityIcons name="progress-check" size={24} color={colors.mainGreen} />
-            <Text twentyEight fontFamily="Extra" marginTop="8px" color={colors.mainGreen}>
+            <MaterialCommunityIcons name="progress-check" size={28} color={color} />
+            <Text twentyEight fontFamily="Bold" marginTop="15px" color={color}>
                 {completionRate.toFixed(0)}%
             </Text>
             <Text marginTop="5px" sixteen>

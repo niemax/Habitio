@@ -11,6 +11,7 @@ import {
     HomepageDataBox,
     HomepageDataView,
     ItemTimesContainer,
+    PopableLineBreak,
 } from '../../utils/StyledComponents/Styled';
 import ProgressModal from '../modalComponents/ProgressModal';
 import HabitCompletedStatusText from './HabitCompletedStatusText';
@@ -63,11 +64,13 @@ export default function HomeListItem({ item }) {
                 </View>
                 <ItemTimesContainer>
                     <Popable
+                        onAction={() => haptics.selection()}
+                        style={{ width: 150, opacity: 0.91 }}
                         animationType="spring"
                         position="left"
                         content={
-                            <View style={{ padding: 4 }}>
-                                <Text fifteen fontFamily="Medium">
+                            <View style={{ padding: 4, opacity: 0.7 }}>
+                                <Text fifteen fontFamily="Bold">
                                     Progress
                                 </Text>
                                 <AddProgressButton
@@ -78,11 +81,12 @@ export default function HomeListItem({ item }) {
                                         alignItems: 'center',
                                     }}
                                 >
-                                    <Feather name="plus" size={24} color="white" />
+                                    <Feather name="arrow-up-circle" size={24} color="white" />
                                     <Text twentyTwo fontFamily="Extra">
                                         1
                                     </Text>
                                 </AddProgressButton>
+                                <PopableLineBreak />
                                 <AddProgressButton
                                     onPress={() => handleHabitProgress(Math.floor(times / 2))}
                                     style={{
@@ -91,11 +95,12 @@ export default function HomeListItem({ item }) {
                                         alignItems: 'center',
                                     }}
                                 >
-                                    <Feather name="plus" size={24} color="white" />
+                                    <Feather name="arrow-up-circle" size={24} color="white" />
                                     <Text twentyTwo fontFamily="Extra">
                                         {Math.floor(times / 2)}
                                     </Text>
                                 </AddProgressButton>
+                                <PopableLineBreak />
                                 <AddProgressButton
                                     onPress={() => handleHabitProgress(-1)}
                                     style={{
@@ -104,7 +109,7 @@ export default function HomeListItem({ item }) {
                                         alignItems: 'center',
                                     }}
                                 >
-                                    <Feather name="minus" size={24} color="white" />
+                                    <Feather name="arrow-down-circle" size={24} color="white" />
                                     <Text twentyTwo fontFamily="Extra">
                                         1
                                     </Text>

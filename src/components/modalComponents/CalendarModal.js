@@ -19,8 +19,6 @@ import CalendarStats from '../uiComponents/CalendarStats';
 import Notes from '../uiComponents/Notes';
 import { handleDoneOtherDay } from '../../utils/helpers/handleDone';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
-
 export default function CalendarModal({ route }) {
     const [noteInput, setNoteInput] = useState('');
     const [selectedDay, setSelectedDay] = useState(new Date());
@@ -30,7 +28,17 @@ export default function CalendarModal({ route }) {
     const { habits, habitSetter } = useHabits();
 
     const { data } = route.params;
-    const { completedDates, days, dataCurrentWeek, name, times, unitValue, diaryInputs, id } = data;
+    const {
+        color,
+        completedDates,
+        days,
+        dataCurrentWeek,
+        name,
+        times,
+        unitValue,
+        diaryInputs,
+        id,
+    } = data;
 
     const sheetRef = useRef(null);
     const actionSheetRef = useRef(null);
@@ -71,16 +79,21 @@ export default function CalendarModal({ route }) {
 
     return (
         <ModalContent>
-            <CalendarHead name={name} />
+            <CalendarHead name={name} color={color} />
             <HabitHeaderLineBreak />
             <ScrollView>
-                <CalendarStats completedDates={completedDates} completionRate={completionRate} />
+                <CalendarStats
+                    completedDates={completedDates}
+                    completionRate={completionRate}
+                    color={color}
+                />
                 <Calendar
-                    style={{
-                        height: 340,
-                        width: SCREEN_WIDTH,
+                    theme={{
+                        ...calendarStyles,
+                        selectedDayBackgroundColor: color,
+                        arrowColor: color,
+                        todayTextColor: color,
                     }}
-                    theme={calendarStyles}
                     firstDay={1}
                     hideExtraDays={true}
                     maxDate={getCurrentDateFormattedForCalendarComponent()}

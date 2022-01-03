@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { colors } from '../../utils/colors';
-import { formatDateForInputModal } from '../../utils/helpers/dateHelpers';
+import { formatDateForHabitEndDate } from '../../utils/helpers/dateHelpers';
 import Text from '../../utils/Text';
 import { Entypo } from '@expo/vector-icons';
 import EditNoteModal from '../modalComponents/EditNoteModal';
@@ -33,12 +33,12 @@ const Notes = ({ notes, editNoteModalVisible, setEditNoteModalVisible, data }) =
                     <TouchableOpacity onPress={() => setEditNoteModalVisible(index)}>
                         <Text
                             fontFamily="Bold"
-                            color={colors.mainGreen}
+                            color={data.color}
                             left
                             marginLeft="15px"
                             marginBottom="3px"
                         >
-                            {formatDateForInputModal(date)}
+                            {formatDateForHabitEndDate(date)}
                         </Text>
                         <Text
                             numberOfLines={1}
