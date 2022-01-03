@@ -51,11 +51,8 @@ const handleUpdate = async (
         }
         return habit;
     });
-
     scheduleRepeatingNotificationIfTimeIsNotNull(habitReminderTime, habitName, habits, data);
-
     if (habitSpecificDate !== null) scheduleOneTimeEdit(habitSpecificDate, habitName, habits, data);
-
     habitSetter(newHabits);
 };
 

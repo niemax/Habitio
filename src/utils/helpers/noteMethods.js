@@ -1,9 +1,8 @@
-import { toasts } from './toastMethods';
-
 /**
  * ! handle all operations within notes in calendarModal
  */
-export const handleDiaryInputEdit = (diaryInputs, id, habitSetter, habits, data, input) => {
+
+export const handleNoteEdit = (diaryInputs, id, habitSetter, habits, data, input) => {
     const mappedInputs = diaryInputs.map((diaryInput) => {
         if (diaryInput.id === id) {
             diaryInput.input = input;
@@ -20,7 +19,7 @@ export const handleDiaryInputEdit = (diaryInputs, id, habitSetter, habits, data,
     habitSetter(newHabits);
 };
 
-export const handleDiaryInputDelete = (id, habits, diaryInputs, data, habitSetter) => {
+export const handleNoteDelete = (id, habits, diaryInputs, data, habitSetter) => {
     const filtered = diaryInputs.filter((inp) => inp.id !== id);
     const newHabits = habits.map((habit) => {
         if (habit.id === data.id) {

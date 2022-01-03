@@ -7,9 +7,9 @@ import { getCurrentWeek } from './dateHelpers';
  * ? completedPercentage is tracked based on users weekly completion rate
  */
 
-const calculateCompletionRate = (completedAmount, amountOfDays) => {
+const calculateCompletionRate = (completedAmount, daysWeekly) => {
     const completedLength = Object.keys(completedAmount).length;
-    const rate = (completedLength / amountOfDays) * 100;
+    const rate = (completedLength / daysWeekly) * 100;
     return rate;
 };
 
@@ -19,11 +19,11 @@ const checkCurrentWeek = (dataCurrentWeek, completedDates, days, data) => {
     if (getCurrentWeek() > dataCurrentWeek) {
         completedPercentage = 0;
         data.dataCurrentWeek = getCurrentWeek();
+    } else {
+        completedPercentage = calculateCompletionRate(completedDates, days);
     }
 
-    completedPercentage = calculateCompletionRate(completedDates, days);
-
-    return { completedPercentage };
+    return completedPercentage;
 };
 
 export default checkCurrentWeek;

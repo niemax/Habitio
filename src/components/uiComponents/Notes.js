@@ -41,6 +41,7 @@ const Notes = ({ notes, editNoteModalVisible, setEditNoteModalVisible, data }) =
                             {formatDateForInputModal(date)}
                         </Text>
                         <Text
+                            numberOfLines={1}
                             marginBottom="15px"
                             marginLeft="15px"
                             left

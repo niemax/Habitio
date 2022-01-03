@@ -36,14 +36,8 @@ export default function CalendarModal({ route }) {
     const actionSheetRef = useRef(null);
 
     useEffect(() => {
-        const { completedPercentage } = checkCurrentWeek(
-            dataCurrentWeek,
-            completedDates,
-            days,
-            data
-        );
-        setCompletionRate(completedPercentage);
-    }, [days]);
+        setCompletionRate(checkCurrentWeek(dataCurrentWeek, completedDates, days, data));
+    }, [days, dataCurrentWeek]);
 
     const calendarDayPress = (day) => {
         setSelectedDay(day.dateString);

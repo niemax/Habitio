@@ -17,9 +17,11 @@ import { getCurrentDay } from './src/utils/helpers/dateHelpers';
 export default function App() {
     const [, , setExpoPushToken] = useState('');
     const [, , setNotification] = useState(false);
+    const [fontsLoaded, setFontsLoaded] = useState(false);
+
     const notificationListener = useRef();
     const responseListener = useRef();
-    const [fontsLoaded, setFontsLoaded] = useState(false);
+
     async function loadFonts() {
         await Font.loadAsync({
             // Load the main font from static assets

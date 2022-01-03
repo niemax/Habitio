@@ -10,7 +10,7 @@ export default function DoneCheckBox({ item }) {
 
     return (
         <BouncyCheckbox
-            size={30}
+            size={32}
             fillColor={color}
             unfillColor="#192429"
             iconStyle={{ borderColor: '#404040', borderRadius: 10 }}

@@ -2,27 +2,25 @@ import React, { useState } from 'react';
 import { Dimensions, Image, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress';
-import TextStyle from '../../utils/Text';
+import { Popable } from 'react-native-popable';
+import { useNavigation } from '@react-navigation/core';
+import Text from '../../utils/Text';
 import { haptics } from '../../utils/helpers/haptics';
 import {
-    AddProgressPreDefinedButton,
+    AddProgressButton,
     HomepageDataBox,
     HomepageDataView,
     ItemTimesContainer,
 } from '../../utils/StyledComponents/Styled';
 import ProgressModal from '../modalComponents/ProgressModal';
 import HabitCompletedStatusText from './HabitCompletedStatusText';
-import Dialog from 'react-native-dialog';
 import { colors } from '../../utils/colors';
 import { progressBar } from '../../utils/globalStyles';
-import { useNavigation } from '@react-navigation/core';
 import { useHabits } from '../../context/HabitProvider';
 import DoneCheckBox from './DoneCheckBox';
 
-export default function HomeListItem({ item, index }) {
+export default function HomeListItem({ item }) {
     const [progressModalVisible, setProgressModalVisible] = useState(false);
-    const [inputText, setInputText] = useState();
-    const [visible, setVisible] = useState(false);
     const { icon, completed, times, progress, color, name, unitValue, id } = item;
     const navigation = useNavigation();
     const { habits, habitSetter } = useHabits();
@@ -30,19 +28,11 @@ export default function HomeListItem({ item, index }) {
     const handleHabitProgress = (operand) => {
         const mapped = habits.map((habit) => {
             if (habit.id === id) {
-                if (operand === '+' && progress < times) {
-                    habit.progress += Number(inputText);
-                } else if (operand === '-') {
-                    habit.progress -= Number(inputText);
-                } else {
-                    habit.progress += operand;
-                }
+                habit.progress += operand;
             }
             return habit;
         });
         habitSetter(mapped);
-        setVisible(false);
-        setInputText('');
     };
 
     return (
@@ -55,18 +45,12 @@ export default function HomeListItem({ item, index }) {
                     haptics.selection();
                 }}
             >
-                <View>
-                    <DoneCheckBox item={item} />
-                </View>
+                <DoneCheckBox item={item} />
                 <View style={{ marginLeft: 2 }}>
                     {icon ? (
-                        <Image style={{ height: 35, width: 35 }} source={icon} />
+                        <Image style={{ height: 25, width: 25 }} source={icon} />
                     ) : (
-                        <Feather
-                            name="activity"
-                            size={32}
-                            color={color ? color : colors.mainGreen}
-                        />
+                        <Feather name="activity" size={32} color={color || colors.mainGreen} />
                     )}
                 </View>
                 <View>
@@ -77,36 +61,86 @@ export default function HomeListItem({ item, index }) {
                         data={item}
                     />
                 </View>
-                <ItemTimesContainer onPress={() => !completed && setVisible(true)}>
-                    <TextStyle color={color} marginLeft="10px" fontFamily="Bold" twenty>
-                        {times > 1 && (
-                            <>
-                                <TextStyle fontFamily="Extra" color={color} twenty>
-                                    {!completed ? progress : times}
-                                </TextStyle>
-                                <TextStyle
-                                    fontFamily="Regular"
-                                    twenty
-                                    color={color}
-                                    style={{ opacity: 0.8 }}
+                <ItemTimesContainer>
+                    <Popable
+                        animationType="spring"
+                        position="left"
+                        content={
+                            <View style={{ padding: 4 }}>
+                                <Text fifteen fontFamily="Medium">
+                                    Progress
+                                </Text>
+                                <AddProgressButton
+                                    onPress={() => handleHabitProgress(1)}
+                                    style={{
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                    }}
                                 >
-                                    /
-                                </TextStyle>
-                                <TextStyle
-                                    twenty
-                                    fontFamily="Regular"
-                                    color={color}
-                                    style={{ opacity: 0.8 }}
+                                    <Feather name="plus" size={24} color="white" />
+                                    <Text twentyTwo fontFamily="Extra">
+                                        1
+                                    </Text>
+                                </AddProgressButton>
+                                <AddProgressButton
+                                    onPress={() => handleHabitProgress(Math.floor(times / 2))}
+                                    style={{
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                    }}
                                 >
-                                    {times}
-                                </TextStyle>
-                            </>
-                        )}
-                    </TextStyle>
-
-                    <TextStyle sixteen fontFamily="Medium">
-                        {times > 1 && unitValue}
-                    </TextStyle>
+                                    <Feather name="plus" size={24} color="white" />
+                                    <Text twentyTwo fontFamily="Extra">
+                                        {Math.floor(times / 2)}
+                                    </Text>
+                                </AddProgressButton>
+                                <AddProgressButton
+                                    onPress={() => handleHabitProgress(-1)}
+                                    style={{
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                    }}
+                                >
+                                    <Feather name="minus" size={24} color="white" />
+                                    <Text twentyTwo fontFamily="Extra">
+                                        1
+                                    </Text>
+                                </AddProgressButton>
+                            </View>
+                        }
+                    >
+                        <Text color={color} marginLeft="10px" fontFamily="Bold" twenty>
+                            {times > 1 && (
+                                <>
+                                    <Text fontFamily="Extra" color={color} twenty>
+                                        {!completed ? progress : times}
+                                    </Text>
+                                    <Text
+                                        fontFamily="Regular"
+                                        twenty
+                                        color={color}
+                                        style={{ opacity: 0.8 }}
+                                    >
+                                        /
+                                    </Text>
+                                    <Text
+                                        twenty
+                                        fontFamily="Regular"
+                                        color={color}
+                                        style={{ opacity: 0.8 }}
+                                    >
+                                        {times}
+                                    </Text>
+                                </>
+                            )}
+                        </Text>
+                        <Text sixteen fontFamily="Medium">
+                            {times > 1 && unitValue}
+                        </Text>
+                    </Popable>
                 </ItemTimesContainer>
                 {times > 1 && (
                     <Progress.Bar
@@ -118,40 +152,7 @@ export default function HomeListItem({ item, index }) {
                         borderColor="transparent"
                     />
                 )}
-                <Dialog.Container onBackdropPress={() => setVisible(false)} visible={visible}>
-                    <Dialog.Title>Add Progress</Dialog.Title>
-                    <Dialog.Input
-                        autoFocus={true}
-                        placeholder="Amount"
-                        keyboardType="numeric"
-                        onChangeText={(text) => setInputText(text)}
-                    />
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-evenly',
-                            marginBottom: 10,
-                        }}
-                    >
-                        <AddProgressPreDefinedButton onPress={() => handleHabitProgress(1)}>
-                            <TextStyle fontFamily="Medium" twentyTwo>
-                                +1
-                            </TextStyle>
-                        </AddProgressPreDefinedButton>
-                        <AddProgressPreDefinedButton onPress={() => handleHabitProgress(2)}>
-                            <TextStyle fontFamily="Medium" twentyTwo>
-                                +2
-                            </TextStyle>
-                        </AddProgressPreDefinedButton>
-                        <AddProgressPreDefinedButton onPress={() => handleHabitProgress(4)}>
-                            <TextStyle fontFamily="Medium" twentyTwo>
-                                +4
-                            </TextStyle>
-                        </AddProgressPreDefinedButton>
-                    </View>
-                    <Dialog.Button bold label="-" onPress={() => handleHabitProgress('-')} />
-                    <Dialog.Button bold label="+" onPress={() => handleHabitProgress('+')} />
-                </Dialog.Container>
+
                 <ProgressModal
                     data={item}
                     progressModalVisible={progressModalVisible}

@@ -40,8 +40,8 @@ const handleDoneToday = (data, habits, habitSetter) => {
             return habit;
         });
         habitSetter(updatedHabits);
-    } catch (e) {
-        console.error(e);
+    } catch (error) {
+        console.error(error);
     }
 };
 

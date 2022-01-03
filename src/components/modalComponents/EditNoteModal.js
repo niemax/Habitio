@@ -12,10 +12,7 @@ import { Ionicons, Feather } from '@expo/vector-icons';
 import Text from '../../utils/Text';
 import { CalendarHeader, DiaryInput, ModalContent } from '../../utils/StyledComponents/Styled';
 import { colors } from '../../utils/colors';
-import {
-    handleDiaryInputDelete,
-    handleDiaryInputEdit,
-} from '../../utils/helpers/handleDiaryInputDelete';
+import { handleNoteDelete, handleNoteEdit } from '../../utils/helpers/noteMethods';
 import { useHabits } from '../../context/HabitProvider';
 import { formatDateForInputModal } from '../../utils/helpers/dateHelpers';
 
@@ -40,7 +37,7 @@ export default function EditNoteModal({
                 {
                     text: 'OK',
                     onPress: () => {
-                        handleDiaryInputDelete(id, habits, diaryInputs, data, habitSetter);
+                        handleNoteDelete(id, habits, diaryInputs, data, habitSetter);
                         setEditNoteModalVisible(false);
                     },
                 },
@@ -75,7 +72,7 @@ export default function EditNoteModal({
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => {
-                                    handleDiaryInputEdit(
+                                    handleNoteEdit(
                                         diaryInputs,
                                         id,
                                         habitSetter,

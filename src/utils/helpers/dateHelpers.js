@@ -3,7 +3,7 @@ import moment from 'moment';
 
 export const getCurrentDay = (day = new Date()) => day.getDay();
 
-export const getCurrentDateFormatted = (date = moment().format('ddd, ll')) => {
+export const getCurrentDateFormatted = (d = moment().format('ddd, ll')) => {
     return { date };
 };
 
@@ -13,11 +13,11 @@ export const getCurrentDateFormattedForCalendarComponent = (
 
 export const getCurrentWeek = () => getWeek(new Date());
 
-export const formatDateForInputModal = (date) => {
-    const formattedDate = format(new Date(date), 'dd-MM-yyyy');
+export const formatDateForInputModal = (d) => {
+    const formattedDate = format(new Date(d), 'dd/MM/yy');
     return formattedDate;
 };
 
-export const formatDateForHabitEndDate = (date) => format(new Date(date), 'PP');
+export const formatDateForHabitEndDate = (d) => format(new Date(d), 'PP');
 
-export const formatDateForHabitInfoReminder = (date) => format(new Date(date), 'p');
+export const formatDateForHabitInfoReminder = (d) => format(new Date(d), 'p');

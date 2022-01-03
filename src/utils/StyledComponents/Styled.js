@@ -312,7 +312,6 @@ export const CalendarStatsContainer = styled.View`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 10px;
 `;
 
 export const CalendarLineBreak = styled.View`
@@ -446,10 +445,9 @@ export const HabitHeaderLineBreak = styled.View`
     margin-top: 10px;
 `;
 
-export const AddProgressPreDefinedButton = styled.TouchableOpacity`
+export const AddProgressButton = styled.TouchableOpacity`
+    width: 100%;
     height: 30px;
-    width: 55px;
-    border-radius: 5px;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    margin-top: 9px;
 `;
