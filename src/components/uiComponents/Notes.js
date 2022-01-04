@@ -18,12 +18,7 @@ const Notes = ({ notes, editNoteModalVisible, setEditNoteModalVisible, data }) =
                 <Text sixteen fontFamily="MediumItalic" color="gray">
                     No notes added yet. Tap on a date to add a note.
                 </Text>
-                <Entypo
-                    name="pencil"
-                    size={62}
-                    color={colors.mainGreen}
-                    style={{ marginTop: 30 }}
-                />
+                <Entypo name="pencil" size={62} color={data.color} style={{ marginTop: 30 }} />
             </View>
         )}
         {Object.values(notes)

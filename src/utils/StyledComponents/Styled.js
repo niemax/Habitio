@@ -294,9 +294,6 @@ export const ShowHabitActionsAddButton = styled.TouchableOpacity`
 `;
 
 export const CalendarFrequencyContainer = styled.View`
-    flex-direction: row;
-    justify-content: space-between;
-    padding-horizontal: 18px;
     margin-bottom: 20px;
     margin-top: 25px;
 `;
@@ -310,7 +307,7 @@ export const CalendarTimesInfoContainer = styled.View`
     padding-horizontal: 18px;
     margin-bottom: 20px;
     padding-vertical: 20px;
-    height: 130px;
+    height: 150px;
 `;
 
 export const CalendarTextContainer = styled.View`
