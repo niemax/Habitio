@@ -7,7 +7,7 @@ import { deleteNotifications } from '../utils/helpers/notification';
 import { MainContainer } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 
-export default function Settings({ navigation }) {
+const Settings = ({ navigation }) => {
     const { setHabits } = useHabits();
     return (
         <MainContainer>
@@ -25,4 +25,6 @@ export default function Settings({ navigation }) {
             </TouchableOpacity>
         </MainContainer>
     );
-}
+};
+
+export default Settings;

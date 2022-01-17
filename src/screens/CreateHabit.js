@@ -8,7 +8,7 @@ import CHHeader from '../components/uiComponents/CreateHabitHeader';
 import HabitColor from '../components/uiComponents/SelectHabitColorButton';
 import { getCurrentWeek } from '../utils/helpers/dateHelpers';
 
-export default function CreateHabit({ route }) {
+const CreateHabit = ({ route }) => {
     const [updatedColor, setUpdatedColor] = useState();
     const [colorUpdated, setColorUpdated] = useState(false);
     const [description, setDescription] = useState('');
@@ -22,7 +22,6 @@ export default function CreateHabit({ route }) {
     const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
     const [isEnabledEndDate, setIsEnabledEndDate] = useState(false);
     const [selectedValue, setSelectedValue] = useState();
-    const [loading, setLoading] = useState(false);
 
     const toggleSwitch = () =>
         !isEnabledSpecific && setIsEnabled((previousState) => !previousState);
@@ -143,4 +142,6 @@ export default function CreateHabit({ route }) {
             </ScrollView>
         </MainContainer>
     );
-}
+};
+
+export default CreateHabit;

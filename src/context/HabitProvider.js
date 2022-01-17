@@ -11,7 +11,7 @@ const HabitProvider = ({ children }) => {
     const currentDay = getCurrentDay();
 
     const getHabits = async () => {
-        if (Object.keys(habits).length > 1) setHabitsLoading(true);
+        if (Object.keys(habits).length > 0) setHabitsLoading(true);
         try {
             const result = await AsyncStorage.getItem('@habit');
             if (result !== null) {

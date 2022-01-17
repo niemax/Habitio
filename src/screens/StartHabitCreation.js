@@ -14,7 +14,7 @@ import Text from '../utils/Text';
 import data from '../categories';
 import { colors } from '../utils/colors';
 
-export default function StartHabitCreation({ navigation }) {
+const StartHabitCreation = ({ navigation }) => {
     const [habitName, setHabitName] = useState('');
     const [error, setError] = useState('');
 
@@ -101,4 +101,6 @@ export default function StartHabitCreation({ navigation }) {
             </ButtonContainer>
         </ModalContent>
     );
-}
+};
+
+export default StartHabitCreation;

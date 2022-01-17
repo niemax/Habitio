@@ -4,7 +4,7 @@ import HabitEditContent from '../../components/modalContentComponents/HabitEdit'
 import { useHabits } from '../../context/HabitProvider';
 import handleUpdate from '../../utils/helpers/handleUpdate';
 
-export default function ShowHabitEditModal({ route }) {
+const ShowHabitEditModal = ({ route }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [updatedColor, setUpdatedColor] = useState();
     const [habitName, setHabitName] = useState('');
@@ -160,4 +160,6 @@ export default function ShowHabitEditModal({ route }) {
             }}
         />
     );
-}
+};
+
+export default ShowHabitEditModal;

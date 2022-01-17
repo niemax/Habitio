@@ -11,7 +11,7 @@ import deleteHabit from '../../utils/helpers/deleteHabit';
 import { HabitInfo } from '../uiComponents/HabitInfo';
 import { colors } from '../../utils/colors';
 
-export default function ShowHabitModal({ route, navigation }) {
+const ShowHabitModal = ({ route, navigation }) => {
     const { data } = route.params;
     const {
         notificationId,
@@ -89,4 +89,6 @@ export default function ShowHabitModal({ route, navigation }) {
             </ScrollView>
         </ModalContent>
     );
-}
+};
+
+export default ShowHabitModal;

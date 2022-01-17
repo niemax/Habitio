@@ -18,7 +18,6 @@ const MainAppStack = () => (
         screenOptions={{
             headerShown: false,
             gestureEnabled: true,
-            ...TransitionPresets.DefaultTransition,
         }}
     >
         <Stack.Screen name="Homepage" component={Homepage} />
@@ -30,13 +29,23 @@ const MainAppStack = () => (
             screenOptions={{
                 headerShown: false,
                 gestureEnabled: true,
-                cardOverlayEnabled: true,
-                ...TransitionPresets.ModalPresentationIOS,
             }}
         >
-            <Stack.Screen name="ShowHabitModal" component={ShowHabitModal} />
-            <Stack.Screen name="ShowHabitEditModal" component={ShowHabitEditModal} />
-            <Stack.Screen name="CalendarModal" component={CalendarModal} />
+            <Stack.Screen
+                name="ShowHabitModal"
+                component={ShowHabitModal}
+                options={{ presentation: 'modal' }}
+            />
+            <Stack.Screen
+                name="ShowHabitEditModal"
+                component={ShowHabitEditModal}
+                options={{ presentation: 'modal' }}
+            />
+            <Stack.Screen
+                name="CalendarModal"
+                cemponent={CalendarModal}
+                options={{ presentation: 'modal' }}
+            />
         </Stack.Group>
     </Stack.Navigator>
 );

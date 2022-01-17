@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Dimensions, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import {
     CalendarLineBreak,
@@ -19,7 +19,7 @@ import CalendarStats from '../uiComponents/CalendarStats';
 import Notes from '../uiComponents/Notes';
 import { handleDoneOtherDay } from '../../utils/helpers/handleDone';
 
-export default function CalendarModal({ route }) {
+const CalendarModal = ({ route }) => {
     const [noteInput, setNoteInput] = useState('');
     const [selectedDay, setSelectedDay] = useState(new Date());
     const [completionRate, setCompletionRate] = useState(0);
@@ -135,4 +135,6 @@ export default function CalendarModal({ route }) {
             </ScrollView>
         </ModalContent>
     );
-}
+};
+
+export default CalendarModal;
