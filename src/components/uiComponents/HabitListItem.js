@@ -20,7 +20,7 @@ import { progressBar } from '../../utils/globalStyles';
 import { useHabits } from '../../context/HabitProvider';
 import DoneCheckBox from './DoneCheckBox';
 
-export default function HomeListItem({ item }) {
+const HabitListItem = ({ item }) => {
     const [progressModalVisible, setProgressModalVisible] = useState(false);
     const { icon, completed, times, progress, color, name, unitValue, id } = item;
     const navigation = useNavigation();
@@ -166,4 +166,6 @@ export default function HomeListItem({ item }) {
             </HomepageDataBox>
         </HomepageDataView>
     );
-}
+};
+
+export default HabitListItem;

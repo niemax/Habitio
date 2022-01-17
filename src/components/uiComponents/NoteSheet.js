@@ -8,14 +8,14 @@ import { habitBoxShadow } from '../../utils/globalStyles';
 import { format } from 'date-fns';
 import { KeyboardAvoidingView, Platform, TouchableOpacity, View } from 'react-native';
 
-export default function CalendarBottomSheet({
+const NoteSheet = ({
     noteInput,
     setNoteInput,
-    sheetRef,
+    noteSheetRef,
     selectedDay,
     name,
     handleNoteInput,
-}) {
+}) => {
     return (
         <KeyboardAvoidingView>
             <ActionSheet
@@ -29,7 +29,7 @@ export default function CalendarBottomSheet({
                 elevation={2}
                 bounciness={0}
                 extraScroll={80}
-                ref={sheetRef}
+                ref={noteSheetRef}
             >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Text left marginLeft="15px" color="gray" twenty fontFamily="Medium">
@@ -73,4 +73,6 @@ export default function CalendarBottomSheet({
             </ActionSheet>
         </KeyboardAvoidingView>
     );
-}
+};
+
+export default NoteSheet;

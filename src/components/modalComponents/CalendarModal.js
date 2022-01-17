@@ -9,10 +9,13 @@ import {
 import Text from '../../utils/Text';
 import { calendarStyles } from '../../utils/globalStyles';
 import { useHabits } from '../../context/HabitProvider';
-import CalendarBottomSheet from '../uiComponents/CalendarBottomSheet';
+import NoteSheet from '../uiComponents/NoteSheet';
 import CalendarHead from '../uiComponents/CalendarHeader';
-import checkCurrentWeek from '../../utils/helpers/checkWeek';
-import { getCurrentDateFormattedForCalendarComponent } from '../../utils/helpers/dateHelpers';
+import { calculateCompletionRate } from '../../utils/helpers/calculateCompletionRate';
+import {
+    getCurrentDateFormattedForCalendarComponent,
+    getCurrentWeek,
+} from '../../utils/helpers/dateHelpers';
 import CalendarFrequency from '../uiComponents/CalendarFrequency';
 import ActionSheet from '@alessiocancian/react-native-actionsheet';
 import CalendarStats from '../uiComponents/CalendarStats';
@@ -24,7 +27,7 @@ const CalendarModal = ({ route }) => {
     const [selectedDay, setSelectedDay] = useState(new Date());
     const [completionRate, setCompletionRate] = useState(0);
     const [editNoteModalVisible, setEditNoteModalVisible] = useState(false);
-    const [bottomSheetVisible, setBottomSheetVisible] = useState();
+    const [actionSheetVisible, setActionSheetVisible] = useState(false);
     const { habits, habitSetter } = useHabits();
 
     const { data } = route.params;
@@ -40,21 +43,26 @@ const CalendarModal = ({ route }) => {
         id,
     } = data;
 
-    const sheetRef = useRef(null);
+    const noteSheetRef = useRef(null);
     const actionSheetRef = useRef(null);
+    const currentWeek = getCurrentWeek();
 
     useEffect(() => {
-        setCompletionRate(checkCurrentWeek(dataCurrentWeek, completedDates, days, data));
+        if (currentWeek > dataCurrentWeek) {
+            setCompletionRate(0);
+        } else {
+            setCompletionRate(calculateCompletionRate(completedDates, days));
+        }
     }, [days, dataCurrentWeek]);
+
+    useEffect(() => {
+        if (actionSheetVisible) actionSheetRef.current.show();
+    }, [selectedDay]);
 
     const calendarDayPress = (day) => {
         setSelectedDay(day.dateString);
-        setBottomSheetVisible(true);
+        setActionSheetVisible(true);
     };
-
-    useEffect(() => {
-        if (bottomSheetVisible) actionSheetRef.current.show();
-    }, [selectedDay]);
 
     const handleNoteInput = () => {
         const noteInputObj = {
@@ -73,7 +81,7 @@ const CalendarModal = ({ route }) => {
         } catch (error) {
             console.error(error);
         }
-        sheetRef.current?.hide();
+        noteSheetRef.current?.hide();
         setNoteInput('');
     };
 
@@ -112,10 +120,10 @@ const CalendarModal = ({ route }) => {
                     setEditNoteModalVisible={setEditNoteModalVisible}
                     data={data}
                 />
-                <CalendarBottomSheet
+                <NoteSheet
                     data={data}
                     noteInput={noteInput}
-                    sheetRef={sheetRef}
+                    noteSheetRef={noteSheetRef}
                     selectedDay={selectedDay}
                     name={name}
                     setNoteInput={setNoteInput}
@@ -129,7 +137,7 @@ const CalendarModal = ({ route }) => {
                     userInterfaceStyle="dark"
                     onPress={(index) => {
                         if (index === 0) handleDoneOtherDay(selectedDay, data, habits, habitSetter);
-                        if (index === 1) sheetRef.current.show();
+                        if (index === 1) noteSheetRef.current.show();
                     }}
                 />
             </ScrollView>

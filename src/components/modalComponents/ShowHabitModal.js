@@ -14,6 +14,7 @@ import { colors } from '../../utils/colors';
 const ShowHabitModal = ({ route, navigation }) => {
     const { data } = route.params;
     const {
+        id,
         notificationId,
         name,
         icon,
@@ -30,7 +31,7 @@ const ShowHabitModal = ({ route, navigation }) => {
     const { habits, habitSetter } = useHabits();
 
     const deleteHabitAndNavigateBack = () => {
-        deleteHabit(notificationId, habits, habitSetter, data);
+        deleteHabit(habits, habitSetter, notificationId, id);
         navigation.goBack();
     };
 

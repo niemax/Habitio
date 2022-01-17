@@ -12,7 +12,7 @@ import {
 import Text from '../utils/Text';
 import { noHabitsImageStyle } from '../utils/globalStyles';
 import ContentLoader, { Rect } from 'react-content-loader/native';
-import HomeListItem from '../components/uiComponents/HomeListItem';
+import HabitListItem from '../components/uiComponents/HabitListItem';
 import HomepageHeader from '../components/uiComponents/HomepageHeader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NameAlert from '../components/uiComponents/nameAlert';
@@ -78,7 +78,7 @@ const Homepage = ({ navigation }) => {
                 }
                 style={{ marginBottom: 10 }}
             >
-                <Text twentyTwo fontFamily="Bold" marginTop="30px" marginLeft="15px" left>
+                <Text twenty fontFamily="Bold" marginTop="30px" marginLeft="15px" left>
                     Your Habits{' '}
                     <Text fontFamily="Medium" color="gray">
                         ({HABITS_LENGTH})
@@ -119,7 +119,7 @@ const Homepage = ({ navigation }) => {
                         ))}
                     {!habitsLoading &&
                         habits?.map((item) => (
-                            <HomeListItem item={item} completed={item.completed} />
+                            <HabitListItem item={item} completed={item.completed} />
                         ))}
                 </HomepageDataView>
             </ScrollView>

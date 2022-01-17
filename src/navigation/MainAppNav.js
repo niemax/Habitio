@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Homepage from '../screens/Homepage';
 import HabitScreen from '../screens/HabitScreen';
 import CreateHabit from '../screens/CreateHabit';
@@ -9,11 +9,10 @@ import ShowHabitModal from '../components/modalComponents/ShowHabitModal';
 import ShowHabitEditModal from '../components/modalComponents/ShowHabitEditModal';
 import CalendarModal from '../components/modalComponents/CalendarModal';
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const MainAppStack = () => (
     <Stack.Navigator
-        mode="modal"
         initialRouteName="Homepage"
         screenOptions={{
             headerShown: false,
@@ -27,25 +26,12 @@ const MainAppStack = () => (
         <Stack.Screen name="Settings" component={Settings} />
         <Stack.Group
             screenOptions={{
-                headerShown: false,
-                gestureEnabled: true,
+                presentation: 'modal',
             }}
         >
-            <Stack.Screen
-                name="ShowHabitModal"
-                component={ShowHabitModal}
-                options={{ presentation: 'modal' }}
-            />
-            <Stack.Screen
-                name="ShowHabitEditModal"
-                component={ShowHabitEditModal}
-                options={{ presentation: 'modal' }}
-            />
-            <Stack.Screen
-                name="CalendarModal"
-                cemponent={CalendarModal}
-                options={{ presentation: 'modal' }}
-            />
+            <Stack.Screen name="ShowHabitModal" component={ShowHabitModal} />
+            <Stack.Screen name="ShowHabitEditModal" component={ShowHabitEditModal} />
+            <Stack.Screen name="CalendarModal" component={CalendarModal} />
         </Stack.Group>
     </Stack.Navigator>
 );

@@ -3,19 +3,19 @@ import {
     CalendarStatsContainer,
     CalendarTimesInfoContainer,
 } from '../../utils/StyledComponents/Styled';
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Text from '../../utils/Text';
 import { formatDateForHabitEndDate } from '../../utils/helpers/dateHelpers';
 
 const CalendarStats = ({ completedDates, completionRate, color }) => (
     <CalendarTimesInfoContainer>
         <CalendarStatsContainer>
-            <MaterialCommunityIcons name="chart-arc" size={28} color={color} />
+            <MaterialCommunityIcons name="chart-arc" size={32} color={color} />
             <Text twentyEight fontFamily="Medium" marginTop="15px" color={color}>
                 {Object.keys(completedDates).length}
             </Text>
             <Text marginTop="5px" sixteen>
-                Completions
+                Total
             </Text>
         </CalendarStatsContainer>
         <CalendarStatsContainer>
@@ -32,7 +32,7 @@ const CalendarStats = ({ completedDates, completionRate, color }) => (
                 {completionRate.toFixed(0)}%
             </Text>
             <Text marginTop="5px" sixteen>
-                Current rate
+                Current
             </Text>
         </CalendarStatsContainer>
     </CalendarTimesInfoContainer>

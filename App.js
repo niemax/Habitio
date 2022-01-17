@@ -24,7 +24,6 @@ export default function App() {
 
     async function loadFonts() {
         await Font.loadAsync({
-            // Load the main font from static assets
             Regular: require('./src/assets/font/Raleway-Regular.ttf'),
             Medium: require('./src/assets/font/Raleway-Medium.ttf'),
             SemiBold: require('./src/assets/font/Raleway-SemiBold.ttf'),
@@ -65,7 +64,7 @@ export default function App() {
 
     if (fontsLoaded) {
         return (
-            <View style={{ flex: 1, backgroundColor: 'black' }}>
+            <>
                 <StatusBar style="light" />
                 <NavigationContainer>
                     <HabitProvider>
@@ -75,7 +74,7 @@ export default function App() {
                         </SafeAreaProvider>
                     </HabitProvider>
                 </NavigationContainer>
-            </View>
+            </>
         );
     }
     return <AppLoading />;
