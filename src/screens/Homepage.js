@@ -60,7 +60,6 @@ const Homepage = ({ navigation }) => {
 
     return (
         <MainContainer>
-            <HomepageHeader name={name} loading={loading} />
             <NameAlert
                 namePromptVisible={namePromptVisible}
                 setNamePromptVisible={setNamePromptVisible}
@@ -78,6 +77,7 @@ const Homepage = ({ navigation }) => {
                 }
                 style={{ marginBottom: 10 }}
             >
+                <HomepageHeader name={name} loading={loading} />
                 <Text twenty fontFamily="Bold" marginTop="30px" marginLeft="15px" left>
                     Your Habits{' '}
                     <Text fontFamily="Medium" color="gray">

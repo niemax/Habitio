@@ -64,17 +64,15 @@ export default function App() {
 
     if (fontsLoaded) {
         return (
-            <>
+            <NavigationContainer>
                 <StatusBar style="light" />
-                <NavigationContainer>
-                    <HabitProvider>
-                        <SafeAreaProvider>
-                            <FlashMessage position="top" />
-                            <Main />
-                        </SafeAreaProvider>
-                    </HabitProvider>
-                </NavigationContainer>
-            </>
+                <HabitProvider>
+                    <SafeAreaProvider>
+                        <FlashMessage position="top" />
+                        <Main />
+                    </SafeAreaProvider>
+                </HabitProvider>
+            </NavigationContainer>
         );
     }
     return <AppLoading />;
