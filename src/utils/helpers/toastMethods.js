@@ -1,18 +1,19 @@
 import { showMessage } from 'react-native-flash-message';
 import { colors } from '../colors';
 
-const words = ['Awesome!', 'Splendid!', 'Horrendous!', 'Excellent!', 'Great!'];
+const words = ['Awesome!', 'Super!', 'Horrendous!', 'Excellent!', 'Great!'];
 
 const randomWord = words[Math.floor(Math.random() * words.length)];
 
 export const toasts = {
-    info: (habitName, color) => {
+    info: (habitName) => {
         showMessage({
-            duration: 4500,
+            duration: 4000,
             message: randomWord,
-            description: `You completed ${habitName}. Keep it up!`,
-            backgroundColor: color,
+            description: `You completed ${habitName}. Nice work!`,
+            backgroundColor: colors.black,
             titleStyle: {
+                color: colors.mainGreen,
                 fontFamily: 'Bold',
                 fontSize: 17,
             },
@@ -20,6 +21,7 @@ export const toasts = {
                 fontFamily: 'Medium',
                 fontSize: 15,
             },
+            style: { opacity: 0.7 },
             floating: 'true',
             icon: 'success',
         });
@@ -28,8 +30,9 @@ export const toasts = {
         showMessage({
             duration: 4000,
             message: `${keyword} successfully ${verb}`,
-            backgroundColor: colors.error,
+            backgroundColor: colors.black,
             titleStyle: {
+                color: colors.error,
                 fontFamily: 'Medium',
                 fontSize: 16,
             },

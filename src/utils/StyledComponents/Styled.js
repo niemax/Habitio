@@ -108,6 +108,15 @@ export const ButtonContainer = styled.View`
     align-items: center;
 `;
 
+export const CreateHabitButton = styled.TouchableOpacity`
+    width: 160px;
+    height: 60px;
+    background-color: ${mainGreen};
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+`;
+
 export const HabitNextButton = styled.TouchableOpacity`
     width: ${deviceWidth - 40}px
     height: 60px;
@@ -139,11 +148,11 @@ export const HabitScreenContainer = styled.View`
 
 export const ImageContainer = styled.View`
     width: 100%;
-    height: 160px;
+    height: 130px;
     justify-content: space-between;
     flex-direction: row;
     align-items: center
-    background-color: #191919;
+    background-color: ${colors.black};
 `;
 
 export const ChevronTextContainer = styled.View`
@@ -200,6 +209,7 @@ export const HabitUtilityInfoContainer = styled.View`
     background-color: ${colors.mainBoxes};
     border-radius: 8px;
     margin-top: 25px;
+    margin-bottom: 50px;
     justify-content: center;
     padding-horizontal: 10px;
     padding-vertical: 20px;
@@ -299,7 +309,6 @@ export const CalendarFrequencyContainer = styled.View`
 `;
 
 export const CalendarTimesInfoContainer = styled.View`
-    background-color: ${colors.mainBoxes};
     opacity: 0.9
     flex-direction: row;
     justify-content: space-between;
@@ -318,8 +327,8 @@ export const CalendarTextContainer = styled.View`
 `;
 
 export const CalendarStatsContainer = styled.View`
-    flex-direction: column;
-    justify-content: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
     align-items: center;
 `;
 
@@ -432,6 +441,7 @@ export const ProgressModalCloseButton = styled.TouchableOpacity`
     border-radius: 30px;
     margin-top: 10px;
 `;
+
 export const ProgressModalShareButton = styled.TouchableOpacity`
     justify-content: center;
     background-color: ${colors.mainBoxes};

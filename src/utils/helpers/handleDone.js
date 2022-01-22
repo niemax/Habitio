@@ -4,7 +4,7 @@ import { haptics } from './haptics';
 import { toasts } from './toastMethods';
 
 const handleDoneToday = (data, habits, habitSetter) => {
-    const { id, name, color } = data;
+    const { id, name } = data;
     const getCalendarDateString = getCurrentDateFormattedForCalendarComponent();
 
     try {
@@ -19,7 +19,7 @@ const handleDoneToday = (data, habits, habitSetter) => {
                     habit.completedDay = getCurrentDay();
                     habit.completed = true;
                     habit.completedDates = completedDatesObj;
-                    toasts.info(name, color);
+                    toasts.info(name);
                     haptics.success();
                 }
             } else {

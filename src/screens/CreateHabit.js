@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
 import { ScrollView, View } from 'react-native';
-import { HabitUtilityInfoContainer, MainContainer } from '../utils/StyledComponents/Styled';
+import {
+    ButtonContainer,
+    CreateHabitButton,
+    HabitUtilityInfoContainer,
+    MainContainer,
+} from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 import HabitInput from '../components/uiComponents/HabitDescriptionInput';
 import Frequency from '../components/uiComponents/ChooseFrequency';
-import CHHeader from '../components/uiComponents/CreateHabitHeader';
 import HabitColor from '../components/uiComponents/SelectHabitColorButton';
 import { getCurrentWeek } from '../utils/helpers/dateHelpers';
+import handleHabitCreation from '../utils/helpers/createhabitHelpers';
+import { useHabits } from '../context/HabitProvider';
 
-const CreateHabit = ({ route }) => {
+const CreateHabit = ({ route, navigation }) => {
+    const { name, habitIcon, color, habitName } = route.params;
+
     const [updatedColor, setUpdatedColor] = useState();
     const [colorUpdated, setColorUpdated] = useState(false);
     const [description, setDescription] = useState('');
@@ -23,6 +31,8 @@ const CreateHabit = ({ route }) => {
     const [isEnabledEndDate, setIsEnabledEndDate] = useState(false);
     const [selectedValue, setSelectedValue] = useState();
 
+    const { CRUDHabits } = useHabits();
+
     const toggleSwitch = () =>
         !isEnabledSpecific && setIsEnabled((previousState) => !previousState);
     const toggleSwitchDate = () =>
@@ -30,8 +40,6 @@ const CreateHabit = ({ route }) => {
     const toggleSwitchSpecific = () =>
         !isEnabledDate && !isEnabled && setIsEnabledSpecific((previousState) => !previousState);
     const toggleSwitchEndDate = () => setIsEnabledEndDate((previousState) => !previousState);
-
-    const { habitName, habitIcon, color } = route.params;
 
     const currentWeek = getCurrentWeek();
 
@@ -56,7 +64,7 @@ const CreateHabit = ({ route }) => {
     };
 
     const newHabit = {
-        name: habitName,
+        name: name || habitName,
         id: Math.floor(Math.random() * 10000),
         color: color || updatedColor,
         icon: habitIcon,
@@ -78,19 +86,8 @@ const CreateHabit = ({ route }) => {
 
     return (
         <MainContainer>
-            <CHHeader
-                newHabit={newHabit}
-                isEnabledDate={isEnabledDate}
-                isEnabledSpecific={isEnabledSpecific}
-                reminderTime={reminderTime}
-                habitName={habitName}
-                specificDate={specificDate}
-            />
             <ScrollView>
                 <View style={{ marginBottom: 40 }}>
-                    <Text left twentyTwo fontFamily="Bold" marginLeft="10px" marginTop="30px">
-                        {habitName}
-                    </Text>
                     <Text left marginLeft="10px" fontFamily="Regular" marginTop="35px">
                         Description
                     </Text>
@@ -140,6 +137,25 @@ const CreateHabit = ({ route }) => {
                     </View>
                 </View>
             </ScrollView>
+            <ButtonContainer>
+                <CreateHabitButton
+                    onPress={() => {
+                        handleHabitCreation(
+                            newHabit,
+                            isEnabledDate,
+                            isEnabledSpecific,
+                            CRUDHabits,
+                            reminderTime,
+                            name,
+                            navigation,
+                            specificDate
+                        );
+                        navigation.navigate('Homepage');
+                    }}
+                >
+                    <Text twentyTwo>Create</Text>
+                </CreateHabitButton>
+            </ButtonContainer>
         </MainContainer>
     );
 };

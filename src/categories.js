@@ -2,7 +2,7 @@ import { colors } from './utils/colors';
 
 const data = [
     {
-        name: 'Self-Care',
+        category: 'Self-Care',
         mainIcon: require('./assets/flatIcons/heart.png'),
         color: colors.error,
         image: require('./assets/flatIcons/selfcare.png'),
@@ -35,7 +35,7 @@ const data = [
         ],
     },
     {
-        name: 'Productivity',
+        category: 'Productivity',
         mainIcon: require('./assets/flatIcons/timetomarket.png'),
         color: '#EBDBB1',
         image: require('./assets/flatIcons/time-to-market.png'),
@@ -67,7 +67,7 @@ const data = [
         ],
     },
     {
-        name: 'Fitness',
+        category: 'Fitness',
         mainIcon: require('./assets/flatIcons/flexions-exercise.png'),
         color: colors.mainGreen,
         image: require('./assets/flatIcons/dumbbell.png'),
@@ -87,7 +87,7 @@ const data = [
         ],
     },
     {
-        name: 'Goals',
+        category: 'Goals',
         mainIcon: require('./assets/flatIcons/goal.png'),
         color: '#EBDBB1',
         image: require('./assets/flatIcons/career.png'),
@@ -101,7 +101,7 @@ const data = [
         ],
     },
     {
-        name: 'Nutrition',
+        category: 'Nutrition',
         mainIcon: require('./assets/flatIcons/dinner.png'),
         color: '#764D00',
         image: require('./assets/flatIcons/nutrition.png'),

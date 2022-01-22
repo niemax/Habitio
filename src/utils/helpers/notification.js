@@ -37,7 +37,7 @@ export const scheduleOneTimeWeekNotification = async (currentDay) => {
                     body: `New week, new fresh start! Get in champ! 💪`,
                 },
                 trigger: {
-                    seconds: 10,
+                    seconds: 60 * 2,
                     repeats: true,
                 },
             });

@@ -1,17 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { ScrollView } from 'react-native';
 import { Calendar } from 'react-native-calendars';
-import {
-    CalendarLineBreak,
-    HabitHeaderLineBreak,
-    ModalContent,
-} from '../../utils/StyledComponents/Styled';
+import { CalendarLineBreak, ModalContent } from '../../utils/StyledComponents/Styled';
 import Text from '../../utils/Text';
 import { calendarStyles } from '../../utils/globalStyles';
 import { useHabits } from '../../context/HabitProvider';
 import NoteSheet from '../uiComponents/NoteSheet';
-import CalendarHead from '../uiComponents/CalendarHeader';
-import { calculateCompletionRate } from '../../utils/helpers/calculateCompletionRate';
 import {
     getCurrentDateFormattedForCalendarComponent,
     getCurrentWeek,
@@ -21,6 +15,7 @@ import ActionSheet from '@alessiocancian/react-native-actionsheet';
 import CalendarStats from '../uiComponents/CalendarStats';
 import Notes from '../uiComponents/Notes';
 import { handleDoneOtherDay } from '../../utils/helpers/handleDone';
+import { colors } from '../../utils/colors';
 
 const CalendarModal = ({ route }) => {
     const [noteInput, setNoteInput] = useState('');
@@ -47,13 +42,13 @@ const CalendarModal = ({ route }) => {
     const actionSheetRef = useRef(null);
     const currentWeek = getCurrentWeek();
 
-    useEffect(() => {
+    /*  useEffect(() => {
         if (currentWeek > dataCurrentWeek) {
             setCompletionRate(0);
         } else {
             setCompletionRate(calculateCompletionRate(completedDates, days));
         }
-    }, [days, dataCurrentWeek]);
+    }, [days, dataCurrentWeek]); */
 
     useEffect(() => {
         if (actionSheetVisible) actionSheetRef.current.show();
@@ -87,8 +82,6 @@ const CalendarModal = ({ route }) => {
 
     return (
         <ModalContent>
-            <CalendarHead name={name} color={color} />
-            <HabitHeaderLineBreak />
             <ScrollView>
                 <CalendarStats
                     completedDates={completedDates}
@@ -98,9 +91,9 @@ const CalendarModal = ({ route }) => {
                 <Calendar
                     theme={{
                         ...calendarStyles,
-                        selectedDayBackgroundColor: color,
-                        arrowColor: color,
-                        todayTextColor: color,
+                        selectedDayBackgroundColor: colors.mainGreen,
+                        arrowColor: colors.mainGreen,
+                        todayTextColor: colors.mainGreen,
                     }}
                     firstDay={1}
                     hideExtraDays={true}

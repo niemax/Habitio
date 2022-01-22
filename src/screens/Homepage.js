@@ -16,7 +16,6 @@ import HabitListItem from '../components/uiComponents/HabitListItem';
 import HomepageHeader from '../components/uiComponents/HomepageHeader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NameAlert from '../components/uiComponents/nameAlert';
-import { scheduleOneTimeWeekNotification } from '../utils/helpers/notification';
 
 const wait = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
 
@@ -49,7 +48,6 @@ const Homepage = ({ navigation }) => {
     };
 
     useEffect(() => {
-        scheduleOneTimeWeekNotification();
         const timeout = setTimeout(() => {
             fetchName();
         }, 1000);

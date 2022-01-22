@@ -1,6 +1,5 @@
 import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
-import { Feather } from '@expo/vector-icons';
 import {
     ChevronTextContainer,
     HabitCardsContainer,
@@ -11,18 +10,14 @@ import {
 import Text from '../utils/Text';
 
 const HabitScreen = ({ route, navigation }) => {
-    const { habitData, habitName, image } = route.params;
+    const { habitData, image, category } = route.params;
 
     return (
         <HabitScreenContainer>
             <ImageContainer>
                 <ChevronTextContainer>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Feather name="chevron-left" size={32} color="white" />
-                    </TouchableOpacity>
-
                     <Text left fontFamily="Extra" thirtyFour marginLeft="10px" marginTop="20px">
-                        {habitName}
+                        {category}
                     </Text>
                 </ChevronTextContainer>
                 <Image
@@ -30,19 +25,18 @@ const HabitScreen = ({ route, navigation }) => {
                     source={image}
                 />
             </ImageContainer>
-            {habitData.map(({ habitIcon, name, data, description, color }, index) => (
+            {habitData.map(({ habitIcon, description, color, name }) => (
                 <TouchableOpacity
-                    key={index.toString()}
+                    key={name}
                     onPress={() =>
                         navigation.push('CreateHabit', {
                             habitIcon: habitIcon,
-                            habitName: name,
+                            name: name,
                             color: color,
-                            ...data,
                         })
                     }
                 >
-                    <HabitCardsContainer key={index.toString()}>
+                    <HabitCardsContainer>
                         <Image
                             style={{ height: 40, width: 40, marginLeft: 15 }}
                             source={habitIcon}

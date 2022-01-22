@@ -31,7 +31,6 @@ const handleHabitCreation = async (
     CRUDHabits,
     reminderTime,
     habitName,
-    navigation,
     specificDate
 ) => {
     const { reminderTimeHours, reminderTimeMinutes } = getParsedReminderTimeHours(reminderTime);
@@ -44,7 +43,6 @@ const handleHabitCreation = async (
         cHScheduleOneTime(habitName, specificDate, newHabit);
     }
     CRUDHabits(newHabit);
-    navigation.navigate('Homepage');
 };
 
 export default handleHabitCreation;

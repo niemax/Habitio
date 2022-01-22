@@ -9,6 +9,7 @@ const HabitInput = ({ values: { description, stateDescription }, actions: { setV
         <HabitDescriptionInput
             keyboardAppearance="dark"
             multiline={Platform.OS === 'android' ? false : true}
+            placeholder="Write a description"
             autoCorrect={false}
             value={description || stateDescription}
             placeholderTextColor="gray"

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Image, ScrollView, TouchableOpacity, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import {
     ButtonContainer,
     HabitInput,
@@ -22,7 +21,7 @@ const StartHabitCreation = ({ navigation }) => {
         if (habitName === '') {
             setError('Name Required');
         } else {
-            navigation.push('CreateHabit', {
+            navigation.navigate('CreateHabit', {
                 habitName: habitName,
             });
         }
@@ -30,16 +29,7 @@ const StartHabitCreation = ({ navigation }) => {
 
     return (
         <ModalContent>
-            <TouchableOpacity
-                style={{ marginLeft: 10, marginTop: 40 }}
-                onPress={() => navigation.goBack()}
-            >
-                <Ionicons name="close-circle-sharp" size={34} color="gray" />
-            </TouchableOpacity>
             <ScrollView>
-                <Text left marginLeft="25px" thirtyFour fontFamily="Extra" marginTop="20px">
-                    Add a habit
-                </Text>
                 <Text left fontFamily="Regular" marginLeft="25px" marginTop="25px">
                     Create your own Habit
                 </Text>
@@ -66,16 +56,16 @@ const StartHabitCreation = ({ navigation }) => {
                 </Text>
                 <View style={{ marginBottom: 60 }}>
                     <Text left fontFamily="Regular" marginLeft="25px" marginTop="50px">
-                        Or choose from existing Habits
+                        Or choose
                     </Text>
                     <PreDefinedContainer>
-                        {data.map(({ name, image, mainIcon, habits }, index) => (
+                        {data.map(({ category, image, mainIcon, habits }) => (
                             <TouchableOpacity
-                                key={index.toString()}
+                                key={category}
                                 onPress={() =>
                                     navigation.push('HabitScreen', {
                                         image: image,
-                                        habitName: name,
+                                        category: category,
                                         habitData: habits,
                                     })
                                 }
@@ -86,7 +76,7 @@ const StartHabitCreation = ({ navigation }) => {
                                         style={{ height: 40, width: 40, marginLeft: 20 }}
                                     />
                                     <Text marginLeft="15px" fontFamily="Medium">
-                                        {name}
+                                        {category}
                                     </Text>
                                 </PreDefinedHabitsContainer>
                             </TouchableOpacity>

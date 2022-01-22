@@ -3,9 +3,8 @@ import { Alert, Image, ScrollView, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useHabits } from '../../context/HabitProvider';
 import { showHabitImage, showHabitImageBackground } from '../../utils/globalStyles';
-import { HabitHeaderLineBreak, ModalContent } from '../../utils/StyledComponents/Styled';
+import { ModalContent } from '../../utils/StyledComponents/Styled';
 import Text from '../../utils/Text';
-import ShowHabitHeader from '../uiComponents/ShowHabitHeader';
 import ShowHabitActions from '../uiComponents/ShowHabitActions';
 import deleteHabit from '../../utils/helpers/deleteHabit';
 import { HabitInfo } from '../uiComponents/HabitInfo';
@@ -54,8 +53,6 @@ const ShowHabitModal = ({ route, navigation }) => {
 
     return (
         <ModalContent>
-            <ShowHabitHeader data={data} />
-            <HabitHeaderLineBreak />
             <ScrollView contentContainerStyle={{ marginTop: 10 }}>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <View style={showHabitImageBackground}>

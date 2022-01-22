@@ -1,8 +1,9 @@
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 import {
+    ButtonContainer,
+    CreateHabitButton,
     HabitCentered,
-    HabitHeaderLineBreak,
     HabitInfoContainer,
     HabitUtilityInfoContainer,
     ModalContent,
@@ -11,7 +12,6 @@ import Text from '../../utils/Text';
 import Frequency from '../uiComponents/ChooseFrequency';
 import HabitInput from '../uiComponents/HabitDescriptionInput';
 import HabitColor from '../uiComponents/SelectHabitColorButton';
-import ShowEditHeader from '../uiComponents/ShowEditHeader';
 
 export default function HabitEditContent({
     methods: {
@@ -26,7 +26,6 @@ export default function HabitEditContent({
         onChangeEndDate,
     },
     setters: {
-        setEditHabitModalVisible,
         setSelectedValue,
         setStateDescription,
         setDaysCount,
@@ -52,11 +51,6 @@ export default function HabitEditContent({
 }) {
     return (
         <ModalContent>
-            <ShowEditHeader
-                setEditHabitModalVisible={setEditHabitModalVisible}
-                handleUpdate={handleSubmit}
-            />
-            <HabitHeaderLineBreak />
             <ScrollView>
                 <View style={{ marginBottom: 40 }}>
                     <Text left twentyTwo fontFamily="SemiBold" marginLeft="10px" marginTop="30px">
@@ -119,6 +113,11 @@ export default function HabitEditContent({
                     </HabitInfoContainer>
                 </View>
             </ScrollView>
+            <ButtonContainer>
+                <CreateHabitButton onPress={handleSubmit}>
+                    <Text twentyTwo>Update</Text>
+                </CreateHabitButton>
+            </ButtonContainer>
         </ModalContent>
     );
 }

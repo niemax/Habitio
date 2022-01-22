@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Platform, View } from 'react-native';
+import { Platform } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import FlashMessage from 'react-native-flash-message';
@@ -10,9 +10,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import * as Notifications from 'expo-notifications';
 import HabitProvider from './src/context/HabitProvider';
-import Main from './src/navigation/MainAppNav';
 import { scheduleOneTimeWeekNotification } from './src/utils/helpers/notification';
 import { getCurrentDay } from './src/utils/helpers/dateHelpers';
+import MainAppStack from './src/navigation/MainAppNav';
 
 export default function App() {
     const [, , setExpoPushToken] = useState('');
@@ -65,13 +65,13 @@ export default function App() {
     if (fontsLoaded) {
         return (
             <NavigationContainer>
-                <StatusBar style="light" />
-                <HabitProvider>
-                    <SafeAreaProvider>
-                        <FlashMessage position="top" />
-                        <Main />
-                    </SafeAreaProvider>
-                </HabitProvider>
+                <SafeAreaProvider>
+                    <StatusBar style="light" />
+                    <HabitProvider>
+                        <FlashMessage position="bottom" />
+                        <MainAppStack />
+                    </HabitProvider>
+                </SafeAreaProvider>
             </NavigationContainer>
         );
     }

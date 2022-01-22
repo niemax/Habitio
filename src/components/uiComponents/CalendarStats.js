@@ -1,41 +1,24 @@
 import React from 'react';
-import {
-    CalendarStatsContainer,
-    CalendarTimesInfoContainer,
-} from '../../utils/StyledComponents/Styled';
+import { CalendarLineBreak, CalendarStatsContainer } from '../../utils/StyledComponents/Styled';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Text from '../../utils/Text';
 import { formatDateForHabitEndDate } from '../../utils/helpers/dateHelpers';
+import { colors } from '../../utils/colors';
 
-const CalendarStats = ({ completedDates, completionRate, color }) => (
-    <CalendarTimesInfoContainer>
+const CalendarStats = ({ completedDates }) => (
+    <>
+        <CalendarLineBreak />
         <CalendarStatsContainer>
-            <MaterialCommunityIcons name="chart-arc" size={32} color={color} />
-            <Text twentyEight fontFamily="Medium" marginTop="15px" color={color}>
+            <MaterialCommunityIcons name="chart-arc" size={48} color={colors.mainGreen} />
+            <Text style={{ fontSize: 38 }} fontFamily="Extra" marginTop="15px" color="gold">
                 {Object.keys(completedDates).length}
             </Text>
-            <Text marginTop="5px" sixteen>
-                Total
+            <Text twenty fontFamily="Extra" marginTop="15px">
+                Total completions
             </Text>
         </CalendarStatsContainer>
-        <CalendarStatsContainer>
-            <Text fontFamily="Bold" color={color}>
-                Today{' '}
-            </Text>
-            <Text marginTop="5px" sixteen fontFamily="Medium">
-                {formatDateForHabitEndDate(new Date())}
-            </Text>
-        </CalendarStatsContainer>
-        <CalendarStatsContainer>
-            <MaterialCommunityIcons name="progress-check" size={28} color={color} />
-            <Text twentyEight fontFamily="Medium" marginTop="15px" color={color}>
-                {completionRate.toFixed(0)}%
-            </Text>
-            <Text marginTop="5px" sixteen>
-                Current
-            </Text>
-        </CalendarStatsContainer>
-    </CalendarTimesInfoContainer>
+        <CalendarLineBreak />
+    </>
 );
 
 export default CalendarStats;
