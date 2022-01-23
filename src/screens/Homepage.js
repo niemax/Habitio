@@ -5,7 +5,6 @@ import { Feather } from '@expo/vector-icons';
 import { useHabits } from '../context/HabitProvider';
 import {
     HomepageDataView,
-    MainContainer,
     NoHabitsContainer,
     TabAddButton,
 } from '../utils/StyledComponents/Styled';
@@ -13,9 +12,9 @@ import Text from '../utils/Text';
 import { noHabitsImageStyle } from '../utils/globalStyles';
 import ContentLoader, { Rect } from 'react-content-loader/native';
 import HabitListItem from '../components/uiComponents/HabitListItem';
-import HomepageHeader from '../components/uiComponents/HomepageHeader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NameAlert from '../components/uiComponents/nameAlert';
+import { Box, useColorModeValue, useColorMode } from 'native-base';
 
 const wait = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
 
@@ -25,6 +24,7 @@ const Homepage = ({ navigation }) => {
     const [name, setName] = useState('');
     const [loading, setLoading] = useState(true);
     const { habits, getHabits, habitsLoading } = useHabits();
+    const { colorMode, toggleColorMode } = useColorMode();
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
@@ -57,12 +57,13 @@ const Homepage = ({ navigation }) => {
     const HABITS_LENGTH = Object.keys(habits).length;
 
     return (
-        <MainContainer>
+        <Box flex={1} bg={useColorModeValue('#000000', '#FFFFFF')}>
             <NameAlert
                 namePromptVisible={namePromptVisible}
                 setNamePromptVisible={setNamePromptVisible}
                 setName={setName}
             />
+
             <ScrollView
                 refreshControl={
                     <RefreshControl
@@ -75,7 +76,6 @@ const Homepage = ({ navigation }) => {
                 }
                 style={{ marginBottom: 10 }}
             >
-                <HomepageHeader name={name} loading={loading} />
                 <Text twenty fontFamily="Bold" marginTop="30px" marginLeft="15px" left>
                     Your Habits{' '}
                     <Text fontFamily="Medium" color="gray">
@@ -117,14 +117,11 @@ const Homepage = ({ navigation }) => {
                         ))}
                     {!habitsLoading &&
                         habits?.map((item) => (
-                            <HabitListItem item={item} completed={item.completed} />
+                            <HabitListItem key={item.id} item={item} completed={item.completed} />
                         ))}
                 </HomepageDataView>
             </ScrollView>
-            <TabAddButton onPress={() => navigation.navigate('StartHabitCreation')}>
-                <Feather name="plus" size={36} color="white" />
-            </TabAddButton>
-        </MainContainer>
+        </Box>
     );
 };
 

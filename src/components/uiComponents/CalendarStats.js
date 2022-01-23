@@ -7,7 +7,6 @@ import { colors } from '../../utils/colors';
 
 const CalendarStats = ({ completedDates }) => (
     <>
-        <CalendarLineBreak />
         <CalendarStatsContainer>
             <MaterialCommunityIcons name="chart-arc" size={48} color={colors.mainGreen} />
             <Text style={{ fontSize: 38 }} fontFamily="Extra" marginTop="15px" color="gold">

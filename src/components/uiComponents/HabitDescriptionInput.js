@@ -18,6 +18,7 @@ const HabitInput = ({ values: { description, stateDescription }, actions: { setV
                 fontSize: 17,
                 fontFamily: 'SemiBold',
                 width: width - 15,
+                marginBottom: 20,
             }}
             onChangeText={setValue}
         />

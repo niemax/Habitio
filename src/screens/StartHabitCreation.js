@@ -12,6 +12,7 @@ import {
 import Text from '../utils/Text';
 import data from '../categories';
 import { colors } from '../utils/colors';
+import { Box, Center } from 'native-base';
 
 const StartHabitCreation = ({ navigation }) => {
     const [habitName, setHabitName] = useState('');
@@ -71,10 +72,12 @@ const StartHabitCreation = ({ navigation }) => {
                                 }
                             >
                                 <PreDefinedHabitsContainer>
-                                    <Image
-                                        source={mainIcon}
-                                        style={{ height: 40, width: 40, marginLeft: 20 }}
-                                    />
+                                    <Center bg="gray.800" p={2} rounded="lg" align="center" ml={2}>
+                                        <Image
+                                            source={mainIcon}
+                                            style={{ height: 30, width: 30 }}
+                                        />
+                                    </Center>
                                     <Text marginLeft="15px" fontFamily="Medium">
                                         {category}
                                     </Text>

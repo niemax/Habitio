@@ -53,9 +53,6 @@ export default function HabitEditContent({
         <ModalContent>
             <ScrollView>
                 <View style={{ marginBottom: 40 }}>
-                    <Text left twentyTwo fontFamily="SemiBold" marginLeft="10px" marginTop="30px">
-                        {habitName}
-                    </Text>
                     <Text left marginLeft="10px" fontFamily="Regular" marginTop="35px">
                         Description
                     </Text>
@@ -79,6 +76,8 @@ export default function HabitEditContent({
                                 color={color}
                                 updateColor={updateColor}
                             />
+                        </HabitUtilityInfoContainer>
+                        <View style={{ marginTop: 20 }}>
                             <Frequency
                                 switchStates={{
                                     isEnabledSpecific,
@@ -109,7 +108,7 @@ export default function HabitEditContent({
                                     habitEndDate,
                                 }}
                             />
-                        </HabitUtilityInfoContainer>
+                        </View>
                     </HabitInfoContainer>
                 </View>
             </ScrollView>

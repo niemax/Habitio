@@ -21,7 +21,7 @@ export const toasts = {
                 fontFamily: 'Medium',
                 fontSize: 15,
             },
-            style: { opacity: 0.7 },
+            style: { opacity: 0.9 },
             floating: 'true',
             icon: 'success',
         });
@@ -49,6 +49,7 @@ export const toasts = {
                 fontFamily: 'Medium',
                 fontSize: 16,
             },
+            style: { opacity: 0.9 },
             floating: 'true',
             icon: 'info',
         });

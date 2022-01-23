@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Platform } from 'react-native';
+import { Platform, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import FlashMessage from 'react-native-flash-message';
@@ -13,6 +13,9 @@ import HabitProvider from './src/context/HabitProvider';
 import { scheduleOneTimeWeekNotification } from './src/utils/helpers/notification';
 import { getCurrentDay } from './src/utils/helpers/dateHelpers';
 import MainAppStack from './src/navigation/MainAppNav';
+import { colors } from './src/utils/colors';
+import { NativeBaseProvider } from 'native-base';
+import { extendedTheme } from './src/theme';
 
 export default function App() {
     const [, , setExpoPushToken] = useState('');
@@ -64,15 +67,19 @@ export default function App() {
 
     if (fontsLoaded) {
         return (
-            <NavigationContainer>
-                <SafeAreaProvider>
-                    <StatusBar style="light" />
-                    <HabitProvider>
-                        <FlashMessage position="bottom" />
-                        <MainAppStack />
-                    </HabitProvider>
-                </SafeAreaProvider>
-            </NavigationContainer>
+            <NativeBaseProvider theme={extendedTheme}>
+                <View style={{ flex: 1, backgroundColor: colors.mainBackground }}>
+                    <NavigationContainer>
+                        <StatusBar style="light" />
+                        <HabitProvider>
+                            <FlashMessage position="top" />
+                            <SafeAreaProvider>
+                                <MainAppStack />
+                            </SafeAreaProvider>
+                        </HabitProvider>
+                    </NavigationContainer>
+                </View>
+            </NativeBaseProvider>
         );
     }
     return <AppLoading />;

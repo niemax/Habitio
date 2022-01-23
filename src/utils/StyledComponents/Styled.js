@@ -6,11 +6,11 @@ const deviceWidth = Dimensions.get('window').width;
 
 const { mainBackground, mainGreen } = colors;
 
-const radius = '10px';
+const radius = '15px';
 
 export const MainContainer = styled.View`
-    background-color: ${mainBackground};
     flex: 1;
+    background-color: ${mainBackground};
 `;
 
 export const HomeheaderContainer = styled.View`
@@ -25,18 +25,6 @@ export const HomepageTextContainer = styled.View`
     flex-direction: column;
 `;
 
-export const TabAddButton = styled.TouchableOpacity`
-    position: absolute;
-    bottom: 25px;
-    right: 25px;
-    height: 70px;
-    width: 70px;
-    justify-content: center;
-    align-items: center;
-    background-color: green;
-    border-radius: 200px;
-    background: ${colors.mainGreen};
-`;
 export const TabContainer = styled.View`
     padding-horizontal: 140px;
     justify-content: center;
@@ -109,7 +97,7 @@ export const ButtonContainer = styled.View`
 `;
 
 export const CreateHabitButton = styled.TouchableOpacity`
-    width: 160px;
+    width: 180px;
     height: 60px;
     background-color: ${mainGreen};
     justify-content: center;
@@ -182,6 +170,8 @@ export const CreateHabitHeader = styled.View`
 
 export const HabitInfoContainer = styled.View`
     flex: 1;
+    padding-horizontal: 8px;
+    margin-bottom: 50px;
 `;
 
 export const HabitCentered = styled.View`
@@ -208,11 +198,9 @@ export const DiaryInput = styled.TextInput`
 export const HabitUtilityInfoContainer = styled.View`
     background-color: ${colors.mainBoxes};
     border-radius: 8px;
-    margin-top: 25px;
-    margin-bottom: 50px;
+    margin-top: 4px;
     justify-content: center;
-    padding-horizontal: 10px;
-    padding-vertical: 20px;
+    padding: 11px;
 `;
 
 export const SelectHabitColorButton = styled.TouchableOpacity`
@@ -244,18 +232,23 @@ export const FrequencySwitchContainer = styled.View`
 `;
 
 export const HomepageDataView = styled.View`
+    flex: 1;
     justify-content: center;
     align-items: center;
     margin-top: 10px;
+    padding-horizontal: 9px;
 `;
 
 export const HomepageDataBox = styled.Pressable`
     margin-top: 2px;
     height: 80px;
+    width: ${deviceWidth - 40} 
     padding-horizontal: 15px;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+    background-color: #1c1b1b;
+    border-radius: ${radius};
 `;
 
 export const ShowHabitFrequency = styled.View`

@@ -1,5 +1,6 @@
+import { Center } from 'native-base';
 import React from 'react';
-import { Image, TouchableOpacity } from 'react-native';
+import { Image, ScrollView, TouchableOpacity } from 'react-native';
 import {
     ChevronTextContainer,
     HabitCardsContainer,
@@ -37,10 +38,9 @@ const HabitScreen = ({ route, navigation }) => {
                     }
                 >
                     <HabitCardsContainer>
-                        <Image
-                            style={{ height: 40, width: 40, marginLeft: 15 }}
-                            source={habitIcon}
-                        />
+                        <Center bg="gray.800" p={2} rounded="lg" align="center" ml={2}>
+                            <Image style={{ height: 30, width: 30 }} source={habitIcon} />
+                        </Center>
                         <HabitTextColumnContainer>
                             <Text left marginLeft="15px" fontFamily="Medium">
                                 {name}

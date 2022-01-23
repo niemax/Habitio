@@ -42,7 +42,7 @@ export const createHabitColorIndicator = {
 
 export const showHabitImageBackground = {
     marginTop: 20,
-    backgroundColor: '#181818',
+    backgroundColor: '#101010',
     opacity: 0.8,
     justifyContent: 'center',
     alignItems: 'center',

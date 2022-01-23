@@ -12,7 +12,7 @@ export default function DoneCheckBox({ item }) {
         <BouncyCheckbox
             size={32}
             fillColor={color}
-            unfillColor="black"
+            unfillColor="#101010"
             iconStyle={{ borderColor: '#404040', borderRadius: 10 }}
             bounceFriction={2}
             isChecked={completed}

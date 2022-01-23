@@ -108,32 +108,32 @@ const CreateHabit = ({ route, navigation }) => {
                                 color={color}
                                 updateColor={updateColor}
                             />
-                            <Frequency
-                                switchStates={{
-                                    isEnabledSpecific,
-                                    isEnabled,
-                                    isEnabledDate,
-                                    isEnabledEndDate,
-                                }}
-                                methods={{
-                                    toggleSwitchSpecific,
-                                    onChangeSpecific,
-                                    onChangeReminderTime,
-                                    onChangeEndDate,
-                                    toggleSwitch,
-                                    toggleSwitchDate,
-                                    toggleSwitchEndDate,
-                                }}
-                                setters={{
-                                    setDaysCount,
-                                    setSelectedValue,
-                                    setTimesCount,
-                                    setIsEnabledEndDate,
-                                }}
-                                values={{ specificDate, reminderTime, endDate }}
-                                states={{ daysCount, timesCount }}
-                            />
                         </HabitUtilityInfoContainer>
+                        <Frequency
+                            switchStates={{
+                                isEnabledSpecific,
+                                isEnabled,
+                                isEnabledDate,
+                                isEnabledEndDate,
+                            }}
+                            methods={{
+                                toggleSwitchSpecific,
+                                onChangeSpecific,
+                                onChangeReminderTime,
+                                onChangeEndDate,
+                                toggleSwitch,
+                                toggleSwitchDate,
+                                toggleSwitchEndDate,
+                            }}
+                            setters={{
+                                setDaysCount,
+                                setSelectedValue,
+                                setTimesCount,
+                                setIsEnabledEndDate,
+                            }}
+                            values={{ specificDate, reminderTime, endDate }}
+                            states={{ daysCount, timesCount }}
+                        />
                     </View>
                 </View>
             </ScrollView>
@@ -147,7 +147,6 @@ const CreateHabit = ({ route, navigation }) => {
                             CRUDHabits,
                             reminderTime,
                             name,
-                            navigation,
                             specificDate
                         );
                         navigation.navigate('Homepage');
