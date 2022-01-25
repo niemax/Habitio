@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Platform, View } from 'react-native';
+import { AsyncStorage, Platform, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import FlashMessage from 'react-native-flash-message';
@@ -15,7 +15,7 @@ import { getCurrentDay } from './src/utils/helpers/dateHelpers';
 import MainAppStack from './src/navigation/MainAppNav';
 import { colors } from './src/utils/colors';
 import { NativeBaseProvider } from 'native-base';
-import { extendedTheme } from './src/theme';
+import { customTheme, extendedTheme } from './src/theme';
 
 export default function App() {
     const [, , setExpoPushToken] = useState('');
@@ -55,7 +55,7 @@ export default function App() {
 
         responseListener.current = Notifications.addNotificationResponseReceivedListener(
             (response) => {
-                console.log(response);
+                response;
             }
         );
 
@@ -67,19 +67,19 @@ export default function App() {
 
     if (fontsLoaded) {
         return (
-            <NativeBaseProvider theme={extendedTheme}>
-                <View style={{ flex: 1, backgroundColor: colors.mainBackground }}>
+            <HabitProvider>
+                <NativeBaseProvider theme={customTheme}>
                     <NavigationContainer>
-                        <StatusBar style="light" />
-                        <HabitProvider>
-                            <FlashMessage position="top" />
-                            <SafeAreaProvider>
+                        <SafeAreaProvider>
+                            <View style={{ flex: 1, backgroundColor: colors.mainBackground }}>
+                                <StatusBar style="light" />
+                                <FlashMessage position="top" />
                                 <MainAppStack />
-                            </SafeAreaProvider>
-                        </HabitProvider>
+                            </View>
+                        </SafeAreaProvider>
                     </NavigationContainer>
-                </View>
-            </NativeBaseProvider>
+                </NativeBaseProvider>
+            </HabitProvider>
         );
     }
     return <AppLoading />;

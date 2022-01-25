@@ -1,3 +1,4 @@
+import { themeTools, useColorModeValue } from 'native-base';
 import React from 'react';
 import styled from 'styled-components/native';
 
@@ -19,7 +20,7 @@ const Text = styled.Text`
     marginBottom: ${(props) => props.marginBottom ?? 0};
     /* prettier-ignore */
     fontFamily: ${(props) => props.fontFamily ?? 'SemiBold'};
-    color: ${(props) => props.color ?? 'white'};
+    color: ${(props) => props.color ?? themeTools.mode('white', 'black')};
     /* prettier-ignore */
     textDecorationLine: ${(props) => props.textDecorationLine ?? 'none'}
         ${({

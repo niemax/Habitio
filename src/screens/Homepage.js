@@ -5,6 +5,7 @@ import { Feather } from '@expo/vector-icons';
 import { useHabits } from '../context/HabitProvider';
 import {
     HomepageDataView,
+    MainContainer,
     NoHabitsContainer,
     TabAddButton,
 } from '../utils/StyledComponents/Styled';
@@ -14,17 +15,16 @@ import ContentLoader, { Rect } from 'react-content-loader/native';
 import HabitListItem from '../components/uiComponents/HabitListItem';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NameAlert from '../components/uiComponents/nameAlert';
-import { Box, useColorModeValue, useColorMode } from 'native-base';
+import { Box, useColorModeValue, useColorMode, Flex, Container } from 'native-base';
 
 const wait = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
 
-const Homepage = ({ navigation }) => {
+const Homepage = () => {
     const [refreshing, setRefreshing] = useState(false);
     const [namePromptVisible, setNamePromptVisible] = useState(false);
-    const [name, setName] = useState('');
+    const [_, setName] = useState('');
     const [loading, setLoading] = useState(true);
-    const { habits, getHabits, habitsLoading } = useHabits();
-    const { colorMode, toggleColorMode } = useColorMode();
+    const { habits, getHabits, habitsLoading, setHabits } = useHabits();
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
@@ -57,13 +57,12 @@ const Homepage = ({ navigation }) => {
     const HABITS_LENGTH = Object.keys(habits).length;
 
     return (
-        <Box flex={1} bg={useColorModeValue('#000000', '#FFFFFF')}>
+        <Box flex={1} bg={colors.black}>
             <NameAlert
                 namePromptVisible={namePromptVisible}
                 setNamePromptVisible={setNamePromptVisible}
                 setName={setName}
             />
-
             <ScrollView
                 refreshControl={
                     <RefreshControl
@@ -103,7 +102,7 @@ const Homepage = ({ navigation }) => {
                             <View key={index.toString()} style={{ marginTop: 20 }}>
                                 <ContentLoader
                                     height={80}
-                                    width={350}
+                                    width="350px"
                                     speed={2}
                                     backgroundColor="#333"
                                     foregroundColor="#999"

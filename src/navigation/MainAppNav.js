@@ -1,12 +1,11 @@
-import React from 'react';
-import { Touchable, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { AsyncStorage, Touchable, TouchableOpacity } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Homepage from '../screens/Homepage';
 import HabitScreen from '../screens/HabitScreen';
 import CreateHabit from '../screens/CreateHabit';
 import StartHabitCreation from '../screens/StartHabitCreation';
 import Settings from '../screens/Settings';
-import ShowHabitModal from '../components/modalComponents/ShowHabitModal';
 import ShowHabitEditModal from '../components/modalComponents/ShowHabitEditModal';
 import { AntDesign } from '@expo/vector-icons';
 import CalendarModal from '../components/modalComponents/CalendarModal';
@@ -18,7 +17,20 @@ import TextStyle from '../utils/Text';
 const Stack = createNativeStackNavigator();
 
 const MainAppStack = () => {
+    const [name, setName] = useState('');
     const navigation = useNavigation();
+
+    useEffect(async () => {
+        try {
+            const result = await AsyncStorage.getItem('@name');
+            if (result !== null) {
+                setName(result);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }, []);
+
     return (
         <Stack.Navigator
             initialRouteName="Homepage"
@@ -37,7 +49,7 @@ const MainAppStack = () => {
                         headerShown: true,
                         headerLargeTitle: true,
                         headerLargeTitleStyle: { fontSize: 34, fontWeight: '800' },
-                        title: 'Today',
+                        title: `${name}'s Dashboard`,
                         headerRight: () => (
                             <TouchableOpacity
                                 onPress={() => navigation.navigate('StartHabitCreation')}
@@ -54,9 +66,9 @@ const MainAppStack = () => {
                         headerShown: true,
                         title: 'Add a Habit',
                         headerTitleStyle: { color: '#FFFFFF', fontFamily: 'Bold', fontSize: 20 },
-                        headerBackTitleVisible: false,
+                        headerBackTitleVisible: true,
                         headerTintColor: colors.mainGreen,
-                        headerStyle: { backgroundColor: colors.black },
+                        headerStyle: { backgroundColor: colors.mainBackground },
                     }}
                     component={StartHabitCreation}
                 />
@@ -65,9 +77,10 @@ const MainAppStack = () => {
                     options={{
                         headerShown: true,
                         title: 'Choose one',
-                        headerBackTitleVisible: false,
+                        headerBackTitleVisible: true,
+                        headerBackTitle: 'Back',
                         headerTintColor: colors.mainGreen,
-                        headerStyle: { backgroundColor: colors.black },
+                        headerStyle: { backgroundColor: colors.mainBackground },
                     }}
                     component={HabitScreen}
                 />
@@ -94,38 +107,6 @@ const MainAppStack = () => {
                 <Stack.Screen name="Settings" component={Settings} />
             </Stack.Group>
             <Stack.Group screenOptions={{ presentation: 'modal' }}>
-                <Stack.Screen
-                    name="ShowHabitModal"
-                    options={({ route }) => ({
-                        headerTintColor: colors.mainGreen,
-                        headerStyle: { backgroundColor: colors.mainBackground },
-                        headerShown: true,
-                        title: '',
-                        headerRight: () => (
-                            <TouchableOpacity
-                                onPress={() =>
-                                    navigation.navigate('ShowHabitEditModal', {
-                                        data: route.params.data,
-                                    })
-                                }
-                            >
-                                <TextStyle twenty color={colors.mainGreen}>
-                                    Edit
-                                </TextStyle>
-                            </TouchableOpacity>
-                        ),
-                        headerLeft: () => (
-                            <Ionicons
-                                name="chevron-down"
-                                size={32}
-                                color={colors.mainGreen}
-                                onPress={() => navigation.goBack()}
-                            />
-                        ),
-                    })}
-                    component={ShowHabitModal}
-                />
-
                 <Stack.Screen
                     name="ShowHabitEditModal"
                     options={({ route }) => ({

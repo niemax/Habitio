@@ -5,14 +5,14 @@ import {
     HabitInput,
     HabitNextButton,
     InputContainer,
-    ModalContent,
     PreDefinedContainer,
     PreDefinedHabitsContainer,
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 import data from '../categories';
 import { colors } from '../utils/colors';
-import { Box, Center } from 'native-base';
+import { Ionicons } from '@expo/vector-icons';
+import { Box, Center, Flex } from 'native-base';
 
 const StartHabitCreation = ({ navigation }) => {
     const [habitName, setHabitName] = useState('');
@@ -29,7 +29,7 @@ const StartHabitCreation = ({ navigation }) => {
     };
 
     return (
-        <ModalContent>
+        <Box flex={1} bg={colors.mainBackground}>
             <ScrollView>
                 <Text left fontFamily="Regular" marginLeft="25px" marginTop="25px">
                     Create your own Habit
@@ -44,6 +44,14 @@ const StartHabitCreation = ({ navigation }) => {
                             color: 'white',
                             fontSize: 18,
                             fontFamily: 'Bold',
+                            shadowColor: '#000',
+                            shadowOffset: {
+                                width: 0,
+                                height: 2,
+                            },
+                            shadowOpacity: 0.25,
+                            shadowRadius: 3.84,
+                            elevation: 5,
                         }}
                         onChangeText={(text) => {
                             setError('');
@@ -72,16 +80,28 @@ const StartHabitCreation = ({ navigation }) => {
                                 }
                             >
                                 <PreDefinedHabitsContainer>
-                                    <Center bg="gray.800" p={2} rounded="lg" align="center" ml={2}>
-                                        <Image
-                                            source={mainIcon}
-                                            style={{ height: 30, width: 30 }}
-                                        />
-                                    </Center>
-                                    <Text marginLeft="15px" fontFamily="Medium">
-                                        {category}
-                                    </Text>
+                                    <Flex direction="row" align="center">
+                                        <Center
+                                            bg="gray.900"
+                                            p={3}
+                                            rounded="lg"
+                                            align="center"
+                                            ml={2}
+                                        >
+                                            <Image
+                                                source={mainIcon}
+                                                style={{ height: 15, width: 15 }}
+                                            />
+                                        </Center>
+                                        <Text marginLeft="15px" fontFamily="Medium">
+                                            {category}
+                                        </Text>
+                                    </Flex>
+                                    <Ionicons name="chevron-forward" size={24} color="white" />
                                 </PreDefinedHabitsContainer>
+                                <View
+                                    style={{ height: 1, backgroundColor: '#FFFFFF', width: '100%' }}
+                                />
                             </TouchableOpacity>
                         ))}
                     </PreDefinedContainer>
@@ -92,7 +112,7 @@ const StartHabitCreation = ({ navigation }) => {
                     <Text twentyTwo>Next</Text>
                 </HabitNextButton>
             </ButtonContainer>
-        </ModalContent>
+        </Box>
     );
 };
 

@@ -1,61 +1,28 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { FlatList, ScrollView } from 'react-native';
+import { FlatList } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { CalendarLineBreak, ModalContent } from '../../utils/StyledComponents/Styled';
 import Text from '../../utils/Text';
 import { calendarStyles } from '../../utils/globalStyles';
-import { useHabits } from '../../context/HabitProvider';
-import NoteSheet from '../uiComponents/NoteSheet';
 import { getCurrentDateFormattedForCalendarComponent } from '../../utils/helpers/dateHelpers';
 import CalendarFrequency from '../uiComponents/CalendarFrequency';
-import ActionSheet from '@alessiocancian/react-native-actionsheet';
 import CalendarStats from '../uiComponents/CalendarStats';
 import Notes from '../uiComponents/Notes';
-import { handleDoneOtherDay } from '../../utils/helpers/handleDone';
 import { colors } from '../../utils/colors';
+import { handleDoneOtherDay } from '../../utils/helpers/handleDone';
+import { useHabits } from '../../context/HabitProvider';
 
 const CalendarModal = ({ route }) => {
-    const [noteInput, setNoteInput] = useState('');
-    const [selectedDay, setSelectedDay] = useState(new Date());
     const [completionRate, setCompletionRate] = useState(0);
     const [editNoteModalVisible, setEditNoteModalVisible] = useState(false);
-    const [actionSheetVisible, setActionSheetVisible] = useState(false);
 
     const { habits, habitSetter } = useHabits();
+
     const { data } = route.params;
-    const { color, completedDates, days, name, times, unitValue, diaryInputs, id } = data;
-
-    const noteSheetRef = useRef(null);
-    const actionSheetRef = useRef(null);
-
-    useEffect(() => {
-        if (actionSheetVisible) actionSheetRef.current.show();
-    }, [selectedDay]);
+    const { completedDates, days, times, unitValue, noteInputs } = data;
 
     const calendarDayPress = (day) => {
-        setSelectedDay(day.dateString);
-        setActionSheetVisible(true);
-    };
-
-    const handleNoteInput = () => {
-        const noteInputObj = {
-            date: selectedDay,
-            input: noteInput,
-            id: Math.floor(Math.random() * 100000),
-        };
-        try {
-            const updatedHabits = habits.map((habit) => {
-                if (habit.id === id) {
-                    habit.diaryInputs.push(noteInputObj);
-                }
-                return habit;
-            });
-            habitSetter(updatedHabits);
-        } catch (error) {
-            console.error(error);
-        }
-        noteSheetRef.current?.hide();
-        setNoteInput('');
+        handleDoneOtherDay(day.dateString, data, habits, habitSetter);
     };
 
     return (
@@ -91,35 +58,14 @@ const CalendarModal = ({ route }) => {
                             Notes
                         </Text>
                         <Notes
-                            notes={diaryInputs}
+                            notes={noteInputs}
                             editNoteModalVisible={editNoteModalVisible}
                             setEditNoteModalVisible={setEditNoteModalVisible}
                             data={data}
                         />
-                        <NoteSheet
-                            data={data}
-                            noteInput={noteInput}
-                            noteSheetRef={noteSheetRef}
-                            selectedDay={selectedDay}
-                            name={name}
-                            setNoteInput={setNoteInput}
-                            handleNoteInput={handleNoteInput}
-                        />
-                        <ActionSheet
-                            ref={actionSheetRef}
-                            title={` ${selectedDay} - Select an action`}
-                            options={['Completion', 'Add a note', 'Cancel']}
-                            cancelButtonIndex={2}
-                            userInterfaceStyle="dark"
-                            onPress={(index) => {
-                                if (index === 0)
-                                    handleDoneOtherDay(selectedDay, data, habits, habitSetter);
-                                if (index === 1) noteSheetRef.current.show();
-                            }}
-                        />
                     </>
                 }
-            ></FlatList>
+            />
         </ModalContent>
     );
 };

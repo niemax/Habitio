@@ -141,7 +141,6 @@ const ShowHabitEditModal = ({ route }) => {
                 habitSetEndDate,
             }}
             states={{
-                habitName,
                 stateDescription,
                 daysCount,
                 timesCount,

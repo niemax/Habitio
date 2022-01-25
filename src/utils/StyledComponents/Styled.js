@@ -6,11 +6,11 @@ const deviceWidth = Dimensions.get('window').width;
 
 const { mainBackground, mainGreen } = colors;
 
-const radius = '15px';
+const radius = '18px';
 
 export const MainContainer = styled.View`
     flex: 1;
-    background-color: ${mainBackground};
+    background-color: ${colors.mainBackground};
 `;
 
 export const HomeheaderContainer = styled.View`
@@ -83,7 +83,7 @@ export const HabitInput = styled.TextInput`
     width: ${deviceWidth - 50}px
     height: 60px
     background-color: ${colors.mainBoxes} 
-    border-radius: ${radius}; 
+    border-radius: 8px; 
     padding: 15px;
 `;
 
@@ -115,22 +115,23 @@ export const HabitNextButton = styled.TouchableOpacity`
 `;
 
 export const PreDefinedContainer = styled.View`
+    margin-top: 10px;
     align-items: center;
 `;
 
 export const PreDefinedHabitsContainer = styled.View`
     background-color: ${colors.mainBoxes};
-    width: ${deviceWidth - 20}px
-    height: 80px;
-    border-radius: ${radius};
-    margin-top: 10px;
+    width: ${deviceWidth - 30}px
+    height: 60px;
+    border-radius: 4px;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
 `;
 
 export const HabitScreenContainer = styled.View`
     flex: 1;
-    background-color: ${mainBackground};
+    background-color: ${colors.mainBackground};
     align-items: center;
 `;
 
@@ -149,12 +150,11 @@ export const ChevronTextContainer = styled.View`
 `;
 
 export const HabitCardsContainer = styled.View`
-    background-color: ${colors.mainBoxes};
     width: ${deviceWidth - 20}px;
-    height: 80px;
-    border-radius: ${radius};
-    margin-top: 10px;
+    border-radius: 10px;
+    margin-top: 20px;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
 `;
 
@@ -181,9 +181,9 @@ export const HabitCentered = styled.View`
 
 export const HabitDescriptionInput = styled.TextInput`
     width: ${deviceWidth - 30}px
-    height: 100px;
+    height: 50px;
     background-color: ${colors.mainBoxes};
-    border-radius: ${radius};
+    border-radius: 8px;
     padding: 15px;
     margin-top: 13px;
     justify-content: center;
@@ -196,36 +196,36 @@ export const DiaryInput = styled.TextInput`
 `;
 
 export const HabitUtilityInfoContainer = styled.View`
-    background-color: ${colors.mainBoxes};
-    border-radius: 8px;
-    margin-top: 4px;
     justify-content: center;
-    padding: 11px;
+    padding-horizontal: 2px;
+    justify-content: center;
+    margin-top: 20px;
 `;
 
 export const SelectHabitColorButton = styled.TouchableOpacity`
     justify-content: center;
-    margin-top: 10px;
     background-color: #141414;
     align-items: center;
-    height: 70px;
-    width: 70px;
+    height: 60px;
+    width: 60px;
     border-radius: 15px;
+    margin-left: 8px;
+    margin-bottom: 10px;
 `;
 
 export const FrequencyTouchable = styled.View`
-    height: 60px;
-    background-color: ${colors.mainBackground};
-    border-radius: ${radius};
-    padding: 15px;
-    margin-top: 10px;
+    border-radius: 7px;
+    margin-top: 15px;
+    padding-horizontal: 10px;
+    padding-vertical: 4px;
     flex-direction: row;
+    background-color: #3f3f46;
     align-items: center;
     justify-content: space-between;
 `;
 
 export const FrequencySwitchContainer = styled.View`
-    margin-top: 20px;
+    margin-top: 10px;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;

@@ -21,7 +21,7 @@ export default function EditNoteModal({
     setEditNoteModalVisible,
     date,
     currentInput,
-    diaryInputs,
+    noteInputs,
     id,
     data,
 }) {
@@ -37,7 +37,7 @@ export default function EditNoteModal({
                 {
                     text: 'OK',
                     onPress: () => {
-                        handleNoteDelete(id, habits, diaryInputs, data, habitSetter);
+                        handleNoteDelete(id, habits, noteInputs, data, habitSetter);
                         setEditNoteModalVisible(false);
                     },
                 },
@@ -73,7 +73,7 @@ export default function EditNoteModal({
                             <TouchableOpacity
                                 onPress={() => {
                                     handleNoteEdit(
-                                        diaryInputs,
+                                        noteInputs,
                                         id,
                                         habitSetter,
                                         habits,

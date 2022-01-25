@@ -34,6 +34,14 @@ const HabitProvider = ({ children }) => {
         }
     };
 
+    const getSpecificHabit = (id) => habits.filter((habit) => habit.id === id);
+
+    const replaceSpecificHabit = async (id, props) => {
+        const filtered = habits.filter((habit) => habit.id === id);
+
+        Object.values(filtered);
+    };
+
     const CRUDHabits = async (props) => {
         try {
             setHabits([...habits, props]);
@@ -62,6 +70,8 @@ const HabitProvider = ({ children }) => {
                 habits,
                 habitsLoading,
                 habitSetter,
+                getSpecificHabit,
+                replaceSpecificHabit,
                 getHabits,
                 setHabits,
                 CRUDHabits,

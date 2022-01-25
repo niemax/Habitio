@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
 import {
     ButtonContainer,
     CreateHabitButton,
-    HabitUtilityInfoContainer,
     MainContainer,
 } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
@@ -13,6 +12,7 @@ import HabitColor from '../components/uiComponents/SelectHabitColorButton';
 import { getCurrentWeek } from '../utils/helpers/dateHelpers';
 import handleHabitCreation from '../utils/helpers/createhabitHelpers';
 import { useHabits } from '../context/HabitProvider';
+import { Box, Flex } from 'native-base';
 
 const CreateHabit = ({ route, navigation }) => {
     const { name, habitIcon, color, habitName } = route.params;
@@ -81,34 +81,34 @@ const CreateHabit = ({ route, navigation }) => {
         calendarDone: false,
         completedDates: {},
         progress: 0,
-        diaryInputs: [],
+        noteInputs: [],
     };
 
     return (
         <MainContainer>
             <ScrollView>
-                <View style={{ marginBottom: 40 }}>
-                    <Text left marginLeft="10px" fontFamily="Regular" marginTop="35px">
+                <Box flex={1} mt={0} px={2} mb={32}>
+                    <Text left marginLeft="10px" fontFamily="Regular" marginTop="35px" sixteen>
                         Description
                     </Text>
-                    <View style={{ flex: 1 }}>
-                        <HabitInput
-                            values={description}
-                            actions={{
-                                setValue: (text) => setDescription(text),
-                            }}
+                    <HabitInput
+                        values={description}
+                        actions={{
+                            setValue: (text) => setDescription(text),
+                        }}
+                    />
+                    <Flex direction="row" align="center">
+                        <Text left fontFamily="Medium" marginLeft="10px" sixteen>
+                            Color
+                        </Text>
+                        <HabitColor
+                            colorUpdated={colorUpdated}
+                            updatedColor={updatedColor}
+                            color={color}
+                            updateColor={updateColor}
                         />
-                        <HabitUtilityInfoContainer>
-                            <Text left fontFamily="Medium">
-                                Color
-                            </Text>
-                            <HabitColor
-                                colorUpdated={colorUpdated}
-                                updatedColor={updatedColor}
-                                color={color}
-                                updateColor={updateColor}
-                            />
-                        </HabitUtilityInfoContainer>
+                    </Flex>
+                    <Box mt={4}>
                         <Frequency
                             switchStates={{
                                 isEnabledSpecific,
@@ -134,8 +134,8 @@ const CreateHabit = ({ route, navigation }) => {
                             values={{ specificDate, reminderTime, endDate }}
                             states={{ daysCount, timesCount }}
                         />
-                    </View>
-                </View>
+                    </Box>
+                </Box>
             </ScrollView>
             <ButtonContainer>
                 <CreateHabitButton

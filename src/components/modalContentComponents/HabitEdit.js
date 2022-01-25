@@ -1,3 +1,4 @@
+import { Flex } from 'native-base';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 import {
@@ -33,7 +34,6 @@ export default function HabitEditContent({
         setIsEnabledEndDate,
     },
     states: {
-        habitName,
         stateDescription,
         daysCount,
         timesCount,
@@ -52,8 +52,8 @@ export default function HabitEditContent({
     return (
         <ModalContent>
             <ScrollView>
-                <View style={{ marginBottom: 40 }}>
-                    <Text left marginLeft="10px" fontFamily="Regular" marginTop="35px">
+                <View style={{ marginBottom: 60 }}>
+                    <Text left marginLeft="17px" fontFamily="Regular" marginTop="35px" sixteen>
                         Description
                     </Text>
                     <HabitInfoContainer>
@@ -67,15 +67,17 @@ export default function HabitEditContent({
                             />
                         </HabitCentered>
                         <HabitUtilityInfoContainer>
-                            <Text left fontFamily="Regular">
-                                Color
-                            </Text>
-                            <HabitColor
-                                colorUpdated={colorUpdated}
-                                updatedColor={updatedColor}
-                                color={color}
-                                updateColor={updateColor}
-                            />
+                            <Flex direction="row" align="center">
+                                <Text left fontFamily="Regular" sixteen>
+                                    Color
+                                </Text>
+                                <HabitColor
+                                    colorUpdated={colorUpdated}
+                                    updatedColor={updatedColor}
+                                    color={color}
+                                    updateColor={updateColor}
+                                />
+                            </Flex>
                         </HabitUtilityInfoContainer>
                         <View style={{ marginTop: 20 }}>
                             <Frequency

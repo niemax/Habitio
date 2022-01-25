@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, View, FlatList } from 'react-native';
+import { TouchableOpacity, View, FlatList, TextInput } from 'react-native';
 import { colors } from '../../utils/colors';
 import { formatDateForHabitEndDate } from '../../utils/helpers/dateHelpers';
 import Text from '../../utils/Text';
 import { Entypo } from '@expo/vector-icons';
-import EditNoteModal from '../modalComponents/EditNoteModal';
+import { Flex, Modal, Button, Box, Container } from 'native-base';
 
-const Notes = ({ notes, editNoteModalVisible, setEditNoteModalVisible, data }) => {
+const Notes = ({ notes, data }) => {
+    const [showModal, setShowModal] = useState(false);
     const [noteRenderAmount, setNoteRenderAmount] = useState(2);
 
     const renderItem = ({ item, index }) =>
         index <= noteRenderAmount && (
             <View key={item.id}>
-                <TouchableOpacity onPress={() => setEditNoteModalVisible(index)}>
+                <TouchableOpacity onPress={() => setShowModal(true)}>
                     <Text
                         fontFamily="Bold"
                         color={colors.mainGreen}
@@ -33,15 +34,58 @@ const Notes = ({ notes, editNoteModalVisible, setEditNoteModalVisible, data }) =
                         {item.input}
                     </Text>
                 </TouchableOpacity>
-                <EditNoteModal
-                    editNoteModalVisible={editNoteModalVisible === index}
-                    setEditNoteModalVisible={setEditNoteModalVisible}
-                    date={item.date}
-                    id={item.id}
-                    currentInput={item.input}
-                    diaryInputs={notes}
-                    data={data}
-                />
+
+                <Modal
+                    size="xl"
+                    isOpen={showModal}
+                    onClose={() => setShowModal(false)}
+                    avoidKeyboard
+                    animationPreset="slide"
+                >
+                    <Modal.Content maxWidth="400px" bg="gray.800" rounded="2xl">
+                        <Text fontFamily="Extra" marginTop="10px">
+                            Note
+                        </Text>
+                        <Box p={4}>
+                            <TextInput
+                                keyboardAppearance="dark"
+                                multiline={Platform.OS === 'android' ? false : true}
+                                autoCorrect={false}
+                                value={item.input}
+                                placeholderTextColor="gray"
+                                style={{
+                                    borderRadius: 10,
+                                    backgroundColor: colors.black,
+                                    padding: 15,
+                                    color: 'white',
+                                    fontSize: 17,
+                                    fontFamily: 'SemiBold',
+                                    marginBottom: 20,
+                                }}
+                            />
+                        </Box>
+                        <Flex direction="row" bg="gray.800" justify="space-around" mb={4}>
+                            <Button.Group colorScheme="green" space={2}>
+                                <Button
+                                    size="lg"
+                                    bg="gray.700"
+                                    rounded="lg"
+                                    w={150}
+                                    h={50}
+                                    variant="subtle"
+                                    onPress={() => {
+                                        setShowModal(false);
+                                    }}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button w={150} h={50} variant="subtle" rounded="lg">
+                                    Done
+                                </Button>
+                            </Button.Group>
+                        </Flex>
+                    </Modal.Content>
+                </Modal>
             </View>
         );
 

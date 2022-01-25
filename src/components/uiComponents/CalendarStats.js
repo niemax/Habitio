@@ -1,23 +1,40 @@
 import React from 'react';
-import { CalendarLineBreak, CalendarStatsContainer } from '../../utils/StyledComponents/Styled';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { CalendarLineBreak } from '../../utils/StyledComponents/Styled';
 import Text from '../../utils/Text';
-import { formatDateForHabitEndDate } from '../../utils/helpers/dateHelpers';
-import { colors } from '../../utils/colors';
+import { Box, Flex, VStack } from 'native-base';
 
 const CalendarStats = ({ completedDates }) => (
-    <>
-        <CalendarStatsContainer>
-            <MaterialCommunityIcons name="chart-arc" size={48} color={colors.mainGreen} />
-            <Text style={{ fontSize: 38 }} fontFamily="Extra" marginTop="15px" color="gold">
-                {Object.keys(completedDates).length}
-            </Text>
-            <Text twenty fontFamily="Extra" marginTop="15px">
-                Total completions
-            </Text>
-        </CalendarStatsContainer>
+    <Box p={3} shadow={2}>
+        <Box bg="gray.800" rounded="lg" p={3}>
+            <Flex direction="row" justify="space-around">
+                <VStack>
+                    <Text thirtyFour fontFamily="Extra">
+                        {Object.keys(completedDates).length}
+                    </Text>
+                    <Text fifteen fontFamily="Medium" color="gray">
+                        done
+                    </Text>
+                </VStack>
+                <VStack>
+                    <Text thirtyFour fontFamily="Extra">
+                        {Object.keys(completedDates).length}
+                    </Text>
+                    <Text fifteen fontFamily="Medium" color="gray">
+                        longest
+                    </Text>
+                </VStack>
+                <VStack>
+                    <Text thirtyFour fontFamily="Extra">
+                        {Object.keys(completedDates).length}
+                    </Text>
+                    <Text fifteen fontFamily="Medium" color="gray">
+                        current streak
+                    </Text>
+                </VStack>
+            </Flex>
+        </Box>
         <CalendarLineBreak />
-    </>
+    </Box>
 );
 
 export default CalendarStats;

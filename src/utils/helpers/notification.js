@@ -11,7 +11,7 @@ Notifications.setNotificationHandler({
 export const cancelPushNotification = async (id) => {
     try {
         await Notifications.cancelScheduledNotificationAsync(id).then(() => {
-            console.log(`Successfully cancelled notification with id: ${id}`);
+            `Successfully cancelled notification with id: ${id}`;
         });
     } catch (error) {
         console.error(error);
@@ -24,7 +24,7 @@ export const deleteNotifications = async () => {
 
 export const getAllNotifications = async () => {
     await Notifications.getAllScheduledNotificationsAsync().then((notification) => {
-        console.log('Notification length', notification.length);
+        'Notification length', notification.length;
     });
 };
 
@@ -104,7 +104,7 @@ export const chRepeating = async (name, hours, minutes, newHabit) => {
     } catch (error) {
         console.error(error);
     }
-    console.log(newHabit);
+    newHabit;
 };
 
 export const cHScheduleOneTime = async (name, date, newHabit) => {

@@ -1,6 +1,6 @@
-import { Center } from 'native-base';
 import React from 'react';
-import { Image, ScrollView, TouchableOpacity } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
+import { Box, Center, HStack } from 'native-base';
 import {
     ChevronTextContainer,
     HabitCardsContainer,
@@ -8,6 +8,7 @@ import {
     HabitTextColumnContainer,
     ImageContainer,
 } from '../utils/StyledComponents/Styled';
+import { Ionicons } from '@expo/vector-icons';
 import Text from '../utils/Text';
 
 const HabitScreen = ({ route, navigation }) => {
@@ -38,25 +39,37 @@ const HabitScreen = ({ route, navigation }) => {
                     }
                 >
                     <HabitCardsContainer>
-                        <Center bg="gray.800" p={2} rounded="lg" align="center" ml={2}>
-                            <Image style={{ height: 30, width: 30 }} source={habitIcon} />
-                        </Center>
-                        <HabitTextColumnContainer>
-                            <Text left marginLeft="15px" fontFamily="Medium">
-                                {name}
-                            </Text>
-                            <Text
-                                left
-                                marginLeft="15px"
-                                marginTop="3px"
-                                fontFamily="Regular"
-                                sixteen
-                                color="gray"
-                            >
-                                {description}
-                            </Text>
-                        </HabitTextColumnContainer>
+                        <HStack>
+                            <Center bg="gray.800" h={10} p={2} rounded="lg" align="center" mr={2}>
+                                <Image style={{ height: 20, width: 20 }} source={habitIcon} />
+                            </Center>
+                            <HabitTextColumnContainer>
+                                <Text left marginLeft="5px" fontFamily="Medium">
+                                    {name}
+                                </Text>
+                                <Text
+                                    left
+                                    marginLeft="5px"
+                                    fontFamily="Regular"
+                                    sixteen
+                                    color="gray"
+                                >
+                                    {description}
+                                </Text>
+                            </HabitTextColumnContainer>
+                        </HStack>
+                        <Box>
+                            <Ionicons name="chevron-forward" size={24} color="white" />
+                        </Box>
                     </HabitCardsContainer>
+                    <View
+                        style={{
+                            borderBottomColor: 'gray',
+                            borderBottomWidth: 1,
+                            opacity: 0.1,
+                            marginTop: 10,
+                        }}
+                    />
                 </TouchableOpacity>
             ))}
         </HabitScreenContainer>
