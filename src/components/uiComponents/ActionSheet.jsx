@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Actionsheet, Box, Button, Flex } from 'native-base';
+import { Actionsheet, Box, Button, Flex, Slide } from 'native-base';
 import { useHabits } from '../../context/HabitProvider';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Text from '../../utils/Text';
@@ -28,6 +28,7 @@ export default function ListItemActionSheet({
 }) {
     const [showModal, setShowModal] = useState(false);
     const [showProgressModal, setShowProgressModal] = useState(false);
+    const [slide, setSlide] = useState(false);
     const actionSheetRef = useRef(null);
     const { habits, habitSetter } = useHabits();
     const navigation = useNavigation();
@@ -80,9 +81,11 @@ export default function ListItemActionSheet({
                         <Text thirtyFour fontFamily="Extra">
                             {name}
                         </Text>
-                        <Text sixteen fontFamily="Regular" marginTop="10px">
-                            Goal: {times} {unitValue} daily
-                        </Text>
+                        {times > 0 && (
+                            <Text sixteen fontFamily="Regular" marginTop="10px">
+                                Goal: {times} {unitValue} daily
+                            </Text>
+                        )}
                     </Box>
                 </Box>
                 <CircleProgress
@@ -91,22 +94,25 @@ export default function ListItemActionSheet({
                     habitProgress={habitProgress}
                     completed={completed}
                     unitValue={unitValue}
+                    item={item}
                 />
-                <Box mt={8}>
-                    <Button
-                        onPress={() => handleDoneToday(item, habits, habitSetter)}
-                        size="lg"
-                        w={300}
-                        h={50}
-                        variant="subtle"
-                        colorScheme="emerald"
-                        rounded="xl"
-                        align="center"
-                        justify="center"
-                    >
-                        {!completed ? 'Mark as Done' : 'Mark as Undone'}
-                    </Button>
-                </Box>
+                {!completed && (
+                    <Box mt={8}>
+                        <Button
+                            onPress={() => handleDoneToday(item, habits, habitSetter)}
+                            size="lg"
+                            w={300}
+                            h={50}
+                            variant="subtle"
+                            colorScheme="emerald"
+                            rounded="xl"
+                            align="center"
+                            justify="center"
+                        >
+                            {!completed ? 'Mark as Done' : 'Mark as Undone'}
+                        </Button>
+                    </Box>
+                )}
             </Actionsheet.Content>
             <NoteModal showModal={showModal} setShowModal={setShowModal} height={200} id={id} />
             <ProgressAmountModal

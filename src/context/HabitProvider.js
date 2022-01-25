@@ -17,7 +17,7 @@ const HabitProvider = ({ children }) => {
             if (result !== null) {
                 const parsedResult = JSON.parse(result);
                 const mappedHabits = parsedResult.map((habit) => {
-                    if (currentDay > habit.completedDay || currentDay === 0) {
+                    if (currentDay > habit.completedDay || currentDay === 1) {
                         habit.completed = false;
                         habit.progress = 0;
                         habit.completedDay = currentDay;

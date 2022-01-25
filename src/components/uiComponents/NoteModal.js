@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { Box, Flex, Modal, Button } from 'native-base';
+import { Box, Flex, Modal, Button, HStack } from 'native-base';
 import { TextInput } from 'react-native';
 import { colors } from '../../utils/colors';
 import Text from '../../utils/Text';
+import { Feather } from '@expo/vector-icons';
 import { useHabits } from '../../context/HabitProvider';
 
 const NoteModal = ({ showModal, setShowModal, id }) => {
     const [inputText, setInputText] = useState('');
     const [selectedDay] = useState(new Date());
+    const [isOpen, setIsOpen] = React.useState(false);
 
     const { habitSetter, habits } = useHabits();
 
@@ -38,11 +40,14 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
             onClose={() => setShowModal(false)}
             avoidKeyboard
             animationPreset="slide"
+            isKeyboardDismissable={true}
+            closeOnOverlayClick={false}
         >
             <Modal.Content maxWidth="400px" bg="gray.800" rounded="2xl">
                 <Text fontFamily="Extra" marginTop="10px">
                     Note
                 </Text>
+
                 <Box p={3}>
                     <TextInput
                         keyboardAppearance="dark"
@@ -54,8 +59,8 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
                             padding: 15,
                             color: 'white',
                             height: 220,
-                            fontSize: 18,
-                            fontFamily: 'SemiBold',
+                            fontSize: 16,
+                            fontFamily: 'Medium',
                         }}
                         onChangeText={(text) => setInputText(text)}
                     />
@@ -70,6 +75,7 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
                             h={50}
                             variant="subtle"
                             onPress={() => {
+                                setInputText('');
                                 setShowModal(false);
                             }}
                         >
@@ -81,8 +87,10 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
                             variant="subtle"
                             rounded="xl"
                             onPress={() => {
-                                handleNoteInput();
-                                setShowModal(false);
+                                if (inputText !== '') {
+                                    handleNoteInput();
+                                    setShowModal(false);
+                                }
                             }}
                         >
                             Done

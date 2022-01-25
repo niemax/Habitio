@@ -203,8 +203,9 @@ export const HabitUtilityInfoContainer = styled.View`
 `;
 
 export const SelectHabitColorButton = styled.TouchableOpacity`
+    margin-top: 10px;
     justify-content: center;
-    background-color: #141414;
+    background-color: ${colors.mainBoxes};
     align-items: center;
     height: 60px;
     width: 60px;
@@ -217,7 +218,7 @@ export const FrequencyTouchable = styled.View`
     border-radius: 7px;
     margin-top: 15px;
     padding-horizontal: 10px;
-    padding-vertical: 4px;
+    padding-vertical: 3px;
     flex-direction: row;
     background-color: #3f3f46;
     align-items: center;
@@ -225,10 +226,11 @@ export const FrequencyTouchable = styled.View`
 `;
 
 export const FrequencySwitchContainer = styled.View`
-    margin-top: 10px;
+    margin-top: 5px;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    padding-vertical: 2px;
 `;
 
 export const HomepageDataView = styled.View`
@@ -447,6 +449,7 @@ export const ProgressModalShareButton = styled.TouchableOpacity`
 
 export const DateTimePickerView = styled.View`
     margin-top: 10px;
+    margin-bottom: 4px;
 `;
 
 export const HabitHeaderLineBreak = styled.View`

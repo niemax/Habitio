@@ -1,25 +1,18 @@
 import React from 'react';
-import { View, Switch, TouchableOpacity } from 'react-native';
+import { View, Switch } from 'react-native';
 import Text from '../../utils/Text';
 import { colors } from '../../utils/colors';
 import RNPickerSelect from 'react-native-picker-select';
-import styled from 'styled-components/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {
     DateTimePickerView,
     FrequencySwitchContainer,
     FrequencyTouchable,
     HabitUtilityInfoContainer,
+    LineBreak,
 } from '../../utils/StyledComponents/Styled';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { Box, Flex, HStack, Button } from 'native-base';
-
-const LineBreak = styled.View`
-    margin-top: 10px;
-    opacity: 0.2;
-    border-bottom-width: 1;
-    border-bottom-color: gray;
-`;
 
 export default function Frequency({
     switchStates: { isEnabled, isEnabledDate, isEnabledSpecific, isEnabledEndDate },
@@ -44,8 +37,13 @@ export default function Frequency({
     return (
         <View>
             <Flex py={4}>
+                <Box ml={2}>
+                    <Text left fontFamily="Regular" sixteen>
+                        Frequency
+                    </Text>
+                </Box>
                 <HabitUtilityInfoContainer>
-                    <Box bg="gray.800" px={2} rounded="lg">
+                    <Box bg="gray.800" px={2} py={1} rounded="lg">
                         <FrequencySwitchContainer>
                             <Text fontFamily="Medium" sixteen>
                                 Complete once
@@ -71,15 +69,14 @@ export default function Frequency({
                                 />
                             )}
                         </DateTimePickerView>
-                    </Box>
-                </HabitUtilityInfoContainer>
-                <Box mt={6}>
-                    <Text marginTop="10px" left fontFamily="Regular" sixteen marginLeft="10px">
-                        Frequency
-                    </Text>
-                </Box>
-                <HabitUtilityInfoContainer>
-                    <Box bg="gray.800" p={2} rounded="lg">
+                        <View
+                            style={{
+                                borderBottomColor: 'gray',
+                                borderBottomWidth: 0.4,
+                                opacity: 0.5,
+                                marginBottom: 5,
+                            }}
+                        />
                         <FrequencySwitchContainer>
                             <Text fontFamily="SemiBold" sixteen>
                                 Goal
@@ -108,7 +105,7 @@ export default function Frequency({
                                     <HStack>
                                         <Button
                                             bg="gray.600"
-                                            rounded="xs"
+                                            rounded="md"
                                             onPress={() => {
                                                 if (daysCount > 1) {
                                                     setDaysCount(daysCount - 1);
@@ -119,7 +116,7 @@ export default function Frequency({
                                         </Button>
                                         <Button
                                             bg="gray.600"
-                                            rounded="xs"
+                                            rounded="md"
                                             onPress={() => {
                                                 if (daysCount < 7) {
                                                     setDaysCount(daysCount + 1);
@@ -133,7 +130,7 @@ export default function Frequency({
 
                                 <Box mt={6}>
                                     <Text fontFamily="Regular" left sixteen>
-                                        Times per day
+                                        per day
                                     </Text>
                                 </Box>
                                 <FrequencyTouchable>
@@ -171,7 +168,7 @@ export default function Frequency({
                                     <HStack>
                                         <Button
                                             bg="gray.600"
-                                            rounded="xs"
+                                            rounded="md"
                                             onPress={() => {
                                                 if (timesCount > 1) {
                                                     setTimesCount(timesCount - 1);
@@ -182,7 +179,7 @@ export default function Frequency({
                                         </Button>
                                         <Button
                                             bg="gray.600"
-                                            rounded="xs"
+                                            rounded="md"
                                             onPress={() => setTimesCount(timesCount + 1)}
                                         >
                                             <Ionicons name="add-sharp" size={24} color="white" />
@@ -195,7 +192,7 @@ export default function Frequency({
                 </HabitUtilityInfoContainer>
 
                 <HabitUtilityInfoContainer>
-                    <Box mt={4}>
+                    <Box mt={2}>
                         <Text
                             marginBottom="10px"
                             left

@@ -4,8 +4,18 @@ import { AntDesign, Entypo } from '@expo/vector-icons';
 import Text from '../../utils/Text';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { colors } from '../../utils/colors';
+import { useHabits } from '../../context/HabitProvider';
+import { handleDoneToday } from '../../utils/helpers/handleDone';
 
-const CircleProgress = ({ handleHabitProgress, times, habitProgress, completed, unitValue }) => {
+const CircleProgress = ({
+    handleHabitProgress,
+    times,
+    habitProgress,
+    completed,
+    unitValue,
+    item,
+}) => {
+    const { habits, habitSetter } = useHabits();
     return (
         <HStack mt={4} mb={8}>
             <Flex direction="row" align="center">
@@ -16,7 +26,11 @@ const CircleProgress = ({ handleHabitProgress, times, habitProgress, completed, 
                         variant="subtle"
                         mr={6}
                         onPress={() => {
-                            handleHabitProgress(-1);
+                            if (completed) {
+                                handleDoneToday(item, habits, habitSetter);
+                            } else {
+                                handleHabitProgress(-1);
+                            }
                         }}
                     >
                         <AntDesign name="minus" size={24} color={colors.mainGreen} />
@@ -55,7 +69,11 @@ const CircleProgress = ({ handleHabitProgress, times, habitProgress, completed, 
                         bg="gray.800"
                         variant="subtle"
                         onPress={() => {
-                            handleHabitProgress(1);
+                            if (habitProgress - times === -1) {
+                                handleDoneToday(item, habits, habitSetter);
+                            } else {
+                                handleHabitProgress(1);
+                            }
                         }}
                     >
                         <AntDesign name="plus" size={24} color={colors.mainGreen} />

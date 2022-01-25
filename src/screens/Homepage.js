@@ -3,19 +3,14 @@ import { Image, RefreshControl, ScrollView, View } from 'react-native';
 import { colors } from '../utils/colors';
 import { Feather } from '@expo/vector-icons';
 import { useHabits } from '../context/HabitProvider';
-import {
-    HomepageDataView,
-    MainContainer,
-    NoHabitsContainer,
-    TabAddButton,
-} from '../utils/StyledComponents/Styled';
+import { HomepageDataView, NoHabitsContainer } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 import { noHabitsImageStyle } from '../utils/globalStyles';
 import ContentLoader, { Rect } from 'react-content-loader/native';
 import HabitListItem from '../components/uiComponents/HabitListItem';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NameAlert from '../components/uiComponents/nameAlert';
-import { Box, useColorModeValue, useColorMode, Flex, Container } from 'native-base';
+import { Box } from 'native-base';
 
 const wait = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
 
@@ -24,7 +19,7 @@ const Homepage = () => {
     const [namePromptVisible, setNamePromptVisible] = useState(false);
     const [_, setName] = useState('');
     const [loading, setLoading] = useState(true);
-    const { habits, getHabits, habitsLoading, setHabits } = useHabits();
+    const { habits, getHabits, habitsLoading } = useHabits();
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);

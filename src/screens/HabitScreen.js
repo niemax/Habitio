@@ -41,7 +41,7 @@ const HabitScreen = ({ route, navigation }) => {
                     <HabitCardsContainer>
                         <HStack>
                             <Center bg="gray.800" h={10} p={2} rounded="lg" align="center" mr={2}>
-                                <Image style={{ height: 20, width: 20 }} source={habitIcon} />
+                                <Image style={{ height: 25, width: 25 }} source={habitIcon} />
                             </Center>
                             <HabitTextColumnContainer>
                                 <Text left marginLeft="5px" fontFamily="Medium">

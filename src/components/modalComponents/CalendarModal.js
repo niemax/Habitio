@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { CalendarLineBreak, ModalContent } from '../../utils/StyledComponents/Styled';
@@ -19,7 +19,8 @@ const CalendarModal = ({ route }) => {
     const { habits, habitSetter } = useHabits();
 
     const { data } = route.params;
-    const { completedDates, days, times, unitValue, noteInputs } = data;
+    const { completedDates, days, times, unitValue, noteInputs, endDate, reminder, specificDate } =
+        data;
 
     const calendarDayPress = (day) => {
         handleDoneOtherDay(day.dateString, data, habits, habitSetter);
@@ -47,7 +48,14 @@ const CalendarModal = ({ route }) => {
                             markedDates={completedDates}
                             onDayPress={(day) => calendarDayPress(day)}
                         />
-                        <CalendarFrequency days={days} times={times} unitValue={unitValue} />
+                        <CalendarFrequency
+                            days={days}
+                            times={times}
+                            unitValue={unitValue}
+                            endDate={endDate}
+                            reminder={reminder}
+                            specificDate={specificDate}
+                        />
                         <CalendarLineBreak />
                         <CalendarLineBreak />
                     </>

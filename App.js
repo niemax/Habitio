@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { AsyncStorage, Platform, View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import FlashMessage from 'react-native-flash-message';
@@ -10,12 +10,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import * as Notifications from 'expo-notifications';
 import HabitProvider from './src/context/HabitProvider';
-import { scheduleOneTimeWeekNotification } from './src/utils/helpers/notification';
-import { getCurrentDay } from './src/utils/helpers/dateHelpers';
 import MainAppStack from './src/navigation/MainAppNav';
 import { colors } from './src/utils/colors';
 import { NativeBaseProvider } from 'native-base';
-import { customTheme, extendedTheme } from './src/theme';
+import { customTheme } from './src/theme';
 
 export default function App() {
     const [, , setExpoPushToken] = useState('');
@@ -36,12 +34,6 @@ export default function App() {
         });
         setFontsLoaded(true);
     }
-
-    const currentDay = getCurrentDay();
-
-    useEffect(() => {
-        scheduleOneTimeWeekNotification(currentDay);
-    }, []);
 
     useEffect(() => {
         loadFonts();

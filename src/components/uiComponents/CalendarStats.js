@@ -8,7 +8,7 @@ const CalendarStats = ({ completedDates }) => (
         <Box bg="gray.800" rounded="lg" p={3}>
             <Flex direction="row" justify="space-around">
                 <VStack>
-                    <Text thirtyFour fontFamily="Extra">
+                    <Text twentyEight fontFamily="Extra">
                         {Object.keys(completedDates).length}
                     </Text>
                     <Text fifteen fontFamily="Medium" color="gray">
@@ -16,7 +16,7 @@ const CalendarStats = ({ completedDates }) => (
                     </Text>
                 </VStack>
                 <VStack>
-                    <Text thirtyFour fontFamily="Extra">
+                    <Text twentyEight fontFamily="Extra">
                         {Object.keys(completedDates).length}
                     </Text>
                     <Text fifteen fontFamily="Medium" color="gray">
@@ -24,11 +24,11 @@ const CalendarStats = ({ completedDates }) => (
                     </Text>
                 </VStack>
                 <VStack>
-                    <Text thirtyFour fontFamily="Extra">
+                    <Text twentyEight fontFamily="Extra">
                         {Object.keys(completedDates).length}
                     </Text>
                     <Text fifteen fontFamily="Medium" color="gray">
-                        current streak
+                        current {'\n'} streak
                     </Text>
                 </VStack>
             </Flex>

@@ -13,6 +13,8 @@ const ProgressAmountModal = ({ showProgressModal, setShowProgressModal, handleHa
             onClose={() => setShowProgressModal(false)}
             avoidKeyboard
             animationPreset="slide"
+            isKeyboardDismissable={true}
+            closeOnOverlayClick={false}
         >
             <Modal.Content maxWidth="400px" bg="gray.800" rounded="2xl">
                 <Text fontFamily="Extra" marginTop="10px">

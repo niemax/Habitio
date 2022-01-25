@@ -9,10 +9,23 @@ import ActionSheet from './ActionSheet';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { haptics } from '../../utils/helpers/haptics';
 import { useHabits } from '../../context/HabitProvider';
+import { formatDateForHabitEndDate } from '../../utils/helpers/dateHelpers';
+import { handleDoneToday } from '../../utils/helpers/handleDone';
 
 const HabitListItem = ({ item }) => {
     const { isOpen, onOpen, onClose } = useDisclose();
-    const { icon, completed, times, progress, color, name, id, unitValue, notificationId } = item;
+    const {
+        icon,
+        completed,
+        times,
+        progress,
+        color,
+        name,
+        id,
+        unitValue,
+        notificationId,
+        specificDate,
+    } = item;
     const [habitProgress, setHabitProgress] = useState(progress);
 
     const { habitSetter, habits } = useHabits();
@@ -50,15 +63,30 @@ const HabitListItem = ({ item }) => {
                             >
                                 {name}
                             </Text>
-                            <Text fontFamily="Regular" left fifteen marginTop="4px">
-                                Goal: {times} {unitValue} daily
-                            </Text>
+                            {times > 0 && (
+                                <Text fontFamily="Regular" left fifteen marginTop="4px">
+                                    Goal: {times} {unitValue} daily
+                                </Text>
+                            )}
+                            {specificDate !== null && (
+                                <Text fontFamily="Regular" left fifteen marginTop="4px">
+                                    Doing it once on {formatDateForHabitEndDate(specificDate)}
+                                </Text>
+                            )}
                         </VStack>
                     </Box>
                 </HStack>
                 {times > 0 && (
                     <Center>
-                        <TouchableOpacity onPress={() => handleHabitProgress(1)}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                if (habitProgress - times === -1) {
+                                    handleDoneToday(item, habits, habitSetter);
+                                } else {
+                                    handleHabitProgress(1);
+                                }
+                            }}
+                        >
                             <AnimatedCircularProgress
                                 size={50}
                                 width={6}

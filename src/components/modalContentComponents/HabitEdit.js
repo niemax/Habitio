@@ -1,4 +1,4 @@
-import { Flex } from 'native-base';
+import { Box, Flex } from 'native-base';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 import {
@@ -66,20 +66,18 @@ export default function HabitEditContent({
                                 }}
                             />
                         </HabitCentered>
-                        <HabitUtilityInfoContainer>
-                            <Flex direction="row" align="center">
-                                <Text left fontFamily="Regular" sixteen>
-                                    Color
-                                </Text>
-                                <HabitColor
-                                    colorUpdated={colorUpdated}
-                                    updatedColor={updatedColor}
-                                    color={color}
-                                    updateColor={updateColor}
-                                />
-                            </Flex>
-                        </HabitUtilityInfoContainer>
-                        <View style={{ marginTop: 20 }}>
+                        <Flex direction="row" align="center">
+                            <Text left fontFamily="Regular" sixteen marginLeft="8px">
+                                Color
+                            </Text>
+                            <HabitColor
+                                colorUpdated={colorUpdated}
+                                updatedColor={updatedColor}
+                                color={color}
+                                updateColor={updateColor}
+                            />
+                        </Flex>
+                        <Box>
                             <Frequency
                                 switchStates={{
                                     isEnabledSpecific,
@@ -110,7 +108,7 @@ export default function HabitEditContent({
                                     habitEndDate,
                                 }}
                             />
-                        </View>
+                        </Box>
                     </HabitInfoContainer>
                 </View>
             </ScrollView>
