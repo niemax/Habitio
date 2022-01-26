@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
-import { Box, Center, HStack } from 'native-base';
+import { Box, Center, Flex, Text, HStack, useColorModeValue } from 'native-base';
 import {
     ChevronTextContainer,
     HabitCardsContainer,
@@ -9,23 +9,20 @@ import {
     ImageContainer,
 } from '../utils/StyledComponents/Styled';
 import { Ionicons } from '@expo/vector-icons';
-import Text from '../utils/Text';
+import { colors } from '../utils/colors';
 
 const HabitScreen = ({ route, navigation }) => {
     const { habitData, image, category } = route.params;
 
     return (
-        <HabitScreenContainer>
-            <ImageContainer>
+        <Box flex={1} bg={useColorModeValue(colors.white, colors.mainBackground)} align="center">
+            <ImageContainer style={{ backgroundColor: useColorModeValue('white', colors.black) }}>
                 <ChevronTextContainer>
-                    <Text left fontFamily="Extra" thirtyFour marginLeft="10px" marginTop="20px">
+                    <Text fontWeight={800} fontSize="3xl" marginLeft="10px" marginTop="20px">
                         {category}
                     </Text>
                 </ChevronTextContainer>
-                <Image
-                    style={{ height: 100, width: 100, marginRight: 20, marginTop: 20 }}
-                    source={image}
-                />
+                <Image style={{ height: 100, width: 100 }} source={image} />
             </ImageContainer>
             {habitData.map(({ habitIcon, description, color, name }) => (
                 <TouchableOpacity
@@ -39,27 +36,27 @@ const HabitScreen = ({ route, navigation }) => {
                     }
                 >
                     <HabitCardsContainer>
-                        <HStack>
-                            <Center bg="gray.800" h={10} p={2} rounded="lg" align="center" mr={2}>
-                                <Image style={{ height: 25, width: 25 }} source={habitIcon} />
+                        <Flex direction="row" align="center" ml={2}>
+                            <Center
+                                bg={useColorModeValue('white', 'gray.800')}
+                                p={2}
+                                rounded="lg"
+                                align="center"
+                                mr={2}
+                            >
+                                <Image style={{ height: 20, width: 20 }} source={habitIcon} />
                             </Center>
                             <HabitTextColumnContainer>
-                                <Text left marginLeft="5px" fontFamily="Medium">
+                                <Text fontWeight={500} fontSize="md" marginLeft="5px">
                                     {name}
                                 </Text>
-                                <Text
-                                    left
-                                    marginLeft="5px"
-                                    fontFamily="Regular"
-                                    sixteen
-                                    color="gray"
-                                >
+                                <Text fontWeight={400} fontSize="sm" opacity={0.8} marginLeft="5px">
                                     {description}
                                 </Text>
                             </HabitTextColumnContainer>
-                        </HStack>
+                        </Flex>
                         <Box>
-                            <Ionicons name="chevron-forward" size={24} color="white" />
+                            <Ionicons name="chevron-forward" size={20} color="gray" />
                         </Box>
                     </HabitCardsContainer>
                     <View
@@ -67,12 +64,12 @@ const HabitScreen = ({ route, navigation }) => {
                             borderBottomColor: 'gray',
                             borderBottomWidth: 1,
                             opacity: 0.1,
-                            marginTop: 10,
+                            marginTop: 13,
                         }}
                     />
                 </TouchableOpacity>
             ))}
-        </HabitScreenContainer>
+        </Box>
     );
 };
 

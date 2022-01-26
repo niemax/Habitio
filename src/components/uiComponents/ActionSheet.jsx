@@ -1,8 +1,7 @@
 import React, { useRef, useState } from 'react';
-import { Actionsheet, Box, Button, Flex, Slide } from 'native-base';
+import { Actionsheet, Box, Button, Flex, Text, useColorModeValue } from 'native-base';
 import { useHabits } from '../../context/HabitProvider';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import Text from '../../utils/Text';
 import { colors } from '../../utils/colors';
 import ActionSheet from '@alessiocancian/react-native-actionsheet';
 import { handleDoneToday } from '../../utils/helpers/handleDone';
@@ -52,7 +51,7 @@ export default function ListItemActionSheet({
 
     return (
         <Actionsheet isOpen={isOpen} onClose={onClose}>
-            <Actionsheet.Content bg="gray.900">
+            <Actionsheet.Content bg={useColorModeValue('white', 'gray.800')}>
                 <Box w="100%" px={4} justifyContent="center">
                     <Flex direction="row" justify="flex-end" align="center">
                         <TouchableOpacity
@@ -78,11 +77,11 @@ export default function ListItemActionSheet({
                         </TouchableOpacity>
                     </Flex>
                     <Box mt={4}>
-                        <Text thirtyFour fontFamily="Extra">
+                        <Text textAlign="center" fontWeight={800} fontSize="3xl">
                             {name}
                         </Text>
                         {times > 0 && (
-                            <Text sixteen fontFamily="Regular" marginTop="10px">
+                            <Text textAlign="center" marginTop="10px">
                                 Goal: {times} {unitValue} daily
                             </Text>
                         )}

@@ -1,3 +1,4 @@
+import { themeTools } from 'native-base';
 import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import { colors } from '../colors';
@@ -82,7 +83,6 @@ export const InputContainer = styled.View`
 export const HabitInput = styled.TextInput`
     width: ${deviceWidth - 50}px
     height: 60px
-    background-color: ${colors.mainBoxes} 
     border-radius: 8px; 
     padding: 15px;
 `;
@@ -116,7 +116,9 @@ export const HabitNextButton = styled.TouchableOpacity`
 
 export const PreDefinedContainer = styled.View`
     margin-top: 10px;
-    align-items: center;
+    justify-content: space-between;
+    background-color: ${colors.mainBoxes};
+    border-radius: 4px;
 `;
 
 export const PreDefinedHabitsContainer = styled.View`
@@ -140,8 +142,7 @@ export const ImageContainer = styled.View`
     height: 130px;
     justify-content: space-between;
     flex-direction: row;
-    align-items: center
-    background-color: ${colors.black};
+    align-items: center;
 `;
 
 export const ChevronTextContainer = styled.View`
@@ -152,7 +153,7 @@ export const ChevronTextContainer = styled.View`
 export const HabitCardsContainer = styled.View`
     width: ${deviceWidth - 20}px;
     border-radius: 10px;
-    margin-top: 20px;
+    margin-top: 25px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -180,13 +181,13 @@ export const HabitCentered = styled.View`
 `;
 
 export const HabitDescriptionInput = styled.TextInput`
-    width: ${deviceWidth - 30}px
-    height: 50px;
-    background-color: ${colors.mainBoxes};
+    height: 60px;
+    padding: 10px;
     border-radius: 8px;
-    padding: 15px;
     margin-top: 13px;
     justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
 `;
 
 export const DiaryInput = styled.TextInput`
@@ -199,13 +200,12 @@ export const HabitUtilityInfoContainer = styled.View`
     justify-content: center;
     padding-horizontal: 2px;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 10px;
 `;
 
 export const SelectHabitColorButton = styled.TouchableOpacity`
     margin-top: 10px;
     justify-content: center;
-    background-color: ${colors.mainBoxes};
     align-items: center;
     height: 60px;
     width: 60px;
@@ -220,7 +220,6 @@ export const FrequencyTouchable = styled.View`
     padding-horizontal: 10px;
     padding-vertical: 3px;
     flex-direction: row;
-    background-color: #3f3f46;
     align-items: center;
     justify-content: space-between;
 `;
@@ -249,7 +248,6 @@ export const HomepageDataBox = styled.Pressable`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: #1c1b1b;
     border-radius: ${radius};
 `;
 

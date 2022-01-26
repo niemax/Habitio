@@ -5,14 +5,11 @@ import {
     HabitInput,
     HabitNextButton,
     InputContainer,
-    PreDefinedContainer,
-    PreDefinedHabitsContainer,
 } from '../utils/StyledComponents/Styled';
-import Text from '../utils/Text';
 import data from '../categories';
 import { colors } from '../utils/colors';
 import { Ionicons } from '@expo/vector-icons';
-import { Box, Center, Flex } from 'native-base';
+import { Box, Center, Flex, HStack, Text, useColorModeValue } from 'native-base';
 
 const StartHabitCreation = ({ navigation }) => {
     const [habitName, setHabitName] = useState('');
@@ -29,18 +26,18 @@ const StartHabitCreation = ({ navigation }) => {
     };
 
     return (
-        <Box flex={1} bg={colors.mainBackground}>
+        <Box flex={1} bg={useColorModeValue(colors.white, colors.mainBackground)}>
             <ScrollView>
-                <Text left fontFamily="Regular" marginLeft="25px" marginTop="25px">
+                <Text fontSize="lg" marginLeft="25px" marginTop="25px">
                     Create your own Habit
                 </Text>
                 <InputContainer>
                     <HabitInput
-                        keyboardAppearance="dark"
                         clearButtonMode="always"
                         placeholder="Habit name"
                         placeholderTextColor="gray"
                         style={{
+                            backgroundColor: useColorModeValue('white', '#27272a'),
                             color: 'white',
                             fontSize: 18,
                             fontFamily: 'Bold',
@@ -60,14 +57,14 @@ const StartHabitCreation = ({ navigation }) => {
                     />
                 </InputContainer>
 
-                <Text left marginLeft="25px" marginTop="10px" color={colors.error}>
+                <Text marginLeft="25px" marginTop="10px" color={colors.error}>
                     {error}
                 </Text>
-                <View style={{ marginBottom: 60 }}>
-                    <Text left fontFamily="Regular" marginLeft="25px" marginTop="50px">
+                <Box mt={10} px={4}>
+                    <Text fontSize="lg" marginLeft="12px">
                         Or choose
                     </Text>
-                    <PreDefinedContainer>
+                    <Box bg={useColorModeValue('white', 'gray.800')} rounded="xl" p={1} mt={6}>
                         {data.map(({ category, image, mainIcon, habits }) => (
                             <TouchableOpacity
                                 key={category}
@@ -79,37 +76,39 @@ const StartHabitCreation = ({ navigation }) => {
                                     })
                                 }
                             >
-                                <PreDefinedHabitsContainer>
-                                    <Flex direction="row" align="center">
-                                        <Center
-                                            bg="gray.900"
-                                            p={3}
-                                            rounded="lg"
-                                            align="center"
-                                            ml={2}
-                                        >
+                                <Flex direction="row" align="center" justify="space-between" py={1}>
+                                    <HStack>
+                                        <Center p={3} align="center">
                                             <Image
                                                 source={mainIcon}
-                                                style={{ height: 15, width: 15 }}
+                                                style={{ height: 20, width: 20 }}
                                             />
                                         </Center>
-                                        <Text marginLeft="15px" fontFamily="Medium">
-                                            {category}
-                                        </Text>
-                                    </Flex>
-                                    <Ionicons name="chevron-forward" size={24} color="white" />
-                                </PreDefinedHabitsContainer>
+                                        <Box p={2}>
+                                            <Text fontSize="md">{category}</Text>
+                                        </Box>
+                                    </HStack>
+                                    <Ionicons name="chevron-forward" size={20} color="gray" />
+                                </Flex>
                                 <View
-                                    style={{ height: 1, backgroundColor: '#FFFFFF', width: '100%' }}
+                                    style={{
+                                        height: 1,
+                                        backgroundColor: 'gray',
+                                        width: '96%',
+                                        opacity: 0.1,
+                                        marginLeft: 16,
+                                    }}
                                 />
                             </TouchableOpacity>
                         ))}
-                    </PreDefinedContainer>
-                </View>
+                    </Box>
+                </Box>
             </ScrollView>
             <ButtonContainer>
                 <HabitNextButton onPress={handleOwnHabit}>
-                    <Text twentyTwo>Next</Text>
+                    <Text fontWeight={600} fontSize="xl">
+                        Next
+                    </Text>
                 </HabitNextButton>
             </ButtonContainer>
         </Box>

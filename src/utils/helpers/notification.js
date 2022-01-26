@@ -28,7 +28,7 @@ export const getAllNotifications = async () => {
     });
 };
 
-export const scheduleOneTimeWeekNotification = async (currentDay) => {
+/* export const scheduleOneTimeWeekNotification = async (currentDay) => {
     switch (currentDay) {
         case 1:
             await Notifications.scheduleNotificationAsync({
@@ -45,7 +45,7 @@ export const scheduleOneTimeWeekNotification = async (currentDay) => {
 
         default:
     }
-};
+}; */
 
 export const scheduleRepeatingEdit = async (hours, minutes, name, habits, data) => {
     const identifier = await Notifications.scheduleNotificationAsync({

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Platform, View } from 'react-native';
+import { AsyncStorage, Platform, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import FlashMessage from 'react-native-flash-message';
@@ -12,8 +12,9 @@ import * as Notifications from 'expo-notifications';
 import HabitProvider from './src/context/HabitProvider';
 import MainAppStack from './src/navigation/MainAppNav';
 import { colors } from './src/utils/colors';
-import { NativeBaseProvider } from 'native-base';
+import { NativeBaseProvider, useColorModeValue } from 'native-base';
 import { customTheme } from './src/theme';
+import { deleteNotifications } from './src/utils/helpers/notification';
 
 export default function App() {
     const [, , setExpoPushToken] = useState('');
@@ -57,15 +58,33 @@ export default function App() {
         };
     }, []);
 
+    const colorModeManager = {
+        get: async () => {
+            try {
+                let val = await AsyncStorage.getItem('@color-mode');
+                return val === 'dark' ? 'dark' : 'light';
+            } catch (e) {
+                return 'light';
+            }
+        },
+        set: async (value) => {
+            try {
+                await AsyncStorage.setItem('@color-mode', value);
+            } catch (e) {
+                console.log(e);
+            }
+        },
+    };
+
     if (fontsLoaded) {
         return (
             <HabitProvider>
-                <NativeBaseProvider theme={customTheme}>
+                <NativeBaseProvider theme={customTheme} colorModeManager={colorModeManager}>
                     <NavigationContainer>
                         <SafeAreaProvider>
-                            <View style={{ flex: 1, backgroundColor: colors.mainBackground }}>
-                                <StatusBar style="light" />
-                                <FlashMessage position="top" />
+                            <StatusBar style={useColorModeValue('dark', 'light')} />
+                            <FlashMessage position="top" />
+                            <View style={{ backgroundColor: colors.black, flex: 1 }}>
                                 <MainAppStack />
                             </View>
                         </SafeAreaProvider>

@@ -1,10 +1,12 @@
+import { themeTools } from 'native-base';
+
 export const colors = {
     mainBackground: '#18181b',
-    mainBoxes: '#27272a',
+    mainBoxes: themeTools.mode('white', '#27272a'),
     mainGreen: '#6ee7b7',
     error: '#EA5B71',
     black: '#040404',
-    white: '#F7F7F7',
+    white: '#F1F1F1',
 };
 
 export const habitSelectionColors = [

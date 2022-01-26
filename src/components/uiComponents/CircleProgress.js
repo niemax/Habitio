@@ -1,7 +1,6 @@
 import React from 'react';
-import { Box, Flex, HStack, Button, VStack, Center } from 'native-base';
+import { Box, Flex, HStack, Button, VStack, Center, useColorModeValue, Text } from 'native-base';
 import { AntDesign, Entypo } from '@expo/vector-icons';
-import Text from '../../utils/Text';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { colors } from '../../utils/colors';
 import { useHabits } from '../../context/HabitProvider';
@@ -21,9 +20,8 @@ const CircleProgress = ({
             <Flex direction="row" align="center">
                 <Box>
                     <Button
-                        bg="gray.800"
+                        bg={useColorModeValue('gray.100', 'gray.700')}
                         rounded="full"
-                        variant="subtle"
                         mr={6}
                         onPress={() => {
                             if (completed) {
@@ -43,17 +41,17 @@ const CircleProgress = ({
                             width={20}
                             fill={!completed ? (habitProgress / times) * 100 : 100}
                             tintColor={colors.mainGreen}
-                            backgroundColor={colors.black}
+                            backgroundColor={useColorModeValue('#f5f5f5', colors.black)}
                         >
                             {() =>
                                 !completed ? (
                                     <VStack>
-                                        <Text style={{ fontSize: 50 }} fontFamily="Extra">
-                                            {habitProgress}
-                                        </Text>
-                                        <Text marginTop="5px" fontFamily="Regular">
-                                            {unitValue}
-                                        </Text>
+                                        <Center>
+                                            <Text fontSize="5xl" fontWeight={700}>
+                                                {habitProgress}
+                                            </Text>
+                                            {unitValue && <Text fontSize="xl">{unitValue}</Text>}
+                                        </Center>
                                     </VStack>
                                 ) : (
                                     <Entypo name="check" size={42} color={colors.mainGreen} />
@@ -66,8 +64,7 @@ const CircleProgress = ({
                     <Button
                         rounded="full"
                         ml={6}
-                        bg="gray.800"
-                        variant="subtle"
+                        bg={useColorModeValue('gray.100', 'gray.700')}
                         onPress={() => {
                             if (habitProgress - times === -1) {
                                 handleDoneToday(item, habits, habitSetter);

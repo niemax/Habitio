@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { CalendarLineBreak, ModalContent } from '../../utils/StyledComponents/Styled';
-import Text from '../../utils/Text';
 import { calendarStyles } from '../../utils/globalStyles';
 import { getCurrentDateFormattedForCalendarComponent } from '../../utils/helpers/dateHelpers';
 import CalendarFrequency from '../uiComponents/CalendarFrequency';
@@ -11,6 +10,7 @@ import Notes from '../uiComponents/Notes';
 import { colors } from '../../utils/colors';
 import { handleDoneOtherDay } from '../../utils/helpers/handleDone';
 import { useHabits } from '../../context/HabitProvider';
+import { Box, useColorModeValue, Text } from 'native-base';
 
 const CalendarModal = ({ route }) => {
     const [completionRate, setCompletionRate] = useState(0);
@@ -27,20 +27,29 @@ const CalendarModal = ({ route }) => {
     };
 
     return (
-        <ModalContent>
+        <Box flex={1} bg={useColorModeValue(colors.white, colors.mainBackground)}>
             <FlatList
+                ListFooterComponentStyle={{ marginTop: 30 }}
                 ListHeaderComponent={
                     <>
-                        <CalendarStats
-                            completedDates={completedDates}
-                            completionRate={completionRate}
-                        />
+                        <Box mt={32}>
+                            <CalendarStats
+                                completedDates={completedDates}
+                                completionRate={completionRate}
+                            />
+                        </Box>
                         <Calendar
                             theme={{
-                                ...calendarStyles,
+                                calendarBackground: useColorModeValue(
+                                    'white',
+                                    colors.mainBackground
+                                ),
+                                monthTextColor: useColorModeValue('black', 'white'),
+                                dayTextColor: useColorModeValue('black', 'white'),
                                 selectedDayBackgroundColor: colors.mainGreen,
                                 arrowColor: colors.mainGreen,
                                 todayTextColor: colors.mainGreen,
+                                ...calendarStyles,
                             }}
                             firstDay={1}
                             hideExtraDays={true}
@@ -62,7 +71,7 @@ const CalendarModal = ({ route }) => {
                 }
                 ListFooterComponent={
                     <>
-                        <Text sixteen left marginLeft="17px" marginTop="10px" marginBottom="15px">
+                        <Text marginLeft="17px" marginBottom="15px">
                             Notes
                         </Text>
                         <Notes
@@ -74,7 +83,7 @@ const CalendarModal = ({ route }) => {
                     </>
                 }
             />
-        </ModalContent>
+        </Box>
     );
 };
 

@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-import { Box, Flex, Modal, Button, HStack } from 'native-base';
+import { Box, Flex, Modal, Button, useColorModeValue, Text } from 'native-base';
 import { TextInput } from 'react-native';
 import { colors } from '../../utils/colors';
-import Text from '../../utils/Text';
-import { Feather } from '@expo/vector-icons';
 import { useHabits } from '../../context/HabitProvider';
 
 const NoteModal = ({ showModal, setShowModal, id }) => {
     const [inputText, setInputText] = useState('');
     const [selectedDay] = useState(new Date());
-    const [isOpen, setIsOpen] = React.useState(false);
 
     const { habitSetter, habits } = useHabits();
 
@@ -43,8 +40,12 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
             isKeyboardDismissable={true}
             closeOnOverlayClick={false}
         >
-            <Modal.Content maxWidth="400px" bg="gray.800" rounded="2xl">
-                <Text fontFamily="Extra" marginTop="10px">
+            <Modal.Content
+                maxWidth="400px"
+                bg={useColorModeValue('gray.100', 'gray.800')}
+                rounded="2xl"
+            >
+                <Text textAlign="center" fontSize="lg" fontWeight={700} marginTop="10px">
                     Note
                 </Text>
 
@@ -55,9 +56,9 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
                         autoCorrect={false}
                         style={{
                             borderRadius: 20,
-                            backgroundColor: colors.black,
+                            backgroundColor: useColorModeValue('white', colors.black),
                             padding: 15,
-                            color: 'white',
+                            color: useColorModeValue('black', 'white'),
                             height: 220,
                             fontSize: 16,
                             fontFamily: 'Medium',
@@ -65,11 +66,16 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
                         onChangeText={(text) => setInputText(text)}
                     />
                 </Box>
-                <Flex direction="row" bg="gray.800" justify="space-around" mb={4}>
+                <Flex
+                    direction="row"
+                    bg={useColorModeValue('gray.100', 'gray.800')}
+                    justify="space-around"
+                    mb={4}
+                >
                     <Button.Group colorScheme="emerald" space={2}>
                         <Button
                             size="lg"
-                            bg="gray.700"
+                            bg={useColorModeValue('gray.200', 'gray.700')}
                             rounded="xl"
                             w={150}
                             h={50}

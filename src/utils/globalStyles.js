@@ -58,12 +58,9 @@ export const showHabitImage = {
 };
 
 export const calendarStyles = {
-    calendarBackground: colors.mainBackground,
     textDayFontFamily: 'Regular',
     textMonthFontFamily: 'Medium',
     textDayHeaderFontFamily: 'Bold',
-    monthTextColor: 'white',
-    dayTextColor: 'white',
     indicatorColor: colors.mainGreen,
     textDayFontSize: 20,
     textMonthFontSize: 20,

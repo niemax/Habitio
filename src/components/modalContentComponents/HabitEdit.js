@@ -1,15 +1,13 @@
-import { Box, Flex } from 'native-base';
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
+import { Box, useColorModeValue, Text } from 'native-base';
+import { colors } from '../../utils/colors';
 import {
     ButtonContainer,
     CreateHabitButton,
     HabitCentered,
     HabitInfoContainer,
-    HabitUtilityInfoContainer,
-    ModalContent,
 } from '../../utils/StyledComponents/Styled';
-import Text from '../../utils/Text';
 import Frequency from '../uiComponents/ChooseFrequency';
 import HabitInput from '../uiComponents/HabitDescriptionInput';
 import HabitColor from '../uiComponents/SelectHabitColorButton';
@@ -50,10 +48,10 @@ export default function HabitEditContent({
     },
 }) {
     return (
-        <ModalContent>
+        <Box flex={1} bg={useColorModeValue(colors.white, colors.mainBackground)} align="center">
             <ScrollView>
-                <View style={{ marginBottom: 60 }}>
-                    <Text left marginLeft="17px" fontFamily="Regular" marginTop="35px" sixteen>
+                <Box mb={24} mt={24}>
+                    <Text marginLeft="17px" marginTop="35px">
                         Description
                     </Text>
                     <HabitInfoContainer>
@@ -66,17 +64,15 @@ export default function HabitEditContent({
                                 }}
                             />
                         </HabitCentered>
-                        <Flex direction="row" align="center">
-                            <Text left fontFamily="Regular" sixteen marginLeft="8px">
-                                Color
-                            </Text>
+                        <Box>
+                            <Text marginLeft="13px">Color</Text>
                             <HabitColor
                                 colorUpdated={colorUpdated}
                                 updatedColor={updatedColor}
                                 color={color}
                                 updateColor={updateColor}
                             />
-                        </Flex>
+                        </Box>
                         <Box>
                             <Frequency
                                 switchStates={{
@@ -110,13 +106,15 @@ export default function HabitEditContent({
                             />
                         </Box>
                     </HabitInfoContainer>
-                </View>
+                </Box>
             </ScrollView>
             <ButtonContainer>
                 <CreateHabitButton onPress={handleSubmit}>
-                    <Text twentyTwo>Update</Text>
+                    <Text color="black" fontWeight={600} fontSize="lg">
+                        Update
+                    </Text>
                 </CreateHabitButton>
             </ButtonContainer>
-        </ModalContent>
+        </Box>
     );
 }

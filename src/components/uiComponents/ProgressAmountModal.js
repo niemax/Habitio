@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Box, Flex, Modal, Button } from 'native-base';
+import { Box, Flex, Modal, Button, Text, useColorModeValue } from 'native-base';
 import { TextInput } from 'react-native';
 import { colors } from '../../utils/colors';
-import Text from '../../utils/Text';
 
 const ProgressAmountModal = ({ showProgressModal, setShowProgressModal, handleHabitProgress }) => {
     const [progressAmount, setProgressAmount] = useState();
@@ -14,35 +13,44 @@ const ProgressAmountModal = ({ showProgressModal, setShowProgressModal, handleHa
             avoidKeyboard
             animationPreset="slide"
             isKeyboardDismissable={true}
-            closeOnOverlayClick={false}
         >
-            <Modal.Content maxWidth="400px" bg="gray.800" rounded="2xl">
-                <Text fontFamily="Extra" marginTop="10px">
-                    Add progress
+            <Modal.Content
+                maxWidth="400px"
+                bg={useColorModeValue('gray.100', 'gray.800')}
+                rounded="2xl"
+            >
+                <Text textAlign="center" fontSize="lg" fontWeight={700} marginTop="10px">
+                    Note
                 </Text>
                 <Box p={4}>
                     <TextInput
+                        returnKeyType="done"
+                        enablesReturnKeyAutomatically={true}
                         keyboardAppearance="dark"
                         keyboardType="numeric"
                         autoCorrect={false}
                         placeholderTextColor="gray"
                         style={{
                             borderRadius: 10,
-                            backgroundColor: colors.black,
+                            backgroundColor: useColorModeValue('white', colors.black),
                             padding: 8,
-                            color: 'white',
+                            color: useColorModeValue('black', 'white'),
                             fontSize: 22,
-                            fontFamily: 'Extra',
                             marginBottom: 20,
                         }}
                         onChangeText={(text) => setProgressAmount(text)}
                     />
                 </Box>
-                <Flex direction="row" bg="gray.800" justify="space-around" mb={4}>
+                <Flex
+                    direction="row"
+                    bg={useColorModeValue('gray.100', 'gray.800')}
+                    justify="space-around"
+                    mb={4}
+                >
                     <Button.Group colorScheme="green" space={2}>
                         <Button
                             size="lg"
-                            bg="gray.700"
+                            bg={useColorModeValue('gray.200', 'gray.700')}
                             rounded="xl"
                             w={150}
                             h={50}

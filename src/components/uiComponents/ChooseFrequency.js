@@ -1,18 +1,14 @@
 import React from 'react';
 import { View, Switch } from 'react-native';
-import Text from '../../utils/Text';
-import { colors } from '../../utils/colors';
 import RNPickerSelect from 'react-native-picker-select';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {
     DateTimePickerView,
     FrequencySwitchContainer,
-    FrequencyTouchable,
     HabitUtilityInfoContainer,
-    LineBreak,
 } from '../../utils/StyledComponents/Styled';
 import { Feather, Ionicons } from '@expo/vector-icons';
-import { Box, Flex, HStack, Button } from 'native-base';
+import { Box, Flex, HStack, Button, Text, useColorModeValue } from 'native-base';
 
 export default function Frequency({
     switchStates: { isEnabled, isEnabledDate, isEnabledSpecific, isEnabledEndDate },
@@ -35,23 +31,18 @@ export default function Frequency({
     };
 
     return (
-        <View>
+        <Box>
             <Flex py={4}>
-                <Box ml={2}>
-                    <Text left fontFamily="Regular" sixteen>
-                        Frequency
+                <Box>
+                    <Text fontSize="xs" marginLeft="15px" opacity={0.7}>
+                        FREQUENCY
                     </Text>
                 </Box>
                 <HabitUtilityInfoContainer>
-                    <Box bg="gray.800" px={2} py={1} rounded="lg">
+                    <Box bg={useColorModeValue('white', 'gray.800')} px={3} py={3} rounded="xl">
                         <FrequencySwitchContainer>
-                            <Text fontFamily="Medium" sixteen>
-                                Complete once
-                            </Text>
+                            <Text fontSize="md">Complete once</Text>
                             <Switch
-                                trackColor={{ false: '#767577', true: colors.mainGreen }}
-                                thumbColor={isEnabledSpecific ? '#f5dd4b' : '#f4f3f4'}
-                                ios_backgroundColor="#3e3e3e"
                                 onValueChange={toggleSwitchSpecific}
                                 value={isEnabledSpecific}
                             />
@@ -64,7 +55,7 @@ export default function Frequency({
                                     mode="datetime"
                                     is24Hour="true"
                                     style={{ width: '100%' }}
-                                    themeVariant="dark"
+                                    themeVariant={useColorModeValue('light', 'dark')}
                                     onChange={onChangeSpecific}
                                 />
                             )}
@@ -73,77 +64,91 @@ export default function Frequency({
                             style={{
                                 borderBottomColor: 'gray',
                                 borderBottomWidth: 0.4,
-                                opacity: 0.5,
+                                opacity: 0.4,
                                 marginBottom: 5,
                             }}
                         />
                         <FrequencySwitchContainer>
-                            <Text fontFamily="SemiBold" sixteen>
-                                Goal
-                            </Text>
-                            <Switch
-                                trackColor={{ false: '#767577', true: colors.mainGreen }}
-                                thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-                                ios_backgroundColor="#3e3e3e"
-                                onValueChange={toggleSwitch}
-                                value={isEnabled}
-                            />
+                            <Text fontSize="md">Goal</Text>
+                            <Switch onValueChange={toggleSwitch} value={isEnabled} />
                         </FrequencySwitchContainer>
                         {isEnabled && (
                             <>
                                 <Box mt={4}>
-                                    <Text fontFamily="Regular" left sixteen>
-                                        Days per week
-                                    </Text>
+                                    <Text marginLeft="10px">Days per week</Text>
                                 </Box>
-                                <FrequencyTouchable>
+                                <Flex
+                                    rounded="md"
+                                    mt={4}
+                                    px={2}
+                                    py={1}
+                                    direction="row"
+                                    align="center"
+                                    justify="space-between"
+                                    bg={useColorModeValue('gray.100', 'gray.600')}
+                                >
                                     <Box>
-                                        <Text fontFamily="Extra" twentyTwo>
+                                        <Text fontWeight={500}>
                                             {daysCount === 7 ? <Text>Every day</Text> : daysCount}
                                         </Text>
                                     </Box>
                                     <HStack>
                                         <Button
-                                            bg="gray.600"
-                                            rounded="md"
+                                            bg={useColorModeValue('gray.200', 'gray.600')}
+                                            rounded="sm"
+                                            size={8}
                                             onPress={() => {
                                                 if (daysCount > 1) {
                                                     setDaysCount(daysCount - 1);
                                                 }
                                             }}
                                         >
-                                            <Feather name="minus" size={24} color="white" />
+                                            <Feather
+                                                name="minus"
+                                                size={24}
+                                                color={useColorModeValue('black', 'white')}
+                                            />
                                         </Button>
                                         <Button
-                                            bg="gray.600"
-                                            rounded="md"
+                                            bg={useColorModeValue('gray.200', 'gray.600')}
+                                            rounded="sm"
+                                            size={8}
                                             onPress={() => {
                                                 if (daysCount < 7) {
                                                     setDaysCount(daysCount + 1);
                                                 }
                                             }}
                                         >
-                                            <Ionicons name="add-sharp" size={24} color="white" />
+                                            <Ionicons
+                                                name="add-sharp"
+                                                size={24}
+                                                color={useColorModeValue('black', 'white')}
+                                            />
                                         </Button>
                                     </HStack>
-                                </FrequencyTouchable>
+                                </Flex>
 
                                 <Box mt={6}>
-                                    <Text fontFamily="Regular" left sixteen>
-                                        per day
-                                    </Text>
+                                    <Text marginLeft="10px">per day</Text>
                                 </Box>
-                                <FrequencyTouchable>
+                                <Flex
+                                    rounded="md"
+                                    mt={4}
+                                    px={2}
+                                    py={1}
+                                    direction="row"
+                                    align="center"
+                                    justify="space-between"
+                                    bg={useColorModeValue('gray.100', 'gray.600')}
+                                >
                                     <HStack>
                                         <Flex direction="row" align="center">
-                                            <Text fontFamily="Extra" twentyTwo>
-                                                {timesCount}
-                                            </Text>
-                                            <Box ml={3} mt={1}>
+                                            <Text fontWeight={500}>{timesCount}</Text>
+                                            <Box ml={2}>
                                                 <RNPickerSelect
                                                     textInputProps={{
-                                                        fontSize: 20,
-                                                        color: 'white',
+                                                        fontSize: 15,
+                                                        color: useColorModeValue('black', 'white'),
                                                     }}
                                                     placeholder={placeholder}
                                                     onValueChange={(value) =>
@@ -167,25 +172,35 @@ export default function Frequency({
                                     </HStack>
                                     <HStack>
                                         <Button
-                                            bg="gray.600"
-                                            rounded="md"
+                                            bg={useColorModeValue('gray.200', 'gray.600')}
+                                            rounded="sm"
+                                            size={8}
                                             onPress={() => {
                                                 if (timesCount > 1) {
                                                     setTimesCount(timesCount - 1);
                                                 }
                                             }}
                                         >
-                                            <Feather name="minus" size={24} color="white" />
+                                            <Feather
+                                                name="minus"
+                                                size={24}
+                                                color={useColorModeValue('black', 'white')}
+                                            />
                                         </Button>
                                         <Button
-                                            bg="gray.600"
-                                            rounded="md"
+                                            bg={useColorModeValue('gray.200', 'gray.600')}
+                                            rounded="sm"
+                                            size={8}
                                             onPress={() => setTimesCount(timesCount + 1)}
                                         >
-                                            <Ionicons name="add-sharp" size={24} color="white" />
+                                            <Ionicons
+                                                name="add-sharp"
+                                                size={24}
+                                                color={useColorModeValue('black', 'white')}
+                                            />
                                         </Button>
                                     </HStack>
-                                </FrequencyTouchable>
+                                </Flex>
                             </>
                         )}
                     </Box>
@@ -193,24 +208,13 @@ export default function Frequency({
 
                 <HabitUtilityInfoContainer>
                     <Box mt={2}>
-                        <Text
-                            marginBottom="10px"
-                            left
-                            fontFamily="Regular"
-                            sixteen
-                            marginLeft="10px"
-                        >
-                            Set an end date
+                        <Text fontSize="xs" marginLeft="15px" mb={2} opacity={0.7}>
+                            SET AN END DATE
                         </Text>
-                        <Box bg="gray.800" p={2} rounded="lg">
+                        <Box bg={useColorModeValue('white', 'gray.800')} px={4} py={1} rounded="xl">
                             <FrequencySwitchContainer>
-                                <Text fontFamily="Medium" sixteen>
-                                    End date
-                                </Text>
+                                <Text fontSize="md">End date</Text>
                                 <Switch
-                                    trackColor={{ false: '#767577', true: colors.mainGreen }}
-                                    thumbColor={isEnabledEndDate ? '#f5dd4b' : '#f4f3f4'}
-                                    ios_backgroundColor="#3e3e3e"
                                     onValueChange={toggleSwitchEndDate}
                                     value={isEnabledEndDate}
                                 />
@@ -221,7 +225,7 @@ export default function Frequency({
                                         testID="dateTimePicker"
                                         value={endDate || habitEndDate}
                                         mode="datetime"
-                                        themeVariant="dark"
+                                        themeVariant={useColorModeValue('light', 'dark')}
                                         is24Hour="true"
                                         onChange={onChangeEndDate}
                                         display="default"
@@ -233,27 +237,13 @@ export default function Frequency({
                 </HabitUtilityInfoContainer>
                 <HabitUtilityInfoContainer>
                     <Box mt={2}>
-                        <Text
-                            marginBottom="10px"
-                            left
-                            fontFamily="Regular"
-                            sixteen
-                            marginLeft="10px"
-                        >
-                            Set a reminder
+                        <Text fontSize="xs" marginLeft="15px" mb={2} opacity={0.7}>
+                            SET A REMINDER
                         </Text>
-                        <Box bg="gray.800" p={2} rounded="lg">
+                        <Box bg={useColorModeValue('white', 'gray.800')} px={4} py={1} rounded="xl">
                             <FrequencySwitchContainer>
-                                <Text fontFamily="Medium" sixteen>
-                                    Reminder
-                                </Text>
-                                <Switch
-                                    trackColor={{ false: '#767577', true: colors.mainGreen }}
-                                    thumbColor={isEnabledDate ? '#f5dd4b' : '#f4f3f4'}
-                                    ios_backgroundColor="#3e3e3e"
-                                    onValueChange={toggleSwitchDate}
-                                    value={isEnabledDate}
-                                />
+                                <Text fontSize="md">Reminder</Text>
+                                <Switch onValueChange={toggleSwitchDate} value={isEnabledDate} />
                             </FrequencySwitchContainer>
                             {isEnabledDate && (
                                 <DateTimePickerView>
@@ -261,7 +251,7 @@ export default function Frequency({
                                         testID="dateTimePicker"
                                         value={reminderTime || habitReminderTime}
                                         mode="time"
-                                        themeVariant="dark"
+                                        themeVariant={useColorModeValue('light', 'dark')}
                                         is24Hour="true"
                                         onChange={onChangeReminderTime}
                                         display="default"
@@ -272,6 +262,6 @@ export default function Frequency({
                     </Box>
                 </HabitUtilityInfoContainer>
             </Flex>
-        </View>
+        </Box>
     );
 }

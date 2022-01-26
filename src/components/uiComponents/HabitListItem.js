@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
 import { Image, TouchableOpacity } from 'react-native';
 import { Feather, Entypo } from '@expo/vector-icons';
-import Text from '../../utils/Text';
 import { HomepageDataBox, HomepageDataView } from '../../utils/StyledComponents/Styled';
 import { colors } from '../../utils/colors';
-import { Box, HStack, VStack, useDisclose, Center } from 'native-base';
+import {
+    Box,
+    HStack,
+    VStack,
+    useDisclose,
+    Center,
+    useColorModeValue,
+    Text,
+    Flex,
+} from 'native-base';
 import ActionSheet from './ActionSheet';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { haptics } from '../../utils/helpers/haptics';
@@ -44,32 +52,51 @@ const HabitListItem = ({ item }) => {
 
     return (
         <HomepageDataView>
-            <HomepageDataBox onPress={onOpen}>
+            <HomepageDataBox
+                onPress={onOpen}
+                style={{
+                    backgroundColor: useColorModeValue('white', '#1c1b1b'),
+                    shadowColor: '#000',
+                    shadowOffset: {
+                        width: 1,
+                        height: 10,
+                    },
+                    shadowOpacity: 0.06,
+                    shadowRadius: 8,
+                    elevation: 6,
+                }}
+            >
                 <HStack>
-                    <Box bg="gray.800" p={3} rounded="full">
-                        {icon ? (
-                            <Image style={{ height: 20, width: 20 }} source={icon} />
-                        ) : (
-                            <Feather name="activity" size={20} color={color || colors.mainGreen} />
-                        )}
-                    </Box>
+                    <Flex align="center" mt={1}>
+                        <Box bg={useColorModeValue('gray.100', 'gray.800')} p={3} rounded="full">
+                            {icon ? (
+                                <Image style={{ height: 15, width: 15 }} source={icon} />
+                            ) : (
+                                <Feather
+                                    name="activity"
+                                    size={20}
+                                    color={color || colors.mainGreen}
+                                />
+                            )}
+                        </Box>
+                    </Flex>
                     <Box ml={3}>
                         <VStack>
                             <Text
-                                left
-                                fontFamily="Bold"
-                                color={completed ? 'gray' : 'white'}
+                                fontWeight={600}
+                                fontSize="md"
+                                color={completed ? 'gray.500' : useColorModeValue('black', 'white')}
                                 textDecorationLine={completed ? 'line-through' : 'none'}
                             >
                                 {name}
                             </Text>
                             {times > 0 && (
-                                <Text fontFamily="Regular" left fifteen marginTop="4px">
+                                <Text fontWeight={400} fontSize="sm" marginTop="4px">
                                     Goal: {times} {unitValue} daily
                                 </Text>
                             )}
                             {specificDate !== null && (
-                                <Text fontFamily="Regular" left fifteen marginTop="4px">
+                                <Text marginTop="4px">
                                     Doing it once on {formatDateForHabitEndDate(specificDate)}
                                 </Text>
                             )}
@@ -93,11 +120,11 @@ const HabitListItem = ({ item }) => {
                                 fill={!completed ? (habitProgress / times) * 100 : 100}
                                 tintColor={colors.mainGreen}
                                 onAnimationComplete={() => 'onAnimationComplete'}
-                                backgroundColor={colors.black}
+                                backgroundColor={useColorModeValue('#e7e5e4', colors.black)}
                             >
                                 {() =>
                                     !completed ? (
-                                        <Text twenty fontFamily="Extra">
+                                        <Text fontSize="sm" fontWeight={600}>
                                             {habitProgress}
                                         </Text>
                                     ) : (

@@ -3,9 +3,9 @@
  */
 
 export const handleNoteEdit = (noteInputs, id, habitSetter, habits, data, input) => {
-    const mappedInputs = noteInputs.map((diaryInput) => {
-        if (diaryInput.id === id) {
-            diaryInput.input = input;
+    const mappedInputs = noteInputs.map((note) => {
+        if (note.id === id) {
+            note.input = input;
         }
         return diaryInput;
     });

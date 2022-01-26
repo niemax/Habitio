@@ -5,14 +5,14 @@ import {
     CreateHabitButton,
     MainContainer,
 } from '../utils/StyledComponents/Styled';
-import Text from '../utils/Text';
 import HabitInput from '../components/uiComponents/HabitDescriptionInput';
 import Frequency from '../components/uiComponents/ChooseFrequency';
 import HabitColor from '../components/uiComponents/SelectHabitColorButton';
 import { getCurrentWeek } from '../utils/helpers/dateHelpers';
 import handleHabitCreation from '../utils/helpers/createhabitHelpers';
 import { useHabits } from '../context/HabitProvider';
-import { Box, Flex } from 'native-base';
+import { Box, Flex, Text, useColorModeValue } from 'native-base';
+import { colors } from '../utils/colors';
 
 const CreateHabit = ({ route, navigation }) => {
     const { name, habitIcon, color, habitName } = route.params;
@@ -85,11 +85,11 @@ const CreateHabit = ({ route, navigation }) => {
     };
 
     return (
-        <MainContainer>
+        <Box flex={1} bg={useColorModeValue(colors.white, colors.mainBackground)} align="center">
             <ScrollView>
-                <Box flex={1} mt={0} px={2} mb={32}>
-                    <Text left marginLeft="10px" fontFamily="Regular" marginTop="35px" sixteen>
-                        Description
+                <Box flex={1} mt={32} px={2} mb={32}>
+                    <Text fontSize="xs" marginLeft="10px" marginTop="35px" opacity={0.7}>
+                        DESCRIPTION
                     </Text>
                     <HabitInput
                         values={description}
@@ -97,9 +97,9 @@ const CreateHabit = ({ route, navigation }) => {
                             setValue: (text) => setDescription(text),
                         }}
                     />
-                    <Flex direction="row" align="center">
-                        <Text left fontFamily="Medium" marginLeft="10px" sixteen>
-                            Color
+                    <Box>
+                        <Text fontSize="xs" marginLeft="15px" opacity={0.7}>
+                            COLOR
                         </Text>
                         <HabitColor
                             colorUpdated={colorUpdated}
@@ -107,7 +107,7 @@ const CreateHabit = ({ route, navigation }) => {
                             color={color}
                             updateColor={updateColor}
                         />
-                    </Flex>
+                    </Box>
                     <Box mt={4}>
                         <Frequency
                             switchStates={{
@@ -152,10 +152,12 @@ const CreateHabit = ({ route, navigation }) => {
                         navigation.navigate('Homepage');
                     }}
                 >
-                    <Text twentyTwo>Create</Text>
+                    <Text fontSize="xl" fontWeight={600}>
+                        Create
+                    </Text>
                 </CreateHabitButton>
             </ButtonContainer>
-        </MainContainer>
+        </Box>
     );
 };
 
