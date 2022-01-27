@@ -5,6 +5,7 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { colors } from '../../utils/colors';
 import { useHabits } from '../../context/HabitProvider';
 import { handleDoneToday } from '../../utils/helpers/handleDone';
+import { TouchableOpacity } from 'react-native';
 
 const CircleProgress = ({
     handleHabitProgress,
@@ -31,33 +32,43 @@ const CircleProgress = ({
                             }
                         }}
                     >
-                        <AntDesign name="minus" size={24} color={colors.mainGreen} />
+                        <AntDesign name="minus" size={24} color={colors.mainPurple} />
                     </Button>
                 </Box>
                 {times && (
                     <Center>
-                        <AnimatedCircularProgress
-                            size={180}
-                            width={20}
-                            fill={!completed ? (habitProgress / times) * 100 : 100}
-                            tintColor={colors.mainGreen}
-                            backgroundColor={useColorModeValue('#f5f5f5', colors.black)}
+                        <TouchableOpacity
+                            onPress={() => {
+                                if (!completed) {
+                                    handleHabitProgress(1);
+                                }
+                            }}
                         >
-                            {() =>
-                                !completed ? (
-                                    <VStack>
-                                        <Center>
-                                            <Text fontSize="5xl" fontWeight={700}>
-                                                {habitProgress}
-                                            </Text>
-                                            {unitValue && <Text fontSize="xl">{unitValue}</Text>}
-                                        </Center>
-                                    </VStack>
-                                ) : (
-                                    <Entypo name="check" size={42} color={colors.mainGreen} />
-                                )
-                            }
-                        </AnimatedCircularProgress>
+                            <AnimatedCircularProgress
+                                size={180}
+                                width={20}
+                                fill={!completed ? (habitProgress / times) * 100 : 100}
+                                tintColor={colors.mainPurple}
+                                backgroundColor={useColorModeValue('#f5f5f5', colors.black)}
+                            >
+                                {() =>
+                                    !completed ? (
+                                        <VStack>
+                                            <Center>
+                                                <Text fontSize="5xl" fontWeight={700}>
+                                                    {habitProgress}
+                                                </Text>
+                                                {unitValue && (
+                                                    <Text fontSize="xl">{unitValue}</Text>
+                                                )}
+                                            </Center>
+                                        </VStack>
+                                    ) : (
+                                        <Entypo name="check" size={54} color={colors.mainPurple} />
+                                    )
+                                }
+                            </AnimatedCircularProgress>
+                        </TouchableOpacity>
                     </Center>
                 )}
                 <Box>
@@ -68,12 +79,13 @@ const CircleProgress = ({
                         onPress={() => {
                             if (habitProgress - times === -1) {
                                 handleDoneToday(item, habits, habitSetter);
+                                handleHabitProgress(1);
                             } else {
                                 handleHabitProgress(1);
                             }
                         }}
                     >
-                        <AntDesign name="plus" size={24} color={colors.mainGreen} />
+                        <AntDesign name="plus" size={24} color={colors.mainPurple} />
                     </Button>
                 </Box>
             </Flex>

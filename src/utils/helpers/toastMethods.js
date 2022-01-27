@@ -13,12 +13,10 @@ export const toasts = {
             description: `You completed ${habitName}. Nice work!`,
             backgroundColor: colors.black,
             titleStyle: {
-                color: colors.mainGreen,
-                fontFamily: 'Bold',
+                color: colors.mainPurple,
                 fontSize: 17,
             },
             textStyle: {
-                fontFamily: 'Medium',
                 fontSize: 15,
             },
             style: { opacity: 0.94 },
@@ -33,7 +31,6 @@ export const toasts = {
             backgroundColor: colors.black,
             titleStyle: {
                 color: colors.error,
-                fontFamily: 'Medium',
                 fontSize: 16,
             },
             floating: 'true',
@@ -44,9 +41,8 @@ export const toasts = {
         showMessage({
             duration: 4000,
             message: `Note successfully edited.`,
-            backgroundColor: colors.mainGreen,
+            backgroundColor: colors.mainPurple,
             titleStyle: {
-                fontFamily: 'Medium',
                 fontSize: 16,
             },
             style: { opacity: 0.9 },

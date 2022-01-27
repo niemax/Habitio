@@ -1,22 +1,18 @@
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
-import {
-    ButtonContainer,
-    CreateHabitButton,
-    MainContainer,
-} from '../utils/StyledComponents/Styled';
+import { ButtonContainer, CreateHabitButton } from '../utils/StyledComponents/Styled';
 import HabitInput from '../components/uiComponents/HabitDescriptionInput';
 import Frequency from '../components/uiComponents/ChooseFrequency';
 import HabitColor from '../components/uiComponents/SelectHabitColorButton';
 import { getCurrentWeek } from '../utils/helpers/dateHelpers';
 import handleHabitCreation from '../utils/helpers/createhabitHelpers';
 import { useHabits } from '../context/HabitProvider';
-import { Box, Flex, Text, useColorModeValue } from 'native-base';
+import { Box, Text, useColorModeValue } from 'native-base';
 import { colors } from '../utils/colors';
 
 const CreateHabit = ({ route, navigation }) => {
     const { name, habitIcon, color, habitName } = route.params;
-
+    const { CRUDHabits } = useHabits();
     const [updatedColor, setUpdatedColor] = useState();
     const [colorUpdated, setColorUpdated] = useState(false);
     const [description, setDescription] = useState('');
@@ -30,8 +26,6 @@ const CreateHabit = ({ route, navigation }) => {
     const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
     const [isEnabledEndDate, setIsEnabledEndDate] = useState(false);
     const [selectedValue, setSelectedValue] = useState();
-
-    const { CRUDHabits } = useHabits();
 
     const toggleSwitch = () =>
         !isEnabledSpecific && setIsEnabled((previousState) => !previousState);

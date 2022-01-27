@@ -4,7 +4,6 @@ import { TouchableOpacity } from 'react-native';
 import { useHabits } from '../context/HabitProvider';
 import { colors } from '../utils/colors';
 import { deleteNotifications } from '../utils/helpers/notification';
-import { MainContainer } from '../utils/StyledComponents/Styled';
 import Text from '../utils/Text';
 import { Box, useColorMode, useColorModeValue } from 'native-base';
 
@@ -24,17 +23,15 @@ const Settings = ({ navigation }) => {
             >
                 <Box mt={10}>
                     <TouchableOpacity onPress={navigation.goBack()}>
-                        <Text marginTop="100px" color={colors.error} fontFamily="Extra" twentyTwo>
+                        <Text marginTop="100px" color={colors.error}>
                             back
                         </Text>
                     </TouchableOpacity>
-                    <Text marginTop="100px" color={colors.error} fontFamily="Extra" twentyTwo>
+                    <Text marginTop="100px" color={colors.error}>
                         Delete all Data
                     </Text>
                     <TouchableOpacity onPress={toggleColorMode}>
-                        <Text marginTop="100px" fontFamily="Extra" twentyTwo>
-                            Toggle color mode
-                        </Text>
+                        <Text marginTop="100px">Toggle color mode</Text>
                     </TouchableOpacity>
                 </Box>
             </TouchableOpacity>

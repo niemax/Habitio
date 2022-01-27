@@ -1,3 +1,4 @@
+import { useColorModeValue } from 'native-base';
 import React, { useRef } from 'react';
 import { View } from 'react-native';
 import ActionSheet from 'react-native-actions-sheet';
@@ -27,7 +28,7 @@ export default function HabitColor({ colorUpdated, updatedColor, updateColor, co
             )}
             <ActionSheet
                 containerStyle={{
-                    backgroundColor: colors.mainBackground,
+                    backgroundColor: useColorModeValue(colors.white, colors.black),
                     height: 270,
                     borderRadius: 35,
                 }}

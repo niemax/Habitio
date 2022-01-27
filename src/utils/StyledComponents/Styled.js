@@ -5,7 +5,7 @@ import { colors } from '../colors';
 
 const deviceWidth = Dimensions.get('window').width;
 
-const { mainBackground, mainGreen } = colors;
+const { mainBackground, mainPurple } = colors;
 
 const radius = '18px';
 
@@ -99,7 +99,7 @@ export const ButtonContainer = styled.View`
 export const CreateHabitButton = styled.TouchableOpacity`
     width: 180px;
     height: 60px;
-    background-color: ${mainGreen};
+    background-color: ${mainPurple};
     justify-content: center;
     align-items: center;
     border-radius: 20px;
@@ -108,7 +108,7 @@ export const CreateHabitButton = styled.TouchableOpacity`
 export const HabitNextButton = styled.TouchableOpacity`
     width: ${deviceWidth - 40}px
     height: 60px;
-    background-color: ${mainGreen};
+    background-color: ${mainPurple};
     justify-content: center;
     align-items: center;
     border-radius: ${radius};
@@ -328,7 +328,7 @@ export const CalendarStatsContainer = styled.View`
 export const CalendarLineBreak = styled.View`
     height: 1px;
     background-color: #494949;
-    opacity: 0.3;
+    opacity: 0.1;
     width: 100%;
 `;
 
@@ -391,7 +391,7 @@ export const ItemTimesContainer = styled.TouchableOpacity`
 export const TextNameAndStatus = styled.View``;
 
 export const RightAction = styled.TouchableOpacity`
-    background-color: ${colors.mainGreen};
+    background-color: ${colors.mainPurple};
     width: 75px;
     margin-top: 13px;
     border-radius: 15px;
@@ -407,7 +407,7 @@ export const ProgressModalMainView = styled.View`
 
 export const ProgressModalView = styled.View`
     margin: 20px;
-    background-color: ${colors.mainGreen};
+    background-color: ${colors.mainPurple};
     border-radius: ${radius};
     padding: 10px;
     align-items: center;

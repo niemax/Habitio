@@ -1,10 +1,9 @@
 import React from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
-import { Box, Center, Flex, Text, HStack, useColorModeValue } from 'native-base';
+import { Box, Center, Flex, Text, useColorModeValue } from 'native-base';
 import {
     ChevronTextContainer,
     HabitCardsContainer,
-    HabitScreenContainer,
     HabitTextColumnContainer,
     ImageContainer,
 } from '../utils/StyledComponents/Styled';
@@ -37,17 +36,11 @@ const HabitScreen = ({ route, navigation }) => {
                 >
                     <HabitCardsContainer>
                         <Flex direction="row" align="center" ml={2}>
-                            <Center
-                                bg={useColorModeValue('white', 'gray.800')}
-                                p={2}
-                                rounded="lg"
-                                align="center"
-                                mr={2}
-                            >
+                            <Center p={2} align="center" mr={2}>
                                 <Image style={{ height: 20, width: 20 }} source={habitIcon} />
                             </Center>
                             <HabitTextColumnContainer>
-                                <Text fontWeight={500} fontSize="md" marginLeft="5px">
+                                <Text fontWeight={600} fontSize="md" marginLeft="5px">
                                     {name}
                                 </Text>
                                 <Text fontWeight={400} fontSize="sm" opacity={0.8} marginLeft="5px">

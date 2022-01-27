@@ -52,7 +52,7 @@ export const handleDoneOtherDay = (date, data, habits, habitSetter) => {
                     selected: true,
                     customStyles: {
                         container: {
-                            backgroundColor: colors.mainGreen,
+                            backgroundColor: colors.mainPurple,
                         },
                     },
                 };

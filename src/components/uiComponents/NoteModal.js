@@ -51,7 +51,6 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
 
                 <Box p={3}>
                     <TextInput
-                        keyboardAppearance="dark"
                         multiline={Platform.OS === 'android' ? false : true}
                         autoCorrect={false}
                         style={{
@@ -61,7 +60,6 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
                             color: useColorModeValue('black', 'white'),
                             height: 220,
                             fontSize: 16,
-                            fontFamily: 'Medium',
                         }}
                         onChangeText={(text) => setInputText(text)}
                     />
@@ -72,7 +70,7 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
                     justify="space-around"
                     mb={4}
                 >
-                    <Button.Group colorScheme="emerald" space={2}>
+                    <Button.Group colorScheme="indigo" space={2}>
                         <Button
                             size="lg"
                             bg={useColorModeValue('gray.200', 'gray.700')}

@@ -15,9 +15,8 @@ const HabitInput = ({ values: { description, stateDescription }, actions: { setV
             placeholderTextColor="gray"
             style={{
                 backgroundColor: useColorModeValue('white', '#27272a'),
-                color: 'white',
+                color: useColorModeValue('black', 'white'),
                 fontSize: 17,
-                fontFamily: 'SemiBold',
                 width: width - 25,
                 shadowColor: '#000',
                 shadowOffset: {

@@ -34,9 +34,9 @@ const HabitListItem = ({ item }) => {
         notificationId,
         specificDate,
     } = item;
-    const [habitProgress, setHabitProgress] = useState(progress);
 
     const { habitSetter, habits } = useHabits();
+    const [habitProgress, setHabitProgress] = useState(progress);
 
     const handleHabitProgress = (operand) => {
         haptics.success();
@@ -75,7 +75,7 @@ const HabitListItem = ({ item }) => {
                                 <Feather
                                     name="activity"
                                     size={20}
-                                    color={color || colors.mainGreen}
+                                    color={color || colors.mainPurple}
                                 />
                             )}
                         </Box>
@@ -91,7 +91,7 @@ const HabitListItem = ({ item }) => {
                                 {name}
                             </Text>
                             {times > 0 && (
-                                <Text fontWeight={400} fontSize="sm" marginTop="4px">
+                                <Text fontWeight={400} fontSize="sm">
                                     Goal: {times} {unitValue} daily
                                 </Text>
                             )}
@@ -118,9 +118,9 @@ const HabitListItem = ({ item }) => {
                                 size={50}
                                 width={6}
                                 fill={!completed ? (habitProgress / times) * 100 : 100}
-                                tintColor={colors.mainGreen}
+                                tintColor={colors.mainPurple}
                                 onAnimationComplete={() => 'onAnimationComplete'}
-                                backgroundColor={useColorModeValue('#e7e5e4', colors.black)}
+                                backgroundColor={useColorModeValue('#f5f5f5', colors.black)}
                             >
                                 {() =>
                                     !completed ? (
@@ -128,7 +128,7 @@ const HabitListItem = ({ item }) => {
                                             {habitProgress}
                                         </Text>
                                     ) : (
-                                        <Entypo name="check" size={20} color={colors.mainGreen} />
+                                        <Entypo name="check" size={20} color={colors.mainPurple} />
                                     )
                                 }
                             </AnimatedCircularProgress>

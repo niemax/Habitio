@@ -8,7 +8,7 @@ import {
     HabitUtilityInfoContainer,
 } from '../../utils/StyledComponents/Styled';
 import { Feather, Ionicons } from '@expo/vector-icons';
-import { Box, Flex, HStack, Button, Text, useColorModeValue } from 'native-base';
+import { Box, Flex, HStack, Button, Text, useColorModeValue, useColorMode } from 'native-base';
 
 export default function Frequency({
     switchStates: { isEnabled, isEnabledDate, isEnabledSpecific, isEnabledEndDate },
@@ -25,6 +25,7 @@ export default function Frequency({
     values: { specificDate, reminderTime, endDate, habitReminderTime },
     states: { daysCount, timesCount, habitSpecificDate, habitEndDate },
 }) {
+    const { colorMode } = useColorMode();
     const placeholder = {
         label: 'Choose',
         color: '#9EA0A4',
@@ -39,7 +40,12 @@ export default function Frequency({
                     </Text>
                 </Box>
                 <HabitUtilityInfoContainer>
-                    <Box bg={useColorModeValue('white', 'gray.800')} px={3} py={3} rounded="xl">
+                    <Box
+                        bg={colorMode === 'dark' ? 'gray.800' : 'white'}
+                        px={3}
+                        py={3}
+                        rounded="xl"
+                    >
                         <FrequencySwitchContainer>
                             <Text fontSize="md">Complete once</Text>
                             <Switch
@@ -55,7 +61,7 @@ export default function Frequency({
                                     mode="datetime"
                                     is24Hour="true"
                                     style={{ width: '100%' }}
-                                    themeVariant={useColorModeValue('light', 'dark')}
+                                    themeVariant={colorMode === 'light' ? 'light' : 'dark'}
                                     onChange={onChangeSpecific}
                                 />
                             )}
@@ -85,7 +91,7 @@ export default function Frequency({
                                     direction="row"
                                     align="center"
                                     justify="space-between"
-                                    bg={useColorModeValue('gray.100', 'gray.600')}
+                                    bg={colorMode === 'light' ? 'gray.100' : 'gray.600'}
                                 >
                                     <Box>
                                         <Text fontWeight={500}>
@@ -94,7 +100,7 @@ export default function Frequency({
                                     </Box>
                                     <HStack>
                                         <Button
-                                            bg={useColorModeValue('gray.200', 'gray.600')}
+                                            bg={colorMode === 'light' ? 'gray.200' : 'gray.600'}
                                             rounded="sm"
                                             size={8}
                                             onPress={() => {
@@ -106,11 +112,11 @@ export default function Frequency({
                                             <Feather
                                                 name="minus"
                                                 size={24}
-                                                color={useColorModeValue('black', 'white')}
+                                                color={colorMode === 'light' ? 'black' : 'white'}
                                             />
                                         </Button>
                                         <Button
-                                            bg={useColorModeValue('gray.200', 'gray.600')}
+                                            bg={colorMode === 'light' ? 'gray.200' : 'gray.600'}
                                             rounded="sm"
                                             size={8}
                                             onPress={() => {
@@ -122,7 +128,7 @@ export default function Frequency({
                                             <Ionicons
                                                 name="add-sharp"
                                                 size={24}
-                                                color={useColorModeValue('black', 'white')}
+                                                color={colorMode === 'light' ? 'black' : 'white'}
                                             />
                                         </Button>
                                     </HStack>
@@ -139,7 +145,7 @@ export default function Frequency({
                                     direction="row"
                                     align="center"
                                     justify="space-between"
-                                    bg={useColorModeValue('gray.100', 'gray.600')}
+                                    bg={colorMode === 'light' ? 'gray.100' : 'gray.600'}
                                 >
                                     <HStack>
                                         <Flex direction="row" align="center">
@@ -148,7 +154,10 @@ export default function Frequency({
                                                 <RNPickerSelect
                                                     textInputProps={{
                                                         fontSize: 15,
-                                                        color: useColorModeValue('black', 'white'),
+                                                        color:
+                                                            colorMode === 'light'
+                                                                ? 'black'
+                                                                : 'white',
                                                     }}
                                                     placeholder={placeholder}
                                                     onValueChange={(value) =>
@@ -172,7 +181,7 @@ export default function Frequency({
                                     </HStack>
                                     <HStack>
                                         <Button
-                                            bg={useColorModeValue('gray.200', 'gray.600')}
+                                            bg={colorMode === 'light' ? 'gray.200' : 'gray.600'}
                                             rounded="sm"
                                             size={8}
                                             onPress={() => {
@@ -184,11 +193,11 @@ export default function Frequency({
                                             <Feather
                                                 name="minus"
                                                 size={24}
-                                                color={useColorModeValue('black', 'white')}
+                                                color={colorMode === 'light' ? 'black' : 'white'}
                                             />
                                         </Button>
                                         <Button
-                                            bg={useColorModeValue('gray.200', 'gray.600')}
+                                            bg={colorMode === 'light' ? 'gray.200' : 'gray.600'}
                                             rounded="sm"
                                             size={8}
                                             onPress={() => setTimesCount(timesCount + 1)}
@@ -196,7 +205,7 @@ export default function Frequency({
                                             <Ionicons
                                                 name="add-sharp"
                                                 size={24}
-                                                color={useColorModeValue('black', 'white')}
+                                                color={colorMode === 'light' ? 'black' : 'white'}
                                             />
                                         </Button>
                                     </HStack>
@@ -211,7 +220,12 @@ export default function Frequency({
                         <Text fontSize="xs" marginLeft="15px" mb={2} opacity={0.7}>
                             SET AN END DATE
                         </Text>
-                        <Box bg={useColorModeValue('white', 'gray.800')} px={4} py={1} rounded="xl">
+                        <Box
+                            bg={colorMode === 'light' ? 'white' : 'gray.800'}
+                            px={4}
+                            py={1}
+                            rounded="xl"
+                        >
                             <FrequencySwitchContainer>
                                 <Text fontSize="md">End date</Text>
                                 <Switch
@@ -225,7 +239,7 @@ export default function Frequency({
                                         testID="dateTimePicker"
                                         value={endDate || habitEndDate}
                                         mode="datetime"
-                                        themeVariant={useColorModeValue('light', 'dark')}
+                                        themeVariant={colorMode === 'light' ? 'light' : 'dark'}
                                         is24Hour="true"
                                         onChange={onChangeEndDate}
                                         display="default"
@@ -240,7 +254,12 @@ export default function Frequency({
                         <Text fontSize="xs" marginLeft="15px" mb={2} opacity={0.7}>
                             SET A REMINDER
                         </Text>
-                        <Box bg={useColorModeValue('white', 'gray.800')} px={4} py={1} rounded="xl">
+                        <Box
+                            bg={colorMode === 'light' ? 'white' : 'gray.800'}
+                            px={4}
+                            py={1}
+                            rounded="xl"
+                        >
                             <FrequencySwitchContainer>
                                 <Text fontSize="md">Reminder</Text>
                                 <Switch onValueChange={toggleSwitchDate} value={isEnabledDate} />
@@ -251,7 +270,7 @@ export default function Frequency({
                                         testID="dateTimePicker"
                                         value={reminderTime || habitReminderTime}
                                         mode="time"
-                                        themeVariant={useColorModeValue('light', 'dark')}
+                                        themeVariant={colorMode === 'light' ? 'light' : 'dark'}
                                         is24Hour="true"
                                         onChange={onChangeReminderTime}
                                         display="default"

@@ -1,37 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { AsyncStorage, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { TouchableOpacity } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 import Homepage from '../screens/Homepage';
 import HabitScreen from '../screens/HabitScreen';
 import CreateHabit from '../screens/CreateHabit';
 import StartHabitCreation from '../screens/StartHabitCreation';
 import Settings from '../screens/Settings';
 import ShowHabitEditModal from '../components/modalComponents/ShowHabitEditModal';
-import { AntDesign, FontAwesome5, Fontisto } from '@expo/vector-icons';
 import CalendarModal from '../components/modalComponents/CalendarModal';
+import { AntDesign } from '@expo/vector-icons';
 import { colors } from '../utils/colors';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import TextStyle from '../utils/Text';
-import { useColorMode, useColorModeValue } from 'native-base';
+import { useColorModeValue, Text, useColorMode } from 'native-base';
 
 const Stack = createNativeStackNavigator();
 
 const MainAppStack = () => {
-    const [name, setName] = useState('');
     const navigation = useNavigation();
-    const { colorMode, toggleColorMode } = useColorMode();
-
-    useEffect(async () => {
-        try {
-            const result = await AsyncStorage.getItem('@name');
-            if (result !== null) {
-                setName(result);
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    }, []);
+    const { colorMode } = useColorMode();
 
     return (
         <Stack.Navigator
@@ -39,7 +26,7 @@ const MainAppStack = () => {
             screenOptions={{
                 headerShown: true,
                 gestureEnabled: true,
-                headerTitleStyle: { color: '#FFFFFF', fontFamily: 'Bold', fontSize: 20 },
+                headerTitleStyle: { color: '#FFFFFF', fontSize: 18 },
             }}
         >
             <Stack.Group>
@@ -47,39 +34,27 @@ const MainAppStack = () => {
                     name="Homepage"
                     options={() => ({
                         headerTransparent: true,
-                        headerBlurEffect: useColorModeValue('systemUltraThinMaterialLight', 'dark'),
+                        headerBlurEffect:
+                            colorMode === 'light' ? 'systemUltraThinMaterialLight' : 'dark',
                         headerLargeTitle: true,
+                        headerLargeStyle: {
+                            backgroundColor: colorMode === 'dark' ? colors.black : colors.white,
+                        },
                         headerLargeTitleStyle: {
                             fontSize: 34,
                             fontWeight: '800',
-                            color: useColorModeValue('black', 'white'),
+                            color: colorMode === 'dark' ? 'white' : 'black',
                         },
-                        title: `${name}'s Dashboard`,
+                        title: `Dashboard`,
                         headerTitleStyle: {
-                            color: useColorModeValue('black', 'white'),
+                            color: colors.mainPurple,
                         },
                         headerRight: () => (
-                            <>
-                                <TouchableOpacity
-                                    onPress={toggleColorMode}
-                                    style={{ marginRight: 20 }}
-                                >
-                                    {colorMode === 'dark' ? (
-                                        <Fontisto name="sun" size={24} color="white" />
-                                    ) : (
-                                        <FontAwesome5 name="moon" size={24} color="black" />
-                                    )}
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={() => navigation.navigate('StartHabitCreation')}
-                                >
-                                    <AntDesign
-                                        name="pluscircle"
-                                        size={28}
-                                        color={colors.mainGreen}
-                                    />
-                                </TouchableOpacity>
-                            </>
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate('StartHabitCreation')}
+                            >
+                                <AntDesign name="pluscircle" size={28} color={colors.mainPurple} />
+                            </TouchableOpacity>
                         ),
                     })}
                     component={Homepage}
@@ -89,14 +64,15 @@ const MainAppStack = () => {
                     options={{
                         title: 'Add a Habit',
                         headerTitleStyle: {
-                            color: useColorModeValue('black', 'white'),
-                            fontFamily: 'Bold',
-                            fontSize: 20,
+                            color: colorMode === 'dark' ? 'white' : 'black',
+                            fontWeight: '600',
+                            fontSize: 18,
                         },
                         headerBackTitleVisible: true,
-                        headerTintColor: useColorModeValue('black', colors.mainGreen),
+                        headerTintColor: colors.mainPurple,
                         headerStyle: {
-                            backgroundColor: useColorModeValue(colors.white, colors.mainBackground),
+                            backgroundColor:
+                                colorMode === 'dark' ? colors.mainBackground : colors.white,
                         },
                     }}
                     component={StartHabitCreation}
@@ -107,14 +83,15 @@ const MainAppStack = () => {
                         title: 'Choose one',
                         headerBackTitleVisible: true,
                         headerBackTitle: 'Back',
-                        headerTintColor: useColorModeValue('black', colors.mainGreen),
+                        headerTintColor: colors.mainPurple,
                         headerStyle: {
-                            backgroundColor: useColorModeValue(colors.white, colors.mainBackground),
+                            backgroundColor:
+                                colorMode === 'dark' ? colors.mainBackground : colors.white,
                         },
                         headerTitleStyle: {
-                            color: useColorModeValue('black', 'white'),
-                            fontFamily: 'Bold',
-                            fontSize: 20,
+                            color: colorMode === 'dark' ? 'white' : 'black',
+                            fontWeight: '600',
+                            fontSize: 18,
                         },
                     }}
                     component={HabitScreen}
@@ -122,19 +99,26 @@ const MainAppStack = () => {
                 <Stack.Screen
                     name="CreateHabit"
                     options={({ route }) => ({
-                        headerBlurEffect: useColorModeValue('systemUltraThinMaterialLight', 'dark'),
+                        headerBlurEffect:
+                            colorMode === 'light' ? 'systemUltraThinMaterialLight' : 'dark',
                         headerLargeTitle: true,
+                        headerLargeStyle: {
+                            backgroundColor:
+                                colorMode === 'dark' ? colors.mainBackground : colors.white,
+                        },
                         headerLargeTitleStyle: {
-                            fontSize: 26,
+                            fontSize: 30,
                             fontWeight: '800',
-                            color: useColorModeValue('black', 'white'),
+                            color: colorMode === 'light' ? 'black' : 'white',
                         },
                         headerTransparent: true,
-                        headerTintColor: useColorModeValue('black', colors.mainGreen),
+                        headerTintColor: colors.mainPurple,
                         headerBackTitleVisible: true,
+                        headerBackTitle: 'Back',
                         title: route.params.name || route.params.habitName,
                         headerTitleStyle: {
-                            color: useColorModeValue('black', 'white'),
+                            color: colorMode === 'light' ? 'black' : 'white',
+                            fontWeight: '600',
                             fontSize: 18,
                         },
                     })}
@@ -146,25 +130,33 @@ const MainAppStack = () => {
                 <Stack.Screen
                     name="ShowHabitEditModal"
                     options={({ route }) => ({
-                        headerTransparent: true,
-                        headerBlurEffect: useColorModeValue('systemUltraThinMaterialLight', 'dark'),
-                        title: route.params.data.name,
+                        headerBlurEffect:
+                            colorMode === 'light' ? 'systemUltraThinMaterialLight' : 'dark',
                         headerLargeTitle: true,
-                        headerLargeTitleStyle: {
-                            fontSize: 26,
-                            fontWeight: '800',
-                            color: useColorModeValue('black', 'white'),
+                        headerLargeStyle: {
+                            backgroundColor:
+                                colorMode === 'dark' ? colors.mainBackground : colors.white,
                         },
+                        headerLargeTitleStyle: {
+                            fontSize: 30,
+                            fontWeight: '800',
+                            color: colorMode === 'light' ? 'black' : 'white',
+                        },
+                        headerTransparent: true,
+                        headerTintColor: colors.mainPurple,
+                        headerBackTitleVisible: true,
+                        headerBackTitle: 'Back',
+                        title: route.params.data.name,
                         headerTitleStyle: {
-                            color: useColorModeValue('black', 'white'),
-                            fontFamily: 'Bold',
+                            color: colorMode === 'light' ? 'black' : 'white',
+                            fontWeight: '600',
                             fontSize: 18,
                         },
                         headerLeft: () => (
                             <Ionicons
                                 name="chevron-down"
                                 size={28}
-                                color={useColorModeValue('black', colors.mainGreen)}
+                                color={useColorModeValue('black', colors.mainPurple)}
                                 onPress={() => navigation.goBack()}
                             />
                         ),
@@ -175,27 +167,32 @@ const MainAppStack = () => {
                     name="CalendarModal"
                     options={({ route }) => ({
                         headerTransparent: true,
-                        headerBlurEffect: useColorModeValue('systemUltraThinMaterialLight', 'dark'),
+                        headerBlurEffect:
+                            colorMode === 'light' ? 'systemUltraThinMaterialLight' : 'dark',
                         headerLargeTitle: true,
+                        headerLargeStyle: {
+                            backgroundColor:
+                                colorMode === 'light' ? colors.white : colors.mainBackground,
+                        },
                         headerLargeTitleStyle: {
-                            fontSize: 26,
+                            fontSize: 30,
                             fontWeight: '800',
-                            color: useColorModeValue('black', 'white'),
+                            color: colorMode === 'light' ? 'black' : 'white',
                         },
                         title: route.params.data.name,
                         headerTitleStyle: {
-                            color: useColorModeValue('black', 'white'),
-                            fontFamily: 'Bold',
+                            color: colorMode === 'light' ? 'black' : 'white',
+                            fontWeight: '600',
                             fontSize: 18,
                         },
                         headerRight: () => (
                             <TouchableOpacity onPress={() => navigation.goBack()}>
-                                <TextStyle color={useColorModeValue('black', colors.mainGreen)}>
+                                <Text color={colors.mainPurple} fontSize="lg" fontWeight={600}>
                                     Done
-                                </TextStyle>
+                                </Text>
                             </TouchableOpacity>
                         ),
-                        headerTintColor: colors.mainGreen,
+                        headerTintColor: colors.mainPurple,
                     })}
                     component={CalendarModal}
                 />

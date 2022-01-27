@@ -10,11 +10,12 @@ import Notes from '../uiComponents/Notes';
 import { colors } from '../../utils/colors';
 import { handleDoneOtherDay } from '../../utils/helpers/handleDone';
 import { useHabits } from '../../context/HabitProvider';
-import { Box, useColorModeValue, Text } from 'native-base';
+import { Box, Text, useColorMode, useColorModeValue } from 'native-base';
 
 const CalendarModal = ({ route }) => {
     const [completionRate, setCompletionRate] = useState(0);
     const [editNoteModalVisible, setEditNoteModalVisible] = useState(false);
+    const { colorMode } = useColorMode();
 
     const { habits, habitSetter } = useHabits();
 
@@ -27,9 +28,9 @@ const CalendarModal = ({ route }) => {
     };
 
     return (
-        <Box flex={1} bg={useColorModeValue(colors.white, colors.mainBackground)}>
+        <Box flex={1} bg={colorMode === 'light' ? colors.white : colors.mainBackground}>
             <FlatList
-                ListFooterComponentStyle={{ marginTop: 30 }}
+                ListFooterComponentStyle={{ marginTop: 10 }}
                 ListHeaderComponent={
                     <>
                         <Box mt={32}>
@@ -40,15 +41,13 @@ const CalendarModal = ({ route }) => {
                         </Box>
                         <Calendar
                             theme={{
-                                calendarBackground: useColorModeValue(
-                                    'white',
-                                    colors.mainBackground
-                                ),
-                                monthTextColor: useColorModeValue('black', 'white'),
-                                dayTextColor: useColorModeValue('black', 'white'),
-                                selectedDayBackgroundColor: colors.mainGreen,
-                                arrowColor: colors.mainGreen,
-                                todayTextColor: colors.mainGreen,
+                                calendarBackground:
+                                    colorMode === 'light' ? colors.white : colors.mainBackground,
+                                monthTextColor: colorMode === 'light' ? 'black' : 'white',
+                                dayTextColor: colorMode === 'light' ? 'black' : 'white',
+                                selectedDayBackgroundColor: colors.mainPurple,
+                                arrowColor: colors.mainPurple,
+                                todayTextColor: colors.mainPurple,
                                 ...calendarStyles,
                             }}
                             firstDay={1}
@@ -65,7 +64,6 @@ const CalendarModal = ({ route }) => {
                             reminder={reminder}
                             specificDate={specificDate}
                         />
-                        <CalendarLineBreak />
                         <CalendarLineBreak />
                     </>
                 }

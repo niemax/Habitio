@@ -24,6 +24,7 @@ export default function ListItemActionSheet({
     notificationId,
     handleHabitProgress,
     habitProgress,
+    setHabitProgress,
 }) {
     const [showModal, setShowModal] = useState(false);
     const [showProgressModal, setShowProgressModal] = useState(false);
@@ -64,7 +65,7 @@ export default function ListItemActionSheet({
                             <MaterialCommunityIcons
                                 name="history"
                                 size={32}
-                                color={colors.mainGreen}
+                                color={colors.mainPurple}
                                 style={{ marginRight: 10 }}
                             />
                         </TouchableOpacity>
@@ -72,16 +73,16 @@ export default function ListItemActionSheet({
                             <MaterialCommunityIcons
                                 name="dots-horizontal-circle"
                                 size={32}
-                                color={colors.mainGreen}
+                                color={colors.mainPurple}
                             />
                         </TouchableOpacity>
                     </Flex>
-                    <Box mt={4}>
+                    <Box mt={2}>
                         <Text textAlign="center" fontWeight={800} fontSize="3xl">
                             {name}
                         </Text>
                         {times > 0 && (
-                            <Text textAlign="center" marginTop="10px">
+                            <Text textAlign="center">
                                 Goal: {times} {unitValue} daily
                             </Text>
                         )}
@@ -91,6 +92,7 @@ export default function ListItemActionSheet({
                     handleHabitProgress={handleHabitProgress}
                     times={times}
                     habitProgress={habitProgress}
+                    setHabitProgress={setHabitProgress}
                     completed={completed}
                     unitValue={unitValue}
                     item={item}
@@ -103,7 +105,7 @@ export default function ListItemActionSheet({
                             w={300}
                             h={50}
                             variant="subtle"
-                            colorScheme="emerald"
+                            colorScheme="indigo"
                             rounded="xl"
                             align="center"
                             justify="center"
@@ -120,10 +122,11 @@ export default function ListItemActionSheet({
                 handleHabitProgress={handleHabitProgress}
             />
             <ActionSheet
+                tintColor={colors.mainPurple}
                 ref={actionSheetRef}
+                title={'Choose an action'}
                 options={['Add a note', 'Add amount', 'Edit Habit', 'Delete Habit', 'Cancel']}
                 cancelButtonIndex={4}
-                userInterfaceStyle="dark"
                 onPress={(index) => {
                     if (index === 0) setShowModal(true);
                     if (index === 1) setShowProgressModal(true);

@@ -63,7 +63,7 @@ export default function EditNoteModal({
                         <TouchableOpacity onPress={() => setEditNoteModalVisible(false)}>
                             <Ionicons name="close-circle-sharp" size={34} color="gray" />
                         </TouchableOpacity>
-                        <Text left fontFamily="Bold" twentyTwo color="gray">
+                        <Text twentyTwo color="gray">
                             {formatDateForInputModal(date)}
                         </Text>
                         <View style={{ flexDirection: 'row' }}>
@@ -86,7 +86,7 @@ export default function EditNoteModal({
                                 <Feather
                                     name="check"
                                     size={32}
-                                    color={colors.mainGreen}
+                                    color={colors.mainPurple}
                                     style={{ marginLeft: 15 }}
                                 />
                             </TouchableOpacity>
@@ -99,19 +99,12 @@ export default function EditNoteModal({
                                 textInputRef.current.focus();
                             }}
                         >
-                            <Text
-                                left
-                                marginLeft="15px"
-                                marginTop="50px"
-                                fontFamily="Bold"
-                                color={colors.mainGreen}
-                            >
+                            <Text marginLeft="15px" marginTop="50px" color={colors.mainPurple}>
                                 Clear text
                             </Text>
                         </TouchableOpacity>
                         <DiaryInput
                             ref={textInputRef}
-                            keyboardAppearance="dark"
                             clearButtonMode="always"
                             autoCorrect={false}
                             headerAlwaysVisible="true"
@@ -123,7 +116,6 @@ export default function EditNoteModal({
                             style={{
                                 color: 'white',
                                 fontSize: 17,
-                                fontFamily: 'SemiBold',
                             }}
                             onChangeText={(text) => setCurrInput(text)}
                         />

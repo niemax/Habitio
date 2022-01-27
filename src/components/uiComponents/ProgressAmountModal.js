@@ -26,7 +26,6 @@ const ProgressAmountModal = ({ showProgressModal, setShowProgressModal, handleHa
                     <TextInput
                         returnKeyType="done"
                         enablesReturnKeyAutomatically={true}
-                        keyboardAppearance="dark"
                         keyboardType="numeric"
                         autoCorrect={false}
                         placeholderTextColor="gray"
@@ -47,7 +46,7 @@ const ProgressAmountModal = ({ showProgressModal, setShowProgressModal, handleHa
                     justify="space-around"
                     mb={4}
                 >
-                    <Button.Group colorScheme="green" space={2}>
+                    <Button.Group colorScheme="indigo" space={2}>
                         <Button
                             size="lg"
                             bg={useColorModeValue('gray.200', 'gray.700')}

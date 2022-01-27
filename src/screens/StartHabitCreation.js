@@ -27,9 +27,9 @@ const StartHabitCreation = ({ navigation }) => {
 
     return (
         <Box flex={1} bg={useColorModeValue(colors.white, colors.mainBackground)}>
-            <ScrollView>
-                <Text fontSize="lg" marginLeft="25px" marginTop="25px">
-                    Create your own Habit
+            <ScrollView style={{ marginTop: 25 }}>
+                <Text opacity={0.7} marginLeft="25px">
+                    CREATE YOUR OWN HABIT
                 </Text>
                 <InputContainer>
                     <HabitInput
@@ -38,9 +38,8 @@ const StartHabitCreation = ({ navigation }) => {
                         placeholderTextColor="gray"
                         style={{
                             backgroundColor: useColorModeValue('white', '#27272a'),
-                            color: 'white',
+                            color: useColorModeValue('black', 'white'),
                             fontSize: 18,
-                            fontFamily: 'Bold',
                             shadowColor: '#000',
                             shadowOffset: {
                                 width: 0,
@@ -61,8 +60,8 @@ const StartHabitCreation = ({ navigation }) => {
                     {error}
                 </Text>
                 <Box mt={10} px={4}>
-                    <Text fontSize="lg" marginLeft="12px">
-                        Or choose
+                    <Text opacity={0.7} marginLeft="12px">
+                        OR CHOOSE
                     </Text>
                     <Box bg={useColorModeValue('white', 'gray.800')} rounded="xl" p={1} mt={6}>
                         {data.map(({ category, image, mainIcon, habits }) => (

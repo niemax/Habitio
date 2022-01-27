@@ -69,7 +69,7 @@ const data = [
     {
         category: 'Fitness',
         mainIcon: require('./assets/flatIcons/flexions-exercise.png'),
-        color: colors.mainGreen,
+        color: colors.mainPurple,
         image: require('./assets/flatIcons/dumbbell.png'),
         habits: [
             {

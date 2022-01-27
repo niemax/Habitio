@@ -3,9 +3,9 @@ import { themeTools } from 'native-base';
 export const colors = {
     mainBackground: '#18181b',
     mainBoxes: themeTools.mode('white', '#27272a'),
-    mainGreen: '#6ee7b7',
+    mainPurple: '#818cf8',
     error: '#EA5B71',
-    black: '#040404',
+    black: '#000000',
     white: '#F1F1F1',
 };
 
