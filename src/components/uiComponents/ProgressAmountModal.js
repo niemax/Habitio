@@ -20,7 +20,7 @@ const ProgressAmountModal = ({ showProgressModal, setShowProgressModal, handleHa
                 rounded="2xl"
             >
                 <Text textAlign="center" fontSize="lg" fontWeight={700} marginTop="10px">
-                    Note
+                    Add progress
                 </Text>
                 <Box p={4}>
                     <TextInput

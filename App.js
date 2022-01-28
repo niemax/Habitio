@@ -3,7 +3,6 @@ import { AsyncStorage, Platform, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import FlashMessage from 'react-native-flash-message';
-import AppLoading from 'expo-app-loading';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
@@ -11,12 +10,13 @@ import * as Notifications from 'expo-notifications';
 import HabitProvider from './src/context/HabitProvider';
 import MainAppStack from './src/navigation/MainAppNav';
 import { colors } from './src/utils/colors';
-import { NativeBaseProvider, useColorModeValue } from 'native-base';
+import { NativeBaseProvider, useColorMode } from 'native-base';
 import theme from './src/theme';
 
 export default function App() {
     const [, , setExpoPushToken] = useState('');
     const [, , setNotification] = useState(false);
+    const { colorMode } = useColorMode();
 
     const notificationListener = useRef();
     const responseListener = useRef();
@@ -69,7 +69,7 @@ export default function App() {
                         <FlashMessage position="top" />
                         <View
                             style={{
-                                backgroundColor: useColorModeValue(colors.black, colors.white),
+                                backgroundColor: colorMode === 'dark' ? colors.black : colors.white,
                                 flex: 1,
                             }}
                         >

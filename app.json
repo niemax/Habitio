@@ -19,7 +19,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "1.0.1",
+      "buildNumber": "2",
       "bundleIdentifier": "com.niemax.Habitio"
     },
     "android": {
