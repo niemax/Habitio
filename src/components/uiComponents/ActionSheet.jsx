@@ -13,25 +13,21 @@ import NoteModal from './NoteModal';
 import ProgressAmountModal from './ProgressAmountModal';
 
 export default function ListItemActionSheet({
+    id,
     isOpen,
     onClose,
-    name,
-    times,
-    completed,
-    item,
-    unitValue,
-    id,
-    notificationId,
     handleHabitProgress,
     habitProgress,
     setHabitProgress,
 }) {
     const [showModal, setShowModal] = useState(false);
     const [showProgressModal, setShowProgressModal] = useState(false);
-    const [slide, setSlide] = useState(false);
-    const actionSheetRef = useRef(null);
-    const { habits, habitSetter } = useHabits();
     const navigation = useNavigation();
+    const actionSheetRef = useRef(null);
+
+    const { habits, habitSetter, getSpecificHabit } = useHabits();
+    const habit = getSpecificHabit(id);
+    const habitItem = habit[0];
 
     const displayDeleteAlert = () => {
         Alert.alert(
@@ -40,7 +36,7 @@ export default function ListItemActionSheet({
             [
                 {
                     text: 'OK',
-                    onPress: () => deleteHabit(habits, habitSetter, notificationId, id),
+                    onPress: () => deleteHabit(habits, habitSetter, habitItem.notificationId, id),
                 },
                 {
                     text: 'Cancel',
@@ -58,7 +54,8 @@ export default function ListItemActionSheet({
                         <TouchableOpacity
                             onPress={() =>
                                 navigation.navigate('CalendarModal', {
-                                    data: item,
+                                    id: id,
+                                    name: habitItem.name,
                                 })
                             }
                         >
@@ -79,28 +76,25 @@ export default function ListItemActionSheet({
                     </Flex>
                     <Box mt={2}>
                         <Text textAlign="center" fontWeight={800} fontSize="3xl">
-                            {name}
+                            {habitItem.name}
                         </Text>
-                        {times > 0 && (
+                        {habitItem.times > 0 && (
                             <Text textAlign="center">
-                                Goal: {times} {unitValue} daily
+                                Goal: {habitItem.times} {habitItem.unitValue} per day
                             </Text>
                         )}
                     </Box>
                 </Box>
                 <CircleProgress
                     handleHabitProgress={handleHabitProgress}
-                    times={times}
                     habitProgress={habitProgress}
                     setHabitProgress={setHabitProgress}
-                    completed={completed}
-                    unitValue={unitValue}
-                    item={item}
+                    id={id}
                 />
-                {!completed && (
+                {!habitItem.completed && (
                     <Box mt={8}>
                         <Button
-                            onPress={() => handleDoneToday(item, habits, habitSetter)}
+                            onPress={() => handleDoneToday(id, habitItem.name, habits, habitSetter)}
                             size="lg"
                             w={300}
                             h={50}
@@ -110,7 +104,7 @@ export default function ListItemActionSheet({
                             align="center"
                             justify="center"
                         >
-                            {!completed ? 'Mark as Done' : 'Mark as Undone'}
+                            {!habitItem.completed ? 'Mark as Done' : 'Mark as Undone'}
                         </Button>
                     </Box>
                 )}
@@ -132,7 +126,8 @@ export default function ListItemActionSheet({
                     if (index === 1) setShowProgressModal(true);
                     if (index === 2) {
                         navigation.navigate('ShowHabitEditModal', {
-                            data: item,
+                            id: id,
+                            name: habitItem.name,
                         });
                     }
                     if (index === 3) {

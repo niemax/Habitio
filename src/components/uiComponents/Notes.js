@@ -5,8 +5,8 @@ import { formatDateForHabitEndDate } from '../../utils/helpers/dateHelpers';
 import { Entypo } from '@expo/vector-icons';
 import { Center, Text } from 'native-base';
 
-const Notes = ({ notes, data }) => {
-    const [showModal, setShowModal] = useState(false);
+const Notes = ({ notes }) => {
+    const [, , setShowModal] = useState(false);
     const [noteRenderAmount, setNoteRenderAmount] = useState(2);
 
     const renderItem = ({ item, index }) =>

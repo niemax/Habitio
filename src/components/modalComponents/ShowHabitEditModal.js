@@ -20,6 +20,7 @@ const ShowHabitEditModal = ({ route }) => {
     const [isEnabledDate, setIsEnabledDate] = useState(false);
     const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
     const [isEnabledEndDate, setIsEnabledEndDate] = useState(false);
+    const navigation = useNavigation();
 
     const toggleSwitch = () =>
         !isEnabledSpecific && setIsEnabled((previousState) => !previousState);
@@ -28,10 +29,12 @@ const ShowHabitEditModal = ({ route }) => {
     const toggleSwitchSpecific = () =>
         !isEnabledDate && !isEnabled && setIsEnabledSpecific((previousState) => !previousState);
     const toggleSwitchEndDate = () => setIsEnabledEndDate((previousState) => !previousState);
-    const navigation = useNavigation();
 
-    const { data } = route.params;
+    const { habits, habitSetter, getSpecificHabit } = useHabits();
+    const habit = getSpecificHabit(route.params.id);
+    const habitItem = habit[0];
     const {
+        id,
         notificationId,
         name,
         unitValue,
@@ -42,9 +45,7 @@ const ShowHabitEditModal = ({ route }) => {
         reminder,
         specificDate,
         endDate,
-    } = data;
-
-    const { habits, habitSetter } = useHabits();
+    } = habitItem;
 
     const updateColor = (updColor) => {
         setUpdatedColor(updColor);
@@ -53,7 +54,7 @@ const ShowHabitEditModal = ({ route }) => {
 
     const handleSubmit = () => {
         handleUpdate(
-            data,
+            id,
             notificationId,
             habits,
             habitSetter,

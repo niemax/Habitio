@@ -38,7 +38,6 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
             avoidKeyboard
             animationPreset="slide"
             isKeyboardDismissable={true}
-            closeOnOverlayClick={false}
         >
             <Modal.Content
                 maxWidth="400px"

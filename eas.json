@@ -7,14 +7,14 @@
       "developmentClient": true,
       "distribution": "internal"
     },
-    "staging": {
-      "releaseChannel": "staging"
-    },
     "preview": {
       "distribution": "internal"
     },
     "prod": {
       "releaseChannel": "prod-v1"
+    },
+    "staging": {
+      "releaseChannel": "staging"
     }
   },
   "submit": {

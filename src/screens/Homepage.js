@@ -51,8 +51,8 @@ const Homepage = () => {
                     )}
                     {habitsLoading &&
                         Array.from(Array(HABITS_LENGTH)).map((_, index) => (
-                            <Center>
-                                <View key={index.toString()} style={{ marginTop: 20 }}>
+                            <Center key={index.toString()}>
+                                <View style={{ marginTop: 30 }}>
                                     <ContentLoader
                                         height={80}
                                         width="350px"

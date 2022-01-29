@@ -14,14 +14,14 @@ const checkReminderTimeForNullValuesAndParse = (reminderTime) => {
     return { parsedHour, parsedMin };
 };
 
-const scheduleRepeatingNotificationIfTimeIsNotNull = (time, habitName, habits, data) => {
+const scheduleRepeatingNotificationIfTimeIsNotNull = (time, habitName, habits, id) => {
     const { parsedHour, parsedMin } = checkReminderTimeForNullValuesAndParse(time);
 
-    scheduleRepeatingEdit(parsedHour, parsedMin, habitName, habits, data);
+    scheduleRepeatingEdit(parsedHour, parsedMin, habitName, habits, id);
 };
 
 const handleUpdate = async (
-    data,
+    id,
     notificationId,
     habits,
     habitSetter,
@@ -38,7 +38,7 @@ const handleUpdate = async (
     if (notificationId !== undefined) cancelPushNotification(notificationId);
 
     const newHabits = habits.map((habit) => {
-        if (habit.id === data.id) {
+        if (habit.id === id) {
             habit.name = habitName;
             habit.unitValue = unitValue;
             habit.color = color;
@@ -51,8 +51,8 @@ const handleUpdate = async (
         }
         return habit;
     });
-    scheduleRepeatingNotificationIfTimeIsNotNull(habitReminderTime, habitName, habits, data);
-    if (habitSpecificDate !== null) scheduleOneTimeEdit(habitSpecificDate, habitName, habits, data);
+    scheduleRepeatingNotificationIfTimeIsNotNull(habitReminderTime, habitName, habits, id);
+    if (habitSpecificDate !== null) scheduleOneTimeEdit(habitSpecificDate, habitName, habits, id);
     habitSetter(newHabits);
 };
 

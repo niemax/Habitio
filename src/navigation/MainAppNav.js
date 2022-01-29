@@ -12,7 +12,7 @@ import CalendarModal from '../components/modalComponents/CalendarModal';
 import { AntDesign } from '@expo/vector-icons';
 import { colors } from '../utils/colors';
 import { Ionicons } from '@expo/vector-icons';
-import { useColorModeValue, Text, useColorMode } from 'native-base';
+import { useColorModeValue, Text, useColorMode, Circle } from 'native-base';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,11 +41,11 @@ const MainAppStack = () => {
                             backgroundColor: colorMode === 'dark' ? colors.black : colors.white,
                         },
                         headerLargeTitleStyle: {
-                            fontSize: 34,
+                            fontSize: 38,
                             fontWeight: '800',
                             color: colorMode === 'dark' ? 'white' : 'black',
                         },
-                        title: `Dashboard`,
+                        title: 'Dashboard',
                         headerTitleStyle: {
                             color: colors.mainPurple,
                         },
@@ -53,7 +53,15 @@ const MainAppStack = () => {
                             <TouchableOpacity
                                 onPress={() => navigation.navigate('StartHabitCreation')}
                             >
-                                <AntDesign name="pluscircle" size={28} color={colors.mainPurple} />
+                                <Circle
+                                    size="xs"
+                                    shadow="5"
+                                    rounded="full"
+                                    _pressed={{ bg: colors.purple }}
+                                    bg={colorMode === 'dark' ? 'gray.800' : 'gray.100'}
+                                >
+                                    <AntDesign name="plus" size={20} color={colors.mainPurple} />
+                                </Circle>
                             </TouchableOpacity>
                         ),
                     })}
@@ -146,7 +154,7 @@ const MainAppStack = () => {
                         headerTintColor: colors.mainPurple,
                         headerBackTitleVisible: true,
                         headerBackTitle: 'Back',
-                        title: route.params.data.name,
+                        title: route.params.name,
                         headerTitleStyle: {
                             color: colorMode === 'light' ? 'black' : 'white',
                             fontWeight: '600',
@@ -179,7 +187,7 @@ const MainAppStack = () => {
                             fontWeight: '800',
                             color: colorMode === 'light' ? 'black' : 'white',
                         },
-                        title: route.params.data.name,
+                        title: route.params.name,
                         headerTitleStyle: {
                             color: colorMode === 'light' ? 'black' : 'white',
                             fontWeight: '600',

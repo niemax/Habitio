@@ -153,7 +153,7 @@ export const ChevronTextContainer = styled.View`
 export const HabitCardsContainer = styled.View`
     width: ${deviceWidth - 20}px;
     border-radius: 10px;
-    margin-top: 25px;
+    margin-top: 20px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;

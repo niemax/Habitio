@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 import { Calendar } from 'react-native-calendars';
-import { CalendarLineBreak, ModalContent } from '../../utils/StyledComponents/Styled';
+import { CalendarLineBreak } from '../../utils/StyledComponents/Styled';
 import { calendarStyles } from '../../utils/globalStyles';
 import { getCurrentDateFormattedForCalendarComponent } from '../../utils/helpers/dateHelpers';
 import CalendarFrequency from '../uiComponents/CalendarFrequency';
@@ -10,21 +10,22 @@ import Notes from '../uiComponents/Notes';
 import { colors } from '../../utils/colors';
 import { handleDoneOtherDay } from '../../utils/helpers/handleDone';
 import { useHabits } from '../../context/HabitProvider';
-import { Box, Text, useColorMode, useColorModeValue } from 'native-base';
+import { Box, Text, useColorMode } from 'native-base';
 
 const CalendarModal = ({ route }) => {
     const [completionRate, setCompletionRate] = useState(0);
     const [editNoteModalVisible, setEditNoteModalVisible] = useState(false);
     const { colorMode } = useColorMode();
 
-    const { habits, habitSetter } = useHabits();
+    const { habits, habitSetter, getSpecificHabit } = useHabits();
+    const habit = getSpecificHabit(route.params.id);
+    const habitItem = habit[0];
 
-    const { data } = route.params;
     const { completedDates, days, times, unitValue, noteInputs, endDate, reminder, specificDate } =
-        data;
+        habitItem;
 
     const calendarDayPress = (day) => {
-        handleDoneOtherDay(day.dateString, data, habits, habitSetter);
+        handleDoneOtherDay(day.dateString, route.params.id, habits, habitSetter);
     };
 
     return (
@@ -76,7 +77,6 @@ const CalendarModal = ({ route }) => {
                             notes={noteInputs}
                             editNoteModalVisible={editNoteModalVisible}
                             setEditNoteModalVisible={setEditNoteModalVisible}
-                            data={data}
                         />
                     </>
                 }

@@ -26,6 +26,7 @@ const ProgressAmountModal = ({ showProgressModal, setShowProgressModal, handleHa
                     <TextInput
                         returnKeyType="done"
                         enablesReturnKeyAutomatically={true}
+                        autoFocus={true}
                         keyboardType="numeric"
                         autoCorrect={false}
                         placeholderTextColor="gray"
@@ -66,8 +67,10 @@ const ProgressAmountModal = ({ showProgressModal, setShowProgressModal, handleHa
                             variant="subtle"
                             rounded="xl"
                             onPress={() => {
-                                handleHabitProgress(progressAmount);
-                                setShowProgressModal(false);
+                                if (Number(progressAmount)) {
+                                    handleHabitProgress(progressAmount);
+                                    setShowProgressModal(false);
+                                }
                             }}
                         >
                             Done

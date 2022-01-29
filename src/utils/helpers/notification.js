@@ -47,7 +47,7 @@ export const getAllNotifications = async () => {
     }
 }; */
 
-export const scheduleRepeatingEdit = async (hours, minutes, name, habits, data) => {
+export const scheduleRepeatingEdit = async (hours, minutes, name, habits, id) => {
     const identifier = await Notifications.scheduleNotificationAsync({
         content: {
             title: name,
@@ -60,14 +60,14 @@ export const scheduleRepeatingEdit = async (hours, minutes, name, habits, data) 
         },
     });
     habits.map((habit) => {
-        if (habit.id === data.id) {
+        if (habit.id === id) {
             habit.notificationId = identifier;
         }
         return habit;
     });
 };
 
-export const scheduleOneTimeEdit = async (date, name, habits, data) => {
+export const scheduleOneTimeEdit = async (date, name, habits, id) => {
     const identifier = await Notifications.scheduleNotificationAsync({
         content: {
             title: name,
@@ -79,7 +79,7 @@ export const scheduleOneTimeEdit = async (date, name, habits, data) => {
         },
     });
     habits.map((habit) => {
-        if (habit.id === data.id) {
+        if (habit.id === id) {
             habit.notificationId = identifier;
         }
         return habit;

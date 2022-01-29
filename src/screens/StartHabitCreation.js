@@ -105,7 +105,7 @@ const StartHabitCreation = ({ navigation }) => {
             </ScrollView>
             <ButtonContainer>
                 <HabitNextButton onPress={handleOwnHabit}>
-                    <Text fontWeight={600} fontSize="xl">
+                    <Text fontWeight={600} fontSize="xl" color="black">
                         Next
                     </Text>
                 </HabitNextButton>

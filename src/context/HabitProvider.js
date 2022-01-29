@@ -11,7 +11,8 @@ const HabitProvider = ({ children }) => {
     const currentDay = getCurrentDay();
 
     const getHabits = async () => {
-        if (Object.keys(habits).length !== 0) setHabitsLoading(true);
+        if (Object.keys(habits).length > 0) setHabitsLoading(true);
+
         try {
             const result = await AsyncStorage.getItem('@habit');
             if (result !== null) {
@@ -35,12 +36,6 @@ const HabitProvider = ({ children }) => {
     };
 
     const getSpecificHabit = (id) => habits.filter((habit) => habit.id === id);
-
-    const replaceSpecificHabit = async (id, props) => {
-        const filtered = habits.filter((habit) => habit.id === id);
-
-        Object.values(filtered);
-    };
 
     const CRUDHabits = async (props) => {
         try {
@@ -71,7 +66,6 @@ const HabitProvider = ({ children }) => {
                 habitsLoading,
                 habitSetter,
                 getSpecificHabit,
-                replaceSpecificHabit,
                 getHabits,
                 setHabits,
                 CRUDHabits,

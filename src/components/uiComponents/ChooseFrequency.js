@@ -9,6 +9,7 @@ import {
 } from '../../utils/StyledComponents/Styled';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { Box, Flex, HStack, Button, Text, useColorMode } from 'native-base';
+import { colors } from '../../utils/colors';
 
 export default function Frequency({
     switchStates: { isEnabled, isEnabledDate, isEnabledSpecific, isEnabledEndDate },
@@ -91,7 +92,7 @@ export default function Frequency({
                                     direction="row"
                                     align="center"
                                     justify="space-between"
-                                    bg={colorMode === 'light' ? 'gray.100' : 'gray.600'}
+                                    bg={colorMode === 'light' ? 'gray.100' : 'gray.700'}
                                 >
                                     <Box>
                                         <Text fontWeight={500}>
@@ -145,7 +146,7 @@ export default function Frequency({
                                     direction="row"
                                     align="center"
                                     justify="space-between"
-                                    bg={colorMode === 'light' ? 'gray.100' : 'gray.600'}
+                                    bg={colorMode === 'light' ? 'gray.100' : 'gray.700'}
                                 >
                                     <HStack>
                                         <Flex direction="row" align="center">
@@ -154,10 +155,7 @@ export default function Frequency({
                                                 <RNPickerSelect
                                                     textInputProps={{
                                                         fontSize: 15,
-                                                        color:
-                                                            colorMode === 'light'
-                                                                ? 'black'
-                                                                : 'white',
+                                                        color: colors.mainPurple,
                                                     }}
                                                     placeholder={placeholder}
                                                     onValueChange={(value) =>

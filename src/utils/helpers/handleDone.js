@@ -3,8 +3,7 @@ import { getCurrentDateFormattedForCalendarComponent, getCurrentDay } from './da
 import { haptics } from './haptics';
 import { toasts } from './toastMethods';
 
-export const handleDoneToday = (data, habits, habitSetter) => {
-    const { id, name } = data;
+export const handleDoneToday = (id, name, habits, habitSetter) => {
     const getCalendarDateString = getCurrentDateFormattedForCalendarComponent();
 
     try {
@@ -39,9 +38,7 @@ export const handleDoneToday = (data, habits, habitSetter) => {
     }
 };
 
-export const handleDoneOtherDay = (date, data, habits, habitSetter) => {
-    const { id } = data;
-
+export const handleDoneOtherDay = (date, id, habits, habitSetter) => {
     try {
         const updatedHabits = habits.map((habit) => {
             const completedDatesObj = { ...habit.completedDates };

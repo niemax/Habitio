@@ -146,7 +146,7 @@ const CreateHabit = ({ route, navigation }) => {
                         navigation.navigate('Homepage');
                     }}
                 >
-                    <Text fontSize="xl" fontWeight={600}>
+                    <Text fontSize="xl" fontWeight={600} color="black">
                         Create
                     </Text>
                 </CreateHabitButton>
