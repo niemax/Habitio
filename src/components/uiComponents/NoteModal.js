@@ -37,7 +37,6 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
             onClose={() => setShowModal(false)}
             avoidKeyboard
             animationPreset="slide"
-            isKeyboardDismissable={true}
         >
             <Modal.Content
                 maxWidth="400px"

@@ -126,7 +126,7 @@ const CreateHabit = ({ route, navigation }) => {
                                 setIsEnabledEndDate,
                             }}
                             values={{ specificDate, reminderTime, endDate }}
-                            states={{ daysCount, timesCount }}
+                            states={{ daysCount, timesCount, selectedValue }}
                         />
                     </Box>
                 </Box>

@@ -203,16 +203,7 @@ export const HabitUtilityInfoContainer = styled.View`
     margin-top: 10px;
 `;
 
-export const SelectHabitColorButton = styled.TouchableOpacity`
-    margin-top: 10px;
-    justify-content: center;
-    align-items: center;
-    height: 60px;
-    width: 60px;
-    border-radius: 15px;
-    margin-left: 8px;
-    margin-bottom: 10px;
-`;
+export const SelectHabitColorButton = styled.TouchableOpacity``;
 
 export const FrequencyTouchable = styled.View`
     border-radius: 7px;
@@ -240,7 +231,7 @@ export const HomepageDataView = styled.View`
     padding-horizontal: 9px;
 `;
 
-export const HomepageDataBox = styled.Pressable`
+export const HomepageDataBox = styled.TouchableOpacity`
     margin-top: 2px;
     height: 80px;
     width: ${deviceWidth - 40} 

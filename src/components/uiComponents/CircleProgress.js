@@ -24,8 +24,7 @@ const CircleProgress = ({ handleHabitProgress, habitProgress, id }) => {
                         onPress={() => {
                             if (habitItem.completed) {
                                 handleDoneToday(id, habitItem.name, habits, habitSetter);
-                                handleHabitProgress(-1);
-                            } else {
+                            } else if (habitProgress > 0) {
                                 handleHabitProgress(-1);
                             }
                         }}
@@ -37,7 +36,7 @@ const CircleProgress = ({ handleHabitProgress, habitProgress, id }) => {
                     <Center>
                         <TouchableOpacity
                             onPress={() => {
-                                if (habitItem?.habitProgress - habitItem?.times === -1) {
+                                if (habitProgress - habitItem?.times === -1) {
                                     handleDoneToday(id, habitItem?.name, habits, habitSetter);
                                 } else {
                                     handleHabitProgress(1);
@@ -87,7 +86,6 @@ const CircleProgress = ({ handleHabitProgress, habitProgress, id }) => {
                         onPress={() => {
                             if (habitProgress - habitItem?.times === -1) {
                                 handleDoneToday(id, habitItem?.name, habits, habitSetter);
-                                handleHabitProgress(1);
                             } else {
                                 handleHabitProgress(1);
                             }

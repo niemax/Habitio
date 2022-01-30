@@ -153,7 +153,7 @@ const ShowHabitEditModal = ({ route }) => {
                 habitSpecificDate,
                 habitReminderTime,
                 habitEndDate,
-                selectedValue,
+                unitValue,
                 color,
                 colorUpdated,
                 updatedColor,

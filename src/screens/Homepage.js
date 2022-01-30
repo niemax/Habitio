@@ -22,7 +22,7 @@ const Homepage = () => {
     const HABITS_LENGTH = Object.keys(habits).length;
 
     return (
-        <Box flex={1} bg={useColorModeValue(colors.white, colors.black)}>
+        <Flex flex={1} bg={useColorModeValue(colors.white, colors.black)}>
             <ScrollView
                 refreshControl={
                     <RefreshControl
@@ -87,7 +87,7 @@ const Homepage = () => {
                     </HomepageDataView>
                 </Flex>
             </ScrollView>
-        </Box>
+        </Flex>
     );
 };
 

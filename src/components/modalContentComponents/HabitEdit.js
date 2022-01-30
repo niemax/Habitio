@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
-import { Box, useColorModeValue, Text } from 'native-base';
+import { Box, useColorModeValue, Text, Flex } from 'native-base';
 import { colors } from '../../utils/colors';
 import {
     ButtonContainer,
@@ -45,6 +45,7 @@ export default function HabitEditContent({
         color,
         colorUpdated,
         updatedColor,
+        unitValue,
     },
 }) {
     return (
