@@ -3,17 +3,7 @@ import { Image, TouchableOpacity } from 'react-native';
 import { Feather, Entypo } from '@expo/vector-icons';
 import { HomepageDataBox, HomepageDataView } from '../../utils/StyledComponents/Styled';
 import { colors } from '../../utils/colors';
-import {
-    Box,
-    HStack,
-    VStack,
-    useDisclose,
-    Center,
-    Text,
-    Flex,
-    useColorMode,
-    Container,
-} from 'native-base';
+import { Box, HStack, VStack, useDisclose, Center, Text, Flex, useColorMode } from 'native-base';
 import ActionSheet from './ActionSheet';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { haptics } from '../../utils/helpers/haptics';
@@ -32,7 +22,7 @@ const HabitListItem = ({ item }) => {
         haptics.success();
         const mapped = habits.map((habit) => {
             if (habit.id === id) {
-                setHabitProgress(habitProgress + Number(operand));
+                setHabitProgress((previous) => previous + Number(operand));
                 habit.progress += Number(operand);
             }
             return habit;
@@ -93,7 +83,7 @@ const HabitListItem = ({ item }) => {
                                 </Text>
                                 {times > 0 && (
                                     <Text fontWeight={400} fontSize="sm">
-                                        Goal: {times} {unitValue} daily
+                                        Goal: {times} {unitValue} per day
                                     </Text>
                                 )}
                                 {specificDate !== null && (

@@ -1,31 +1,44 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, View, FlatList } from 'react-native';
+import { TouchableOpacity, View, FlatList, TextInput } from 'react-native';
 import { colors } from '../../utils/colors';
 import { formatDateForHabitEndDate } from '../../utils/helpers/dateHelpers';
 import { Entypo } from '@expo/vector-icons';
-import { Center, Text } from 'native-base';
+import {
+    Center,
+    Flex,
+    Modal,
+    Text,
+    Button,
+    useColorModeValue,
+    NativeBaseProvider,
+    Box,
+    useColorMode,
+} from 'native-base';
 
 const Notes = ({ notes }) => {
-    const [, , setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const [noteRenderAmount, setNoteRenderAmount] = useState(2);
+    const { colorMode } = useColorMode();
 
     const renderItem = ({ item, index }) =>
         index <= noteRenderAmount && (
-            <View key={item.id}>
-                <TouchableOpacity onPress={() => setShowModal(true)}>
-                    <Text
-                        fontWeight={700}
-                        color={colors.mainPurple}
-                        marginLeft="15px"
-                        marginBottom="3px"
-                    >
-                        {formatDateForHabitEndDate(item.date)}
-                    </Text>
-                    <Text numberOfLines={1} marginBottom="15px" marginLeft="15px">
-                        {item.input}
-                    </Text>
-                </TouchableOpacity>
-            </View>
+            <NativeBaseProvider>
+                <View key={item.id}>
+                    <TouchableOpacity onPress={() => setShowModal(true)}>
+                        <Text
+                            fontWeight={700}
+                            color={colors.mainPurple}
+                            marginLeft="15px"
+                            marginBottom="3px"
+                        >
+                            {formatDateForHabitEndDate(item.date)}
+                        </Text>
+                        <Text numberOfLines={1} marginBottom="15px" marginLeft="15px">
+                            {item.input}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </NativeBaseProvider>
         );
 
     return (

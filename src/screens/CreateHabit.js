@@ -4,7 +4,7 @@ import { ButtonContainer, CreateHabitButton } from '../utils/StyledComponents/St
 import HabitInput from '../components/uiComponents/HabitDescriptionInput';
 import Frequency from '../components/uiComponents/ChooseFrequency';
 import HabitColor from '../components/uiComponents/SelectHabitColorButton';
-import { getCurrentWeek } from '../utils/helpers/dateHelpers';
+import { getCurrentDay, getCurrentWeek } from '../utils/helpers/dateHelpers';
 import handleHabitCreation from '../utils/helpers/createhabitHelpers';
 import { useHabits } from '../context/HabitProvider';
 import { Box, Text, useColorModeValue } from 'native-base';
@@ -57,6 +57,8 @@ const CreateHabit = ({ route, navigation }) => {
         setEndDate(currentDate);
     };
 
+    const currentDay = getCurrentDay();
+
     const newHabit = {
         name: name || habitName,
         id: Math.floor(Math.random() * 10000),
@@ -69,13 +71,14 @@ const CreateHabit = ({ route, navigation }) => {
         endDate: isEnabledEndDate ? endDate : null,
         unitValue: selectedValue,
         description: description,
-        completedDay: null,
+        dataCurrentDay: currentDay,
         dataCurrentWeek: currentWeek,
         completed: false,
         calendarDone: false,
         completedDates: {},
         progress: 0,
         noteInputs: [],
+        streak: [],
     };
 
     return (

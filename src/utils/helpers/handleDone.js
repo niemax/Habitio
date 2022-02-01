@@ -4,29 +4,31 @@ import { haptics } from './haptics';
 import { toasts } from './toastMethods';
 
 export const handleDoneToday = (id, name, habits, habitSetter) => {
-    const getCalendarDateString = getCurrentDateFormattedForCalendarComponent();
+    const calendarDateString = getCurrentDateFormattedForCalendarComponent();
 
     try {
         const updatedHabits = habits.map((habit) => {
             const completedDatesObj = { ...habit.completedDates };
 
-            if (!(getCalendarDateString in completedDatesObj)) {
-                completedDatesObj[getCalendarDateString] = {
+            if (!(calendarDateString in completedDatesObj)) {
+                completedDatesObj[calendarDateString] = {
                     selected: true,
                 };
                 if (habit.id === id) {
-                    habit.completedDay = getCurrentDay();
+                    habit.dataCurrentDay = getCurrentDay();
                     habit.completed = true;
                     habit.completedDates = completedDatesObj;
+                    habit.streak.push(1);
                     toasts.info(name);
                     haptics.success();
                 }
             } else {
-                delete completedDatesObj[getCalendarDateString];
+                delete completedDatesObj[calendarDateString];
                 if (habit.id === id) {
-                    habit.completedDay = null;
+                    habit.dataCurrentDay = null;
                     habit.completed = false;
                     habit.completedDates = completedDatesObj;
+                    habit.streak.pop();
                     haptics.warning();
                 }
             }
@@ -56,6 +58,7 @@ export const handleDoneOtherDay = (date, id, habits, habitSetter) => {
                 if (habit.id === id) {
                     habit.completedDates = completedDatesObj;
                     habit.calendarDone = true;
+                    habit.streak.push(1);
                     haptics.success();
                 }
             } else {
@@ -63,6 +66,7 @@ export const handleDoneOtherDay = (date, id, habits, habitSetter) => {
                 if (habit.id === id) {
                     habit.completedDates = completedDatesObj;
                     habit.calendarDone = false;
+                    habit.streak.pop();
                     haptics.warning();
                 }
             }

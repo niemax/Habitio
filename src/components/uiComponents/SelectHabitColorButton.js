@@ -14,9 +14,9 @@ export default function HabitColor({ colorUpdated, updatedColor, updateColor, co
             bg="gray.800"
             mt={2}
             ml={3}
-            h={12}
-            w={12}
-            bg={useColorModeValue('gray.300', 'gray.700')}
+            h={10}
+            w={10}
+            bg={useColorModeValue('gray.200', 'gray.700')}
             rounded="lg"
         >
             <SelectHabitColorButton onPress={() => sheetRef.current.show()}>
@@ -37,7 +37,7 @@ export default function HabitColor({ colorUpdated, updatedColor, updateColor, co
                 )}
                 <ActionSheet
                     containerStyle={{
-                        backgroundColor: useColorModeValue(colors.white, colors.black),
+                        backgroundColor: useColorModeValue(colors.white, colors.mainBackground),
                         height: 270,
                         borderRadius: 35,
                     }}

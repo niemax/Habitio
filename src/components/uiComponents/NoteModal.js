@@ -32,17 +32,13 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
 
     return (
         <Modal
-            size="xl"
+            size="lg"
             isOpen={showModal}
             onClose={() => setShowModal(false)}
             avoidKeyboard
             animationPreset="slide"
         >
-            <Modal.Content
-                maxWidth="400px"
-                bg={useColorModeValue('gray.100', 'gray.800')}
-                rounded="2xl"
-            >
+            <Modal.Content bg={useColorModeValue('gray.100', 'gray.800')} rounded="2xl">
                 <Text textAlign="center" fontSize="lg" fontWeight={700} marginTop="10px">
                     Note
                 </Text>
@@ -56,7 +52,7 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
                             backgroundColor: useColorModeValue('white', colors.black),
                             padding: 15,
                             color: useColorModeValue('black', 'white'),
-                            height: 220,
+                            height: 200,
                             fontSize: 16,
                         }}
                         onChangeText={(text) => setInputText(text)}

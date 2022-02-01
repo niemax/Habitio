@@ -2,16 +2,16 @@
  * ! handle all operations within notes in calendarModal
  */
 
-export const handleNoteEdit = (noteInputs, id, habitSetter, habits, data, input) => {
+export const handleNoteEdit = (noteInputs, id, habitSetter, habits, input) => {
     const mappedInputs = noteInputs.map((note) => {
         if (note.id === id) {
             note.input = input;
         }
-        return diaryInput;
+        return note;
     });
 
     const newHabits = habits.map((habit) => {
-        if (habit.id === data.id) {
+        if (habit.id === id) {
             habit.noteInputs = [...mappedInputs];
         }
         return habit;
@@ -19,13 +19,17 @@ export const handleNoteEdit = (noteInputs, id, habitSetter, habits, data, input)
     habitSetter(newHabits);
 };
 
-export const handleNoteDelete = (id, habits, noteInputs, data, habitSetter) => {
-    const filtered = noteInputs.filter((inp) => inp.id !== id);
-    const newHabits = habits.map((habit) => {
-        if (habit.id === data.id) {
-            habit.noteInputs = [...filtered];
-        }
-        return habit;
-    });
-    habitSetter(newHabits);
+export const handleNoteDelete = (habitId, noteId, habits, noteInputs, habitSetter) => {
+    try {
+        const filtered = noteInputs.filter((inp) => inp.id !== noteId);
+        const newHabits = habits.map((habit) => {
+            if (habit.id === habitId) {
+                habit.noteInputs = [...filtered];
+            }
+            return habit;
+        });
+        habitSetter(newHabits);
+    } catch (error) {
+        console.error(error);
+    }
 };

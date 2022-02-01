@@ -157,6 +157,7 @@ export const HabitCardsContainer = styled.View`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding-horizontal: 10px;
 `;
 
 export const HabitTextColumnContainer = styled.View`

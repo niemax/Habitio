@@ -17,6 +17,7 @@ const CircleProgress = ({ handleHabitProgress, habitProgress, id }) => {
             <Flex direction="row" align="center">
                 <Box>
                     <Button
+                        size="xs"
                         bg={useColorModeValue('gray.100', 'gray.700')}
                         rounded="full"
                         mr={6}
@@ -36,8 +37,8 @@ const CircleProgress = ({ handleHabitProgress, habitProgress, id }) => {
                     <Center>
                         <TouchableOpacity
                             onPress={() => {
-                                if (habitProgress - habitItem?.times === -1) {
-                                    handleDoneToday(id, habitItem?.name, habits, habitSetter);
+                                if (habitProgress - habitItem.times === -1) {
+                                    handleDoneToday(id, habitItem.name, habits, habitSetter);
                                 } else {
                                     handleHabitProgress(1);
                                 }
@@ -48,24 +49,22 @@ const CircleProgress = ({ handleHabitProgress, habitProgress, id }) => {
                                 size={180}
                                 width={20}
                                 fill={
-                                    !habitItem?.completed
-                                        ? (habitProgress / habitItem?.times) * 100
+                                    !habitItem.completed
+                                        ? (habitProgress / habitItem.times) * 100
                                         : 100
                                 }
                                 tintColor={colors.mainPurple}
                                 backgroundColor={useColorModeValue('#f5f5f5', colors.black)}
                             >
                                 {() =>
-                                    !habitItem?.completed ? (
+                                    !habitItem.completed ? (
                                         <VStack>
                                             <Center>
                                                 <Text fontSize="5xl" fontWeight={700}>
                                                     {habitProgress}
                                                 </Text>
-                                                {habitItem?.unitValue && (
-                                                    <Text fontSize="xl">
-                                                        {habitItem?.unitValue}
-                                                    </Text>
+                                                {habitItem.unitValue && (
+                                                    <Text fontSize="xl">{habitItem.unitValue}</Text>
                                                 )}
                                             </Center>
                                         </VStack>
@@ -79,13 +78,14 @@ const CircleProgress = ({ handleHabitProgress, habitProgress, id }) => {
                 )}
                 <Box>
                     <Button
+                        size="xs"
                         rounded="full"
                         _pressed={{ bg: colors.mainPurple }}
                         ml={6}
                         bg={useColorModeValue('gray.100', 'gray.700')}
                         onPress={() => {
                             if (habitProgress - habitItem?.times === -1) {
-                                handleDoneToday(id, habitItem?.name, habits, habitSetter);
+                                handleDoneToday(id, habitItem.name, habits, habitSetter);
                             } else {
                                 handleHabitProgress(1);
                             }

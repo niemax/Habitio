@@ -3,7 +3,7 @@ import { Box, Flex, Modal, Button, Text, useColorModeValue } from 'native-base';
 import { TextInput } from 'react-native';
 import { colors } from '../../utils/colors';
 
-const ProgressAmountModal = ({ showProgressModal, setShowProgressModal, handleHabitProgress }) => {
+const ProgressAmountModal = ({ showProgressModal, setShowProgressModal, setHabitProgress }) => {
     const [progressAmount, setProgressAmount] = useState();
     return (
         <Modal
@@ -20,7 +20,7 @@ const ProgressAmountModal = ({ showProgressModal, setShowProgressModal, handleHa
                 rounded="2xl"
             >
                 <Text textAlign="center" fontSize="lg" fontWeight={700} marginTop="10px">
-                    Add progress
+                    Change Value
                 </Text>
                 <Box p={4}>
                     <TextInput
@@ -68,7 +68,7 @@ const ProgressAmountModal = ({ showProgressModal, setShowProgressModal, handleHa
                             rounded="xl"
                             onPress={() => {
                                 if (Number(progressAmount)) {
-                                    handleHabitProgress(progressAmount);
+                                    setHabitProgress(Number(progressAmount));
                                     setShowProgressModal(false);
                                 }
                             }}

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Actionsheet, Box, Button, Container, Flex, Text, useColorModeValue } from 'native-base';
+import { Actionsheet, Box, Button, Flex, Text, useColorModeValue } from 'native-base';
 import { useHabits } from '../../context/HabitProvider';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../../utils/colors';
@@ -113,13 +113,13 @@ export default function ListItemActionSheet({
             <ProgressAmountModal
                 showProgressModal={showProgressModal}
                 setShowProgressModal={setShowProgressModal}
-                handleHabitProgress={handleHabitProgress}
+                setHabitProgress={setHabitProgress}
             />
             <ActionSheet
                 tintColor={colors.mainPurple}
                 ref={actionSheetRef}
                 title={'Choose an action'}
-                options={['Add a note', 'Add amount', 'Edit Habit', 'Delete Habit', 'Cancel']}
+                options={['Add a note', 'Change value', 'Edit Habit', 'Delete Habit', 'Cancel']}
                 cancelButtonIndex={4}
                 onPress={(index) => {
                     if (index === 0) setShowModal(true);

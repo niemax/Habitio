@@ -45,7 +45,7 @@ const MainAppStack = () => {
                             fontWeight: '800',
                             color: colorMode === 'dark' ? 'white' : 'black',
                         },
-                        title: 'Your Dashboard',
+                        title: 'Dashboard',
                         headerTitleStyle: {
                             color: colors.mainPurple,
                         },

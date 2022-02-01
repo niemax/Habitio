@@ -98,8 +98,8 @@ export const tabNavStyle = {
 };
 
 export const habitColor = {
-    width: 35,
-    height: 35,
+    width: 25,
+    height: 25,
     borderRadius: 50,
 };
 

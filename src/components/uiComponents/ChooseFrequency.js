@@ -157,6 +157,7 @@ export default function Frequency({
                                             <Text fontWeight={500}>{timesCount}</Text>
                                             <Box ml={2}>
                                                 <TextInput
+                                                    width={200}
                                                     placeholder="unit"
                                                     style={{
                                                         fontSize: 16,
