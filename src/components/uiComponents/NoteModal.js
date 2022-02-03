@@ -32,7 +32,7 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
 
     return (
         <Modal
-            size="lg"
+            size="xl"
             isOpen={showModal}
             onClose={() => setShowModal(false)}
             avoidKeyboard
@@ -52,7 +52,7 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
                             backgroundColor: useColorModeValue('white', colors.black),
                             padding: 15,
                             color: useColorModeValue('black', 'white'),
-                            height: 200,
+                            height: 240,
                             fontSize: 16,
                         }}
                         onChangeText={(text) => setInputText(text)}

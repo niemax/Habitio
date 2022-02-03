@@ -7,7 +7,15 @@ import {
 } from '../../utils/helpers/dateHelpers';
 import { CalendarFrequencyContainer } from '../../utils/StyledComponents/Styled';
 
-const CalendarFrequency = ({ days, times, unitValue, endDate, reminder, specificDate }) => (
+const CalendarFrequency = ({
+    description,
+    days,
+    times,
+    unitValue,
+    endDate,
+    reminder,
+    specificDate,
+}) => (
     <CalendarFrequencyContainer>
         {days > 0 && (
             <>
@@ -45,6 +53,14 @@ const CalendarFrequency = ({ days, times, unitValue, endDate, reminder, specific
                     Doing it once on
                 </Text>
                 <Text marginLeft="15px">{formatDateForHabitEndDate(specificDate)}</Text>
+            </Box>
+        )}
+        {description !== undefined && (
+            <Box mt={4}>
+                <Text marginLeft="15px" opacity={0.6}>
+                    Description
+                </Text>
+                <Text marginLeft="15px">{description}</Text>
             </Box>
         )}
     </CalendarFrequencyContainer>

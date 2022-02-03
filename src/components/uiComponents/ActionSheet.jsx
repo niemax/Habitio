@@ -26,8 +26,7 @@ export default function ListItemActionSheet({
     const actionSheetRef = useRef(null);
 
     const { habits, habitSetter, getSpecificHabit } = useHabits();
-    const habit = getSpecificHabit(id);
-    const habitItem = habit[0];
+    const habitItem = getSpecificHabit(id)[0];
 
     const displayDeleteAlert = () => {
         Alert.alert(
@@ -114,6 +113,8 @@ export default function ListItemActionSheet({
                 showProgressModal={showProgressModal}
                 setShowProgressModal={setShowProgressModal}
                 setHabitProgress={setHabitProgress}
+                times={habitItem.times}
+                id={id}
             />
             <ActionSheet
                 tintColor={colors.mainPurple}

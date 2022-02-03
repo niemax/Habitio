@@ -31,8 +31,7 @@ const ShowHabitEditModal = ({ route }) => {
     const toggleSwitchEndDate = () => setIsEnabledEndDate((previousState) => !previousState);
 
     const { habits, habitSetter, getSpecificHabit } = useHabits();
-    const habit = getSpecificHabit(route.params.id);
-    const habitItem = habit[0];
+    const habitItem = getSpecificHabit(route.params.id)[0];
     const {
         id,
         notificationId,

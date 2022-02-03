@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, TextInput } from 'react-native';
 import { Box, useColorModeValue, Text, Flex } from 'native-base';
 import { colors } from '../../utils/colors';
 import {
@@ -45,28 +45,51 @@ export default function HabitEditContent({
         color,
         colorUpdated,
         updatedColor,
-        unitValue,
     },
 }) {
     return (
         <Box flex={1} bg={useColorModeValue(colors.white, colors.mainBackground)} align="center">
             <ScrollView>
                 <Box mb={24} mt={24}>
-                    <Text marginLeft="17px" marginTop="35px">
-                        Description
+                    <Text
+                        fontSize="xs"
+                        marginLeft="24px"
+                        marginTop="35px"
+                        marginBottom="10px"
+                        opacity={0.7}
+                    >
+                        DESCRIPTION
                     </Text>
                     <HabitInfoContainer>
                         <HabitCentered>
-                            <HabitInput
-                                placeholder={stateDescription}
-                                values={stateDescription}
-                                actions={{
-                                    setValue: (text) => setStateDescription(text),
+                            <TextInput
+                                autoCorrect={false}
+                                value={stateDescription}
+                                clearButtonMode="always"
+                                style={{
+                                    backgroundColor: useColorModeValue('white', '#27272a'),
+                                    color: useColorModeValue('black', 'white'),
+                                    fontSize: 17,
+                                    width: '98%',
+                                    height: 'auto',
+                                    borderRadius: 8,
+                                    padding: 10,
+                                    shadowColor: '#000',
+                                    shadowOffset: {
+                                        width: 0,
+                                        height: 1,
+                                    },
+                                    shadowOpacity: 0.15,
+                                    shadowRadius: 2.84,
+                                    elevation: 4,
                                 }}
+                                onChangeText={(text) => setStateDescription(text)}
                             />
                         </HabitCentered>
                         <Box>
-                            <Text marginLeft="13px">Color</Text>
+                            <Text fontSize="xs" marginLeft="15px" opacity={0.7} marginTop="15px">
+                                COLOR
+                            </Text>
                             <HabitColor
                                 colorUpdated={colorUpdated}
                                 updatedColor={updatedColor}

@@ -11,7 +11,6 @@ export const toasts = {
             duration: 4000,
             message: randomWord,
             description: `You completed ${habitName}. Nice work!`,
-            backgroundColor: colors.black,
             titleStyle: {
                 color: colors.mainPurple,
                 fontSize: 17,
@@ -20,36 +19,21 @@ export const toasts = {
                 fontSize: 15,
             },
             style: { opacity: 0.94 },
-            floating: 'true',
             icon: 'success',
+            floating: true,
         });
     },
     error: (keyword, verb) => {
         showMessage({
             duration: 4000,
             message: `${keyword} successfully ${verb}`,
-            backgroundColor: colors.black,
             titleStyle: {
                 color: colors.error,
                 fontSize: 16,
             },
-            floating: 'true',
             icon: 'info',
-        });
-    },
-    note_edit: () => {
-        showMessage({
-            duration: 4000,
-            message: `Note successfully edited.`,
-            backgroundColor: colors.mainPurple,
-            titleStyle: {
-                fontSize: 16,
-            },
-            style: { opacity: 0.9 },
-            floating: 'true',
-            icon: 'info',
+            floating: true,
+            style: { opacity: 0.94 },
         });
     },
 };
-
-export const fuckOffLinter = {};

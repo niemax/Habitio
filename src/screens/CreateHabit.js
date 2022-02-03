@@ -70,7 +70,7 @@ const CreateHabit = ({ route, navigation }) => {
         reminder: isEnabledDate ? reminderTime : null,
         endDate: isEnabledEndDate ? endDate : null,
         unitValue: selectedValue,
-        description: description,
+        description: description || undefined,
         dataCurrentDay: currentDay,
         dataCurrentWeek: currentWeek,
         completed: false,
@@ -89,7 +89,6 @@ const CreateHabit = ({ route, navigation }) => {
                         DESCRIPTION
                     </Text>
                     <HabitInput
-                        values={description}
                         actions={{
                             setValue: (text) => setDescription(text),
                         }}

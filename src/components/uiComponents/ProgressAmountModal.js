@@ -2,9 +2,28 @@ import React, { useState } from 'react';
 import { Box, Flex, Modal, Button, Text, useColorModeValue } from 'native-base';
 import { TextInput } from 'react-native';
 import { colors } from '../../utils/colors';
+import { useHabits } from '../../context/HabitProvider';
 
-const ProgressAmountModal = ({ showProgressModal, setShowProgressModal, setHabitProgress }) => {
-    const [progressAmount, setProgressAmount] = useState();
+const ProgressAmountModal = ({
+    showProgressModal,
+    setShowProgressModal,
+    setHabitProgress,
+    times,
+    id,
+}) => {
+    const [progressAmount, setProgressAmount] = useState(times);
+    const { habits, habitSetter } = useHabits();
+
+    const handleChangeValue = (amount) => {
+        const mapped = habits.map((habit) => {
+            if (habit.id === id) {
+                habit.progress = amount;
+            }
+            return habit;
+        });
+        habitSetter(mapped);
+    };
+
     return (
         <Modal
             size="xl"
@@ -26,10 +45,10 @@ const ProgressAmountModal = ({ showProgressModal, setShowProgressModal, setHabit
                     <TextInput
                         returnKeyType="done"
                         enablesReturnKeyAutomatically={true}
-                        autoFocus={true}
                         keyboardType="numeric"
+                        autoFocus={true}
                         autoCorrect={false}
-                        placeholderTextColor="gray"
+                        value={progressAmount}
                         style={{
                             borderRadius: 10,
                             backgroundColor: useColorModeValue('white', colors.black),
@@ -69,6 +88,7 @@ const ProgressAmountModal = ({ showProgressModal, setShowProgressModal, setHabit
                             onPress={() => {
                                 if (Number(progressAmount)) {
                                     setHabitProgress(Number(progressAmount));
+                                    handleChangeValue(Number(progressAmount));
                                     setShowProgressModal(false);
                                 }
                             }}

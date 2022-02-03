@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Homepage from '../screens/Homepage';
 import HabitScreen from '../screens/HabitScreen';
 import CreateHabit from '../screens/CreateHabit';
@@ -12,13 +12,18 @@ import CalendarModal from '../components/modalComponents/CalendarModal';
 import { AntDesign } from '@expo/vector-icons';
 import { colors } from '../utils/colors';
 import { Ionicons } from '@expo/vector-icons';
-import { useColorModeValue, Text, useColorMode, Circle } from 'native-base';
+import { useColorModeValue, Text, useColorMode, Circle, HStack } from 'native-base';
+import EditNote from '../screens/EditNote';
+import { formatDateForHabitEndDate } from '../utils/helpers/dateHelpers';
+import { handleNoteEdit, handleNoteDelete } from '../utils/helpers/noteMethods';
+import { useHabits } from '../context/HabitProvider';
 
 const Stack = createNativeStackNavigator();
 
 const MainAppStack = () => {
     const navigation = useNavigation();
     const { colorMode } = useColorMode();
+    const { habits, habitSetter } = useHabits();
 
     return (
         <Stack.Navigator
@@ -203,6 +208,75 @@ const MainAppStack = () => {
                         headerTintColor: colors.mainPurple,
                     })}
                     component={CalendarModal}
+                />
+                <Stack.Screen
+                    name="EditNote"
+                    options={({ route }) => ({
+                        headerTransparent: true,
+                        headerBlurEffect:
+                            colorMode === 'light' ? 'systemUltraThinMaterialLight' : 'dark',
+                        headerLargeTitle: true,
+                        headerLargeStyle: {
+                            backgroundColor:
+                                colorMode === 'light' ? colors.white : colors.mainBackground,
+                        },
+                        headerLargeTitleStyle: {
+                            fontSize: 24,
+                            fontWeight: '700',
+                            color: colorMode === 'light' ? 'black' : 'white',
+                        },
+
+                        title: formatDateForHabitEndDate(route.params.date),
+                        headerTitleStyle: {
+                            color: colorMode === 'light' ? 'black' : 'white',
+                            fontWeight: '600',
+                            fontSize: 16,
+                        },
+                        headerLeft: () => (
+                            <TouchableOpacity onPress={() => navigation.goBack()}>
+                                <Text color={colors.mainPurple} fontSize="lg" fontWeight={600}>
+                                    Cancel
+                                </Text>
+                            </TouchableOpacity>
+                        ),
+                        headerRight: () => (
+                            <HStack space={8}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        handleNoteDelete(
+                                            route.params.habitId,
+                                            route.params.id,
+                                            habits,
+                                            route.params.allNotes,
+                                            habitSetter
+                                        );
+                                        navigation.goBack();
+                                    }}
+                                >
+                                    <Ionicons name="trash" size={24} color={colors.error} />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        handleNoteEdit(
+                                            route.params.allNotes,
+                                            route.params.id,
+                                            habitSetter,
+                                            habits,
+                                            route.params.inputText
+                                        );
+                                        navigation.goBack();
+                                    }}
+                                >
+                                    <Text color={colors.mainPurple} fontSize="lg" fontWeight={600}>
+                                        Save
+                                    </Text>
+                                </TouchableOpacity>
+                            </HStack>
+                        ),
+
+                        headerTintColor: colors.mainPurple,
+                    })}
+                    component={EditNote}
                 />
             </Stack.Group>
         </Stack.Navigator>

@@ -9,8 +9,7 @@ import { TouchableOpacity } from 'react-native';
 
 const CircleProgress = ({ handleHabitProgress, habitProgress, id }) => {
     const { habits, habitSetter, getSpecificHabit } = useHabits();
-    const habit = getSpecificHabit(id);
-    const habitItem = habit[0];
+    const habitItem = getSpecificHabit(id)[0];
 
     return (
         <HStack mt={4} mb={8}>
@@ -37,10 +36,12 @@ const CircleProgress = ({ handleHabitProgress, habitProgress, id }) => {
                     <Center>
                         <TouchableOpacity
                             onPress={() => {
-                                if (habitProgress - habitItem.times === -1) {
+                                if (habitItem.times - habitProgress === 1) {
                                     handleDoneToday(id, habitItem.name, habits, habitSetter);
                                 } else {
-                                    handleHabitProgress(1);
+                                    if (!habitItem.completed) {
+                                        handleHabitProgress(1);
+                                    }
                                 }
                             }}
                         >
@@ -84,10 +85,13 @@ const CircleProgress = ({ handleHabitProgress, habitProgress, id }) => {
                         ml={6}
                         bg={useColorModeValue('gray.100', 'gray.700')}
                         onPress={() => {
-                            if (habitProgress - habitItem?.times === -1) {
+                            if (habitItem.times - habitProgress === 1) {
                                 handleDoneToday(id, habitItem.name, habits, habitSetter);
-                            } else {
                                 handleHabitProgress(1);
+                            } else {
+                                if (!habitItem.completed) {
+                                    handleHabitProgress(1);
+                                }
                             }
                         }}
                     >

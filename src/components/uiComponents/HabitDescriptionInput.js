@@ -5,14 +5,12 @@ import { HabitCentered, HabitDescriptionInput } from '../../utils/StyledComponen
 
 const { width } = Dimensions.get('window');
 
-const HabitInput = ({ values: { description, stateDescription }, actions: { setValue } }) => (
+const HabitInput = ({ actions: { setValue } }) => (
     <HabitCentered>
         <HabitDescriptionInput
             multiline={true}
-            placeholder="Write a description"
             autoCorrect={false}
-            value={description || stateDescription}
-            placeholderTextColor="gray"
+            placeholder="write a description"
             style={{
                 backgroundColor: useColorModeValue('white', '#27272a'),
                 color: useColorModeValue('black', 'white'),

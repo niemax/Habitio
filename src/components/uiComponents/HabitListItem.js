@@ -59,7 +59,7 @@ const HabitListItem = ({ item }) => {
                                 ) : (
                                     <Feather
                                         name="activity"
-                                        size={20}
+                                        size={15}
                                         color={color || colors.mainPurple}
                                     />
                                 )}
@@ -133,16 +133,16 @@ const HabitListItem = ({ item }) => {
                         </Center>
                     )}
                 </HomepageDataBox>
+                <ActionSheet
+                    id={id}
+                    habitProgress={habitProgress}
+                    setHabitProgress={setHabitProgress}
+                    handleHabitProgress={handleHabitProgress}
+                    onOpen={onOpen}
+                    isOpen={isOpen}
+                    onClose={onClose}
+                />
             </HomepageDataView>
-            <ActionSheet
-                id={id}
-                habitProgress={habitProgress}
-                setHabitProgress={setHabitProgress}
-                handleHabitProgress={handleHabitProgress}
-                onOpen={onOpen}
-                isOpen={isOpen}
-                onClose={onClose}
-            />
         </>
     );
 };

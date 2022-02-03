@@ -58,7 +58,6 @@ export const handleDoneOtherDay = (date, id, habits, habitSetter) => {
                 if (habit.id === id) {
                     habit.completedDates = completedDatesObj;
                     habit.calendarDone = true;
-                    habit.streak.push(1);
                     haptics.success();
                 }
             } else {
@@ -66,7 +65,6 @@ export const handleDoneOtherDay = (date, id, habits, habitSetter) => {
                 if (habit.id === id) {
                     habit.completedDates = completedDatesObj;
                     habit.calendarDone = false;
-                    habit.streak.pop();
                     haptics.warning();
                 }
             }
