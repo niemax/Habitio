@@ -2,7 +2,11 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
+<<<<<<< HEAD
 import Homepage from '../screens/Homepage';
+=======
+import HomeScreen from '../screens/HomeScreen';
+>>>>>>> d6793223a07a0925a88d67172fd94bbd6f2049fc
 import HabitScreen from '../screens/HabitScreen';
 import CreateHabit from '../screens/CreateHabit';
 import StartHabitCreation from '../screens/StartHabitCreation';
@@ -70,7 +74,7 @@ const MainAppStack = () => {
                             </TouchableOpacity>
                         ),
                     })}
-                    component={Homepage}
+                    component={HomeScreen}
                 />
                 <Stack.Screen
                     name="StartHabitCreation"
