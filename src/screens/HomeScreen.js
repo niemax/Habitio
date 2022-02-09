@@ -1,15 +1,16 @@
 import React, { useState, useCallback } from 'react';
-import { RefreshControl, ScrollView, View } from 'react-native';
+import { RefreshControl, ScrollView, TouchableOpacity, View } from 'react-native';
 import { colors } from '../utils/colors';
 import { useHabits } from '../context/HabitProvider';
 import { HomepageDataView } from '../utils/StyledComponents/Styled';
 import ContentLoader, { Rect } from 'react-content-loader/native';
 import HabitListItem from '../components/uiComponents/HabitListItem';
-import { Text, useColorModeValue, Flex, Center } from 'native-base';
+import { Ionicons } from '@expo/vector-icons';
+import { Text, useColorModeValue, Flex, Center, HStack, Box, Spacer } from 'native-base';
 
 const wait = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
     const [refreshing, setRefreshing] = useState(false);
     const { habits, getHabits, habitsLoading } = useHabits();
 
@@ -35,12 +36,22 @@ const HomeScreen = () => {
                 }
                 style={{ marginBottom: 10, marginTop: 150 }}
             >
-                <Text fontWeight={800} fontSize="xl" marginLeft="20px" mt={4}>
-                    Your Habits{' '}
-                    <Text opacity={0.6} fontSize="md">
-                        ({HABITS_LENGTH})
-                    </Text>
-                </Text>
+                <HStack px={4}>
+                    <Box>
+                        <Text fontWeight={800} fontSize="xl">
+                            Your Habits{' '}
+                            <Text opacity={0.6} fontSize="md">
+                                ({HABITS_LENGTH})
+                            </Text>
+                        </Text>
+                    </Box>
+                    <Spacer />
+                    <Box>
+                        <TouchableOpacity onPress={() => navigation.navigate('SearchModal')}>
+                            <Ionicons name="search" size={24} color={colors.mainPurple} />
+                        </TouchableOpacity>
+                    </Box>
+                </HStack>
                 {Object.keys(habits).length <= 0 && (
                     <Center mt={10}>
                         <Text fontWeight={800} fontSize="3xl" color={colors.mainPurple}>
@@ -54,7 +65,7 @@ const HomeScreen = () => {
                             <View style={{ marginTop: 30 }}>
                                 <ContentLoader
                                     height={80}
-                                    width="350px"
+                                    width={350}
                                     speed={2}
                                     backgroundColor="#333"
                                     foregroundColor="#999"
