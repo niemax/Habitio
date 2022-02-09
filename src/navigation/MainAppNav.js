@@ -17,6 +17,7 @@ import EditNote from '../screens/EditNote';
 import { formatDateForHabitEndDate } from '../utils/helpers/dateHelpers';
 import { handleNoteEdit, handleNoteDelete } from '../utils/helpers/noteMethods';
 import { useHabits } from '../context/HabitProvider';
+import SearchModal from '../screens/SearchModal';
 
 const Stack = createNativeStackNavigator();
 
@@ -140,6 +141,31 @@ const MainAppStack = () => {
                 <Stack.Screen name="Settings" component={Settings} />
             </Stack.Group>
             <Stack.Group screenOptions={{ presentation: 'modal' }}>
+                <Stack.Screen
+                    name="SearchModal"
+                    options={{
+                        headerTitle: 'Search a habit',
+                        headerBlurEffect:
+                            colorMode === 'light' ? 'systemUltraThinMaterialLight' : 'dark',
+                        headerTransparent: true,
+                        headerTintColor: colors.mainPurple,
+                        headerBackTitleVisible: true,
+                        headerBackTitle: 'Cancel',
+                        headerTitleStyle: {
+                            color: colorMode === 'light' ? 'black' : 'white',
+                            fontWeight: '600',
+                            fontSize: 18,
+                        },
+                        headerRight: () => (
+                            <TouchableOpacity onPress={() => navigation.goBack()}>
+                                <Text color={colors.mainPurple} fontSize="lg" fontWeight={600}>
+                                    Cancel
+                                </Text>
+                            </TouchableOpacity>
+                        ),
+                    }}
+                    component={SearchModal}
+                />
                 <Stack.Screen
                     name="ShowHabitEditModal"
                     options={({ route }) => ({
