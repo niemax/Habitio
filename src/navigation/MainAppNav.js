@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import Homepage from '../screens/Homepage';
 import HabitScreen from '../screens/HabitScreen';
 import CreateHabit from '../screens/CreateHabit';
@@ -165,13 +165,12 @@ const MainAppStack = () => {
                             fontWeight: '600',
                             fontSize: 18,
                         },
-                        headerLeft: () => (
-                            <Ionicons
-                                name="chevron-down"
-                                size={28}
-                                color={useColorModeValue('black', colors.mainPurple)}
-                                onPress={() => navigation.goBack()}
-                            />
+                        headerRight: () => (
+                            <TouchableOpacity onPress={() => navigation.goBack()}>
+                                <Text color={colors.mainPurple} fontSize="lg" fontWeight={600}>
+                                    Cancel
+                                </Text>
+                            </TouchableOpacity>
                         ),
                     })}
                     component={ShowHabitEditModal}
@@ -226,7 +225,7 @@ const MainAppStack = () => {
                             color: colorMode === 'light' ? 'black' : 'white',
                         },
 
-                        title: formatDateForHabitEndDate(route.params.date),
+                        title: `📌 ${formatDateForHabitEndDate(route.params.date)}`,
                         headerTitleStyle: {
                             color: colorMode === 'light' ? 'black' : 'white',
                             fontWeight: '600',

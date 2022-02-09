@@ -55,7 +55,7 @@ const CalendarFrequency = ({
                 <Text marginLeft="15px">{formatDateForHabitEndDate(specificDate)}</Text>
             </Box>
         )}
-        {description !== undefined && (
+        {description !== '' && (
             <Box mt={4}>
                 <Text marginLeft="15px" opacity={0.6}>
                     Description

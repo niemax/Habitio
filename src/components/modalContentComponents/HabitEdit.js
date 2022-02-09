@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, TextInput } from 'react-native';
-import { Box, useColorModeValue, Text, Flex } from 'native-base';
+import { Box, useColorModeValue, Text } from 'native-base';
 import { colors } from '../../utils/colors';
 import {
     ButtonContainer,
@@ -9,7 +9,6 @@ import {
     HabitInfoContainer,
 } from '../../utils/StyledComponents/Styled';
 import Frequency from '../uiComponents/ChooseFrequency';
-import HabitInput from '../uiComponents/HabitDescriptionInput';
 import HabitColor from '../uiComponents/SelectHabitColorButton';
 
 export default function HabitEditContent({
@@ -42,6 +41,7 @@ export default function HabitEditContent({
         habitSpecificDate,
         habitReminderTime,
         habitEndDate,
+        selectedValue,
         color,
         colorUpdated,
         updatedColor,
@@ -70,8 +70,8 @@ export default function HabitEditContent({
                                     backgroundColor: useColorModeValue('white', '#27272a'),
                                     color: useColorModeValue('black', 'white'),
                                     fontSize: 17,
-                                    width: '98%',
-                                    height: 'auto',
+                                    width: '91%',
+                                    height: 50,
                                     borderRadius: 8,
                                     padding: 10,
                                     shadowColor: '#000',
@@ -126,6 +126,7 @@ export default function HabitEditContent({
                                     timesCount,
                                     habitSpecificDate,
                                     habitEndDate,
+                                    selectedValue,
                                 }}
                             />
                         </Box>

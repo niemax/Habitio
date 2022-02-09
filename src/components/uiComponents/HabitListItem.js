@@ -3,13 +3,25 @@ import { Image, TouchableOpacity } from 'react-native';
 import { Feather, Entypo } from '@expo/vector-icons';
 import { HomepageDataBox, HomepageDataView } from '../../utils/StyledComponents/Styled';
 import { colors } from '../../utils/colors';
-import { Box, HStack, VStack, useDisclose, Center, Text, Flex, useColorMode } from 'native-base';
+import {
+    Box,
+    HStack,
+    VStack,
+    useDisclose,
+    Center,
+    Text,
+    Flex,
+    useColorMode,
+    Button,
+    useColorModeValue,
+} from 'native-base';
 import ActionSheet from './ActionSheet';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { haptics } from '../../utils/helpers/haptics';
 import { useHabits } from '../../context/HabitProvider';
 import { formatDateForHabitEndDate } from '../../utils/helpers/dateHelpers';
 import { handleDoneToday } from '../../utils/helpers/handleDone';
+import { renderIconBackgroundColor } from '../../utils/helpers/renderIconBackgroundColor';
 
 const HabitListItem = ({ item }) => {
     const { icon, completed, times, progress, color, name, id, unitValue, specificDate } = item;
@@ -49,8 +61,10 @@ const HabitListItem = ({ item }) => {
                 >
                     <HStack>
                         <Flex align="center" mt={1}>
-                            <Box
-                                bg={colorMode === 'light' ? 'gray.100' : 'gray.800'}
+                            <Button
+                                variant="subtle"
+                                opacity={useColorModeValue(0.6, 0.8)}
+                                colorScheme={renderIconBackgroundColor(color)}
                                 p={3}
                                 rounded="full"
                             >
@@ -63,10 +77,10 @@ const HabitListItem = ({ item }) => {
                                         color={color || colors.mainPurple}
                                     />
                                 )}
-                            </Box>
+                            </Button>
                         </Flex>
                         <Box ml={3}>
-                            <VStack>
+                            <VStack space={0.5}>
                                 <Text
                                     fontWeight={600}
                                     fontSize="md"
@@ -107,7 +121,7 @@ const HabitListItem = ({ item }) => {
                             >
                                 <AnimatedCircularProgress
                                     fillLineCap="round"
-                                    size={50}
+                                    size={58}
                                     width={7}
                                     fill={!completed ? (habitProgress / times) * 100 : 100}
                                     tintColor={colors.mainPurple}

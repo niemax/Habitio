@@ -234,7 +234,7 @@ export const HomepageDataView = styled.View`
 
 export const HomepageDataBox = styled.TouchableOpacity`
     margin-top: 2px;
-    height: 80px;
+    height: 84px;
     width: ${deviceWidth - 40} 
     padding-horizontal: 15px;
     flex-direction: row;

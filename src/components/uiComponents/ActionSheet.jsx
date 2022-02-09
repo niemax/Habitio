@@ -91,7 +91,7 @@ export default function ListItemActionSheet({
                     id={id}
                 />
                 {!habitItem.completed && (
-                    <Box mt={8}>
+                    <Box mt={3}>
                         <Button
                             onPress={() => handleDoneToday(id, habitItem.name, habits, habitSetter)}
                             size="lg"

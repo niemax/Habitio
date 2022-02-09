@@ -24,7 +24,7 @@ export default function Frequency({
     },
     setters: { setDaysCount, setSelectedValue, setTimesCount },
     values: { specificDate, reminderTime, endDate, habitReminderTime },
-    states: { daysCount, timesCount, habitSpecificDate, habitEndDate, unitValue, selectedValue },
+    states: { daysCount, timesCount, habitSpecificDate, habitEndDate, selectedValue },
 }) {
     const { colorMode } = useColorMode();
 
@@ -158,7 +158,7 @@ export default function Frequency({
                                             <Box ml={2}>
                                                 <TextInput
                                                     width={200}
-                                                    placeholder="unit"
+                                                    value={selectedValue}
                                                     style={{
                                                         fontSize: 16,
                                                         color: colors.mainPurple,

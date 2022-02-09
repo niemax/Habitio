@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import {
     Box,
     Flex,
@@ -15,7 +15,7 @@ export default function EditNote({ route, navigation }) {
     const { input } = route.params;
     const [inputText, setInputText] = useState(input);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         navigation.setParams({
             inputText: inputText,
         });
