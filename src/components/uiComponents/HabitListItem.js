@@ -23,7 +23,7 @@ import { formatDateForHabitEndDate } from '../../utils/helpers/dateHelpers';
 import { handleDoneToday } from '../../utils/helpers/handleDone';
 import { renderIconBackgroundColor } from '../../utils/helpers/renderIconBackgroundColor';
 
-const HabitListItem = ({ item }) => {
+const HabitListItem = ({ item, onPressMethod }) => {
     const { icon, completed, times, progress, color, name, id, unitValue, specificDate } = item;
     const [habitProgress, setHabitProgress] = useState(progress);
     const { isOpen, onOpen, onClose } = useDisclose();
@@ -46,7 +46,7 @@ const HabitListItem = ({ item }) => {
         <>
             <HomepageDataView>
                 <HomepageDataBox
-                    onPress={onOpen}
+                    onPress={onOpen || onPressMethod}
                     style={{
                         backgroundColor: colorMode === 'light' ? 'white' : '#1c1b1b',
                         shadowColor: '#000',

@@ -4,9 +4,10 @@ import { colors } from '../utils/colors';
 import { HomepageDataView } from '../utils/StyledComponents/Styled';
 import { useHabits } from '../context/HabitProvider';
 import HabitListItem from '../components/uiComponents/HabitListItem';
-import { TextInput } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { TextInput, TouchableOpacity } from 'react-native';
 
-const SearchModal = () => {
+const SearchModal = ({ navigation }) => {
     const { habits } = useHabits();
     const [data, setData] = useState([]);
 
@@ -18,33 +19,43 @@ const SearchModal = () => {
     };
 
     return (
-        <Flex flex={1} bg={useColorModeValue(colors.white, colors.black)}>
+        <Flex flex={1} bg={useColorModeValue(colors.white, colors.mainBackground)}>
             <ScrollView>
                 <Box mt={20} px={4}>
-                    <TextInput
-                        autoFocus={true}
-                        clearButtonMode="always"
-                        style={{
-                            backgroundColor: useColorModeValue('white', '#27272a'),
-                            color: useColorModeValue('black', 'white'),
-                            fontSize: 17,
-                            padding: 10,
-                            borderRadius: 10,
-                            width: '100%',
-                            shadowColor: '#000',
-                            shadowOffset: {
-                                width: 0,
-                                height: 1,
-                            },
-                            shadowOpacity: 0.15,
-                            shadowRadius: 2.84,
-                            elevation: 4,
-                        }}
-                        onChangeText={(text) => filterData(text)}
-                        placeholder="Search habit"
-                    />
-
-                    <Box mt={10}>
+                    <Flex
+                        direction="row"
+                        align="center"
+                        justify="center"
+                        bg={useColorModeValue('gray.300', 'gray.800')}
+                        opacity={0.7}
+                        px={1}
+                        rounded="lg"
+                        shadow={2}
+                    >
+                        <Ionicons name="search" size={22} color="gray" />
+                        <TextInput
+                            placeholder="Search"
+                            autoFocus={true}
+                            clearButtonMode="always"
+                            style={{
+                                color: useColorModeValue('black', 'white'),
+                                fontSize: 17,
+                                padding: 10,
+                                borderRadius: 10,
+                                width: '92%',
+                                shadowColor: '#000',
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 1,
+                                },
+                                shadowOpacity: 0.15,
+                                shadowRadius: 4.84,
+                                elevation: 4,
+                            }}
+                            onChangeText={(text) => filterData(text)}
+                        />
+                    </Flex>
+                    <Box mt={2}>
                         {data.map((item) => (
                             <HomepageDataView key={item.id}>
                                 <HabitListItem item={item} />

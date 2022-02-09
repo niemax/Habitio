@@ -2,11 +2,7 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
-<<<<<<< HEAD
-import Homepage from '../screens/Homepage';
-=======
 import HomeScreen from '../screens/HomeScreen';
->>>>>>> d6793223a07a0925a88d67172fd94bbd6f2049fc
 import HabitScreen from '../screens/HabitScreen';
 import CreateHabit from '../screens/CreateHabit';
 import StartHabitCreation from '../screens/StartHabitCreation';
@@ -16,7 +12,7 @@ import CalendarModal from '../components/modalComponents/CalendarModal';
 import { AntDesign } from '@expo/vector-icons';
 import { colors } from '../utils/colors';
 import { Ionicons } from '@expo/vector-icons';
-import { useColorModeValue, Text, useColorMode, Circle, HStack } from 'native-base';
+import { Text, useColorMode, Circle, HStack, Box, Flex } from 'native-base';
 import EditNote from '../screens/EditNote';
 import { formatDateForHabitEndDate } from '../utils/helpers/dateHelpers';
 import { handleNoteEdit, handleNoteDelete } from '../utils/helpers/noteMethods';
@@ -72,6 +68,16 @@ const MainAppStack = () => {
                                 >
                                     <AntDesign name="plus" size={20} color={colors.mainPurple} />
                                 </Circle>
+                            </TouchableOpacity>
+                        ),
+                        headerLeft: () => (
+                            <TouchableOpacity onPress={() => navigation.navigate('SearchModal')}>
+                                <Flex flexDirection="row" align="center">
+                                    <Ionicons name="search" size={26} color={colors.mainPurple} />
+                                    <Text fontWeight={600} ml={1} color="grey">
+                                        Search
+                                    </Text>
+                                </Flex>
                             </TouchableOpacity>
                         ),
                     })}
@@ -148,7 +154,7 @@ const MainAppStack = () => {
                 <Stack.Screen
                     name="SearchModal"
                     options={{
-                        headerTitle: 'Search a habit',
+                        headerTitle: 'Search a Habit',
                         headerBlurEffect:
                             colorMode === 'light' ? 'systemUltraThinMaterialLight' : 'dark',
                         headerTransparent: true,

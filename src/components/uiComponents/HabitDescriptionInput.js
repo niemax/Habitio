@@ -25,6 +25,7 @@ const HabitInput = ({ actions: { setValue } }) => (
                 shadowRadius: 2.84,
                 elevation: 4,
             }}
+            placeholderTextColor="gray"
             onChangeText={setValue}
         />
     </HabitCentered>

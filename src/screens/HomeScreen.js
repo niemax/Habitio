@@ -5,12 +5,11 @@ import { useHabits } from '../context/HabitProvider';
 import { HomepageDataView } from '../utils/StyledComponents/Styled';
 import ContentLoader, { Rect } from 'react-content-loader/native';
 import HabitListItem from '../components/uiComponents/HabitListItem';
-import { Ionicons } from '@expo/vector-icons';
 import { Text, useColorModeValue, Flex, Center, HStack, Box, Spacer } from 'native-base';
 
 const wait = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = () => {
     const [refreshing, setRefreshing] = useState(false);
     const { habits, getHabits, habitsLoading } = useHabits();
 
@@ -34,23 +33,18 @@ const HomeScreen = ({ navigation }) => {
                         onRefresh={onRefresh}
                     />
                 }
-                style={{ marginBottom: 10, marginTop: 150 }}
+                style={{ marginBottom: 10 }}
             >
-                <HStack px={4}>
+                <HStack px={4} mt={40}>
                     <Box>
                         <Text fontWeight={800} fontSize="xl">
                             Your Habits{' '}
-                            <Text opacity={0.6} fontSize="md">
+                            <Text opacity={0.6} fontWeight={400} fontSize="sm">
                                 ({HABITS_LENGTH})
                             </Text>
                         </Text>
                     </Box>
                     <Spacer />
-                    <Box>
-                        <TouchableOpacity onPress={() => navigation.navigate('SearchModal')}>
-                            <Ionicons name="search" size={24} color={colors.mainPurple} />
-                        </TouchableOpacity>
-                    </Box>
                 </HStack>
                 {Object.keys(habits).length <= 0 && (
                     <Center mt={10}>
