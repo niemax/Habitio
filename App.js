@@ -49,9 +49,7 @@ export default function App() {
                     <SafeAreaProvider>
                         <StatusBar style="auto" />
                         <FlashMessage position="top" />
-                        <Box flex={1} bg={colorMode === 'dark' ? colors.black : colors.white}>
-                            <MainAppStack />
-                        </Box>
+                        <MainAppStack />
                     </SafeAreaProvider>
                 </NavigationContainer>
             </NativeBaseProvider>

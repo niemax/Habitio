@@ -12,7 +12,7 @@ import CalendarModal from '../components/modalComponents/CalendarModal';
 import { AntDesign } from '@expo/vector-icons';
 import { colors } from '../utils/colors';
 import { Ionicons } from '@expo/vector-icons';
-import { Text, useColorMode, Circle, HStack, Box, Flex } from 'native-base';
+import { Text, useColorMode, Circle, HStack, Flex } from 'native-base';
 import EditNote from '../screens/EditNote';
 import { formatDateForHabitEndDate } from '../utils/helpers/dateHelpers';
 import { handleNoteEdit, handleNoteDelete } from '../utils/helpers/noteMethods';
