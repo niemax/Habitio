@@ -82,8 +82,8 @@ export const InputContainer = styled.View`
 
 export const HabitInput = styled.TextInput`
     width: ${deviceWidth - 50}px
-    height: 60px
-    border-radius: 8px; 
+    height: 50px
+    border-radius: 10px; 
     padding: 15px;
 `;
 

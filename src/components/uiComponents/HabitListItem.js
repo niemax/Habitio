@@ -46,7 +46,7 @@ const HabitListItem = ({ item, onPressMethod }) => {
         <>
             <HomepageDataView>
                 <HomepageDataBox
-                    onPress={onOpen || onPressMethod}
+                    onPress={onOpen}
                     style={{
                         backgroundColor: colorMode === 'light' ? 'white' : '#1c1b1b',
                         shadowColor: '#000',

@@ -79,7 +79,9 @@ export default function Frequency({
                             {isEnabled && (
                                 <>
                                     <Box mt={4}>
-                                        <Text marginLeft="10px">Days per week</Text>
+                                        <Text marginLeft="10px" opacity={0.7} fontSize="xs">
+                                            DAYS PER WEEK
+                                        </Text>
                                     </Box>
                                     <Flex
                                         rounded="md"
@@ -141,7 +143,9 @@ export default function Frequency({
                                     </Flex>
 
                                     <Box mt={6}>
-                                        <Text marginLeft="10px">per day</Text>
+                                        <Text marginLeft="10px" opacity={0.7} fontSize="xs">
+                                            PER DAY
+                                        </Text>
                                     </Box>
                                     <Flex
                                         rounded="md"

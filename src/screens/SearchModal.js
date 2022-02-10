@@ -58,7 +58,13 @@ const SearchModal = ({ navigation }) => {
                     <Box mt={2}>
                         {data.map((item) => (
                             <HomepageDataView key={item.id}>
-                                <HabitListItem item={item} />
+                                <HabitListItem
+                                    item={item}
+                                    onPressMethod={() => {
+                                        navigation.goBack();
+                                        navigation.navigate('CalendarModal');
+                                    }}
+                                />
                             </HomepageDataView>
                         ))}
                     </Box>
