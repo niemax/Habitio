@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Image, TouchableOpacity } from 'react-native';
 import { Feather, Entypo } from '@expo/vector-icons';
 import { HomepageDataBox, HomepageDataView } from '../../utils/StyledComponents/Styled';
@@ -22,6 +22,32 @@ import { useHabits } from '../../context/HabitProvider';
 import { formatDateForHabitEndDate } from '../../utils/helpers/dateHelpers';
 import { handleDoneToday } from '../../utils/helpers/handleDone';
 import { renderIconBackgroundColor } from '../../utils/helpers/renderIconBackgroundColor';
+import { habitItemShadow } from '../../utils/globalStyles';
+import AnimatedLottieView from 'lottie-react-native';
+
+export const RenderLottieOrIcon = ({ lottieAnimating = true, setLottieAnimating }) => {
+    const animation = useRef(null);
+
+    useEffect(() => {
+        animation.current.play();
+        setLottieAnimating(true);
+        const timeout = setTimeout(() => {
+            animation.current.pause();
+            setLottieAnimating(false);
+        }, 3000);
+        return () => clearTimeout(timeout);
+    }, []);
+
+    return (
+        <>
+            {!lottieAnimating && <Entypo name="check" size={20} color={colors.mainPurple} />}
+            <AnimatedLottieView
+                ref={animation}
+                source={require('../../assets/lottieJson/lf30_editor_oua2u7xf.json')}
+            />
+        </>
+    );
+};
 
 const HabitListItem = ({ item, onPressMethod }) => {
     const { icon, completed, times, progress, color, name, id, unitValue, specificDate } = item;
@@ -29,18 +55,24 @@ const HabitListItem = ({ item, onPressMethod }) => {
     const { isOpen, onOpen, onClose } = useDisclose();
     const { colorMode } = useColorMode();
     const { habitSetter, habits } = useHabits();
+    const [lottieAnimating, setLottieAnimating] = useState(false);
 
     const handleHabitProgress = (operand) => {
         haptics.success();
         const mapped = habits.map((habit) => {
-            if (habit.id === id) {
-                setHabitProgress((previous) => previous + Number(operand));
-                habit.progress += Number(operand);
-            }
+            setHabitProgress(habitProgress + Number(operand));
+            habit.progress += Number(operand);
             return habit;
         });
         habitSetter(mapped);
     };
+
+    const renderIcon = () =>
+        !!icon ? (
+            <Image style={{ height: 15, width: 15 }} source={icon} />
+        ) : (
+            <Feather name="activity" size={15} color={color || colors.mainPurple} />
+        );
 
     return (
         <>
@@ -48,15 +80,8 @@ const HabitListItem = ({ item, onPressMethod }) => {
                 <HomepageDataBox
                     onPress={onOpen || onPressMethod}
                     style={{
-                        backgroundColor: colorMode === 'light' ? 'white' : '#1c1b1b',
-                        shadowColor: '#000',
-                        shadowOffset: {
-                            width: 1,
-                            height: 10,
-                        },
-                        shadowOpacity: 0.06,
-                        shadowRadius: 8,
-                        elevation: 6,
+                        backgroundColor: colorMode === 'light' ? 'white' : '#151618',
+                        ...habitItemShadow,
                     }}
                 >
                     <HStack>
@@ -68,15 +93,7 @@ const HabitListItem = ({ item, onPressMethod }) => {
                                 p={3}
                                 rounded="full"
                             >
-                                {icon ? (
-                                    <Image style={{ height: 15, width: 15 }} source={icon} />
-                                ) : (
-                                    <Feather
-                                        name="activity"
-                                        size={15}
-                                        color={color || colors.mainPurple}
-                                    />
-                                )}
+                                {renderIcon()}
                             </Button>
                         </Flex>
                         <Box ml={3}>
@@ -85,13 +102,13 @@ const HabitListItem = ({ item, onPressMethod }) => {
                                     fontWeight={600}
                                     fontSize="md"
                                     color={
-                                        completed
+                                        !!completed
                                             ? 'gray.500'
                                             : colorMode === 'light'
                                             ? 'black'
                                             : 'white'
                                     }
-                                    textDecorationLine={completed ? 'line-through' : 'none'}
+                                    textDecorationLine={!!completed ? 'line-through' : 'none'}
                                 >
                                     {name}
                                 </Text>
@@ -135,10 +152,9 @@ const HabitListItem = ({ item, onPressMethod }) => {
                                                 {habitProgress}
                                             </Text>
                                         ) : (
-                                            <Entypo
-                                                name="check"
-                                                size={20}
-                                                color={colors.mainPurple}
+                                            <RenderLottieOrIcon
+                                                lottieAnimating={lottieAnimating}
+                                                setLottieAnimating={setLottieAnimating}
                                             />
                                         )
                                     }

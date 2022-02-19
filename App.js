@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { AsyncStorage, Platform, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import FlashMessage from 'react-native-flash-message';
@@ -74,17 +73,7 @@ async function registerForPushNotificationsAsync() {
         }
         token = (await Notifications.getExpoPushTokenAsync()).data;
     } else {
-        //alert('Must use physical device for Push Notifications');
+        console.error('Must use physical device for Push Notifications');
     }
-
-    if (Platform.OS === 'android') {
-        Notifications.setNotificationChannelAsync('default', {
-            name: 'default',
-            importance: Notifications.AndroidImportance.MAX,
-            vibrationPattern: [0, 250, 250, 250],
-            lightColor: '#FF231F7C',
-        });
-    }
-
     return token;
 }

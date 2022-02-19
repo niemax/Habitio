@@ -10,6 +10,7 @@ import {
 } from '../../utils/StyledComponents/Styled';
 import Frequency from '../uiComponents/ChooseFrequency';
 import HabitColor from '../uiComponents/SelectHabitColorButton';
+import { textInputShadow } from '../../utils/globalStyles';
 
 export default function HabitEditContent({
     methods: {
@@ -74,14 +75,7 @@ export default function HabitEditContent({
                                     height: 50,
                                     borderRadius: 8,
                                     padding: 10,
-                                    shadowColor: '#000',
-                                    shadowOffset: {
-                                        width: 0,
-                                        height: 1,
-                                    },
-                                    shadowOpacity: 0.15,
-                                    shadowRadius: 2.84,
-                                    elevation: 4,
+                                    ...textInputShadow,
                                 }}
                                 onChangeText={(text) => setStateDescription(text)}
                             />

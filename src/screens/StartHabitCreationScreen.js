@@ -10,20 +10,35 @@ import data from '../categories';
 import { colors } from '../utils/colors';
 import { Ionicons } from '@expo/vector-icons';
 import { Box, Center, Flex, HStack, Text, useColorModeValue } from 'native-base';
+import { textInputShadow } from '../utils/globalStyles';
+import Button from '../components/uiComponents/Button';
 
 const StartHabitCreation = ({ navigation }) => {
     const [habitName, setHabitName] = useState('');
     const [error, setError] = useState('');
+    const { navigate } = navigation;
 
     const handleOwnHabit = () => {
         if (habitName === '') {
             setError('Name Required');
         } else {
-            navigation.navigate('CreateHabit', {
+            navigate('CreateHabit', {
                 habitName: habitName,
             });
         }
     };
+
+    const renderLineBreak = () => (
+        <View
+            style={{
+                height: 1,
+                backgroundColor: 'gray',
+                width: '96%',
+                opacity: 0.1,
+                marginLeft: 16,
+            }}
+        />
+    );
 
     return (
         <Box flex={1} bg={useColorModeValue(colors.white, colors.mainBackground)}>
@@ -37,17 +52,9 @@ const StartHabitCreation = ({ navigation }) => {
                         placeholder="Habit name"
                         placeholderTextColor="gray"
                         style={{
+                            ...textInputShadow,
                             backgroundColor: useColorModeValue('white', '#27272a'),
                             color: useColorModeValue('black', 'white'),
-                            fontSize: 18,
-                            shadowColor: '#000',
-                            shadowOffset: {
-                                width: 0,
-                                height: 2,
-                            },
-                            shadowOpacity: 0.25,
-                            shadowRadius: 3.84,
-                            elevation: 5,
                         }}
                         onChangeText={(text) => {
                             setError('');
@@ -64,11 +71,11 @@ const StartHabitCreation = ({ navigation }) => {
                         OR CHOOSE
                     </Text>
                     <Box bg={useColorModeValue('white', 'gray.800')} rounded="xl" p={1} mt={6}>
-                        {data.map(({ category, image, mainIcon, habits }) => (
+                        {data.map(({ category, image, mainIcon, habits }, index) => (
                             <TouchableOpacity
                                 key={category}
                                 onPress={() =>
-                                    navigation.push('HabitScreen', {
+                                    navigate('HabitScreen', {
                                         image: image,
                                         category: category,
                                         habitData: habits,
@@ -89,26 +96,18 @@ const StartHabitCreation = ({ navigation }) => {
                                     </HStack>
                                     <Ionicons name="chevron-forward" size={20} color="gray" />
                                 </Flex>
-                                <View
-                                    style={{
-                                        height: 1,
-                                        backgroundColor: 'gray',
-                                        width: '96%',
-                                        opacity: 0.1,
-                                        marginLeft: 16,
-                                    }}
-                                />
+                                {index < data.length - 1 && renderLineBreak()}
                             </TouchableOpacity>
                         ))}
                     </Box>
                 </Box>
             </ScrollView>
             <ButtonContainer>
-                <HabitNextButton onPress={handleOwnHabit}>
-                    <Text fontWeight={600} fontSize="xl" color="black">
+                <Button onPress={handleOwnHabit} w="90%">
+                    <Text fontWeight={600} fontSize="lg" color="black">
                         Next
                     </Text>
-                </HabitNextButton>
+                </Button>
             </ButtonContainer>
         </Box>
     );

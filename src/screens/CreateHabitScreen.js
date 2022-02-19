@@ -9,10 +9,15 @@ import handleHabitCreation from '../utils/helpers/createhabitHelpers';
 import { useHabits } from '../context/HabitProvider';
 import { Box, Text, useColorModeValue } from 'native-base';
 import { colors } from '../utils/colors';
+import Button from '../components/uiComponents/Button';
+
+const currentWeek = getCurrentWeek();
 
 const CreateHabit = ({ route, navigation }) => {
     const { name, habitIcon, color, habitName } = route.params;
     const { CRUDHabits } = useHabits();
+    const { navigate } = navigation;
+
     const [updatedColor, setUpdatedColor] = useState();
     const [colorUpdated, setColorUpdated] = useState(false);
     const [description, setDescription] = useState('');
@@ -34,8 +39,6 @@ const CreateHabit = ({ route, navigation }) => {
     const toggleSwitchSpecific = () =>
         !isEnabledDate && !isEnabled && setIsEnabledSpecific((previousState) => !previousState);
     const toggleSwitchEndDate = () => setIsEnabledEndDate((previousState) => !previousState);
-
-    const currentWeek = getCurrentWeek();
 
     const updateColor = (color) => {
         setUpdatedColor(color);
@@ -79,6 +82,16 @@ const CreateHabit = ({ route, navigation }) => {
         progress: 0,
         noteInputs: [],
         streak: [],
+    };
+
+    const objectToDispatch = {
+        newHabit,
+        isEnabledDate,
+        isEnabledSpecific,
+        CRUDHabits,
+        reminderTime,
+        name,
+        specificDate,
     };
 
     return (
@@ -134,24 +147,17 @@ const CreateHabit = ({ route, navigation }) => {
                 </Box>
             </ScrollView>
             <ButtonContainer>
-                <CreateHabitButton
+                <Button
+                    w="90%"
                     onPress={() => {
-                        handleHabitCreation(
-                            newHabit,
-                            isEnabledDate,
-                            isEnabledSpecific,
-                            CRUDHabits,
-                            reminderTime,
-                            name,
-                            specificDate
-                        );
-                        navigation.navigate('Homepage');
+                        handleHabitCreation(objectToDispatch);
+                        navigate('Homepage');
                     }}
                 >
                     <Text fontSize="xl" fontWeight={600} color="black">
                         Create
                     </Text>
-                </CreateHabitButton>
+                </Button>
             </ButtonContainer>
         </Box>
     );

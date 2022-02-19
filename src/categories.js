@@ -81,7 +81,7 @@ const data = [
             {
                 name: 'Go for a walk',
                 habitIcon: require('./assets/flatIcons/person-walking.png'),
-                description: 'Clear your mind and sharpen your cardiovascular side',
+                description: 'Wander around your neighborhood',
                 color: '#2EB284',
             },
         ],

@@ -38,7 +38,7 @@ export default function HabitColor({ colorUpdated, updatedColor, updateColor, co
                 <ActionSheet
                     containerStyle={{
                         backgroundColor: useColorModeValue(colors.white, colors.mainBackground),
-                        height: 270,
+                        height: 200,
                         borderRadius: 35,
                     }}
                     defaultOverlayOpacity={0.3}

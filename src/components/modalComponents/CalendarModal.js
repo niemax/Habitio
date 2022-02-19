@@ -16,12 +16,12 @@ import { useHabits } from '../../context/HabitProvider';
 import { Box, Center, Text, useColorMode } from 'native-base';
 
 const CalendarModal = ({ route, navigation }) => {
-    const [completionRate, setCompletionRate] = useState(0);
     const [noteRenderAmount, setNoteRenderAmount] = useState(2);
     const { colorMode } = useColorMode();
+    const { navigate } = navigation;
 
     const { habits, habitSetter, getSpecificHabit } = useHabits();
-    const habitItem = getSpecificHabit(route.params.id)[0];
+    const habitItem = getSpecificHabit(route.params.id);
 
     const {
         id,
@@ -38,7 +38,9 @@ const CalendarModal = ({ route, navigation }) => {
     } = habitItem;
 
     const calendarDayPress = (day) => {
-        handleDoneOtherDay(day.dateString, route.params.id, habits, habitSetter);
+        const date = day.dateString;
+        const id = route.params.id;
+        handleDoneOtherDay(date, id, habits, habitSetter);
     };
 
     const renderNoteItem = ({ item, index }) =>
@@ -46,7 +48,7 @@ const CalendarModal = ({ route, navigation }) => {
             <View key={item.id}>
                 <TouchableOpacity
                     onPress={() =>
-                        navigation.navigate('EditNote', {
+                        navigate('EditNote', {
                             input: item.input,
                             date: formatDateForHabitEndDate(item.date),
                             id: item.id,
@@ -70,90 +72,87 @@ const CalendarModal = ({ route, navigation }) => {
             </View>
         );
 
+    const renderHeader = () => (
+        <>
+            <Box mt={32}>
+                <CalendarStats completedDates={completedDates} streak={streak} />
+            </Box>
+            <Calendar
+                theme={{
+                    calendarBackground:
+                        colorMode === 'light' ? colors.white : colors.mainBackground,
+                    monthTextColor: colorMode === 'light' ? 'black' : 'white',
+                    dayTextColor: colorMode === 'light' ? 'black' : 'white',
+                    selectedDayBackgroundColor: colors.mainPurple,
+                    arrowColor: colors.mainPurple,
+                    todayTextColor: colors.mainPurple,
+                    ...calendarStyles,
+                }}
+                firstDay={1}
+                hideExtraDays={true}
+                maxDate={getCurrentDateFormattedForCalendarComponent()}
+                markedDates={completedDates}
+                onDayPress={(day) => calendarDayPress(day)}
+            />
+            <CalendarFrequency
+                description={description}
+                days={days}
+                times={times}
+                unitValue={unitValue}
+                endDate={endDate}
+                reminder={reminder}
+                specificDate={specificDate}
+            />
+            <CalendarLineBreak />
+        </>
+    );
+
+    const renderFooter = () => (
+        <>
+            <Text marginLeft="15px" marginBottom="15px" opacity={0.7}>
+                Notes
+            </Text>
+            {Object.values(noteInputs).length === 0 && (
+                <Center>
+                    <Text fontSize="md" color="gray.500">
+                        No notes added yet
+                    </Text>
+                    <Entypo
+                        name="pencil"
+                        size={62}
+                        color={colors.mainPurple}
+                        style={{ marginTop: 30 }}
+                    />
+                </Center>
+            )}
+            <FlatList
+                lazy
+                data={Object.values(noteInputs).sort((a, b) => new Date(b.date) - new Date(a.date))}
+                renderItem={renderNoteItem}
+                keyExtractor={(item) => item.id}
+                ListFooterComponent={
+                    <View style={{ marginBottom: 50 }}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                setNoteRenderAmount(noteRenderAmount + 3);
+                            }}
+                        >
+                            {noteInputs.length >= noteRenderAmount && (
+                                <Text textAlign="center">Load more</Text>
+                            )}
+                        </TouchableOpacity>
+                    </View>
+                }
+            />
+        </>
+    );
+
     return (
         <Box flex={1} bg={colorMode === 'light' ? colors.white : colors.mainBackground}>
             <FlatList
                 ListFooterComponentStyle={{ marginTop: 10 }}
-                ListHeaderComponent={
-                    <>
-                        <Box mt={32}>
-                            <CalendarStats
-                                completedDates={completedDates}
-                                completionRate={completionRate}
-                                streak={streak}
-                            />
-                        </Box>
-                        <Calendar
-                            theme={{
-                                calendarBackground:
-                                    colorMode === 'light' ? colors.white : colors.mainBackground,
-                                monthTextColor: colorMode === 'light' ? 'black' : 'white',
-                                dayTextColor: colorMode === 'light' ? 'black' : 'white',
-                                selectedDayBackgroundColor: colors.mainPurple,
-                                arrowColor: colors.mainPurple,
-                                todayTextColor: colors.mainPurple,
-                                ...calendarStyles,
-                            }}
-                            firstDay={1}
-                            hideExtraDays={true}
-                            maxDate={getCurrentDateFormattedForCalendarComponent()}
-                            markedDates={completedDates}
-                            onDayPress={(day) => calendarDayPress(day)}
-                        />
-                        <CalendarFrequency
-                            description={description}
-                            days={days}
-                            times={times}
-                            unitValue={unitValue}
-                            endDate={endDate}
-                            reminder={reminder}
-                            specificDate={specificDate}
-                        />
-                        <CalendarLineBreak />
-                    </>
-                }
-                ListFooterComponent={
-                    <>
-                        <Text marginLeft="15px" marginBottom="15px" opacity={0.7}>
-                            Notes
-                        </Text>
-                        {Object.values(noteInputs).length === 0 && (
-                            <Center>
-                                <Text fontSize="md" color="gray.500">
-                                    {' '}
-                                    No notes added yet
-                                </Text>
-                                <Entypo
-                                    name="pencil"
-                                    size={62}
-                                    color={colors.mainPurple}
-                                    style={{ marginTop: 30 }}
-                                />
-                            </Center>
-                        )}
-                        <FlatList
-                            lazy
-                            data={Object.values(noteInputs).sort(
-                                (a, b) => new Date(b.date) - new Date(a.date)
-                            )}
-                            renderItem={renderNoteItem}
-                            keyExtractor={(item) => item.id}
-                            ListFooterComponent={
-                                <View style={{ marginBottom: 50 }}>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            setNoteRenderAmount(noteRenderAmount + 3);
-                                        }}
-                                    >
-                                        {noteInputs.length >= noteRenderAmount && (
-                                            <Text textAlign="center">Load more</Text>
-                                        )}
-                                    </TouchableOpacity>
-                                </View>
-                            }
-                        />
-                    </>
-                }
+                ListHeaderComponent={renderHeader()}
+                ListFooterComponent={renderFooter()}
             />
         </Box>
     );

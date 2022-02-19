@@ -4,20 +4,19 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import HomeScreen from '../screens/HomeScreen';
 import HabitScreen from '../screens/HabitScreen';
-import CreateHabit from '../screens/CreateHabit';
-import StartHabitCreation from '../screens/StartHabitCreation';
-import Settings from '../screens/Settings';
-import ShowHabitEditModal from '../components/modalComponents/ShowHabitEditModal';
+import CreateHabit from '../screens/CreateHabitScreen';
+import StartHabitCreation from '../screens/StartHabitCreationScreen';
+import Settings from '../screens/SettingsScreen';
+import ShowHabitEditModal from '../components/modalComponents/HabitEditModal';
 import CalendarModal from '../components/modalComponents/CalendarModal';
 import { AntDesign } from '@expo/vector-icons';
 import { colors } from '../utils/colors';
 import { Ionicons } from '@expo/vector-icons';
-import { Text, useColorMode, Circle, HStack, Box, Flex } from 'native-base';
-import EditNote from '../screens/EditNote';
+import { Text, useColorMode, Circle, HStack } from 'native-base';
+import EditNote from '../screens/EditNoteModal';
 import { formatDateForHabitEndDate } from '../utils/helpers/dateHelpers';
 import { handleNoteEdit, handleNoteDelete } from '../utils/helpers/noteMethods';
 import { useHabits } from '../context/HabitProvider';
-import SearchModal from '../screens/SearchModal';
 
 const Stack = createNativeStackNavigator();
 
@@ -68,16 +67,6 @@ const MainAppStack = () => {
                                 >
                                     <AntDesign name="plus" size={20} color={colors.mainPurple} />
                                 </Circle>
-                            </TouchableOpacity>
-                        ),
-                        headerLeft: () => (
-                            <TouchableOpacity onPress={() => navigation.navigate('SearchModal')}>
-                                <Flex flexDirection="row" align="center">
-                                    <Ionicons name="search" size={26} color={colors.mainPurple} />
-                                    <Text fontWeight={600} ml={1} color="grey">
-                                        Search
-                                    </Text>
-                                </Flex>
                             </TouchableOpacity>
                         ),
                     })}
@@ -151,31 +140,6 @@ const MainAppStack = () => {
                 <Stack.Screen name="Settings" component={Settings} />
             </Stack.Group>
             <Stack.Group screenOptions={{ presentation: 'modal' }}>
-                <Stack.Screen
-                    name="SearchModal"
-                    options={{
-                        headerTitle: 'Search a Habit',
-                        headerBlurEffect:
-                            colorMode === 'light' ? 'systemUltraThinMaterialLight' : 'dark',
-                        headerTransparent: true,
-                        headerTintColor: colors.mainPurple,
-                        headerBackTitleVisible: true,
-                        headerBackTitle: 'Cancel',
-                        headerTitleStyle: {
-                            color: colorMode === 'light' ? 'black' : 'white',
-                            fontWeight: '600',
-                            fontSize: 18,
-                        },
-                        headerRight: () => (
-                            <TouchableOpacity onPress={() => navigation.goBack()}>
-                                <Text color={colors.mainPurple} fontSize="lg" fontWeight={600}>
-                                    Cancel
-                                </Text>
-                            </TouchableOpacity>
-                        ),
-                    }}
-                    component={SearchModal}
-                />
                 <Stack.Screen
                     name="ShowHabitEditModal"
                     options={({ route }) => ({
@@ -289,22 +253,6 @@ const MainAppStack = () => {
                                     }}
                                 >
                                     <Ionicons name="trash" size={24} color={colors.error} />
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        handleNoteEdit(
-                                            route.params.allNotes,
-                                            route.params.id,
-                                            habitSetter,
-                                            habits,
-                                            route.params.inputText
-                                        );
-                                        navigation.goBack();
-                                    }}
-                                >
-                                    <Text color={colors.mainPurple} fontSize="lg" fontWeight={600}>
-                                        Save
-                                    </Text>
                                 </TouchableOpacity>
                             </HStack>
                         ),

@@ -11,7 +11,7 @@ Notifications.setNotificationHandler({
 export const cancelPushNotification = async (id) => {
     try {
         await Notifications.cancelScheduledNotificationAsync(id).then(() => {
-            `Successfully cancelled notification with id: ${id}`;
+            console.log(`Successfully cancelled notification with id: ${id}`);
         });
     } catch (error) {
         console.error(error);
@@ -27,25 +27,6 @@ export const getAllNotifications = async () => {
         'Notification length', notification.length;
     });
 };
-
-/* export const scheduleOneTimeWeekNotification = async (currentDay) => {
-    switch (currentDay) {
-        case 1:
-            await Notifications.scheduleNotificationAsync({
-                content: {
-                    title: 'Habitio',
-                    body: `New week, new fresh start! Get in champ! 💪`,
-                },
-                trigger: {
-                    seconds: 60 * 2,
-                    repeats: true,
-                },
-            });
-            break;
-
-        default:
-    }
-}; */
 
 export const scheduleRepeatingEdit = async (hours, minutes, name, habits, id) => {
     const identifier = await Notifications.scheduleNotificationAsync({

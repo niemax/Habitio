@@ -138,3 +138,26 @@ export const progressBar = {
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
 };
+
+export const textInputShadow = {
+    fontSize: 18,
+    shadowColor: '#000',
+    shadowOffset: {
+        width: 0,
+        height: 2,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 2.84,
+    elevation: 5,
+};
+
+export const habitItemShadow = {
+    shadowColor: '#000',
+    shadowOffset: {
+        width: 1,
+        height: 10,
+    },
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
+    elevation: 6,
+};

@@ -24,15 +24,15 @@ const checkIfSpecificDateisEnabled = (enabledSpecific) => {
     return true;
 };
 
-const handleHabitCreation = async (
+const handleHabitCreation = async ({
     newHabit,
     isEnabledDate,
     isEnabledSpecific,
     CRUDHabits,
     reminderTime,
     habitName,
-    specificDate
-) => {
+    specificDate,
+}) => {
     const { reminderTimeHours, reminderTimeMinutes } = getParsedReminderTimeHours(reminderTime);
 
     if (checkIfReminderDateIsEnabled(isEnabledDate)) {

@@ -1,7 +1,3 @@
-/**
- * ! handle all operations within notes in calendarModal
- */
-
 export const handleNoteEdit = (noteInputs, id, habitSetter, habits, input) => {
     const mappedInputs = noteInputs.map((note) => {
         if (note.id === id) {
@@ -24,7 +20,7 @@ export const handleNoteDelete = (habitId, noteId, habits, noteInputs, habitSette
         const filtered = noteInputs.filter((inp) => inp.id !== noteId);
         const newHabits = habits.map((habit) => {
             if (habit.id === habitId) {
-                habit.noteInputs = [...filtered];
+                habit.noteInputs = filtered;
             }
             return habit;
         });

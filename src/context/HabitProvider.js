@@ -40,7 +40,7 @@ const HabitProvider = ({ children }) => {
         }
     };
 
-    const getSpecificHabit = (id) => habits.filter((habit) => habit.id === id);
+    const getSpecificHabit = (id) => habits.find((habit) => habit.id === id);
 
     const CRUDHabits = async (props) => {
         try {

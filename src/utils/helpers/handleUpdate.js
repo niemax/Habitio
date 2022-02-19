@@ -1,15 +1,8 @@
 import { cancelPushNotification, scheduleOneTimeEdit, scheduleRepeatingEdit } from './notification';
 
-/**
- * ! handle update based on the habit id coming from route.params
- * ! updates the habit with new arguments and cancels a push notification
- * ! every time on save. If user has set another notification -> schedule
- * ! a new one.
- */
-
 const checkReminderTimeForNullValuesAndParse = (reminderTime) => {
-    const parsedHour = reminderTime !== null && reminderTime.getHours();
-    const parsedMin = reminderTime !== null && reminderTime.getMinutes();
+    const parsedHour = reminderTime?.getHours();
+    const parsedMin = reminderTime?.getMinutes();
 
     return { parsedHour, parsedMin };
 };
@@ -20,7 +13,7 @@ const scheduleRepeatingNotificationIfTimeIsNotNull = (time, habitName, habits, i
     scheduleRepeatingEdit(parsedHour, parsedMin, habitName, habits, id);
 };
 
-const handleUpdate = async (
+const handleUpdate = (
     id,
     notificationId,
     habits,
@@ -35,7 +28,7 @@ const handleUpdate = async (
     habitSpecificDate,
     endDate
 ) => {
-    if (notificationId !== undefined) cancelPushNotification(notificationId);
+    cancelPushNotification(notificationId);
 
     const newHabits = habits.map((habit) => {
         if (habit.id === id) {

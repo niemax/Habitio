@@ -21,7 +21,7 @@ const CalendarStats = ({ completedDates, streak }) => {
     };
 
     return (
-        <Box p={3} shadow={2}>
+        <Box p={3} shadow={1}>
             <Flex bg={colorMode === 'light' ? 'gray.100' : 'gray.800'} rounded="lg" p={3}>
                 <Flex direction="row" justify="space-around">
                     <VStack>

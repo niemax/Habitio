@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/core';
-import HabitEditContent from '../../components/modalContentComponents/HabitEdit';
+import HabitEditContent from '../modalContentComponents/HabitEdit';
 import { useHabits } from '../../context/HabitProvider';
 import handleUpdate from '../../utils/helpers/handleUpdate';
 
@@ -31,7 +31,7 @@ const ShowHabitEditModal = ({ route }) => {
     const toggleSwitchEndDate = () => setIsEnabledEndDate((previousState) => !previousState);
 
     const { habits, habitSetter, getSpecificHabit } = useHabits();
-    const habitItem = getSpecificHabit(route.params.id)[0];
+    const habitItem = getSpecificHabit(route.params.id);
     const {
         id,
         notificationId,

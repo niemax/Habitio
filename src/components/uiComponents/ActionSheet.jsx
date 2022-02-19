@@ -23,10 +23,11 @@ export default function ListItemActionSheet({
     const [showModal, setShowModal] = useState(false);
     const [showProgressModal, setShowProgressModal] = useState(false);
     const navigation = useNavigation();
-    const actionSheetRef = useRef(null);
+    const { navigate } = navigation;
 
+    const actionSheetRef = useRef(null);
     const { habits, habitSetter, getSpecificHabit } = useHabits();
-    const habitItem = getSpecificHabit(id)[0];
+    const habitItem = getSpecificHabit(id);
 
     const displayDeleteAlert = () => {
         Alert.alert(
@@ -52,7 +53,7 @@ export default function ListItemActionSheet({
                     <Flex direction="row" justify="flex-end" align="center">
                         <TouchableOpacity
                             onPress={() =>
-                                navigation.navigate('CalendarModal', {
+                                navigate('CalendarModal', {
                                     id: id,
                                     name: habitItem.name,
                                 })

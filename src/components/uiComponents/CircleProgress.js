@@ -9,7 +9,7 @@ import { TouchableOpacity } from 'react-native';
 
 const CircleProgress = ({ handleHabitProgress, habitProgress, id }) => {
     const { habits, habitSetter, getSpecificHabit } = useHabits();
-    const habitItem = getSpecificHabit(id)[0];
+    const habitItem = getSpecificHabit(id);
 
     return (
         <HStack mt={4} mb={8}>

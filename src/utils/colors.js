@@ -25,11 +25,4 @@ export const habitSelectionColors = [
     '#722672',
     '#3FBFBF',
     '#EA5B71',
-    '#F8E6BE',
-    '#7D0618',
-    '#7D6C06',
-    '#02D94D',
-    '#FACBEA',
-    '#764D00',
-    '#D2FACB',
 ];
