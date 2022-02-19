@@ -15,7 +15,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Text, useColorMode, Circle, HStack } from 'native-base';
 import EditNote from '../screens/EditNoteModal';
 import { formatDateForHabitEndDate } from '../utils/helpers/dateHelpers';
-import { handleNoteEdit, handleNoteDelete } from '../utils/helpers/noteMethods';
+import { handleNoteDelete } from '../utils/helpers/noteMethods';
 import { useHabits } from '../context/HabitProvider';
 
 const Stack = createNativeStackNavigator();

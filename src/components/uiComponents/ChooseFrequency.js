@@ -7,18 +7,8 @@ import {
     HabitUtilityInfoContainer,
 } from '../../utils/StyledComponents/Styled';
 import { Feather, Ionicons } from '@expo/vector-icons';
-import {
-    Box,
-    Flex,
-    HStack,
-    Button,
-    Text,
-    useColorMode,
-    KeyboardAvoidingView,
-    ScrollView,
-} from 'native-base';
+import { Box, Flex, HStack, Button, Text, useColorMode, KeyboardAvoidingView } from 'native-base';
 import { colors } from '../../utils/colors';
-import { render } from 'react-dom';
 
 export default function Frequency({
     switchStates: { isEnabled, isEnabledDate, isEnabledSpecific, isEnabledEndDate },

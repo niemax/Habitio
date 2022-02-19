@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import { Image, ScrollView, TouchableOpacity, View } from 'react-native';
-import {
-    ButtonContainer,
-    HabitInput,
-    HabitNextButton,
-    InputContainer,
-} from '../utils/StyledComponents/Styled';
+import { ButtonContainer, HabitInput, InputContainer } from '../utils/StyledComponents/Styled';
 import data from '../categories';
 import { colors } from '../utils/colors';
 import { Ionicons } from '@expo/vector-icons';
