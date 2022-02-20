@@ -1,5 +1,13 @@
 import React, { useRef, useState } from 'react';
-import { Actionsheet, Box, Button, Flex, Text, useColorModeValue } from 'native-base';
+import {
+    Actionsheet,
+    Box,
+    Flex,
+    PresenceTransition,
+    ScaleFade,
+    Text,
+    useColorModeValue,
+} from 'native-base';
 import { useHabits } from '../../context/HabitProvider';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../../utils/colors';
@@ -8,9 +16,10 @@ import { handleDoneToday } from '../../utils/helpers/handleDone';
 import { Alert, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import deleteHabit from '../../utils/helpers/deleteHabit';
-import CircleProgress from './CircleProgress';
 import NoteModal from './NoteModal';
 import ProgressAmountModal from './ProgressAmountModal';
+import CircularProgress from './CircularProgress';
+import MainButton from './Button';
 
 export default function ListItemActionSheet({
     id,
@@ -46,6 +55,36 @@ export default function ListItemActionSheet({
         );
     };
 
+    const renderTransitionedButton = () =>
+        !habitItem.completed && (
+            <PresenceTransition
+                visible={isOpen}
+                initial={{
+                    opacity: 0,
+                    scale: 0,
+                }}
+                animate={{
+                    opacity: 1,
+                    scale: 1,
+                    transition: {
+                        duration: 1000,
+                    },
+                }}
+            >
+                <Box mt={4}>
+                    <MainButton
+                        onPress={() => handleDoneToday(id, habitItem.name, habits, habitSetter)}
+                        size="lg"
+                        w={300}
+                        h={50}
+                        rounded="lg"
+                    >
+                        {!habitItem.completed ? 'Mark as Done' : 'Mark as Undone'}
+                    </MainButton>
+                </Box>
+            </PresenceTransition>
+        );
+
     return (
         <Actionsheet isOpen={isOpen} onClose={onClose}>
             <Actionsheet.Content bg={useColorModeValue('white', 'gray.800')}>
@@ -74,7 +113,7 @@ export default function ListItemActionSheet({
                             />
                         </TouchableOpacity>
                     </Flex>
-                    <Box mt={2}>
+                    <Box mt={2} mb={4}>
                         <Text textAlign="center" fontWeight={800} fontSize="3xl">
                             {habitItem.name}
                         </Text>
@@ -85,29 +124,16 @@ export default function ListItemActionSheet({
                         )}
                     </Box>
                 </Box>
-                <CircleProgress
-                    handleHabitProgress={handleHabitProgress}
+                <CircularProgress
+                    id={habitItem.id}
                     habitProgress={habitProgress}
-                    setHabitProgress={setHabitProgress}
-                    id={id}
+                    handleHabitProgress={handleHabitProgress}
+                    size={100}
+                    fontSize={34}
+                    habitItem={true}
+                    width={22}
                 />
-                {!habitItem.completed && (
-                    <Box mt={3}>
-                        <Button
-                            onPress={() => handleDoneToday(id, habitItem.name, habits, habitSetter)}
-                            size="lg"
-                            w={300}
-                            h={50}
-                            variant="subtle"
-                            colorScheme="indigo"
-                            rounded="xl"
-                            align="center"
-                            justify="center"
-                        >
-                            {!habitItem.completed ? 'Mark as Done' : 'Mark as Undone'}
-                        </Button>
-                    </Box>
-                )}
+                {renderTransitionedButton()}
             </Actionsheet.Content>
             <NoteModal showModal={showModal} setShowModal={setShowModal} height={200} id={id} />
             <ProgressAmountModal

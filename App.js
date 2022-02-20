@@ -8,14 +8,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import * as Notifications from 'expo-notifications';
 import HabitProvider from './src/context/HabitProvider';
 import MainAppStack from './src/navigation/MainAppNav';
-import { colors } from './src/utils/colors';
-import { Box, NativeBaseProvider, useColorMode } from 'native-base';
+import { NativeBaseProvider, useColorModeValue } from 'native-base';
 import theme from './src/theme';
+import { colors } from './src/utils/colors';
+import { View } from 'react-native';
 
 export default function App() {
     const [, , setExpoPushToken] = useState('');
     const [, , setNotification] = useState(false);
-    const { colorMode } = useColorMode();
 
     const notificationListener = useRef();
     const responseListener = useRef();

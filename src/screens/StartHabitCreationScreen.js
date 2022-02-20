@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Box, Center, Flex, HStack, Text, useColorModeValue } from 'native-base';
 import { textInputShadow } from '../utils/globalStyles';
 import Button from '../components/uiComponents/Button';
+import MainContainer from '../components/uiComponents/MainContainer';
 
 const StartHabitCreation = ({ navigation }) => {
     const [habitName, setHabitName] = useState('');
@@ -36,7 +37,7 @@ const StartHabitCreation = ({ navigation }) => {
     );
 
     return (
-        <Box flex={1} bg={useColorModeValue(colors.white, colors.mainBackground)}>
+        <MainContainer>
             <ScrollView style={{ marginTop: 25 }}>
                 <Text opacity={0.7} marginLeft="25px">
                     CREATE YOUR OWN HABIT
@@ -98,13 +99,11 @@ const StartHabitCreation = ({ navigation }) => {
                 </Box>
             </ScrollView>
             <ButtonContainer>
-                <Button onPress={handleOwnHabit} w="90%">
-                    <Text fontWeight={600} fontSize="lg" color="black">
-                        Next
-                    </Text>
+                <Button onPress={handleOwnHabit} w="70%">
+                    Next
                 </Button>
             </ButtonContainer>
-        </Box>
+        </MainContainer>
     );
 };
 

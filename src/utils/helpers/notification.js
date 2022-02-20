@@ -39,6 +39,8 @@ export const scheduleRepeatingEdit = async (hours, minutes, name, habits, id) =>
             minute: minutes,
             repeats: true,
         },
+    }).then(() => {
+        console.log(`successfully scheduled a notification with hours: ${hours}, ${minutes}`);
     });
     habits.map((habit) => {
         if (habit.id === id) {

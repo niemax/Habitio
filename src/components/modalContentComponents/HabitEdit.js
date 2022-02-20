@@ -11,6 +11,8 @@ import {
 import Frequency from '../uiComponents/ChooseFrequency';
 import HabitColor from '../uiComponents/SelectHabitColorButton';
 import { textInputShadow } from '../../utils/globalStyles';
+import MainButton from '../uiComponents/Button';
+import MainContainer from '../uiComponents/MainContainer';
 
 export default function HabitEditContent({
     methods: {
@@ -49,7 +51,7 @@ export default function HabitEditContent({
     },
 }) {
     return (
-        <Box flex={1} bg={useColorModeValue(colors.white, colors.mainBackground)} align="center">
+        <MainContainer>
             <ScrollView>
                 <Box mb={24} mt={24}>
                     <Text
@@ -128,12 +130,8 @@ export default function HabitEditContent({
                 </Box>
             </ScrollView>
             <ButtonContainer>
-                <CreateHabitButton onPress={handleSubmit}>
-                    <Text color="black" fontWeight={600} fontSize="lg">
-                        Update
-                    </Text>
-                </CreateHabitButton>
+                <MainButton onPress={handleSubmit}>Update</MainButton>
             </ButtonContainer>
-        </Box>
+        </MainContainer>
     );
 }

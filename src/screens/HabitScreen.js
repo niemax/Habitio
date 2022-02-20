@@ -9,13 +9,14 @@ import {
 } from '../utils/StyledComponents/Styled';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../utils/colors';
+import MainContainer from '../components/uiComponents/MainContainer';
 
 const HabitScreen = ({ route, navigation }) => {
     const { habitData, image, category } = route.params;
     const { navigate } = navigation;
 
     return (
-        <Box flex={1} bg={useColorModeValue(colors.white, colors.mainBackground)} align="center">
+        <MainContainer>
             <ScrollView>
                 <ImageContainer
                     style={{
@@ -70,7 +71,7 @@ const HabitScreen = ({ route, navigation }) => {
                     </TouchableOpacity>
                 ))}
             </ScrollView>
-        </Box>
+        </MainContainer>
     );
 };
 

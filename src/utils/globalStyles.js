@@ -146,7 +146,7 @@ export const textInputShadow = {
         width: 0,
         height: 2,
     },
-    shadowOpacity: 0.15,
+    shadowOpacity: 0.05,
     shadowRadius: 2.84,
     elevation: 5,
 };

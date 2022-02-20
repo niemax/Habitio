@@ -1,31 +1,22 @@
 import React, { useState } from 'react';
-import {
-    Box,
-    Flex,
-    KeyboardAvoidingView,
-    ScrollView,
-    Text,
-    useColorMode,
-    useColorModeValue,
-} from 'native-base';
-import { colors } from '../utils/colors';
+import { Box, KeyboardAvoidingView, ScrollView, Text, useColorModeValue } from 'native-base';
 import { SafeAreaView, TextInput } from 'react-native';
 import { textInputShadow } from '../utils/globalStyles';
 import MainButton from '../components/uiComponents/Button';
 import { useHabits } from '../context/HabitProvider';
 import { handleNoteEdit } from '../utils/helpers/noteMethods';
+import MainContainer from '../components/uiComponents/MainContainer';
 
 export default function EditNote({ route, navigation }) {
     const { input, id, allNotes } = route.params;
-    const { colorMode } = useColorMode();
     const [inputText, setInputText] = useState(input);
     const { habitSetter, habits } = useHabits();
     const { goBack } = navigation;
 
     return (
-        <Flex flex={1} bg={colorMode === 'light' ? colors.white : colors.mainBackground}>
+        <MainContainer>
             <ScrollView>
-                <Box mt={32} align="center" px={4}>
+                <Box mt={32} align="center" px={4} flex={1}>
                     <TextInput
                         multiline={true}
                         placeholder="Write a description"
@@ -38,7 +29,7 @@ export default function EditNote({ route, navigation }) {
                             fontSize: 17,
                             width: '100%',
                             padding: 10,
-                            height: 220,
+                            height: 200,
                             borderRadius: 10,
                             ...textInputShadow,
                         }}
@@ -49,8 +40,7 @@ export default function EditNote({ route, navigation }) {
             <KeyboardAvoidingView
                 behavior="padding"
                 style={{
-                    marginBottom: 60,
-                    flex: 1,
+                    flex: 3,
                     paddingHorizontal: 10,
                     alignItems: 'center',
                 }}
@@ -62,12 +52,10 @@ export default function EditNote({ route, navigation }) {
                             goBack();
                         }}
                     >
-                        <Text fontWeight={600} fontSize="lg" color="black">
-                            Save
-                        </Text>
+                        Save
                     </MainButton>
                 </SafeAreaView>
             </KeyboardAvoidingView>
-        </Flex>
+        </MainContainer>
     );
 }

@@ -11,9 +11,8 @@ const HabitInput = ({ actions: { setValue } }) => (
         <HabitDescriptionInput
             multiline={true}
             autoCorrect={false}
-            placeholder="Describe the habit"
+            placeholder="write a description"
             style={{
-                ...textInputShadow,
                 backgroundColor: useColorModeValue('white', '#27272a'),
                 color: useColorModeValue('black', 'white'),
                 width: width - 35,

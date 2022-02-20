@@ -10,6 +10,7 @@ import { useHabits } from '../context/HabitProvider';
 import { Box, Text, useColorModeValue } from 'native-base';
 import { colors } from '../utils/colors';
 import Button from '../components/uiComponents/Button';
+import MainContainer from '../components/uiComponents/MainContainer';
 
 const currentWeek = getCurrentWeek();
 
@@ -95,7 +96,7 @@ const CreateHabit = ({ route, navigation }) => {
     };
 
     return (
-        <Box flex={1} bg={useColorModeValue(colors.white, colors.mainBackground)} align="center">
+        <MainContainer>
             <ScrollView>
                 <Box flex={1} mt={32} px={2} mb={32}>
                     <Text fontSize="xs" marginLeft="10px" marginTop="35px" opacity={0.7}>
@@ -148,18 +149,16 @@ const CreateHabit = ({ route, navigation }) => {
             </ScrollView>
             <ButtonContainer>
                 <Button
-                    w="90%"
+                    w="70%"
                     onPress={() => {
                         handleHabitCreation(objectToDispatch);
                         navigate('Homepage');
                     }}
                 >
-                    <Text fontSize="xl" fontWeight={600} color="black">
-                        Create
-                    </Text>
+                    Create
                 </Button>
             </ButtonContainer>
-        </Box>
+        </MainContainer>
     );
 };
 

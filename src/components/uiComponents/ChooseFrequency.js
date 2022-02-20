@@ -21,7 +21,7 @@ export default function Frequency({
         toggleSwitchDate,
         toggleSwitchEndDate,
     },
-    setters: { setDaysCount, setSelectedValue, setTimesCount, setSnapping },
+    setters: { setDaysCount, setSelectedValue, setTimesCount },
     values: { specificDate, reminderTime, endDate, habitReminderTime },
     states: { daysCount, timesCount, habitSpecificDate, habitEndDate, selectedValue },
 }) {

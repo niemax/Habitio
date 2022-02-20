@@ -12,13 +12,16 @@ export const toasts = {
             message: randomWord,
             description: `You completed ${habitName}. Nice work!`,
             titleStyle: {
-                color: colors.mainPurple,
                 fontSize: 17,
             },
             textStyle: {
                 fontSize: 15,
             },
-            style: { opacity: 0.94 },
+            style: {
+                opacity: 0.94,
+                backgroundColor: colors.mainPurple,
+                borderRadius: 15,
+            },
             icon: 'success',
             floating: true,
         });

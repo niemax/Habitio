@@ -7,7 +7,7 @@ const MainButton = ({ onPress, children, ...props }) => (
         colorScheme="indigo"
         rounded="2xl"
         w={200 || props.width}
-        h={12 || props.height}
+        h={16 || props.height}
         onPress={onPress}
         {...props}
     >

@@ -1,8 +1,5 @@
-import { themeTools } from 'native-base';
-
 export const colors = {
     mainBackground: '#18181b',
-    mainBoxes: themeTools.mode('white', '#27272a'),
     mainPurple: '#818cf8',
     error: '#EA5B71',
     black: '#000000',

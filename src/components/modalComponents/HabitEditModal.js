@@ -61,8 +61,8 @@ const ShowHabitEditModal = ({ route }) => {
             selectedValue,
             updatedColor,
             stateDescription,
-            isEnabled ? daysCount : null,
-            timesCount,
+            !!isEnabled ? daysCount : 0,
+            !!isEnabled ? timesCount : 0,
             isEnabledDate ? new Date(habitReminderTime) : null,
             isEnabledSpecific ? new Date(habitSpecificDate) : null,
             isEnabledEndDate ? new Date(habitEndDate) : null

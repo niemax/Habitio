@@ -28,7 +28,7 @@ const handleUpdate = (
     habitSpecificDate,
     endDate
 ) => {
-    cancelPushNotification(notificationId);
+    Promise.resolve(cancelPushNotification(notificationId));
 
     const newHabits = habits.map((habit) => {
         if (habit.id === id) {

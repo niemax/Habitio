@@ -14,6 +14,7 @@ import { colors } from '../../utils/colors';
 import { handleDoneOtherDay } from '../../utils/helpers/handleDone';
 import { useHabits } from '../../context/HabitProvider';
 import { Box, Center, Text, useColorMode } from 'native-base';
+import MainContainer from '../uiComponents/MainContainer';
 
 const CalendarModal = ({ route, navigation }) => {
     const [noteRenderAmount, setNoteRenderAmount] = useState(2);
@@ -129,7 +130,7 @@ const CalendarModal = ({ route, navigation }) => {
                 lazy
                 data={Object.values(noteInputs).sort((a, b) => new Date(b.date) - new Date(a.date))}
                 renderItem={renderNoteItem}
-                keyExtractor={(item) => item.id}
+                keyExtractor={({ id }) => id}
                 ListFooterComponent={
                     <View style={{ marginBottom: 50 }}>
                         <TouchableOpacity
@@ -148,13 +149,13 @@ const CalendarModal = ({ route, navigation }) => {
     );
 
     return (
-        <Box flex={1} bg={colorMode === 'light' ? colors.white : colors.mainBackground}>
+        <MainContainer>
             <FlatList
                 ListFooterComponentStyle={{ marginTop: 10 }}
                 ListHeaderComponent={renderHeader()}
                 ListFooterComponent={renderFooter()}
             />
-        </Box>
+        </MainContainer>
     );
 };
 

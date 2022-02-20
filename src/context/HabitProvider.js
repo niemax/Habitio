@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { getCurrentDay } from '../utils/helpers/dateHelpers';
+import { formatDateForHabitEndDate, getCurrentDay } from '../utils/helpers/dateHelpers';
+import { cancelPushNotification } from '../utils/helpers/notification';
 
 const HabitContext = createContext();
 
@@ -18,15 +19,16 @@ const HabitProvider = ({ children }) => {
             if (result !== null) {
                 const parsedResult = JSON.parse(result);
                 const mappedHabits = parsedResult.map((habit) => {
-                    if (currentDay === 0) {
-                        habit.dataCurrentDay = currentDay + 1;
-                        habit.completed = false;
+                    if (currentDay !== habit.dataCurrentDay) {
                         habit.progress = 0;
-                    }
-                    if (currentDay > habit.dataCurrentDay) {
                         habit.dataCurrentDay = currentDay;
                         habit.completed = false;
-                        habit.progress = 0;
+                    }
+                    if (
+                        formatDateForHabitEndDate(new Date()) ===
+                        formatDateForHabitEndDate(habit.endDate)
+                    ) {
+                        Promise.resolve(cancelPushNotification(habit.notificationId));
                     }
                     return habit;
                 });
