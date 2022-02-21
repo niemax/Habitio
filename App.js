@@ -8,10 +8,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import * as Notifications from 'expo-notifications';
 import HabitProvider from './src/context/HabitProvider';
 import MainAppStack from './src/navigation/MainAppNav';
-import { NativeBaseProvider, useColorModeValue } from 'native-base';
+import { NativeBaseProvider } from 'native-base';
 import theme from './src/theme';
-import { colors } from './src/utils/colors';
-import { View } from 'react-native';
 
 export default function App() {
     const [, , setExpoPushToken] = useState('');

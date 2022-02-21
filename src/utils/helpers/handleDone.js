@@ -19,6 +19,7 @@ export const handleDoneToday = (id, name, habits, habitSetter) => {
                     habit.completed = true;
                     habit.completedDates = completedDatesObj;
                     habit.streak.push(1);
+                    habit.timesDoneThisWeek = habit.times;
                     toasts.info(name);
                     haptics.success();
                 }
@@ -29,9 +30,11 @@ export const handleDoneToday = (id, name, habits, habitSetter) => {
                     habit.completed = false;
                     habit.completedDates = completedDatesObj;
                     habit.streak.pop();
+                    habit.timesDoneThisWeek = habit.progress;
                     haptics.warning();
                 }
             }
+            console.log(habit);
             return habit;
         });
         habitSetter(updatedHabits);

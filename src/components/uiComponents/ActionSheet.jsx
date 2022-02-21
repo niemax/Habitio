@@ -37,6 +37,7 @@ export default function ListItemActionSheet({
     const actionSheetRef = useRef(null);
     const { habits, habitSetter, getSpecificHabit } = useHabits();
     const habitItem = getSpecificHabit(id);
+    const isSelectedWeekly = habitItem.frequency === 'weekly';
 
     const displayDeleteAlert = () => {
         Alert.alert(
@@ -117,11 +118,10 @@ export default function ListItemActionSheet({
                         <Text textAlign="center" fontWeight={800} fontSize="3xl">
                             {habitItem.name}
                         </Text>
-                        {habitItem.times > 0 && (
-                            <Text textAlign="center">
-                                Goal: {habitItem.times} {habitItem.unitValue} per day
-                            </Text>
-                        )}
+                        <Text textAlign="center">
+                            Goal: {!isSelectedWeekly ? habitItem.days : habitItem.times}{' '}
+                            {habitItem.unitValue} per {isSelectedWeekly ? 'day' : 'month'}
+                        </Text>
                     </Box>
                 </Box>
                 <CircularProgress

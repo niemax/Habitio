@@ -1,7 +1,9 @@
-import { format, getWeek } from 'date-fns';
+import { format, getWeek, getMonth } from 'date-fns';
 import moment from 'moment';
 
 export const getCurrentDay = (day = new Date()) => day.getDay();
+
+export const getCurrentMonth = () => getMonth(new Date());
 
 export const getCurrentDateFormatted = (d = moment().format('ddd, ll')) => {
     return { d };

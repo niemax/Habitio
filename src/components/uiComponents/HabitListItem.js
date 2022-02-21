@@ -24,11 +24,25 @@ import { habitItemShadow } from '../../utils/globalStyles';
 import ProgressCircle from './CircularProgress';
 
 const HabitListItem = ({ item }) => {
-    const { icon, completed, times, progress, color, name, id, unitValue, specificDate } = item;
+    const {
+        icon,
+        completed,
+        times,
+        days,
+        progress,
+        color,
+        name,
+        id,
+        unitValue,
+        specificDate,
+        frequency,
+    } = item;
+
     const [habitProgress, setHabitProgress] = useState(progress);
     const { isOpen, onOpen, onClose } = useDisclose();
     const { colorMode } = useColorMode();
     const { habitSetter, habits } = useHabits();
+    const isSelectedWeekly = frequency === 'weekly';
 
     const handleHabitProgress = (operand) => {
         haptics.success();
@@ -36,6 +50,9 @@ const HabitListItem = ({ item }) => {
             if (habit.id === id) {
                 setHabitProgress(habitProgress + Number(operand));
                 habit.progress += Number(operand);
+                if (habit.frequency === 'weekly') {
+                    habit.timesDoneThisWeek += Number(operand);
+                }
             }
             return habit;
         });
@@ -107,11 +124,10 @@ const HabitListItem = ({ item }) => {
                                     >
                                         {name}
                                     </Text>
-                                    {times > 0 && (
-                                        <Text fontWeight={400} fontSize="sm">
-                                            Goal: {times} {unitValue} per day
-                                        </Text>
-                                    )}
+                                    <Text fontWeight={400} fontSize="sm">
+                                        Goal: {!isSelectedWeekly ? days : times} {unitValue} per{' '}
+                                        {isSelectedWeekly ? 'day' : 'month'}
+                                    </Text>
                                     {specificDate !== null && (
                                         <Text marginTop="4px">
                                             Doing it once on{' '}
@@ -131,7 +147,6 @@ const HabitListItem = ({ item }) => {
                         />
                     </HomepageDataBox>
                 </Stagger>
-
                 <ActionSheet
                     id={id}
                     habitProgress={habitProgress}

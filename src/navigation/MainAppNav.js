@@ -69,8 +69,42 @@ const MainAppStack = () => {
                                 </Circle>
                             </TouchableOpacity>
                         ),
+                        headerLeft: () => (
+                            <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+                                <Text fontSize="md" fontWeight={600} color={colors.mainPurple}>
+                                    Settings
+                                </Text>
+                            </TouchableOpacity>
+                        ),
                     })}
                     component={HomeScreen}
+                />
+                <Stack.Screen
+                    name="Settings"
+                    options={{
+                        headerBlurEffect:
+                            colorMode === 'light' ? 'systemUltraThinMaterialLight' : 'dark',
+                        headerLargeTitle: true,
+                        headerLargeStyle: {
+                            backgroundColor:
+                                colorMode === 'dark' ? colors.mainBackground : colors.white,
+                        },
+                        headerLargeTitleStyle: {
+                            fontSize: 30,
+                            fontWeight: '800',
+                            color: colorMode === 'light' ? 'black' : 'white',
+                        },
+                        headerTransparent: true,
+                        headerTintColor: colors.mainPurple,
+                        headerBackTitleVisible: true,
+                        headerBackTitle: 'Back',
+                        headerTitleStyle: {
+                            color: colorMode === 'light' ? 'black' : 'white',
+                            fontWeight: '600',
+                            fontSize: 18,
+                        },
+                    }}
+                    component={Settings}
                 />
                 <Stack.Screen
                     name="StartHabitCreation"
@@ -137,7 +171,6 @@ const MainAppStack = () => {
                     })}
                     component={CreateHabit}
                 />
-                <Stack.Screen name="Settings" component={Settings} />
             </Stack.Group>
             <Stack.Group screenOptions={{ presentation: 'modal' }}>
                 <Stack.Screen

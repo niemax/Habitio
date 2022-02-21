@@ -32,6 +32,7 @@ export default function HabitEditContent({
         setDaysCount,
         setTimesCount,
         setIsEnabledEndDate,
+        setSelectedFrequency,
     },
     states: {
         stateDescription,
@@ -45,6 +46,7 @@ export default function HabitEditContent({
         habitReminderTime,
         habitEndDate,
         selectedValue,
+        selectedFrequency,
         color,
         colorUpdated,
         updatedColor,
@@ -115,6 +117,7 @@ export default function HabitEditContent({
                                     setTimesCount,
                                     setSelectedValue,
                                     setIsEnabledEndDate,
+                                    setSelectedFrequency,
                                 }}
                                 values={{ isEnabledSpecific, habitReminderTime }}
                                 states={{
@@ -123,6 +126,7 @@ export default function HabitEditContent({
                                     habitSpecificDate,
                                     habitEndDate,
                                     selectedValue,
+                                    selectedFrequency,
                                 }}
                             />
                         </Box>

@@ -216,6 +216,17 @@ export const FrequencyTouchable = styled.View`
     justify-content: space-between;
 `;
 
+export const FrequencySelector = styled.TouchableOpacity`
+    flex-direction: row;
+    width: 100%;
+    height: 40px;
+    justify-content: space-between;
+    padding-vertical: 10px;
+    padding-horizontal: 5px;
+    border-radius: 5px;
+    margin-vertical: 1px;
+`;
+
 export const FrequencySwitchContainer = styled.View`
     margin-top: 5px;
     flex-direction: row;

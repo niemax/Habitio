@@ -20,6 +20,7 @@ const ShowHabitEditModal = ({ route }) => {
     const [isEnabledDate, setIsEnabledDate] = useState(false);
     const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
     const [isEnabledEndDate, setIsEnabledEndDate] = useState(false);
+    const [selectedFrequency, setSelectedFrequency] = useState('');
     const navigation = useNavigation();
 
     const toggleSwitch = () =>
@@ -44,7 +45,22 @@ const ShowHabitEditModal = ({ route }) => {
         reminder,
         specificDate,
         endDate,
+        frequency,
     } = habitItem;
+
+    useEffect(() => {
+        checkSwitchStates();
+        setHabitName(name);
+        setSelectedValue(unitValue);
+        setStateDescription(description);
+        setDaysCount(days);
+        setTimesCount(times);
+        setUpdatedColor(color);
+        habitSetReminderTime(reminder ? new Date(reminder) : new Date());
+        habitSetSpecificDate(specificDate ? new Date(specificDate) : new Date());
+        habitSetEndDate(endDate ? new Date(endDate) : new Date());
+        setSelectedFrequency(frequency);
+    }, []);
 
     const updateColor = (updColor) => {
         setUpdatedColor(updColor);
@@ -65,7 +81,8 @@ const ShowHabitEditModal = ({ route }) => {
             !!isEnabled ? timesCount : 0,
             isEnabledDate ? new Date(habitReminderTime) : null,
             isEnabledSpecific ? new Date(habitSpecificDate) : null,
-            isEnabledEndDate ? new Date(habitEndDate) : null
+            isEnabledEndDate ? new Date(habitEndDate) : null,
+            selectedFrequency
         );
         navigation.goBack();
     };
@@ -102,19 +119,6 @@ const ShowHabitEditModal = ({ route }) => {
         }
     };
 
-    useEffect(() => {
-        checkSwitchStates();
-        setHabitName(name);
-        setSelectedValue(unitValue);
-        setStateDescription(description);
-        setDaysCount(days);
-        setTimesCount(times);
-        setUpdatedColor(color);
-        habitSetReminderTime(reminder ? new Date(reminder) : new Date());
-        habitSetSpecificDate(specificDate ? new Date(specificDate) : new Date());
-        habitSetEndDate(endDate ? new Date(endDate) : new Date());
-    }, []);
-
     return (
         <HabitEditContent
             methods={{
@@ -130,6 +134,7 @@ const ShowHabitEditModal = ({ route }) => {
             }}
             setters={{
                 setSelectedValue,
+                setSelectedFrequency,
                 setStateDescription,
                 setDaysCount,
                 setTimesCount,
@@ -153,6 +158,7 @@ const ShowHabitEditModal = ({ route }) => {
                 habitReminderTime,
                 habitEndDate,
                 selectedValue,
+                selectedFrequency,
                 color,
                 colorUpdated,
                 updatedColor,

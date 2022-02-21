@@ -26,7 +26,8 @@ const handleUpdate = (
     timesCount,
     habitReminderTime,
     habitSpecificDate,
-    endDate
+    endDate,
+    selectedFrequency
 ) => {
     Promise.resolve(cancelPushNotification(notificationId));
 
@@ -41,6 +42,7 @@ const handleUpdate = (
             habit.reminder = habitReminderTime !== null ? habitReminderTime : null;
             habit.specificDate = habitSpecificDate !== null ? habitSpecificDate : null;
             habit.endDate = endDate;
+            habit.frequency = selectedFrequency;
         }
         return habit;
     });

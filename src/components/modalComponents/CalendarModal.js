@@ -36,7 +36,10 @@ const CalendarModal = ({ route, navigation }) => {
         reminder,
         specificDate,
         streak,
+        frequency,
     } = habitItem;
+
+    const isSelectedWeekly = habitItem.frequency === 'weekly';
 
     const calendarDayPress = (day) => {
         const date = day.dateString;
@@ -103,6 +106,7 @@ const CalendarModal = ({ route, navigation }) => {
                 endDate={endDate}
                 reminder={reminder}
                 specificDate={specificDate}
+                frequency={isSelectedWeekly}
             />
             <CalendarLineBreak />
         </>

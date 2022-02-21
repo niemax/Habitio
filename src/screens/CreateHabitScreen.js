@@ -4,7 +4,7 @@ import { ButtonContainer, CreateHabitButton } from '../utils/StyledComponents/St
 import HabitInput from '../components/uiComponents/HabitDescriptionInput';
 import Frequency from '../components/uiComponents/ChooseFrequency';
 import HabitColor from '../components/uiComponents/SelectHabitColorButton';
-import { getCurrentDay, getCurrentWeek } from '../utils/helpers/dateHelpers';
+import { getCurrentDay, getCurrentMonth, getCurrentWeek } from '../utils/helpers/dateHelpers';
 import handleHabitCreation from '../utils/helpers/createhabitHelpers';
 import { useHabits } from '../context/HabitProvider';
 import { Box, Text, useColorModeValue } from 'native-base';
@@ -32,6 +32,7 @@ const CreateHabit = ({ route, navigation }) => {
     const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
     const [isEnabledEndDate, setIsEnabledEndDate] = useState(false);
     const [selectedValue, setSelectedValue] = useState();
+    const [selectedFrequency, setSelectedFrequency] = useState('weekly');
 
     const toggleSwitch = () =>
         !isEnabledSpecific && setIsEnabled((previousState) => !previousState);
@@ -62,27 +63,31 @@ const CreateHabit = ({ route, navigation }) => {
     };
 
     const currentDay = getCurrentDay();
+    const currentMonth = getCurrentMonth();
 
     const newHabit = {
         name: name || habitName,
         id: Math.floor(Math.random() * 10000),
         color: color || updatedColor,
         icon: habitIcon,
-        days: isEnabled ? daysCount : 0,
-        times: isEnabled ? timesCount : 0,
+        days: isEnabled ? daysCount : 1,
+        times: isEnabled && selectedFrequency !== 'monthly' ? timesCount : 0,
         specificDate: isEnabledSpecific ? specificDate : null,
         reminder: isEnabledDate ? reminderTime : null,
         endDate: isEnabledEndDate ? endDate : null,
         unitValue: selectedValue,
-        description: description || undefined,
+        description: description || null,
         dataCurrentDay: currentDay,
         dataCurrentWeek: currentWeek,
+        dataCurrentMonth: currentMonth,
         completed: false,
         calendarDone: false,
         completedDates: {},
         progress: 0,
         noteInputs: [],
         streak: [],
+        frequency: selectedFrequency,
+        timesDoneThisWeek: 0,
     };
 
     const objectToDispatch = {
@@ -140,9 +145,10 @@ const CreateHabit = ({ route, navigation }) => {
                                 setSelectedValue,
                                 setTimesCount,
                                 setIsEnabledEndDate,
+                                setSelectedFrequency,
                             }}
                             values={{ specificDate, reminderTime, endDate }}
-                            states={{ daysCount, timesCount, selectedValue }}
+                            states={{ daysCount, timesCount, selectedValue, selectedFrequency }}
                         />
                     </Box>
                 </Box>

@@ -15,9 +15,10 @@ const CalendarFrequency = ({
     endDate,
     reminder,
     specificDate,
+    isSelectedWeekly,
 }) => (
     <CalendarFrequencyContainer>
-        {days > 0 && (
+        {days > 0 && isSelectedWeekly ? (
             <>
                 <Text marginLeft="15px" opacity={0.6}>
                     Frequency
@@ -28,6 +29,21 @@ const CalendarFrequency = ({
                     <Text>
                         {times} {unitValue} per day
                     </Text>
+                </View>
+            </>
+        ) : (
+            <>
+                <Text marginLeft="15px" opacity={0.6}>
+                    Frequency
+                </Text>
+                <View style={{ flexDirection: 'row', marginLeft: 15, marginTop: 4 }}>
+                    {days === 7 ? (
+                        <Text>Every day</Text>
+                    ) : (
+                        <Text>
+                            {days} {unitValue} per month
+                        </Text>
+                    )}
                 </View>
             </>
         )}
