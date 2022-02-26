@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppLoading from 'expo-app-loading';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import {
     formatDateForHabitEndDate,
@@ -17,10 +18,10 @@ const currentWeek = getCurrentWeek();
 
 const HabitProvider = ({ children }) => {
     const [habits, setHabits] = useState([]);
-    const [habitsLoading, setHabitsLoading] = useState(true);
+    const [habitsLoading, setHabitsLoading] = useState(false);
 
     const getHabits = async () => {
-        if (Object.keys(habits).length > 0) setHabitsLoading(true);
+        if (AppLoading) setHabitsLoading(true);
 
         try {
             const result = await AsyncStorage.getItem('@habit');
@@ -43,7 +44,7 @@ const HabitProvider = ({ children }) => {
                         formatDateForHabitEndDate(new Date()) ===
                         formatDateForHabitEndDate(habit.endDate)
                     ) {
-                        Promise.resolve(cancelPushNotification(habit.notificationId));
+                        cancelPushNotification(habit.notificationId);
                     }
                     return habit;
                 });

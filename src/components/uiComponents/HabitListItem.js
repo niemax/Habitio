@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { HomepageDataBox, HomepageDataView } from '../../utils/StyledComponents/Styled';
@@ -43,7 +43,6 @@ const HabitListItem = ({ item }) => {
     const { colorMode } = useColorMode();
     const { habitSetter, habits } = useHabits();
     const isSelectedWeekly = frequency === 'weekly';
-
     const handleHabitProgress = (operand) => {
         haptics.success();
         const mapped = habits.map((habit) => {

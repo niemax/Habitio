@@ -36,7 +36,6 @@ const CalendarModal = ({ route, navigation }) => {
         reminder,
         specificDate,
         streak,
-        frequency,
     } = habitItem;
 
     const isSelectedWeekly = habitItem.frequency === 'weekly';

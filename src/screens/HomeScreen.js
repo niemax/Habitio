@@ -1,13 +1,12 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { RefreshControl, ScrollView } from 'react-native';
+import React, { useState, useCallback, useRef, useMemo, useEffect } from 'react';
+import { Button, RefreshControl, ScrollView, View } from 'react-native';
 import { colors } from '../utils/colors';
 import { useHabits } from '../context/HabitProvider';
 import HabitListItem from '../components/uiComponents/HabitListItem';
 import { Text, useColorModeValue, Flex, Center, HStack, Box, Spacer } from 'native-base';
 import Spinner from 'react-native-loading-spinner-overlay';
 import CircularProgress from 'react-native-circular-progress-indicator';
-import { MainContainer } from '../utils/StyledComponents/Styled';
-
+import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 const wait = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
 
 const TotalProgressCircle = () => {
@@ -16,7 +15,6 @@ const TotalProgressCircle = () => {
     const totalTimesWeeklyToDo = weeklyHabits
         ?.map((habit) => habit.times * habit.days)
         .reduce((acc, curr) => acc + curr, 0);
-    console.log(totalTimesWeeklyToDo);
 
     const value = weeklyHabits
         ?.map((habit) => habit.timesDoneThisWeek)
@@ -29,13 +27,13 @@ const TotalProgressCircle = () => {
                 inActiveStrokeWidth={24}
                 activeStrokeWidth={24}
                 duration={800}
-                value={weeklyHabits.length === 0 ? 0 : value}
+                value={!weeklyHabits.length ? 0 : (value / totalTimesWeeklyToDo) * 100}
                 valueSuffix="%"
-                radius={90}
+                radius={95}
                 textColor={useColorModeValue('black', 'white')}
-                maxValue={totalTimesWeeklyToDo}
-                activeStrokeColor={totalTimesWeeklyToDo === 100 ? '#43E443' : colors.mainPurple}
-                activeStrokeSecondaryColor={totalTimesWeeklyToDo === 100 ? '#43E4E4' : '#C25AFF'}
+                maxValue={100}
+                activeStrokeColor={value === totalTimesWeeklyToDo ? '#43E443' : colors.mainPurple}
+                activeStrokeSecondaryColor={value === totalTimesWeeklyToDo ? '#43E4E4' : '#C25AFF'}
             />
         </Box>
     );
@@ -77,7 +75,19 @@ const HomeScreen = () => {
         />
     );
 
-    if (habits.length === 0 && !habitsLoading)
+    const bottomSheetModalRef = useRef(null);
+
+    // variables
+    const snapPoints = useMemo(() => ['25%', '50%'], []);
+
+    useEffect(() => {
+        bottomSheetModalRef.current?.present();
+    }, []);
+    const handlePresentModalPress = useCallback(() => {
+        bottomSheetModalRef.current?.present();
+    }, []);
+
+    if (!habits.length && !habitsLoading)
         return (
             <Center mt={10} flex={1} bg={useColorModeValue(colors.white, colors.black)}>
                 <Text fontWeight={800} fontSize="3xl" color={colors.mainPurple}>

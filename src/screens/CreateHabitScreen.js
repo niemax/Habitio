@@ -71,7 +71,7 @@ const CreateHabit = ({ route, navigation }) => {
         color: color || updatedColor,
         icon: habitIcon,
         days: isEnabled ? daysCount : 1,
-        times: isEnabled && selectedFrequency !== 'monthly' ? timesCount : 0,
+        times: selectedFrequency !== 'monthly' ? timesCount : 0,
         specificDate: isEnabledSpecific ? specificDate : null,
         reminder: isEnabledDate ? reminderTime : null,
         endDate: isEnabledEndDate ? endDate : null,
