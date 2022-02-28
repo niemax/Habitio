@@ -73,9 +73,14 @@ const HomeScreen = () => {
 
     const renderContentLoader = () => (
         <Spinner
+            size="small"
             visible={habitsLoading}
-            textContent={'Loading habits...'}
-            textStyle={{ color: useColorModeValue('', 'white') }}
+            textContent={'Loading...'}
+            textStyle={{
+                color: useColorModeValue('black', 'white'),
+                fontSize: 16,
+                fontWeight: '400',
+            }}
             color={colors.mainPurple}
         />
     );

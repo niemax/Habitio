@@ -4,11 +4,11 @@ import Constants from 'expo-constants';
 import FlashMessage from 'react-native-flash-message';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, DarkTheme, LightTheme } from '@react-navigation/native';
 import * as Notifications from 'expo-notifications';
 import HabitProvider from './src/context/HabitProvider';
 import MainAppStack from './src/navigation/MainAppNav';
-import { NativeBaseProvider } from 'native-base';
+import { NativeBaseProvider, useColorModeValue } from 'native-base';
 import theme from './src/theme';
 
 export default function App() {
@@ -42,7 +42,7 @@ export default function App() {
     return (
         <HabitProvider>
             <NativeBaseProvider theme={theme}>
-                <NavigationContainer>
+                <NavigationContainer theme={useColorModeValue(DefaultTheme, DarkTheme)}>
                     <SafeAreaProvider>
                         <StatusBar style="auto" />
                         <FlashMessage position="top" />

@@ -128,7 +128,7 @@ export default function ListItemActionSheet({
                     style={{ borderRadius: 30 }}
                 >
                     <Box w="100%" justifyContent="center">
-                        <Flex direction="row" justify="space-between" align="center" mt={2}>
+                        <Flex direction="row" justify="space-between" align="center" mt={0}>
                             <Box>
                                 <TouchableOpacity onPress={() => setIsVisible(false)}>
                                     <AntDesign
@@ -167,7 +167,7 @@ export default function ListItemActionSheet({
                                 </TouchableOpacity>
                             </HStack>
                         </Flex>
-                        <Box mb={1}>
+                        <Box mb={1} mt={2}>
                             <Text textAlign="center" fontWeight={800} fontSize="3xl">
                                 {habitItem.name}
                             </Text>

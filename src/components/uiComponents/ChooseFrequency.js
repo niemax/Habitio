@@ -155,6 +155,17 @@ export default function Frequency({
         </HabitUtilityInfoContainer>
     );
 
+    const renderVerticalLineBreak = () => (
+        <View
+            style={{
+                height: 20,
+                width: 0.5,
+                backgroundColor: 'black',
+                opacity: 0.3,
+            }}
+        />
+    );
+
     const renderGoalIfEnabled = () =>
         isEnabled && (
             <Box mt={4}>
@@ -193,10 +204,17 @@ export default function Frequency({
                                     <Text>{daysCount <= 31 && daysCount}</Text>
                                 )}
                             </Box>
-                            <HStack>
+                            <Flex
+                                direction="row"
+                                bg={colorMode === 'light' ? 'gray.100' : 'gray.600'}
+                                rounded="lg"
+                                align="center"
+                                justify="center"
+                                px={1}
+                            >
                                 <Button
-                                    bg={colorMode === 'light' ? 'gray.100' : 'gray.600'}
-                                    rounded="sm"
+                                    bg="transparent"
+                                    _pressed={{ background: 'transparent' }}
                                     size={8}
                                     onPress={() => {
                                         if (daysCount > 1) {
@@ -206,23 +224,24 @@ export default function Frequency({
                                 >
                                     <Feather
                                         name="minus"
-                                        size={24}
+                                        size={22}
                                         color={colorMode === 'light' ? 'black' : 'white'}
                                     />
                                 </Button>
+                                {renderVerticalLineBreak()}
                                 <Button
-                                    bg={colorMode === 'light' ? 'gray.100' : 'gray.600'}
-                                    rounded="sm"
                                     size={8}
+                                    bg="transparent"
+                                    _pressed={{ background: 'transparent' }}
                                     onPress={handleDaysCount}
                                 >
                                     <Ionicons
                                         name="add-sharp"
-                                        size={24}
+                                        size={22}
                                         color={colorMode === 'light' ? 'black' : 'white'}
                                     />
                                 </Button>
-                            </HStack>
+                            </Flex>
                         </Flex>
                         {isSelectedWeekly && renderLineBreak()}
                         <SafeAreaView>
@@ -243,10 +262,17 @@ export default function Frequency({
                                     <Flex direction="row" align="center">
                                         <Text fontSize="md">{timesCount}</Text>
                                     </Flex>
-                                    <HStack>
+                                    <Flex
+                                        direction="row"
+                                        bg={colorMode === 'light' ? 'gray.100' : 'gray.600'}
+                                        rounded="lg"
+                                        align="center"
+                                        justify="center"
+                                        px={1}
+                                    >
                                         <Button
-                                            bg={colorMode === 'light' ? 'gray.100' : 'gray.600'}
-                                            rounded="sm"
+                                            _pressed={{ background: 'transparent' }}
+                                            bg="transparent"
                                             size={8}
                                             onPress={() => {
                                                 if (timesCount > 1) {
@@ -256,23 +282,24 @@ export default function Frequency({
                                         >
                                             <Feather
                                                 name="minus"
-                                                size={24}
+                                                size={22}
                                                 color={colorMode === 'light' ? 'black' : 'white'}
                                             />
                                         </Button>
+                                        {renderVerticalLineBreak()}
                                         <Button
-                                            bg={colorMode === 'light' ? 'gray.100' : 'gray.600'}
-                                            rounded="sm"
+                                            bg="transparent"
+                                            _pressed={{ background: 'transparent' }}
                                             size={8}
                                             onPress={() => setTimesCount(timesCount + 1)}
                                         >
                                             <Ionicons
                                                 name="add-sharp"
-                                                size={24}
+                                                size={22}
                                                 color={colorMode === 'light' ? 'black' : 'white'}
                                             />
                                         </Button>
-                                    </HStack>
+                                    </Flex>
                                 </Flex>
                             )}
                         </SafeAreaView>

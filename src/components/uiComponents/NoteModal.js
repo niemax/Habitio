@@ -87,7 +87,7 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
                             variant="subtle"
                             rounded="xl"
                             onPress={() => {
-                                if (inputText !== '') {
+                                if (!!inputText) {
                                     handleNoteInput();
                                     setShowModal(false);
                                 }
