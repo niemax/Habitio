@@ -13,7 +13,7 @@ const scheduleRepeatingNotificationIfTimeIsNotNull = (time, habitName, habits, i
     scheduleRepeatingEdit(parsedHour, parsedMin, habitName, habits, id);
 };
 
-const handleUpdate = (
+const handleUpdate = async (
     id,
     notificationId,
     habits,
@@ -29,7 +29,7 @@ const handleUpdate = (
     endDate,
     selectedFrequency
 ) => {
-    Promise.resolve(cancelPushNotification(notificationId));
+    await cancelPushNotification(notificationId);
 
     const newHabits = habits.map((habit) => {
         if (habit.id === id) {
@@ -48,6 +48,7 @@ const handleUpdate = (
     });
     scheduleRepeatingNotificationIfTimeIsNotNull(habitReminderTime, habitName, habits, id);
     if (habitSpecificDate !== null) scheduleOneTimeEdit(habitSpecificDate, habitName, habits, id);
+    console.log(newHabits);
     habitSetter(newHabits);
 };
 

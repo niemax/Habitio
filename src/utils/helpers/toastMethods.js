@@ -18,12 +18,11 @@ export const toasts = {
                 fontSize: 15,
             },
             style: {
-                opacity: 0.94,
-                backgroundColor: colors.mainPurple,
-                borderRadius: 15,
+                opacity: 0.87,
+                backgroundColor: '#040404',
+                borderRadius: 5,
             },
             icon: 'success',
-            floating: true,
         });
     },
     error: (keyword, verb) => {
@@ -35,8 +34,11 @@ export const toasts = {
                 fontSize: 16,
             },
             icon: 'info',
-            floating: true,
-            style: { opacity: 0.94 },
+            style: {
+                opacity: 0.87,
+                backgroundColor: '#040404',
+                borderRadius: 5,
+            },
         });
     },
 };

@@ -49,9 +49,7 @@ const HabitProvider = ({ children }) => {
                     return habit;
                 });
                 setHabits(mappedHabits);
-                setTimeout(() => {
-                    setHabitsLoading(false);
-                }, 1000);
+                setHabitsLoading(false);
             } else {
                 setHabitsLoading(false);
             }

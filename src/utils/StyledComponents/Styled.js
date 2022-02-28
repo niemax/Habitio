@@ -240,14 +240,13 @@ export const HomepageDataView = styled.View`
     justify-content: center;
     align-items: center;
     margin-top: 10px;
-    padding-horizontal: 9px;
 `;
 
 export const HomepageDataBox = styled.TouchableOpacity`
     margin-top: 2px;
     height: 84px;
     width: ${deviceWidth - 40} 
-    padding-horizontal: 15px;
+    padding-horizontal: 13px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;

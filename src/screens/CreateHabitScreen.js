@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
-import { ButtonContainer, CreateHabitButton } from '../utils/StyledComponents/Styled';
+import { ButtonContainer } from '../utils/StyledComponents/Styled';
 import HabitInput from '../components/uiComponents/HabitDescriptionInput';
 import Frequency from '../components/uiComponents/ChooseFrequency';
 import HabitColor from '../components/uiComponents/SelectHabitColorButton';
 import { getCurrentDay, getCurrentMonth, getCurrentWeek } from '../utils/helpers/dateHelpers';
 import handleHabitCreation from '../utils/helpers/createhabitHelpers';
 import { useHabits } from '../context/HabitProvider';
-import { Box, Text, useColorModeValue } from 'native-base';
-import { colors } from '../utils/colors';
+import { Box, Text } from 'native-base';
 import Button from '../components/uiComponents/Button';
 import MainContainer from '../components/uiComponents/MainContainer';
 
@@ -103,7 +102,7 @@ const CreateHabit = ({ route, navigation }) => {
     return (
         <MainContainer>
             <ScrollView>
-                <Box flex={1} mt={32} px={2} mb={32}>
+                <Box flex={1} mt={24} px={2} mb={32}>
                     <Text fontSize="xs" marginLeft="10px" marginTop="35px" opacity={0.7}>
                         DESCRIPTION
                     </Text>
@@ -158,7 +157,7 @@ const CreateHabit = ({ route, navigation }) => {
                     w="70%"
                     onPress={() => {
                         handleHabitCreation(objectToDispatch);
-                        navigate('Homepage');
+                        navigate('HomeScreen');
                     }}
                 >
                     Create

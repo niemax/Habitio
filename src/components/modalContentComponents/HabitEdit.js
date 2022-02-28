@@ -1,10 +1,8 @@
 import React from 'react';
 import { ScrollView, TextInput } from 'react-native';
 import { Box, useColorModeValue, Text } from 'native-base';
-import { colors } from '../../utils/colors';
 import {
     ButtonContainer,
-    CreateHabitButton,
     HabitCentered,
     HabitInfoContainer,
 } from '../../utils/StyledComponents/Styled';

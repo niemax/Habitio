@@ -10,8 +10,8 @@ Notifications.setNotificationHandler({
 
 export const cancelPushNotification = async (id) => {
     try {
-        await Notifications.cancelScheduledNotificationAsync(id).then(() => {
-            console.log(`Successfully cancelled notification with id: ${id}`);
+        await Notifications.cancelScheduledNotificationAsync(id).then((identifier) => {
+            console.log(`Successfully cancelled notification with id: ${identifier}`);
         });
     } catch (error) {
         console.error(error);
@@ -24,12 +24,12 @@ export const deleteNotifications = async () => {
 
 export const getAllNotifications = async () => {
     await Notifications.getAllScheduledNotificationsAsync().then((notification) => {
-        'Notification length', notification.length;
+        console.log('Notification length', notification.length);
     });
 };
 
 export const scheduleRepeatingEdit = async (hours, minutes, name, habits, id) => {
-    const identifier = await Notifications.scheduleNotificationAsync({
+    await Notifications.scheduleNotificationAsync({
         content: {
             title: name,
             body: `Your daily reminder to ${name}`,
@@ -39,19 +39,18 @@ export const scheduleRepeatingEdit = async (hours, minutes, name, habits, id) =>
             minute: minutes,
             repeats: true,
         },
-    }).then(() => {
-        console.log(`successfully scheduled a notification with hours: ${hours}, ${minutes}`);
-    });
-    habits.map((habit) => {
-        if (habit.id === id) {
-            habit.notificationId = identifier;
-        }
-        return habit;
+    }).then((identifier) => {
+        habits.map((habit) => {
+            if (habit.id === id) {
+                habit.notificationId = identifier;
+            }
+            return habit;
+        });
     });
 };
 
 export const scheduleOneTimeEdit = async (date, name, habits, id) => {
-    const identifier = await Notifications.scheduleNotificationAsync({
+    await Notifications.scheduleNotificationAsync({
         content: {
             title: name,
             body: `Your reminder for ${name}`,
@@ -60,18 +59,18 @@ export const scheduleOneTimeEdit = async (date, name, habits, id) => {
             date: date,
             repeats: false,
         },
-    });
-    habits.map((habit) => {
-        if (habit.id === id) {
-            habit.notificationId = identifier;
-        }
-        return habit;
+    }).then((identifier) => {
+        habits.forEach((habit) => {
+            if (habit.id === id) {
+                habit.notificationId = identifier;
+            }
+        });
     });
 };
 
 export const chRepeating = async (name, hours, minutes, newHabit) => {
     try {
-        const identifier = await Notifications.scheduleNotificationAsync({
+        await Notifications.scheduleNotificationAsync({
             content: {
                 title: name,
                 body: `Your daily reminder to ${name}`,
@@ -81,17 +80,16 @@ export const chRepeating = async (name, hours, minutes, newHabit) => {
                 minute: minutes,
                 repeats: true,
             },
-        });
-
-        Object.assign(newHabit, { notificationId: identifier });
+        })
+            .then((identifier) => Object.assign(newHabit, { notificationId: identifier }))
+            .finally(() => console.log(newHabit));
     } catch (error) {
         console.error(error);
     }
-    newHabit;
 };
 
 export const cHScheduleOneTime = async (name, date, newHabit) => {
-    const identifier = await Notifications.scheduleNotificationAsync({
+    await Notifications.scheduleNotificationAsync({
         content: {
             title: name,
             body: `Reminder to ${name}`,
@@ -100,6 +98,5 @@ export const cHScheduleOneTime = async (name, date, newHabit) => {
             date: date,
             repeats: false,
         },
-    });
-    Object.assign(newHabit, { notificationId: identifier });
+    }).then((identifier) => Object.assign(newHabit, { notificationId: identifier }));
 };

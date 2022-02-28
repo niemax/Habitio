@@ -56,6 +56,12 @@ export default function Frequency({
     );
     const isSelectedWeekly = selectedFrequency === 'weekly';
 
+    const handleFrequencySelection = (frequency) => {
+        setSelectedFrequency(frequency);
+        setDaysCount(1);
+        setTimesCount(1);
+    };
+
     const renderMonthlyOrWeeklyContainer = () =>
         isEnabled && (
             <>
@@ -65,7 +71,7 @@ export default function Frequency({
                     </Text>
                 </Box>
                 <Box mt={2}>
-                    <FrequencySelector onPress={() => setSelectedFrequency('weekly')}>
+                    <FrequencySelector onPress={() => handleFrequencySelection('weekly')}>
                         <Text fontSize="md">Weekly</Text>
                         {isSelectedWeekly ? (
                             <Center rounded="full" bg={colors.mainPurple} w={6} h={6}>
@@ -77,7 +83,7 @@ export default function Frequency({
                     </FrequencySelector>
                 </Box>
                 {renderLineBreak()}
-                <FrequencySelector onPress={() => setSelectedFrequency('monthly')}>
+                <FrequencySelector onPress={() => handleFrequencySelection('monthly')}>
                     <Text fontSize="md">Monthly</Text>
                     {!isSelectedWeekly ? (
                         <Center rounded="full" bg={colors.mainPurple} w={6} h={6}>

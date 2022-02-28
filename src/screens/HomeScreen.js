@@ -1,12 +1,13 @@
-import React, { useState, useCallback, useRef, useMemo, useEffect } from 'react';
-import { Button, RefreshControl, ScrollView, View } from 'react-native';
+import React, { useState, useCallback, useEffect } from 'react';
+import { RefreshControl, ScrollView } from 'react-native';
 import { colors } from '../utils/colors';
 import { useHabits } from '../context/HabitProvider';
 import HabitListItem from '../components/uiComponents/HabitListItem';
 import { Text, useColorModeValue, Flex, Center, HStack, Box, Spacer } from 'native-base';
 import Spinner from 'react-native-loading-spinner-overlay';
 import CircularProgress from 'react-native-circular-progress-indicator';
-import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { getAllNotifications } from '../utils/helpers/notification';
+
 const wait = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
 
 const TotalProgressCircle = () => {
@@ -52,6 +53,10 @@ const HomeScreen = () => {
     const WEEKLY_HABITS_LENGTH = weeklyHabits.length;
     const MONTHLY_HABITS_LENGTH = monthlyHabits.length;
 
+    useEffect(() => {
+        getAllNotifications();
+    }, []);
+
     const renderHeader = (frequency, marginTop) => (
         <HStack px={4} mt={marginTop}>
             <Box>
@@ -75,18 +80,6 @@ const HomeScreen = () => {
         />
     );
 
-    const bottomSheetModalRef = useRef(null);
-
-    // variables
-    const snapPoints = useMemo(() => ['25%', '50%'], []);
-
-    useEffect(() => {
-        bottomSheetModalRef.current?.present();
-    }, []);
-    const handlePresentModalPress = useCallback(() => {
-        bottomSheetModalRef.current?.present();
-    }, []);
-
     if (!habits.length && !habitsLoading)
         return (
             <Center mt={10} flex={1} bg={useColorModeValue(colors.white, colors.black)}>
@@ -108,7 +101,6 @@ const HomeScreen = () => {
                         onRefresh={onRefresh}
                     />
                 }
-                style={{ marginBottom: 10 }}
             >
                 {habitsLoading ? (
                     renderContentLoader()
@@ -117,9 +109,9 @@ const HomeScreen = () => {
                         <Center mt={40}>
                             <TotalProgressCircle />
                         </Center>
-                        {renderHeader('weekly', 10)}
+                        <Box>{renderHeader('weekly', 10)}</Box>
                         <Box>
-                            {!habitsLoading &&
+                            {!!weeklyHabits.length &&
                                 weeklyHabits?.map((item) => (
                                     <HabitListItem
                                         key={item.id}
@@ -128,16 +120,15 @@ const HomeScreen = () => {
                                     />
                                 ))}
                         </Box>
-                        {renderHeader('monthly', 10)}
-                        <Box>
-                            {!habitsLoading &&
-                                monthlyHabits?.map((item) => (
-                                    <HabitListItem
-                                        key={item.id}
-                                        item={item}
-                                        completed={item.completed}
-                                    />
-                                ))}
+                        <Box>{!!monthlyHabits.length && renderHeader('monthly', 10)}</Box>
+                        <Box mb={40}>
+                            {monthlyHabits?.map((item) => (
+                                <HabitListItem
+                                    key={item.id}
+                                    item={item}
+                                    completed={item.completed}
+                                />
+                            ))}
                         </Box>
                     </>
                 )}

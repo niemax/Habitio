@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { Image } from 'react-native';
+import React, { useState } from 'react';
+import { Image, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { HomepageDataBox, HomepageDataView } from '../../utils/StyledComponents/Styled';
 import { colors } from '../../utils/colors';
@@ -39,10 +39,12 @@ const HabitListItem = ({ item }) => {
     } = item;
 
     const [habitProgress, setHabitProgress] = useState(progress);
-    const { isOpen, onOpen, onClose } = useDisclose();
+    const [isActionSheetVisible, setIsActionSheetVisible] = useState(false);
+    const { onClose } = useDisclose();
     const { colorMode } = useColorMode();
     const { habitSetter, habits } = useHabits();
     const isSelectedWeekly = frequency === 'weekly';
+
     const handleHabitProgress = (operand) => {
         haptics.success();
         const mapped = habits.map((habit) => {
@@ -89,17 +91,16 @@ const HabitListItem = ({ item }) => {
                     }}
                 >
                     <HomepageDataBox
-                        onPress={onOpen}
+                        onPress={() => setIsActionSheetVisible(true)}
                         style={{
-                            ...habitItemShadow,
                             backgroundColor: colorMode === 'light' ? 'white' : '#151618',
+                            ...habitItemShadow,
                         }}
                     >
                         <HStack>
                             <Flex align="center" mt={1}>
                                 <Button
                                     variant="subtle"
-                                    opacity={useColorModeValue(0.6, 0.8)}
                                     colorScheme={renderIconBackgroundColor(color)}
                                     p={3}
                                     rounded="full"
@@ -146,16 +147,16 @@ const HabitListItem = ({ item }) => {
                         />
                     </HomepageDataBox>
                 </Stagger>
-                <ActionSheet
-                    id={id}
-                    habitProgress={habitProgress}
-                    setHabitProgress={setHabitProgress}
-                    handleHabitProgress={handleHabitProgress}
-                    onOpen={onOpen}
-                    isOpen={isOpen}
-                    onClose={onClose}
-                />
             </HomepageDataView>
+            <ActionSheet
+                id={id}
+                habitProgress={habitProgress}
+                setHabitProgress={setHabitProgress}
+                handleHabitProgress={handleHabitProgress}
+                isVisible={isActionSheetVisible}
+                setIsVisible={setIsActionSheetVisible}
+                onClose={onClose}
+            />
         </>
     );
 };

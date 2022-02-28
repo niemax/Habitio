@@ -1,5 +1,5 @@
 import { colors } from '../colors';
-import { getCurrentDateFormattedForCalendarComponent, getCurrentDay } from './dateHelpers';
+import { getCurrentDateFormattedForCalendarComponent } from './dateHelpers';
 import { haptics } from './haptics';
 import { toasts } from './toastMethods';
 
@@ -15,7 +15,6 @@ export const handleDoneToday = (id, name, habits, habitSetter) => {
                     selected: true,
                 };
                 if (habit.id === id) {
-                    habit.dataCurrentDay = getCurrentDay();
                     habit.completed = true;
                     habit.completedDates = completedDatesObj;
                     habit.streak.push(1);
@@ -26,7 +25,6 @@ export const handleDoneToday = (id, name, habits, habitSetter) => {
             } else {
                 delete completedDatesObj[calendarDateString];
                 if (habit.id === id) {
-                    habit.dataCurrentDay = null;
                     habit.completed = false;
                     habit.completedDates = completedDatesObj;
                     habit.streak.pop();
@@ -34,7 +32,6 @@ export const handleDoneToday = (id, name, habits, habitSetter) => {
                     haptics.warning();
                 }
             }
-            console.log(habit);
             return habit;
         });
         habitSetter(updatedHabits);

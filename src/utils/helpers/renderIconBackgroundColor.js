@@ -31,6 +31,6 @@ export const renderIconBackgroundColor = (color) => {
         case '#02D94D':
             return 'lime';
         default:
-            return 'indigo';
+            return 'rose';
     }
 };

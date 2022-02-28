@@ -1,11 +1,11 @@
 import React from 'react';
 import { Button } from 'native-base';
 
-const MainButton = ({ onPress, children, ...props }) => (
+const MainButton = ({ onPress, children, variant = 'subtle', rounded = '2xl', ...props }) => (
     <Button
-        variant="subtle"
-        colorScheme="indigo"
-        rounded="2xl"
+        variant={variant}
+        colorScheme="rose"
+        rounded={rounded}
         w={200 || props.width}
         h={16 || props.height}
         onPress={onPress}

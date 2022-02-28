@@ -16,10 +16,51 @@ const CalendarFrequency = ({
     reminder,
     specificDate,
     isSelectedWeekly,
-}) => (
-    <CalendarFrequencyContainer>
-        {days > 0 && isSelectedWeekly ? (
-            <>
+}) => {
+    const renderOtherInfo = () => {
+        endDate !== null && (
+            <Box mt={4}>
+                <Text marginLeft="15px" opacity={0.6}>
+                    End Date
+                </Text>
+                <Text marginLeft="15px">{formatDateForHabitEndDate(endDate)}</Text>
+            </Box>
+        );
+    };
+    {
+        reminder !== null && (
+            <Box mt={4}>
+                <Text marginLeft="15px" opacity={0.6}>
+                    Reminder
+                </Text>
+                <Text marginLeft="15px">{formatDateForHabitInfoReminder(reminder)}</Text>
+            </Box>
+        );
+    }
+    {
+        specificDate !== null && (
+            <Box mt={4}>
+                <Text marginLeft="15px" opacity={0.6}>
+                    Doing it once on
+                </Text>
+                <Text marginLeft="15px">{formatDateForHabitEndDate(specificDate)}</Text>
+            </Box>
+        );
+    }
+    {
+        description && (
+            <Box mt={4}>
+                <Text marginLeft="15px" opacity={0.6}>
+                    Description
+                </Text>
+                <Text marginLeft="15px">{description}</Text>
+            </Box>
+        );
+    }
+
+    if (!!isSelectedWeekly)
+        return (
+            <CalendarFrequencyContainer>
                 <Text marginLeft="15px" opacity={0.6}>
                     Frequency
                 </Text>
@@ -30,8 +71,11 @@ const CalendarFrequency = ({
                         {times} {unitValue} per day
                     </Text>
                 </View>
-            </>
-        ) : (
+                {renderOtherInfo()}
+            </CalendarFrequencyContainer>
+        );
+    return (
+        <CalendarFrequencyContainer>
             <>
                 <Text marginLeft="15px" opacity={0.6}>
                     Frequency
@@ -46,40 +90,9 @@ const CalendarFrequency = ({
                     )}
                 </View>
             </>
-        )}
-        {endDate !== null && (
-            <Box mt={4}>
-                <Text marginLeft="15px" opacity={0.6}>
-                    End Date
-                </Text>
-                <Text marginLeft="15px">{formatDateForHabitEndDate(endDate)}</Text>
-            </Box>
-        )}
-        {reminder !== null && (
-            <Box mt={4}>
-                <Text marginLeft="15px" opacity={0.6}>
-                    Reminder
-                </Text>
-                <Text marginLeft="15px">{formatDateForHabitInfoReminder(reminder)}</Text>
-            </Box>
-        )}
-        {specificDate !== null && (
-            <Box mt={4}>
-                <Text marginLeft="15px" opacity={0.6}>
-                    Doing it once on
-                </Text>
-                <Text marginLeft="15px">{formatDateForHabitEndDate(specificDate)}</Text>
-            </Box>
-        )}
-        {description && (
-            <Box mt={4}>
-                <Text marginLeft="15px" opacity={0.6}>
-                    Description
-                </Text>
-                <Text marginLeft="15px">{description}</Text>
-            </Box>
-        )}
-    </CalendarFrequencyContainer>
-);
+            {renderOtherInfo()}
+        </CalendarFrequencyContainer>
+    );
+};
 
 export default CalendarFrequency;

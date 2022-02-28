@@ -38,8 +38,8 @@ const StartHabitCreation = ({ navigation }) => {
 
     return (
         <MainContainer>
-            <ScrollView style={{ marginTop: 25 }}>
-                <Text opacity={0.7} marginLeft="25px">
+            <ScrollView>
+                <Text opacity={0.7} marginLeft="25px" marginTop="20px">
                     CREATE YOUR OWN HABIT
                 </Text>
                 <InputContainer>

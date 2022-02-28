@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Flex, Button, useColorModeValue, Text } from 'native-base';
 import Modal from 'react-native-modal';
-import { Keyboard, KeyboardAvoidingView, TextInput } from 'react-native';
+import { Keyboard, TextInput } from 'react-native';
 import { colors } from '../../utils/colors';
 import { useHabits } from '../../context/HabitProvider';
 
@@ -40,7 +40,7 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
             avoidKeyboard={true}
             onBackdropPress={() => Keyboard.dismiss()}
         >
-            <Box bg={useColorModeValue('gray.100', 'gray.800')} rounded="2xl">
+            <Box bg={useColorModeValue('gray.100', 'gray.800')} rounded="3xl">
                 <Text textAlign="center" fontSize="lg" fontWeight={700} marginTop="10px">
                     Note
                 </Text>
@@ -50,11 +50,11 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
                         multiline={Platform.OS === 'android' ? false : true}
                         autoCorrect={false}
                         style={{
-                            borderRadius: 20,
+                            borderRadius: 10,
                             backgroundColor: useColorModeValue('white', colors.black),
                             padding: 15,
                             color: useColorModeValue('black', 'white'),
-                            height: 220,
+                            height: 240,
                             fontSize: 16,
                         }}
                         onChangeText={(text) => setInputText(text)}
@@ -66,7 +66,7 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
                     justify="space-around"
                     mb={4}
                 >
-                    <Button.Group colorScheme="indigo" space={2}>
+                    <Button.Group colorScheme="rose" space={2}>
                         <Button
                             size="lg"
                             bg={useColorModeValue('gray.200', 'gray.700')}

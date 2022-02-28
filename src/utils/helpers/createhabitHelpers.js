@@ -24,7 +24,7 @@ const checkIfSpecificDateisEnabled = (enabledSpecific) => {
     return true;
 };
 
-const handleHabitCreation = async ({
+const handleHabitCreation = ({
     newHabit,
     isEnabledDate,
     isEnabledSpecific,

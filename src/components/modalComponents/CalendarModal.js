@@ -105,7 +105,7 @@ const CalendarModal = ({ route, navigation }) => {
                 endDate={endDate}
                 reminder={reminder}
                 specificDate={specificDate}
-                frequency={isSelectedWeekly}
+                isSelectedWeekly={isSelectedWeekly}
             />
             <CalendarLineBreak />
         </>
@@ -141,7 +141,7 @@ const CalendarModal = ({ route, navigation }) => {
                                 setNoteRenderAmount(noteRenderAmount + 3);
                             }}
                         >
-                            {noteInputs.length >= noteRenderAmount && (
+                            {noteInputs.length > noteRenderAmount && (
                                 <Text textAlign="center">Load more</Text>
                             )}
                         </TouchableOpacity>
