@@ -1,11 +1,19 @@
 import React, { useRef, useState } from 'react';
-import { Box, Flex, HStack, PresenceTransition, Text, useColorModeValue } from 'native-base';
+import { Alert, TouchableOpacity } from 'react-native';
+import {
+    Box,
+    Container,
+    Flex,
+    HStack,
+    PresenceTransition,
+    Text,
+    useColorModeValue,
+} from 'native-base';
 import { useHabits } from '../../context/HabitProvider';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../../utils/colors';
 import ActionSheet from '@alessiocancian/react-native-actionsheet';
 import { handleDoneToday } from '../../utils/helpers/handleDone';
-import { Alert, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import deleteHabit from '../../utils/helpers/deleteHabit';
 import NoteModal from './NoteModal';
@@ -107,7 +115,7 @@ export default function ListItemActionSheet({
     };
 
     return (
-        <>
+        <Flex flex={1}>
             <Modal
                 onSwipeComplete={() => setIsVisible(false)}
                 swipeDirection="down"
@@ -118,6 +126,7 @@ export default function ListItemActionSheet({
                 style={{ justifyContent: 'flex-end', marginBottom: 30, marginHorizontal: 10 }}
                 animationInTiming={450}
                 animationOutTiming={400}
+                propagateSwipe={true}
             >
                 <Flex
                     bg={useColorModeValue('white', 'gray.800')}
@@ -148,7 +157,7 @@ export default function ListItemActionSheet({
                                                 id: id,
                                                 name: habitItem.name,
                                             });
-                                        }, 1000);
+                                        }, 1200);
                                     }}
                                 >
                                     <MaterialCommunityIcons
@@ -206,6 +215,6 @@ export default function ListItemActionSheet({
                 cancelButtonIndex={4}
                 onPress={(index) => decideAction(index)}
             />
-        </>
+        </Flex>
     );
 }

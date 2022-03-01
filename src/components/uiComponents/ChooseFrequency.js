@@ -8,16 +8,7 @@ import {
     HabitUtilityInfoContainer,
 } from '../../utils/StyledComponents/Styled';
 import { Feather, Ionicons } from '@expo/vector-icons';
-import {
-    Box,
-    Flex,
-    HStack,
-    Button,
-    Text,
-    useColorMode,
-    KeyboardAvoidingView,
-    Center,
-} from 'native-base';
+import { Box, Flex, Button, Text, useColorMode, KeyboardAvoidingView, Center } from 'native-base';
 import { colors } from '../../utils/colors';
 
 export default function Frequency({
@@ -54,6 +45,7 @@ export default function Frequency({
             }}
         />
     );
+
     const isSelectedWeekly = selectedFrequency === 'weekly';
 
     const handleFrequencySelection = (frequency) => {

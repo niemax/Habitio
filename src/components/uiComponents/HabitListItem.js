@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, View } from 'react-native';
+import { Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { HomepageDataBox, HomepageDataView } from '../../utils/StyledComponents/Styled';
 import { colors } from '../../utils/colors';
@@ -12,8 +12,8 @@ import {
     Flex,
     useColorMode,
     Button,
-    useColorModeValue,
     Stagger,
+    Container,
 } from 'native-base';
 import ActionSheet from './ActionSheet';
 import { haptics } from '../../utils/helpers/haptics';
@@ -148,15 +148,17 @@ const HabitListItem = ({ item }) => {
                     </HomepageDataBox>
                 </Stagger>
             </HomepageDataView>
-            <ActionSheet
-                id={id}
-                habitProgress={habitProgress}
-                setHabitProgress={setHabitProgress}
-                handleHabitProgress={handleHabitProgress}
-                isVisible={isActionSheetVisible}
-                setIsVisible={setIsActionSheetVisible}
-                onClose={onClose}
-            />
+            <Container>
+                <ActionSheet
+                    id={id}
+                    habitProgress={habitProgress}
+                    setHabitProgress={setHabitProgress}
+                    handleHabitProgress={handleHabitProgress}
+                    isVisible={isActionSheetVisible}
+                    setIsVisible={setIsActionSheetVisible}
+                    onClose={onClose}
+                />
+            </Container>
         </>
     );
 };

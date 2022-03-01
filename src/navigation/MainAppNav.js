@@ -19,6 +19,7 @@ import { formatDateForHabitEndDate } from '../utils/helpers/dateHelpers';
 import { handleNoteDelete } from '../utils/helpers/noteMethods';
 import { useHabits } from '../context/HabitProvider';
 import { BlurView } from 'expo-blur';
+import SettingsDetailScreen from '../screens/SettingsDetailScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -70,19 +71,59 @@ const MainTab = () => {
                 }}
                 component={MainAppStack}
             />
-            <Tab.Screen
-                name="Settings"
-                options={{
-                    tabBarLabel: 'Settings',
-                    tabBarLabelStyle: { fontSize: 12 },
-                }}
-                component={Settings}
-            />
+            <Tab.Screen name="Settings" component={SettingsStack} />
         </Tab.Navigator>
     );
 };
 
 const Stack = createNativeStackNavigator();
+
+const SettingsStack = () => {
+    const { colorMode } = useColorMode();
+    return (
+        <Stack.Navigator initiaRouteName="Settings">
+            <Stack.Screen
+                name="Settings"
+                options={{
+                    tabBarLabel: 'Settings',
+                    tabBarLabelStyle: { fontSize: 12 },
+                    headerShown: true,
+                    headerTransparent: true,
+                    headerBlurEffect:
+                        colorMode === 'light' ? 'systemUltraThinMaterialLight' : 'dark',
+                    headerLargeTitle: true,
+                    headerLargeStyle: {
+                        backgroundColor: colorMode === 'dark' ? colors.black : colors.white,
+                    },
+                    headerLargeTitleStyle: {
+                        fontSize: 38,
+                        fontWeight: '800',
+                        color: colorMode === 'dark' ? 'white' : 'black',
+                    },
+                    headerTitleStyle: {
+                        color: colors.mainPurple,
+                    },
+                }}
+                component={Settings}
+            />
+            <Stack.Screen
+                name="SettingsDetailScreen"
+                options={({ route }) => ({
+                    headerShown: true,
+                    headerBlurEffect:
+                        colorMode === 'light' ? 'systemUltraThinMaterialLight' : 'dark',
+                    headerTransparent: true,
+                    headerTintColor: colors.mainPurple,
+                    headerTitle: route.params.name,
+                    headerTitleStyle: {
+                        color: colorMode === 'dark' ? 'white' : 'black',
+                    },
+                })}
+                component={SettingsDetailScreen}
+            />
+        </Stack.Navigator>
+    );
+};
 
 const CreateHabitStack = () => {
     const { colorMode } = useColorMode();
@@ -175,7 +216,7 @@ const MainAppStack = () => {
         >
             <Stack.Group screenOptions={{ presentation: 'modal' }}>
                 <Stack.Screen
-                    name="HomeScreen"
+                    name="Dashboard"
                     options={() => ({
                         headerShown: true,
                         headerTransparent: true,
@@ -190,7 +231,6 @@ const MainAppStack = () => {
                             fontWeight: '800',
                             color: colorMode === 'dark' ? 'white' : 'black',
                         },
-                        title: 'Dashboard',
                         headerTitleStyle: {
                             color: colors.mainPurple,
                         },

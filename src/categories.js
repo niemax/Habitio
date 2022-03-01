@@ -26,12 +26,6 @@ const data = [
                 description: 'Take a moment for yourself to think',
                 color: '#EA5B71',
             },
-            {
-                name: 'Take Meds',
-                habitIcon: require('./assets/flatIcons/drugs.png'),
-                description: 'Do not neglect taking your meds',
-                color: '#E2FA0F',
-            },
         ],
     },
     {

@@ -20,7 +20,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.niemax.Habitio",
-      "buildNumber": "13"
+      "buildNumber": "15"
     },
     "android": {
       "adaptiveIcon": {

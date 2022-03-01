@@ -3,22 +3,10 @@ import { CalendarLineBreak } from '../../utils/StyledComponents/Styled';
 import { Box, Flex, VStack, Text, useColorMode } from 'native-base';
 import { colors } from '../../utils/colors';
 
-const CalendarStats = ({ completedDates, streak }) => {
+const CalendarStats = ({ completedDates, streak = [] }) => {
     const { colorMode } = useColorMode();
 
-    const renderStreak = () => {
-        let total = 0;
-        if (streak.length > 0) {
-            for (let i = 0; i < streak.length; i++) {
-                if (streak[i] === 1) {
-                    total++;
-                } else {
-                    total = 0;
-                }
-            }
-            return total;
-        }
-    };
+    const renderStreak = () => !!streak.length && streak.reduce((acc, curr) => acc + curr);
 
     return (
         <Box p={3} shadow={1}>

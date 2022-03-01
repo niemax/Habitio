@@ -10,6 +10,7 @@ import HabitProvider from './src/context/HabitProvider';
 import MainAppStack from './src/navigation/MainAppNav';
 import { NativeBaseProvider, useColorModeValue } from 'native-base';
 import theme from './src/theme';
+import { colorModeManager } from './src/screens/SettingsDetailScreen';
 
 export default function App() {
     const [, , setExpoPushToken] = useState('');
@@ -41,7 +42,7 @@ export default function App() {
 
     return (
         <HabitProvider>
-            <NativeBaseProvider theme={theme}>
+            <NativeBaseProvider theme={theme} colorModeManager={colorModeManager}>
                 <NavigationContainer theme={useColorModeValue(DefaultTheme, DarkTheme)}>
                     <SafeAreaProvider>
                         <StatusBar style="auto" />

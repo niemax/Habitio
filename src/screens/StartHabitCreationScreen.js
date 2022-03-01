@@ -8,6 +8,7 @@ import { Box, Center, Flex, HStack, Text, useColorModeValue } from 'native-base'
 import { textInputShadow } from '../utils/globalStyles';
 import Button from '../components/uiComponents/Button';
 import MainContainer from '../components/uiComponents/MainContainer';
+import ListContainer from '../components/uiComponents/ListContainer';
 
 const StartHabitCreation = ({ navigation }) => {
     const [habitName, setHabitName] = useState('');
@@ -66,7 +67,7 @@ const StartHabitCreation = ({ navigation }) => {
                     <Text opacity={0.7} marginLeft="12px">
                         OR CHOOSE
                     </Text>
-                    <Box bg={useColorModeValue('white', 'gray.800')} rounded="xl" p={1} mt={6}>
+                    <ListContainer>
                         {data.map(({ category, image, mainIcon, habits }, index) => (
                             <TouchableOpacity
                                 key={category}
@@ -95,7 +96,7 @@ const StartHabitCreation = ({ navigation }) => {
                                 {index < data.length - 1 && renderLineBreak()}
                             </TouchableOpacity>
                         ))}
-                    </Box>
+                    </ListContainer>
                 </Box>
             </ScrollView>
             <ButtonContainer>
