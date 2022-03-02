@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { HomepageDataBox, HomepageDataView } from '../../utils/StyledComponents/Styled';
-import { colors } from '../../utils/colors';
 import {
     Box,
     HStack,
@@ -22,6 +21,7 @@ import { formatDateForHabitEndDate } from '../../utils/helpers/dateHelpers';
 import { renderIconBackgroundColor } from '../../utils/helpers/renderIconBackgroundColor';
 import { habitItemShadow } from '../../utils/globalStyles';
 import ProgressCircle from './CircularProgress';
+import useSettings from '../../hooks/useSettings';
 
 const HabitListItem = ({ item }) => {
     const {
@@ -42,6 +42,7 @@ const HabitListItem = ({ item }) => {
     const [isActionSheetVisible, setIsActionSheetVisible] = useState(false);
     const { onClose } = useDisclose();
     const { colorMode } = useColorMode();
+    const { colors } = useSettings();
     const { habitSetter, habits } = useHabits();
     const isSelectedWeekly = frequency === 'weekly';
 
@@ -64,7 +65,7 @@ const HabitListItem = ({ item }) => {
         !!icon ? (
             <Image style={{ height: 15, width: 15 }} source={icon} />
         ) : (
-            <Feather name="activity" size={15} color={color || colors.mainPurple} />
+            <Feather name="activity" size={15} color={color || colors.mainColor} />
         );
 
     return (

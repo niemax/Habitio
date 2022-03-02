@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import { Alert, TouchableOpacity } from 'react-native';
 import {
     Box,
-    Container,
     Flex,
     HStack,
     PresenceTransition,
@@ -11,7 +10,6 @@ import {
 } from 'native-base';
 import { useHabits } from '../../context/HabitProvider';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { colors } from '../../utils/colors';
 import ActionSheet from '@alessiocancian/react-native-actionsheet';
 import { handleDoneToday } from '../../utils/helpers/handleDone';
 import { useNavigation } from '@react-navigation/native';
@@ -22,6 +20,7 @@ import CircularProgress from './CircularProgress';
 import MainButton from './Button';
 import { AntDesign } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
+import useSettings from '../../hooks/useSettings';
 
 export default function ListItemActionSheet({
     id,
@@ -35,6 +34,8 @@ export default function ListItemActionSheet({
     const [showProgressModal, setShowProgressModal] = useState(false);
     const navigation = useNavigation();
     const { navigate } = navigation;
+
+    const {colors} = useSettings()
 
     const { habits, habitSetter, getSpecificHabit } = useHabits();
     const habitItem = getSpecificHabit(id);
@@ -163,7 +164,7 @@ export default function ListItemActionSheet({
                                     <MaterialCommunityIcons
                                         name="history"
                                         size={28}
-                                        color={colors.mainPurple}
+                                        color={colors.mainColor}
                                         style={{ marginRight: 10 }}
                                     />
                                 </TouchableOpacity>
@@ -171,7 +172,7 @@ export default function ListItemActionSheet({
                                     <MaterialCommunityIcons
                                         name="dots-horizontal-circle"
                                         size={28}
-                                        color={colors.mainPurple}
+                                        color={colors.mainColor}
                                     />
                                 </TouchableOpacity>
                             </HStack>
@@ -208,7 +209,7 @@ export default function ListItemActionSheet({
                 />
             </Modal>
             <ActionSheet
-                tintColor={colors.mainPurple}
+                tintColor={colors.mainColor}
                 ref={actionSheetRef}
                 title={'Choose an action'}
                 options={['Add a note', 'Change value', 'Edit Habit', 'Delete Habit', 'Cancel']}

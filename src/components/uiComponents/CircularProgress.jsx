@@ -5,8 +5,8 @@ import { AntDesign } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import AnimatedLottieView from 'lottie-react-native';
-import { colors } from '../../utils/colors';
 import { handleDoneToday } from '../../utils/helpers/handleDone';
+import useSettings from '../../hooks/useSettings';
 
 export const RenderLottie = () => {
     const animation = useRef(null);
@@ -29,6 +29,8 @@ export const RenderLottie = () => {
 const ProgressCircle = ({ id, habitProgress, handleHabitProgress, size, width, habitItem }) => {
     const { habits, habitSetter, getSpecificHabit } = useHabits();
     const habit = getSpecificHabit(id);
+
+    const { colors } = useSettings();
 
     const handleDecrement = () => {
         if (habit.completed) {
@@ -68,7 +70,7 @@ const ProgressCircle = ({ id, habitProgress, handleHabitProgress, size, width, h
                 title={!!habitItem && !habit?.completed && habit?.unitValue}
                 titleColor={useColorModeValue('black', 'white')}
                 titleStyle={{ fontWeight: 'regular', fontSize: 20 }}
-                activeStrokeColor={habit?.completed ? '#43E443' : colors.mainPurple}
+                activeStrokeColor={habit?.completed ? '#43E443' : colors.mainColor}
                 activeStrokeSecondaryColor={habit?.completed ? '#43E4E4' : '#C25AFF'}
             />
         </TouchableOpacity>
@@ -82,10 +84,10 @@ const ProgressCircle = ({ id, habitProgress, handleHabitProgress, size, width, h
                     bg={useColorModeValue('gray.100', 'gray.700')}
                     rounded="full"
                     mr={6}
-                    _pressed={{ bg: colors.mainPurple }}
+                    _pressed={{ bg: colors.mainColor }}
                     onPress={handleDecrement}
                 >
-                    <AntDesign name="minus" size={24} color={colors.mainPurple} />
+                    <AntDesign name="minus" size={24} color={colors.mainColor} />
                 </Button>
             ) : (
                 !!habitItem && (
@@ -94,10 +96,10 @@ const ProgressCircle = ({ id, habitProgress, handleHabitProgress, size, width, h
                         bg={useColorModeValue('gray.100', 'gray.700')}
                         rounded="full"
                         mr={6}
-                        _pressed={{ bg: colors.mainPurple }}
+                        _pressed={{ bg: colors.mainColor }}
                         onPress={handleDecrement}
                     >
-                        <AntDesign name="minus" size={24} color={colors.mainPurple} />
+                        <AntDesign name="minus" size={24} color={colors.mainColor} />
                     </Button>
                 )
             )}
@@ -107,12 +109,12 @@ const ProgressCircle = ({ id, habitProgress, handleHabitProgress, size, width, h
                     <Button
                         size="xs"
                         rounded="full"
-                        _pressed={{ bg: colors.mainPurple }}
+                        _pressed={{ bg: colors.mainColor }}
                         ml={6}
                         bg={useColorModeValue('gray.100', 'gray.700')}
                         onPress={handleIncrement}
                     >
-                        <AntDesign name="plus" size={24} color={colors.mainPurple} />
+                        <AntDesign name="plus" size={24} color={colors.mainColor} />
                     </Button>
                 </Box>
             ) : (
@@ -120,12 +122,12 @@ const ProgressCircle = ({ id, habitProgress, handleHabitProgress, size, width, h
                     <Button
                         size="xs"
                         rounded="full"
-                        _pressed={{ bg: colors.mainPurple }}
+                        _pressed={{ bg: colors.mainColor }}
                         ml={6}
                         bg={useColorModeValue('gray.100', 'gray.700')}
                         onPress={handleIncrement}
                     >
-                        <AntDesign name="plus" size={24} color={colors.mainPurple} />
+                        <AntDesign name="plus" size={24} color={colors.mainColor} />
                     </Button>
                 )
             )}

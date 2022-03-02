@@ -1,10 +1,12 @@
 import React from 'react';
 import { CalendarLineBreak } from '../../utils/StyledComponents/Styled';
 import { Box, Flex, VStack, Text, useColorMode } from 'native-base';
-import { colors } from '../../utils/colors';
+import useSettings from '../../hooks/useSettings';
 
 const CalendarStats = ({ completedDates, streak = [] }) => {
     const { colorMode } = useColorMode();
+
+    const { colors } = useSettings();
 
     const renderStreak = () => !!streak.length && streak.reduce((acc, curr) => acc + curr);
 
@@ -25,7 +27,7 @@ const CalendarStats = ({ completedDates, streak = [] }) => {
                             fontWeight={900}
                             fontSize="xl"
                             textAlign="center"
-                            color={colors.mainPurple}
+                            color={colors.mainColor}
                         >
                             {streak && renderStreak()}
                         </Text>

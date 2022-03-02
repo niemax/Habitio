@@ -10,16 +10,18 @@ import {
 import CalendarFrequency from '../uiComponents/CalendarFrequency';
 import CalendarStats from '../uiComponents/CalendarStats';
 import { Entypo } from '@expo/vector-icons';
-import { colors } from '../../utils/colors';
 import { handleDoneOtherDay } from '../../utils/helpers/handleDone';
 import { useHabits } from '../../context/HabitProvider';
 import { Box, Center, Text, useColorMode } from 'native-base';
 import MainContainer from '../uiComponents/MainContainer';
+import useSettings from '../../hooks/useSettings';
 
 const CalendarModal = ({ route, navigation }) => {
     const [noteRenderAmount, setNoteRenderAmount] = useState(2);
     const { colorMode } = useColorMode();
     const { navigate } = navigation;
+
+    const { colors, color } = useSettings();
 
     const { habits, habitSetter, getSpecificHabit } = useHabits();
     const habitItem = getSpecificHabit(route.params.id);
@@ -62,7 +64,7 @@ const CalendarModal = ({ route, navigation }) => {
                 >
                     <Text
                         fontWeight={700}
-                        color={colors.mainPurple}
+                        color={colors.mainColor}
                         marginLeft="15px"
                         marginBottom="3px"
                     >
@@ -86,9 +88,10 @@ const CalendarModal = ({ route, navigation }) => {
                         colorMode === 'light' ? colors.white : colors.mainBackground,
                     monthTextColor: colorMode === 'light' ? 'black' : 'white',
                     dayTextColor: colorMode === 'light' ? 'black' : 'white',
-                    selectedDayBackgroundColor: colors.mainPurple,
-                    arrowColor: colors.mainPurple,
-                    todayTextColor: colors.mainPurple,
+                    selectedDayBackgroundColor: color,
+                    arrowColor: color,
+                    todayTextColor: color,
+                    indicatorColor: color,
                     ...calendarStyles,
                 }}
                 firstDay={1}
@@ -124,7 +127,7 @@ const CalendarModal = ({ route, navigation }) => {
                     <Entypo
                         name="pencil"
                         size={62}
-                        color={colors.mainPurple}
+                        color={colors.mainColor}
                         style={{ marginTop: 30 }}
                     />
                 </Center>

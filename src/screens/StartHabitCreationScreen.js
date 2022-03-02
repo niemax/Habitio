@@ -2,18 +2,20 @@ import React, { useState } from 'react';
 import { Image, ScrollView, TouchableOpacity, View } from 'react-native';
 import { ButtonContainer, HabitInput, InputContainer } from '../utils/StyledComponents/Styled';
 import data from '../categories';
-import { colors } from '../utils/colors';
 import { Ionicons } from '@expo/vector-icons';
 import { Box, Center, Flex, HStack, Text, useColorModeValue } from 'native-base';
 import { textInputShadow } from '../utils/globalStyles';
 import Button from '../components/uiComponents/Button';
 import MainContainer from '../components/uiComponents/MainContainer';
 import ListContainer from '../components/uiComponents/ListContainer';
+import useSettings from '../hooks/useSettings';
 
 const StartHabitCreation = ({ navigation }) => {
     const [habitName, setHabitName] = useState('');
     const [error, setError] = useState('');
     const { navigate } = navigation;
+
+    const { colors } = useSettings();
 
     const handleOwnHabit = () => {
         if (habitName === '') {

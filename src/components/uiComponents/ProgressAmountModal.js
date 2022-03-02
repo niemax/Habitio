@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Box, Flex, Button, Text, useColorModeValue } from 'native-base';
 import Modal from 'react-native-modal';
 import { TextInput } from 'react-native';
-import { colors } from '../../utils/colors';
 import { useHabits } from '../../context/HabitProvider';
+import useSettings from '../../hooks/useSettings';
 
 const ProgressAmountModal = ({
     showProgressModal,
@@ -14,6 +14,8 @@ const ProgressAmountModal = ({
 }) => {
     const [progressAmount, setProgressAmount] = useState(times);
     const { habits, habitSetter } = useHabits();
+
+    const { colors } = useSettings();
 
     const handleChangeValue = (amount) => {
         const mapped = habits.map((habit) => {

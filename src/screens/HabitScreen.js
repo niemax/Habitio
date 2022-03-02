@@ -8,12 +8,14 @@ import {
     ImageContainer,
 } from '../utils/StyledComponents/Styled';
 import { Ionicons } from '@expo/vector-icons';
-import { colors } from '../utils/colors';
 import MainContainer from '../components/uiComponents/MainContainer';
+import useSettings from '../hooks/useSettings';
 
 const HabitScreen = ({ route, navigation }) => {
     const { habitData, image, category } = route.params;
     const { navigate } = navigation;
+
+    const { colors } = useSettings();
 
     return (
         <MainContainer>

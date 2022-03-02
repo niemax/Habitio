@@ -1,12 +1,11 @@
 import { useColorModeValue } from 'native-base';
 import React from 'react';
 import { Dimensions } from 'react-native';
-import { textInputShadow } from '../../utils/globalStyles';
 import { HabitCentered, HabitDescriptionInput } from '../../utils/StyledComponents/Styled';
 
 const { width } = Dimensions.get('window');
 
-const HabitInput = ({ actions: { setValue } }) => (
+const HabitInput = ({ actions: { setValue } }, ...props) => (
     <HabitCentered>
         <HabitDescriptionInput
             multiline={true}
@@ -19,6 +18,7 @@ const HabitInput = ({ actions: { setValue } }) => (
             }}
             placeholderTextColor="gray"
             onChangeText={setValue}
+            {...props}
         />
     </HabitCentered>
 );

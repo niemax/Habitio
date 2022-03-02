@@ -1,18 +1,26 @@
 import React from 'react';
 import { Button } from 'native-base';
+import { renderIconBackgroundColor } from '../../utils/helpers/renderIconBackgroundColor';
+import useSettings from '../../hooks/useSettings';
 
-const MainButton = ({ onPress, children, variant = 'subtle', rounded = '2xl', ...props }) => (
+const MainButton = ({ onPress, children, variant = 'solid', rounded = '2xl', width = 200, height = 16, ...props }) => {
+    const { color} = useSettings()
+
+    return(
     <Button
         variant={variant}
-        colorScheme="rose"
+        colorScheme={renderIconBackgroundColor(color)}
         rounded={rounded}
-        w={200 || props.width}
-        h={16 || props.height}
+        w={width}
+        h={height}
         onPress={onPress}
+        _text={{color: "white"}}
         {...props}
     >
         {children}
     </Button>
-);
+    )
+
+};
 
 export default MainButton;

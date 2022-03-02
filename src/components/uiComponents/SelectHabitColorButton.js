@@ -1,14 +1,15 @@
-import { Box, Center, Flex, useColorModeValue } from 'native-base';
+import { Center, useColorModeValue } from 'native-base';
 import React, { useRef } from 'react';
 import { View } from 'react-native';
 import ActionSheet from 'react-native-actions-sheet';
-import { colors } from '../../utils/colors';
+import useSettings from '../../hooks/useSettings';
 import { habitColor } from '../../utils/globalStyles';
 import { SelectHabitColorButton } from '../../utils/StyledComponents/Styled';
 import ColorPalletteModal from './ColorPallette';
 
 export default function HabitColor({ colorUpdated, updatedColor, updateColor, color }) {
     const sheetRef = useRef(null);
+    const { colors } = useSettings();
     return (
         <Center
             bg="gray.800"

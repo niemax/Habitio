@@ -6,18 +6,16 @@ export const renderIconBackgroundColor = (color) => {
             return 'indigo';
         case '#EA5B71':
             return 'rose';
-        case '#E2FA0F':
-            return 'yellow';
         case '#FA9C0F':
             return 'orange';
         case '#0F84FA':
             return 'blue';
-        case '#7D6C06':
-            return 'yellow';
         case '#FF4040':
             return 'red';
         case '#2EB284':
-            return 'tertiary';
+            return 'green';
+        case '#4C7226':
+            return 'green';
         case '#0F84FA':
             return 'blue';
         case '#7D6C06':
@@ -30,6 +28,12 @@ export const renderIconBackgroundColor = (color) => {
             return '#db2777';
         case '#02D94D':
             return 'lime';
+        case '#7FBF3F':
+            return 'green';
+        case '#7F3FBF':
+            return 'violet';
+        case '#3FBFBF':
+            return 'cyan';
         default:
             return 'rose';
     }

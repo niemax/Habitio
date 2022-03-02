@@ -157,7 +157,7 @@ const CreateHabit = ({ route, navigation }) => {
                     w="70%"
                     onPress={() => {
                         handleHabitCreation(objectToDispatch);
-                        navigate('HomeScreen');
+                        navigate('Dashboard');
                     }}
                 >
                     Create

@@ -11,7 +11,6 @@ import Settings from '../screens/SettingsScreen';
 import ShowHabitEditModal from '../components/modalComponents/HabitEditModal';
 import CalendarModal from '../components/modalComponents/CalendarModal';
 import { AntDesign } from '@expo/vector-icons';
-import { colors } from '../utils/colors';
 import { Ionicons } from '@expo/vector-icons';
 import { Text, useColorMode, Circle, HStack } from 'native-base';
 import EditNote from '../screens/EditNoteModal';
@@ -20,11 +19,18 @@ import { handleNoteDelete } from '../utils/helpers/noteMethods';
 import { useHabits } from '../context/HabitProvider';
 import { BlurView } from 'expo-blur';
 import SettingsDetailScreen from '../screens/SettingsDetailScreen';
+import useSettings from '../hooks/useSettings';
+import MoodMainScreen from '../screens/MoodMainScreen';
+import MoodDetailsScreen from '../screens/MoodDetailsScreen';
+import MoodEditScreen from '../screens/MoodEditScreen';
+import { useMoods } from '../context/MoodProvider';
 
 const Tab = createBottomTabNavigator();
 
 const MainTab = () => {
     const { colorMode } = useColorMode();
+
+    const { colors } = useSettings();
     return (
         <Tab.Navigator
             initialRouteName="HomeScreen"
@@ -36,18 +42,20 @@ const MainTab = () => {
                         iconName = 'list';
                     } else if (route.name === 'Settings') {
                         iconName = 'settings';
+                    } else if (route.name === 'Mood') {
+                        iconName = 'heart';
                     }
 
                     return (
                         <Ionicons
                             name={iconName}
                             size={24}
-                            color={focused ? colors.mainPurple : 'gray'}
+                            color={focused ? colors.mainColor : 'gray'}
                         />
                     );
                 },
                 headerShown: false,
-                tabBarActiveTintColor: colors.mainPurple,
+                tabBarActiveTintColor: colors.mainColor,
                 tabBarInactiveTintColor: 'gray',
                 tabBarStyle: {
                     position: 'absolute',
@@ -71,8 +79,83 @@ const MainTab = () => {
                 }}
                 component={MainAppStack}
             />
+            <Tab.Screen name="Mood" component={MoodStack} />
             <Tab.Screen name="Settings" component={SettingsStack} />
         </Tab.Navigator>
+    );
+};
+
+const MoodStack = () => {
+    const { colorMode } = useColorMode();
+    const { colors } = useSettings();
+    const { getHappyMoodCount } = useMoods();
+
+    const happyMoodCount = getHappyMoodCount();
+    return (
+        <Stack.Navigator>
+            <Stack.Screen
+                name="Mood"
+                options={{
+                    tabBarLabel: 'Settings',
+                    tabBarLabelStyle: { fontSize: 12 },
+                    headerShown: true,
+                    headerTransparent: true,
+                    headerBlurEffect:
+                        colorMode === 'light' ? 'systemUltraThinMaterialLight' : 'dark',
+                    headerLargeTitle: true,
+                    headerLargeStyle: {
+                        backgroundColor: colorMode === 'dark' ? colors.black : colors.white,
+                    },
+                    headerLargeTitleStyle: {
+                        fontSize: 38,
+                        fontWeight: '800',
+                        color: colorMode === 'dark' ? 'white' : 'black',
+                    },
+                    headerTitleStyle: {
+                        color: colors.mainColor,
+                    },
+
+                    headerRight: () => (
+                        <Text fontWeight={700}>{happyMoodCount} happy days ❤️‍🔥 </Text>
+                    ),
+                }}
+                component={MoodMainScreen}
+            />
+            <Stack.Screen
+                name="MoodDetailsScreen"
+                options={({ route }) => ({
+                    headerShown: true,
+                    headerTransparent: true,
+                    headerTintColor: colors.mainColor,
+                    headerBlurEffect:
+                        colorMode === 'light' ? 'systemUltraThinMaterialLight' : 'dark',
+
+                    headerTitleStyle: {
+                        color: colorMode === 'light' ? 'black' : 'white',
+                    },
+                    headerTitle: route.params.date,
+                })}
+                component={MoodDetailsScreen}
+            />
+            <Stack.Screen
+                name="MoodEditScreen"
+                options={({ route }) => ({
+                    presentation: 'modal',
+                    headerShown: true,
+                    headerTransparent: true,
+                    headerTintColor: colors.mainColor,
+                    headerBlurEffect:
+                        colorMode === 'light' ? 'systemUltraThinMaterialLight' : 'dark',
+
+                    headerTitleStyle: {
+                        color: colors.mainColor,
+                    },
+                    headerTitle: 'Edit mood',
+                    headerBackTitle: 'Back',
+                })}
+                component={MoodEditScreen}
+            />
+        </Stack.Navigator>
     );
 };
 
@@ -80,6 +163,7 @@ const Stack = createNativeStackNavigator();
 
 const SettingsStack = () => {
     const { colorMode } = useColorMode();
+    const { colors } = useSettings();
     return (
         <Stack.Navigator initiaRouteName="Settings">
             <Stack.Screen
@@ -101,7 +185,7 @@ const SettingsStack = () => {
                         color: colorMode === 'dark' ? 'white' : 'black',
                     },
                     headerTitleStyle: {
-                        color: colors.mainPurple,
+                        color: colors.mainColor,
                     },
                 }}
                 component={Settings}
@@ -113,7 +197,7 @@ const SettingsStack = () => {
                     headerBlurEffect:
                         colorMode === 'light' ? 'systemUltraThinMaterialLight' : 'dark',
                     headerTransparent: true,
-                    headerTintColor: colors.mainPurple,
+                    headerTintColor: colors.mainColor,
                     headerTitle: route.params.name,
                     headerTitleStyle: {
                         color: colorMode === 'dark' ? 'white' : 'black',
@@ -127,6 +211,7 @@ const SettingsStack = () => {
 
 const CreateHabitStack = () => {
     const { colorMode } = useColorMode();
+    const { colors } = useSettings();
     return (
         <Stack.Navigator initialRouteName="StartHabitCreation">
             <Stack.Screen
@@ -141,7 +226,7 @@ const CreateHabitStack = () => {
                     },
                     headerBackTitleVisible: true,
                     headerBackTitle: 'Back',
-                    headerTintColor: colors.mainPurple,
+                    headerTintColor: colors.mainColor,
                     headerStyle: {
                         backgroundColor:
                             colorMode === 'dark' ? colors.mainBackground : colors.white,
@@ -155,7 +240,7 @@ const CreateHabitStack = () => {
                     title: 'Choose one',
                     headerBackTitleVisible: true,
                     headerBackTitle: 'Back',
-                    headerTintColor: colors.mainPurple,
+                    headerTintColor: colors.mainColor,
                     headerStyle: {
                         backgroundColor:
                             colorMode === 'dark' ? colors.mainBackground : colors.white,
@@ -184,7 +269,7 @@ const CreateHabitStack = () => {
                         color: colorMode === 'light' ? 'black' : 'white',
                     },
                     headerTransparent: true,
-                    headerTintColor: colors.mainPurple,
+                    headerTintColor: colors.mainColor,
                     headerBackTitleVisible: true,
                     headerBackTitle: 'Back',
                     title: route.params.name || route.params.habitName,
@@ -204,6 +289,7 @@ const MainAppStack = () => {
     const navigation = useNavigation();
     const { colorMode } = useColorMode();
     const { habits, habitSetter } = useHabits();
+    const { colors } = useSettings();
 
     return (
         <Stack.Navigator
@@ -232,7 +318,7 @@ const MainAppStack = () => {
                             color: colorMode === 'dark' ? 'white' : 'black',
                         },
                         headerTitleStyle: {
-                            color: colors.mainPurple,
+                            color: colors.mainColor,
                         },
                         headerRight: () => (
                             <TouchableOpacity
@@ -245,7 +331,7 @@ const MainAppStack = () => {
                                     _pressed={{ bg: colors.purple }}
                                     bg={colorMode === 'dark' ? 'gray.800' : 'gray.100'}
                                 >
-                                    <AntDesign name="plus" size={20} color={colors.mainPurple} />
+                                    <AntDesign name="plus" size={20} color={colors.mainColor} />
                                 </Circle>
                             </TouchableOpacity>
                         ),
@@ -269,7 +355,7 @@ const MainAppStack = () => {
                             color: colorMode === 'light' ? 'black' : 'white',
                         },
                         headerTransparent: true,
-                        headerTintColor: colors.mainPurple,
+                        headerTintColor: colors.mainColor,
                         headerBackTitleVisible: true,
                         headerBackTitle: 'Back',
                         headerTitle: 'Settings',
@@ -301,7 +387,7 @@ const MainAppStack = () => {
                             color: colorMode === 'light' ? 'black' : 'white',
                         },
                         headerTransparent: true,
-                        headerTintColor: colors.mainPurple,
+                        headerTintColor: colors.mainColor,
                         headerBackTitleVisible: true,
                         headerBackTitle: 'Back',
                         title: route.params.name,
@@ -312,7 +398,7 @@ const MainAppStack = () => {
                         },
                         headerRight: () => (
                             <TouchableOpacity onPress={() => navigation.goBack()}>
-                                <Text color={colors.mainPurple} fontSize="lg" fontWeight={600}>
+                                <Text color={colors.mainColor} fontSize="lg" fontWeight={600}>
                                     Cancel
                                 </Text>
                             </TouchableOpacity>
@@ -345,12 +431,12 @@ const MainAppStack = () => {
                         },
                         headerRight: () => (
                             <TouchableOpacity onPress={() => navigation.goBack()}>
-                                <Text color={colors.mainPurple} fontSize="lg" fontWeight={600}>
+                                <Text color={colors.mainColor} fontSize="lg" fontWeight={600}>
                                     Done
                                 </Text>
                             </TouchableOpacity>
                         ),
-                        headerTintColor: colors.mainPurple,
+                        headerTintColor: colors.mainColor,
                     })}
                     component={CalendarModal}
                 />
@@ -380,7 +466,7 @@ const MainAppStack = () => {
                         },
                         headerLeft: () => (
                             <TouchableOpacity onPress={() => navigation.goBack()}>
-                                <Text color={colors.mainPurple} fontSize="lg" fontWeight={600}>
+                                <Text color={colors.mainColor} fontSize="lg" fontWeight={600}>
                                     Cancel
                                 </Text>
                             </TouchableOpacity>
@@ -404,7 +490,7 @@ const MainAppStack = () => {
                             </HStack>
                         ),
 
-                        headerTintColor: colors.mainPurple,
+                        headerTintColor: colors.mainColor,
                     })}
                     component={EditNote}
                 />

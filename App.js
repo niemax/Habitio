@@ -1,16 +1,19 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import FlashMessage from 'react-native-flash-message';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import 'react-native-gesture-handler';
-import { NavigationContainer, DefaultTheme, DarkTheme, LightTheme } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import * as Notifications from 'expo-notifications';
 import HabitProvider from './src/context/HabitProvider';
 import MainAppStack from './src/navigation/MainAppNav';
 import { NativeBaseProvider, useColorModeValue } from 'native-base';
 import theme from './src/theme';
 import { colorModeManager } from './src/screens/SettingsDetailScreen';
+import useSettings from './src/hooks/useSettings';
+import SettingProvider from './src/hooks/useSettings';
+import MoodProvider from './src/context/MoodProvider';
 
 export default function App() {
     const [, , setExpoPushToken] = useState('');
@@ -42,15 +45,17 @@ export default function App() {
 
     return (
         <HabitProvider>
-            <NativeBaseProvider theme={theme} colorModeManager={colorModeManager}>
-                <NavigationContainer theme={useColorModeValue(DefaultTheme, DarkTheme)}>
-                    <SafeAreaProvider>
-                        <StatusBar style="auto" />
-                        <FlashMessage position="top" />
-                        <MainAppStack />
-                    </SafeAreaProvider>
-                </NavigationContainer>
-            </NativeBaseProvider>
+            <MoodProvider>
+                <NativeBaseProvider theme={theme} colorModeManager={colorModeManager}>
+                    <NavigationContainer theme={useColorModeValue(DefaultTheme, DarkTheme)}>
+                        <SafeAreaProvider>
+                            <StatusBar style="auto" />
+                            <FlashMessage position="top" />
+                            <MainAppStack />
+                        </SafeAreaProvider>
+                    </NavigationContainer>
+                </NativeBaseProvider>
+            </MoodProvider>
         </HabitProvider>
     );
 }

@@ -2,14 +2,15 @@ import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useHabits } from '../context/HabitProvider';
-import { colors } from '../utils/colors';
-import { deleteNotifications, getAllNotifications } from '../utils/helpers/notification';
+import { deleteNotifications } from '../utils/helpers/notification';
 import { Box, Center, Flex, HStack, Text, useColorModeValue } from 'native-base';
-import MainButton from '../components/uiComponents/Button';
-import { FrequencySwitchContainer } from '../utils/StyledComponents/Styled';
 import { Ionicons } from '@expo/vector-icons';
 import styled from 'styled-components';
 import ListContainer from '../components/uiComponents/ListContainer';
+import useSettings from '../hooks/useSettings';
+
+const appMetaData = require('../../app.json');
+const versionNumber = Object.values(appMetaData).map((item) => item.version)[0];
 
 const settingData = [
     {
@@ -18,7 +19,7 @@ const settingData = [
     },
     {
         id: 1,
-        name: 'Setting',
+        name: 'Theme',
     },
 ];
 
@@ -37,8 +38,10 @@ export const LineBreak = styled.View`
 `;
 
 const Settings = ({ navigation }) => {
-    const { setHabits, habits } = useHabits();
+    const { setHabits } = useHabits();
     const { navigate } = navigation;
+
+    const { colors, setColor } = useSettings();
 
     const displayDeleteAlert = () => {
         Alert.alert(
@@ -61,6 +64,7 @@ const Settings = ({ navigation }) => {
         navigation.goBack();
         AsyncStorage.clear();
         setHabits([]);
+        setColor('#FF4040');
         deleteNotifications();
     };
 
@@ -75,17 +79,24 @@ const Settings = ({ navigation }) => {
         />
     );
 
-    const renderSetting = (item) => (
+    const renderSetting = (item, wantToNavigate = true, color) => (
         <SettingTouchable
-            onPress={() =>
-                navigate('SettingsDetailScreen', {
-                    name: item.name,
-                })
-            }
+            onPress={() => {
+                if (!!wantToNavigate) {
+                    navigate('SettingsDetailScreen', {
+                        name: item.name,
+                    });
+                }
+                if (!wantToNavigate) {
+                    displayDeleteAlert();
+                }
+            }}
         >
             <HStack>
                 <Box p={1}>
-                    <Text fontSize="md">{item.name}</Text>
+                    <Text fontSize="md" color={color !== '' && color}>
+                        {item.name}
+                    </Text>
                 </Box>
             </HStack>
             <Ionicons name="chevron-forward" size={20} color="gray" />
@@ -98,7 +109,7 @@ const Settings = ({ navigation }) => {
                 <Box mt={40}>
                     <Box px={4}>
                         <Text fontSize="xs" marginLeft={4}>
-                            PREFERENCES
+                            CUSTOMIZATION
                         </Text>
                         <ListContainer colorNumber={900}>
                             {settingData.map((item, index) => (
@@ -109,13 +120,33 @@ const Settings = ({ navigation }) => {
                             ))}
                         </ListContainer>
                     </Box>
+                    <Box px={4} mt={4}>
+                        <Text fontSize="xs" marginLeft={4}>
+                            PRIVACY
+                        </Text>
+                        <ListContainer colorNumber={900}>
+                            <Box>{renderSetting({ name: 'Privacy policy' })}</Box>
+                            {renderLineBreak()}
+                            <Box>
+                                {renderSetting({ name: 'Delete all data' }, false, colors.error)}
+                            </Box>
+                        </ListContainer>
+                    </Box>
+                </Box>
+                <Box px={4} mt={4}>
+                    <Text fontSize="xs" marginLeft={4}>
+                        FEEDBACK
+                    </Text>
+                    <ListContainer colorNumber={900}>
+                        <Box>{renderSetting({ name: 'Send feedback' })}</Box>
+                    </ListContainer>
                 </Box>
                 <Center justify="flex-end" mt={100}>
-                    <TouchableOpacity onPress={() => displayDeleteAlert()}>
-                        <Text fontWeight={700} color={colors.mainPurple} fontSize="xl">
-                            Delete all data
+                    <Box mt={10}>
+                        <Text fontSize="sm" color="grey">
+                            Version {versionNumber}
                         </Text>
-                    </TouchableOpacity>
+                    </Box>
                 </Center>
             </ScrollView>
         </Flex>

@@ -1,18 +1,10 @@
 import { themeTools } from 'native-base';
 import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
-import { colors } from '../colors';
 
 const deviceWidth = Dimensions.get('window').width;
 
-const { mainBackground, mainPurple } = colors;
-
 const radius = '18px';
-
-export const MainContainer = styled.View`
-    flex: 1;
-    background-color: ${colors.mainBackground};
-`;
 
 export const HomeheaderContainer = styled.View`
     flex-direction: row;
@@ -68,11 +60,6 @@ export const ModalView = styled.View`
     align-items: center;
 `;
 
-export const ModalContent = styled.View`
-    flex: 1;
-    background-color: ${mainBackground};
-`;
-
 export const InputContainer = styled.View`
     flex-direction: column;
     justify-content: center;
@@ -93,47 +80,6 @@ export const ButtonContainer = styled.View`
     left: 20px;
     right: 20px;
     justify-content: center;
-    align-items: center;
-`;
-
-export const CreateHabitButton = styled.TouchableOpacity`
-    width: 180px;
-    height: 60px;
-    background-color: ${mainPurple};
-    justify-content: center;
-    align-items: center;
-    border-radius: 20px;
-`;
-
-export const HabitNextButton = styled.TouchableOpacity`
-    width: ${deviceWidth - 40}px
-    height: 60px;
-    background-color: ${mainPurple};
-    justify-content: center;
-    align-items: center;
-    border-radius: ${radius};
-`;
-
-export const PreDefinedContainer = styled.View`
-    margin-top: 10px;
-    justify-content: space-between;
-    background-color: ${colors.mainBoxes};
-    border-radius: 4px;
-`;
-
-export const PreDefinedHabitsContainer = styled.View`
-    background-color: ${colors.mainBoxes};
-    width: ${deviceWidth - 30}px
-    height: 60px;
-    border-radius: 4px;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-`;
-
-export const HabitScreenContainer = styled.View`
-    flex: 1;
-    background-color: ${colors.mainBackground};
     align-items: center;
 `;
 
@@ -275,27 +221,10 @@ export const ShowHabitActionsContainer = styled.View`
     margin-bottom: 45px;
 `;
 
-export const ShowHabitActionsButton = styled.TouchableOpacity`
-    width: ${deviceWidth - 30}px;
-    height: 60px;
-    background-color: ${colors.mainBoxes};
-    justify-content: center;
-    border-radius: ${radius}
-    padding: 15px;
-    margin-top: 10px;
-`;
 export const ShowHabitActionsAddContainer = styled.View`
     flex-direction: row;
     justify-content: space-evenly;
     margin-bottom: 20px;
-`;
-
-export const ShowHabitActionsAddButton = styled.TouchableOpacity`
-    width: 70px;
-    height: ${colors.mainBoxes};
-    justify-content: center;
-    border-radius: 15px;
-    margin-top: 10px;
 `;
 
 export const CalendarFrequencyContainer = styled.View`
@@ -388,63 +317,6 @@ export const LeftAction = styled.View`
 export const ItemTimesContainer = styled.TouchableOpacity`
     position: absolute;
     right: 30px;
-`;
-
-export const TextNameAndStatus = styled.View``;
-
-export const RightAction = styled.TouchableOpacity`
-    background-color: ${colors.mainPurple};
-    width: 75px;
-    margin-top: 13px;
-    border-radius: 15px;
-    justify-content: center;
-    align-items: center;
-`;
-
-export const ProgressModalMainView = styled.View`
-    flex: 1;
-    background-color: black;
-    opacity: 0.979;
-`;
-
-export const ProgressModalView = styled.View`
-    margin: 20px;
-    background-color: ${colors.mainPurple};
-    border-radius: ${radius};
-    padding: 10px;
-    align-items: center;
-    height: auto;
-    width: 350px;
-    opacity: 0.979;
-`;
-
-export const ProgressModalCentered = styled.View`
-    flex: 1;
-    background-color: rgba(0, 0, 0, 0.6);
-    justify-content: center;
-    align-items: center;
-`;
-
-export const ProgressModalCloseButton = styled.TouchableOpacity`
-    justify-content: center;
-    background-color: transparent;
-    border: 2px;
-    border-color: ${colors.mainBackground};
-    align-items: center;
-    height: 60px;
-    width: 90%;
-    border-radius: 30px;
-    margin-top: 10px;
-`;
-
-export const ProgressModalShareButton = styled.TouchableOpacity`
-    justify-content: center;
-    background-color: ${colors.mainBoxes};
-    align-items: center;
-    height: 60px;
-    width: 90%;
-    border-radius: 30px;
-    margin-top: 15px;
 `;
 
 export const DateTimePickerView = styled.View`

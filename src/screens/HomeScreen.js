@@ -1,17 +1,19 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { RefreshControl, ScrollView } from 'react-native';
-import { colors } from '../utils/colors';
 import { useHabits } from '../context/HabitProvider';
 import HabitListItem from '../components/uiComponents/HabitListItem';
 import { Text, useColorModeValue, Flex, Center, HStack, Box, Spacer } from 'native-base';
 import Spinner from 'react-native-loading-spinner-overlay';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { getAllNotifications } from '../utils/helpers/notification';
+import useSettings from '../hooks/useSettings';
 
 const wait = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
 
 const TotalProgressCircle = () => {
     const { weeklyHabits } = useHabits();
+
+    const { colors } = useSettings();
 
     const totalTimesWeeklyToDo = weeklyHabits
         ?.map((habit) => habit.times * habit.days)
@@ -33,7 +35,7 @@ const TotalProgressCircle = () => {
                 radius={95}
                 textColor={useColorModeValue('black', 'white')}
                 maxValue={100}
-                activeStrokeColor={value === totalTimesWeeklyToDo ? '#43E443' : colors.mainPurple}
+                activeStrokeColor={value === totalTimesWeeklyToDo ? '#43E443' : colors.mainColor}
                 activeStrokeSecondaryColor={value === totalTimesWeeklyToDo ? '#43E4E4' : '#C25AFF'}
             />
         </Box>
@@ -43,6 +45,8 @@ const TotalProgressCircle = () => {
 const HomeScreen = () => {
     const [refreshing, setRefreshing] = useState(false);
     const { habits, weeklyHabits, monthlyHabits, getHabits, habitsLoading } = useHabits();
+
+    const { colors } = useSettings();
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
@@ -81,14 +85,14 @@ const HomeScreen = () => {
                 fontSize: 16,
                 fontWeight: '400',
             }}
-            color={colors.mainPurple}
+            color={colors.mainColor}
         />
     );
 
     if (!habits.length && !habitsLoading)
         return (
             <Center mt={10} flex={1} bg={useColorModeValue(colors.white, colors.black)}>
-                <Text fontWeight={800} fontSize="3xl" color={colors.mainPurple}>
+                <Text fontWeight={800} fontSize="3xl" color={colors.mainColor}>
                     No habits yet
                 </Text>
             </Center>
@@ -100,8 +104,8 @@ const HomeScreen = () => {
                 refreshControl={
                     <RefreshControl
                         title="Release to refresh"
-                        tintColor={colors.mainPurple}
-                        titleColor={colors.mainPurple}
+                        tintColor={colors.mainColor}
+                        titleColor={colors.mainColor}
                         refreshing={refreshing}
                         onRefresh={onRefresh}
                     />

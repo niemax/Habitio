@@ -1,4 +1,3 @@
-import { colors } from '../colors';
 import { getCurrentDateFormattedForCalendarComponent } from './dateHelpers';
 import { haptics } from './haptics';
 import { toasts } from './toastMethods';
@@ -47,13 +46,7 @@ export const handleDoneOtherDay = (date, id, habits, habitSetter) => {
 
             if (!(date in completedDatesObj)) {
                 completedDatesObj[date] = {
-                    marked: false,
                     selected: true,
-                    customStyles: {
-                        container: {
-                            backgroundColor: colors.mainPurple,
-                        },
-                    },
                 };
                 if (habit.id === id) {
                     habit.completedDates = completedDatesObj;

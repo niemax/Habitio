@@ -1,5 +1,4 @@
 import { showMessage } from 'react-native-flash-message';
-import { colors } from '../colors';
 
 const words = ['Awesome!', 'Super!', 'Horrendous!', 'Excellent!', 'Great!'];
 
@@ -30,7 +29,6 @@ export const toasts = {
             duration: 4000,
             message: `${keyword} successfully ${verb}`,
             titleStyle: {
-                color: colors.error,
                 fontSize: 16,
             },
             icon: 'info',

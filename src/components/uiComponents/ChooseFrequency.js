@@ -9,7 +9,7 @@ import {
 } from '../../utils/StyledComponents/Styled';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { Box, Flex, Button, Text, useColorMode, KeyboardAvoidingView, Center } from 'native-base';
-import { colors } from '../../utils/colors';
+import useSettings from '../../hooks/useSettings';
 
 export default function Frequency({
     switchStates: { isEnabled, isEnabledDate, isEnabledSpecific, isEnabledEndDate },
@@ -34,6 +34,8 @@ export default function Frequency({
     },
 }) {
     const { colorMode } = useColorMode();
+
+    const { colors } = useSettings();
 
     const renderLineBreak = () => (
         <View
@@ -66,7 +68,7 @@ export default function Frequency({
                     <FrequencySelector onPress={() => handleFrequencySelection('weekly')}>
                         <Text fontSize="md">Weekly</Text>
                         {isSelectedWeekly ? (
-                            <Center rounded="full" bg={colors.mainPurple} w={6} h={6}>
+                            <Center rounded="full" bg={colors.mainColor} w={6} h={6}>
                                 {isSelectedWeekly && (
                                     <Ionicons name="checkmark" size="auto" color="white" />
                                 )}
@@ -78,7 +80,7 @@ export default function Frequency({
                 <FrequencySelector onPress={() => handleFrequencySelection('monthly')}>
                     <Text fontSize="md">Monthly</Text>
                     {!isSelectedWeekly ? (
-                        <Center rounded="full" bg={colors.mainPurple} w={6} h={6}>
+                        <Center rounded="full" bg={colors.mainColor} w={6} h={6}>
                             {!isSelectedWeekly && (
                                 <Ionicons name="checkmark" size="auto" color="white" />
                             )}
@@ -304,7 +306,7 @@ export default function Frequency({
                                 value={selectedValue}
                                 style={{
                                     fontSize: 16,
-                                    color: colors.mainPurple,
+                                    color: colors.mainColor,
                                 }}
                                 placeholderTextColor="gray"
                                 onChangeText={(text) => setSelectedValue(text)}

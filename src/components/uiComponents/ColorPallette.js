@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { ModalContent } from '../../utils/StyledComponents/Styled';
-import { habitSelectionColors as colors } from '../../utils/colors';
+import useSettings from '../../hooks/useSettings';
 import { colorPalletteColor, colorPalletteView } from '../../utils/globalStyles';
 
 export default function ColorPalletteModal({ sheetRef, updateColor }) {
+    const { habitSelectionColors } = useSettings();
     return (
-        <ModalContent>
+        <View>
             <View style={colorPalletteView}>
-                {colors.map((item, index) => (
+                {habitSelectionColors.map((item, index) => (
                     <View key={index.toString()}>
                         <TouchableOpacity
                             onPress={() => {
@@ -23,6 +23,6 @@ export default function ColorPalletteModal({ sheetRef, updateColor }) {
                     </View>
                 ))}
             </View>
-        </ModalContent>
+        </View>
     );
 }

@@ -1,10 +1,8 @@
-import { colors } from './utils/colors';
-
 const data = [
     {
         category: 'Self-Care',
         mainIcon: require('./assets/flatIcons/heart.png'),
-        color: colors.error,
+        color: '#EA5B71',
         image: require('./assets/flatIcons/selfcare.png'),
         habits: [
             {
@@ -63,7 +61,7 @@ const data = [
     {
         category: 'Fitness',
         mainIcon: require('./assets/flatIcons/flexions-exercise.png'),
-        color: colors.mainPurple,
+        color: '#2EB284',
         image: require('./assets/flatIcons/dumbbell.png'),
         habits: [
             {

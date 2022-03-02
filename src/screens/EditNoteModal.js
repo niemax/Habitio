@@ -40,21 +40,18 @@ export default function EditNote({ route, navigation }) {
             <KeyboardAvoidingView
                 behavior="padding"
                 style={{
-                    flex: 3,
-                    paddingHorizontal: 10,
+                    flex: 2,
                     alignItems: 'center',
                 }}
             >
-                <SafeAreaView>
-                    <MainButton
-                        onPress={() => {
-                            handleNoteEdit(allNotes, id, habitSetter, habits, inputText);
-                            goBack();
-                        }}
-                    >
-                        Save
-                    </MainButton>
-                </SafeAreaView>
+                <MainButton
+                    onPress={() => {
+                        handleNoteEdit(allNotes, id, habitSetter, habits, inputText);
+                        goBack();
+                    }}
+                >
+                    Save
+                </MainButton>
             </KeyboardAvoidingView>
         </MainContainer>
     );

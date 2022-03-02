@@ -5,9 +5,7 @@ export const getCurrentDay = (day = new Date()) => day.getDay();
 
 export const getCurrentMonth = () => getMonth(new Date());
 
-export const getCurrentDateFormatted = (d = moment().format('ddd, ll')) => {
-    return { d };
-};
+export const getCurrentDateFormatted = (d) => moment().format('ddd, ll', d);
 
 export const getCurrentDateFormattedForCalendarComponent = (
     newDate = format(new Date(), 'yyyy-MM-dd')

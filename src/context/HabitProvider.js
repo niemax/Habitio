@@ -12,13 +12,13 @@ import { toasts } from '../utils/helpers/toastMethods';
 
 const HabitContext = createContext();
 
-const currentDay = getCurrentDay();
-const currentMonth = getCurrentMonth();
-const currentWeek = getCurrentWeek();
-
 const HabitProvider = ({ children }) => {
     const [habits, setHabits] = useState([]);
     const [habitsLoading, setHabitsLoading] = useState(false);
+
+    const currentDay = getCurrentDay();
+    const currentMonth = getCurrentMonth();
+    const currentWeek = getCurrentWeek();
 
     const getHabits = async () => {
         if (AppLoading) setHabitsLoading(true);

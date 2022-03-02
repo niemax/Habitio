@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import { Box, Flex, Button, useColorModeValue, Text } from 'native-base';
 import Modal from 'react-native-modal';
 import { Keyboard, TextInput } from 'react-native';
-import { colors } from '../../utils/colors';
 import { useHabits } from '../../context/HabitProvider';
+import { renderIconBackgroundColor } from '../../utils/helpers/renderIconBackgroundColor';
+import useSettings from '../../hooks/useSettings';
 
 const NoteModal = ({ showModal, setShowModal, id }) => {
     const [inputText, setInputText] = useState('');
     const [selectedDay] = useState(new Date());
+
+    const { colors, color } = useSettings();
 
     const { habitSetter, habits } = useHabits();
 
@@ -39,6 +42,8 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
             swipeThreshold={300}
             avoidKeyboard={true}
             onBackdropPress={() => Keyboard.dismiss()}
+            animationInTiming={500}
+            animationOutTiming={500}
         >
             <Box bg={useColorModeValue('gray.100', 'gray.800')} rounded="3xl">
                 <Text textAlign="center" fontSize="lg" fontWeight={700} marginTop="10px">
@@ -66,7 +71,7 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
                     justify="space-around"
                     mb={4}
                 >
-                    <Button.Group colorScheme="rose" space={2}>
+                    <Button.Group colorScheme={renderIconBackgroundColor(color)} space={2}>
                         <Button
                             size="lg"
                             bg={useColorModeValue('gray.200', 'gray.700')}

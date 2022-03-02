@@ -1,5 +1,3 @@
-import { colors } from './colors';
-
 export const textInputStyling = {
     color: '#FFF',
     fontSize: 20,
@@ -58,7 +56,6 @@ export const showHabitImage = {
 };
 
 export const calendarStyles = {
-    indicatorColor: colors.mainPurple,
     textDayFontSize: 20,
     textMonthFontSize: 20,
     textMonthFontWeight: '600',
@@ -101,18 +98,6 @@ export const habitColor = {
     width: 25,
     height: 25,
     borderRadius: 50,
-};
-
-export const showHabitTimerIndicator = {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 15,
-    height: 40,
-    width: 125,
-    backgroundColor: colors.mainBoxes,
-    borderRadius: 15,
-    marginBottom: 20,
 };
 
 export const colorPalletteView = {
