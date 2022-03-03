@@ -1,13 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Dimensions, Keyboard, TouchableOpacity, View } from 'react-native';
-import { Box, Center, FlatList, Flex, Stagger, Text, useColorModeValue } from 'native-base';
+import {
+    Box,
+    Center,
+    FlatList,
+    Flex,
+    Stagger,
+    Text,
+    useColorModeValue,
+    Tooltip,
+} from 'native-base';
 import Modal from 'react-native-modal';
 import MainButton from '../components/uiComponents/Button';
 import { AntDesign, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import useSettings from '../hooks/useSettings';
 import { useMoods } from '../context/MoodProvider';
 import { HabitDescriptionInput } from '../utils/StyledComponents/Styled';
-import { getCurrentDateFormatted } from '../utils/helpers/dateHelpers';
+import {
+    getCurrentDateFormatted,
+} from '../utils/helpers/dateHelpers';
+import { renderEmoji } from './MoodDetailsScreen';
 
 const { width } = Dimensions.get('window');
 
@@ -18,18 +30,37 @@ const MoodMainScreen = ({ navigation }) => {
     const [text, setText] = useState('');
     const [moodIndex, setMoodIndex] = useState();
     const [moodName, setMoodName] = useState('');
+    const [tooltipOpen, setTooltipOpen] = useState();
 
     const { navigate } = navigation;
     const textInputRef = useRef(null);
 
+    useEffect(() => {
+        console.log(moods)
+        checkIfShouldOpenTooltip();
+        const timeout = setTimeout(() => setTooltipOpen(false), 5000);
+        return () => clearTimeout(timeout);
+    }, []);
+
+    const checkIfShouldOpenTooltip = () => {
+        const currentDate = getCurrentDateFormatted(new Date());
+        const includesCurrentDate = moods.every((mood) => mood.date !== currentDate)
+        if (!!includesCurrentDate) {
+           setTooltipOpen(true) 
+           return 1;
+        }
+        return - 1
+    };
+
     const handleMood = () => {
-        const moodDispatchObject = {
+        const date = getCurrentDateFormatted(new Date());
+        const moodObject = {
             text: text,
             moodName: moodName,
             id: Math.floor(Math.random() * 10000),
-            date: getCurrentDateFormatted(new Date()),
+            date: date,
         };
-        addMood(moodDispatchObject);
+        addMood(moodObject);
         setIsVisible(false);
         setMoodName('');
         setText('');
@@ -77,7 +108,7 @@ const MoodMainScreen = ({ navigation }) => {
                 }}
             >
                 <Box px={4} py={3}>
-                    <Text fontSize="xl" fontWeight={800} mb={2}>
+                    <Text fontSize="xl" fontWeight={600} mb={2}>
                         {item.date}
                     </Text>
                 </Box>
@@ -96,12 +127,11 @@ const MoodMainScreen = ({ navigation }) => {
                     }}
                 >
                     <Flex direction="row" align="center">
-                        <MaterialCommunityIcons
-                            name={`emoticon-${item.moodName.toLowerCase()}`}
-                            size={32}
-                            color={colors.mainColor}
-                        />
-                        <Text ml={4} fontSize="md" fontWeight={600}>
+                        <Text fontSize={30}>
+
+                        {renderEmoji(item.moodName)} 
+                        </Text>
+                        <Text ml={1} fontSize="md" fontWeight={600}>
                             {item.moodName}
                         </Text>
                     </Flex>
@@ -122,7 +152,7 @@ const MoodMainScreen = ({ navigation }) => {
                     textInputRef.current?.focus();
                 }}
             >
-                <MaterialCommunityIcons name="emoticon-happy" size={60} color={colors.mainColor} />
+                <Text fontSize={70}>😊</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => {
@@ -130,11 +160,7 @@ const MoodMainScreen = ({ navigation }) => {
                     textInputRef.current?.focus();
                 }}
             >
-                <MaterialCommunityIcons
-                    name="emoticon-neutral"
-                    size={60}
-                    color={colors.mainColor}
-                />
+               <Text fontSize={70}>😐</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => {
@@ -142,7 +168,7 @@ const MoodMainScreen = ({ navigation }) => {
                     textInputRef.current?.focus();
                 }}
             >
-                <MaterialCommunityIcons name="emoticon-sad" size={60} color={colors.mainColor} />
+                 <Text fontSize={70}>😞</Text>
             </TouchableOpacity>
         </>
     );
@@ -211,19 +237,40 @@ const MoodMainScreen = ({ navigation }) => {
     );
 
     const renderFooter = () => (
-        <View style={{ position: 'absolute', bottom: 100, right: 30 }}>
-            <MainButton
-                align="center"
-                justify="center"
-                w={12}
-                h={12}
-                rounded="full"
-                onPress={() => setIsVisible(true)}
-                shadow={4}
+        <Box>
+            <Tooltip
+                label={
+                    <Text fontSize="md" color={useColorModeValue('black', 'white')}>
+                        How you are you feeling today? 😊{' '}
+                    </Text>
+                }
+                isOpen={tooltipOpen}
+                openDelay={2000}
+                placement="top left"
+                bg={useColorModeValue('white', 'gray.800')}
+                h="auto"
+                py={2}
+                shadow="none"
+                rounded="xl"
+                closeOnClick={true}
+                hasArrow={true}
+                offset={2}
             >
-                <AntDesign name="plus" size={24} color="white" />
-            </MainButton>
-        </View>
+                <View style={{ position: 'absolute', bottom: 100, right: 30 }}>
+                    <MainButton
+                        align="center"
+                        justify="center"
+                        w={12}
+                        h={12}
+                        rounded="full"
+                        onPress={() => setIsVisible(true)}
+                        shadow={4}
+                    >
+                        <AntDesign name="plus" size={24} color="white" />
+                    </MainButton>
+                </View>
+            </Tooltip>
+        </Box>
     );
 
     if (!!isLoading)

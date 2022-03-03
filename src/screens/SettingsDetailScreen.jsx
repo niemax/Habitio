@@ -4,7 +4,8 @@ import ListContainer from '../components/uiComponents/ListContainer';
 import MainContainer from '../components/uiComponents/MainContainer';
 import { LineBreak, SettingTouchable } from './SettingsScreen';
 import { Ionicons } from '@expo/vector-icons';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import styled from 'styled-components';
 import useSettings from '../hooks/useSettings';
 

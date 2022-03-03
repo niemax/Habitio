@@ -18,7 +18,6 @@ export const handleDoneToday = (id, name, habits, habitSetter) => {
                     habit.completedDates = completedDatesObj;
                     habit.streak.push(1);
                     habit.timesDoneThisWeek = habit.times;
-                    toasts.info(name);
                     haptics.success();
                 }
             } else {
