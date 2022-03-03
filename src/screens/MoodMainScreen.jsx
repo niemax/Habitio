@@ -33,6 +33,7 @@ const MoodMainScreen = ({ navigation }) => {
         setIsVisible(false);
         setMoodName('');
         setText('');
+        setMoodIndex();
     };
 
     const MOODS = ['Happy', 'Neutral', 'Sad'];
@@ -68,7 +69,7 @@ const MoodMainScreen = ({ navigation }) => {
                     opacity: 1,
                     transition: {
                         type: 'spring',
-                        mass: 0.5,
+                        mass: 0.6,
                         stagger: {
                             offset: 50,
                         },
@@ -176,20 +177,20 @@ const MoodMainScreen = ({ navigation }) => {
                 </Text>
                 <Box mt={2}>
                     <Text fontSize="md" textAlign="center">
-                        Which face describes you current feeling the best?
+                        Which face describes your current feeling the best?
                     </Text>
                     <Flex direction="row" justify="space-around" mt={8}>
                         {renderMoodButtons()}
                     </Flex>
                     <Box mt={8}>
                         <Text fontWeight={500} fontSize="md">
-                            Add a comment
+                            Add a comment (optional)
                         </Text>
                         <Center>
                             <HabitDescriptionInput
                                 ref={textInputRef}
                                 multiline={true}
-                                placeholder="Optional"
+                                placeholder={!!moodName ? `Why am I ${moodName}?` : 'Comment'}
                                 placeholderTextColor="gray"
                                 style={{
                                     backgroundColor: useColorModeValue(colors.white, colors.black),
@@ -227,8 +228,8 @@ const MoodMainScreen = ({ navigation }) => {
 
     if (!!isLoading)
         return (
-            <Center>
-                <ActivityIndicator size="small" />
+            <Center flex={1}>
+                <ActivityIndicator size="small" color={colors.mainColor} />
             </Center>
         );
 

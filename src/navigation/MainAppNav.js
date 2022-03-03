@@ -38,7 +38,7 @@ const MainTab = () => {
                 tabBarIcon: ({ focused }) => {
                     let iconName;
 
-                    if (route.name === 'Home') {
+                    if (route.name === 'Dashboard') {
                         iconName = 'list';
                     } else if (route.name === 'Settings') {
                         iconName = 'settings';
@@ -72,15 +72,26 @@ const MainTab = () => {
             })}
         >
             <Tab.Screen
-                name="Home"
+                name="Dashboard"
                 options={{
-                    tabBarLabel: 'Dashboard',
                     tabBarLabelStyle: { fontSize: 12 },
                 }}
                 component={MainAppStack}
             />
-            <Tab.Screen name="Mood" component={MoodStack} />
-            <Tab.Screen name="Settings" component={SettingsStack} />
+            <Tab.Screen
+                name="Mood"
+                options={{
+                    tabBarLabelStyle: { fontSize: 12 },
+                }}
+                component={MoodStack}
+            />
+            <Tab.Screen
+                name="Settings"
+                options={{
+                    tabBarLabelStyle: { fontSize: 12 },
+                }}
+                component={SettingsStack}
+            />
         </Tab.Navigator>
     );
 };
@@ -114,7 +125,6 @@ const MoodStack = () => {
                     headerTitleStyle: {
                         color: colors.mainColor,
                     },
-
                     headerRight: () => (
                         <Text fontWeight={700}>{happyMoodCount} happy days ❤️‍🔥 </Text>
                     ),
@@ -134,6 +144,7 @@ const MoodStack = () => {
                         color: colorMode === 'light' ? 'black' : 'white',
                     },
                     headerTitle: route.params.date,
+                    headerBackTitle: 'Back',
                 })}
                 component={MoodDetailsScreen}
             />

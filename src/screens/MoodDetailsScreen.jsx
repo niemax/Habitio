@@ -16,9 +16,20 @@ const MoodDetailsScreen = ({ route, navigation }) => {
     return (
         <Flex flex={1} bg={useColorModeValue(colors.white, colors.black)}>
             <Box mt={40} px={4}>
+                <TouchableOpacity
+                    style={{ marginBottom: 30 }}
+                    onPress={() =>
+                        navigate('MoodEditScreen', {
+                            text: moodItem.text,
+                            id: id,
+                        })
+                    }
+                >
+                    <Ionicons name="pencil" size={28} color={colors.mainColor} />
+                </TouchableOpacity>
                 <HStack>
                     <Text fontSize="lg" fontWeight={600}>
-                        On this beautiful day I felt:{' '}
+                        On this {moodItem?.moodName === 'Happy' ? 'beautiful' : 'nice'} day I felt:{' '}
                         <Text fontWeight={800}>{moodItem?.moodName}</Text>, because{' '}
                         <Text fontWeight={800}>
                             {!!moodItem?.text
@@ -28,18 +39,6 @@ const MoodDetailsScreen = ({ route, navigation }) => {
                                   } day`}
                         </Text>
                     </Text>
-
-                    <TouchableOpacity
-                        style={{ marginLeft: 30 }}
-                        onPress={() =>
-                            navigate('MoodEditScreen', {
-                                text: moodItem.text,
-                                id: id,
-                            })
-                        }
-                    >
-                        <Ionicons name="pencil" size={24} color={colors.mainColor} />
-                    </TouchableOpacity>
                 </HStack>
                 <TouchableOpacity
                     onPress={() => {
