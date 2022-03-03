@@ -1,11 +1,14 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getCurrentDateFormatted } from '../utils/helpers/dateHelpers';
 
 const MoodContext = createContext();
 
 const MoodProvider = ({ children }) => {
     const [moods, setMoods] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+
+    const currentDay = getCurrentDateFormatted(new Date());
 
     const addMood = async (props) => {
         try {
@@ -50,8 +53,15 @@ const MoodProvider = ({ children }) => {
         updateMoods(filtered);
     };
 
+    console.log(moods);
+
     const getHappyMoodCount = () =>
         moods.map((mood) => mood.moodName === 'Happy').reduce((acc, curr) => acc + curr ?? 0, 0);
+
+    const getTodaysMood = () => {
+        const found = moods?.find((mood) => mood.date === currentDay);
+        return found?.moodName;
+    };
 
     useEffect(() => {
         getMoods();
@@ -69,6 +79,7 @@ const MoodProvider = ({ children }) => {
                 deleteMood,
                 updateMoods,
                 getHappyMoodCount,
+                getTodaysMood,
             }}
         >
             {children}

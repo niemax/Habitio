@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import styled from 'styled-components';
 import ListContainer from '../components/uiComponents/ListContainer';
 import useSettings from '../hooks/useSettings';
+import { useMoods } from '../context/MoodProvider';
 
 const appMetaData = require('../../app.json');
 const versionNumber = Object.values(appMetaData).map((item) => item.version)[0];
@@ -42,6 +43,7 @@ const Settings = ({ navigation }) => {
     const { navigate } = navigation;
 
     const { colors, setColor } = useSettings();
+    const { setMoods } = useMoods();
 
     const displayDeleteAlert = () => {
         Alert.alert(
@@ -64,6 +66,7 @@ const Settings = ({ navigation }) => {
         navigation.goBack();
         AsyncStorage.clear();
         setHabits([]);
+        setMoods([]);
         setColor('#FF4040');
         deleteNotifications();
     };

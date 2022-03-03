@@ -7,6 +7,8 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { getAllNotifications } from '../utils/helpers/notification';
 import useSettings from '../hooks/useSettings';
+import { renderEmoji } from './MoodDetailsScreen';
+import { useMoods } from '../context/MoodProvider';
 
 const wait = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
 
@@ -47,6 +49,8 @@ const HomeScreen = () => {
     const { habits, weeklyHabits, monthlyHabits, getHabits, habitsLoading } = useHabits();
 
     const { colors } = useSettings();
+
+    const { getTodaysMood } = useMoods();
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
@@ -115,7 +119,11 @@ const HomeScreen = () => {
                     renderContentLoader()
                 ) : (
                     <>
-                        <Center mt={40}>
+                        <Box mt={40} px={4}>
+                            <Text fontSize="md">Today's mood: {renderEmoji(getTodaysMood())} </Text>
+                        </Box>
+
+                        <Center>
                             <TotalProgressCircle />
                         </Center>
                         <Box>{renderHeader('weekly', 10)}</Box>

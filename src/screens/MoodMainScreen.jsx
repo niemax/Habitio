@@ -12,13 +12,11 @@ import {
 } from 'native-base';
 import Modal from 'react-native-modal';
 import MainButton from '../components/uiComponents/Button';
-import { AntDesign, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
+import { AntDesign,  Ionicons } from '@expo/vector-icons';
 import useSettings from '../hooks/useSettings';
 import { useMoods } from '../context/MoodProvider';
 import { HabitDescriptionInput } from '../utils/StyledComponents/Styled';
-import {
-    getCurrentDateFormatted,
-} from '../utils/helpers/dateHelpers';
+import { getCurrentDateFormatted } from '../utils/helpers/dateHelpers';
 import { renderEmoji } from './MoodDetailsScreen';
 
 const { width } = Dimensions.get('window');
@@ -36,7 +34,6 @@ const MoodMainScreen = ({ navigation }) => {
     const textInputRef = useRef(null);
 
     useEffect(() => {
-        console.log(moods)
         checkIfShouldOpenTooltip();
         const timeout = setTimeout(() => setTooltipOpen(false), 5000);
         return () => clearTimeout(timeout);
@@ -44,12 +41,12 @@ const MoodMainScreen = ({ navigation }) => {
 
     const checkIfShouldOpenTooltip = () => {
         const currentDate = getCurrentDateFormatted(new Date());
-        const includesCurrentDate = moods.every((mood) => mood.date !== currentDate)
+        const includesCurrentDate = moods.every((mood) => mood.date !== currentDate);
         if (!!includesCurrentDate) {
-           setTooltipOpen(true) 
-           return 1;
+            setTooltipOpen(true);
+            return 1;
         }
-        return - 1
+        return -1;
     };
 
     const handleMood = () => {
@@ -73,17 +70,7 @@ const MoodMainScreen = ({ navigation }) => {
         setMoodName(MOODS[moodIndex]);
     }, [moodIndex]);
 
-    const renderLineBreak = () => (
-        <View
-            style={{
-                borderBottomColor: 'gray',
-                borderBottomWidth: 0.4,
-                opacity: 0.4,
-                marginTop: 5,
-                width: '100%',
-            }}
-        />
-    );
+    const currentDate = getCurrentDateFormatted(new Date());
 
     const renderMoodItem = ({ item }) => (
         <>
@@ -109,7 +96,7 @@ const MoodMainScreen = ({ navigation }) => {
             >
                 <Box px={4} py={3}>
                     <Text fontSize="xl" fontWeight={600} mb={2}>
-                        {item.date}
+                        {item.date === currentDate ? 'Today' : item.date}
                     </Text>
                 </Box>
                 <TouchableOpacity
@@ -127,10 +114,7 @@ const MoodMainScreen = ({ navigation }) => {
                     }}
                 >
                     <Flex direction="row" align="center">
-                        <Text fontSize={30}>
-
-                        {renderEmoji(item.moodName)} 
-                        </Text>
+                        <Text fontSize={30}>{renderEmoji(item.moodName)}</Text>
                         <Text ml={1} fontSize="md" fontWeight={600}>
                             {item.moodName}
                         </Text>
@@ -139,7 +123,6 @@ const MoodMainScreen = ({ navigation }) => {
                         <Ionicons name="chevron-forward" size={20} color="gray" />
                     </Box>
                 </TouchableOpacity>
-                {renderLineBreak()}
             </Stagger>
         </>
     );
@@ -160,7 +143,7 @@ const MoodMainScreen = ({ navigation }) => {
                     textInputRef.current?.focus();
                 }}
             >
-               <Text fontSize={70}>😐</Text>
+                <Text fontSize={70}>😐</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => {
@@ -168,7 +151,7 @@ const MoodMainScreen = ({ navigation }) => {
                     textInputRef.current?.focus();
                 }}
             >
-                 <Text fontSize={70}>😞</Text>
+                <Text fontSize={70}>😞</Text>
             </TouchableOpacity>
         </>
     );
@@ -273,6 +256,18 @@ const MoodMainScreen = ({ navigation }) => {
         </Box>
     );
 
+    const ItemSeparatorComponent = () => (
+        <View
+            style={{
+                borderBottomColor: 'gray',
+                borderBottomWidth: 0.4,
+                opacity: 0.4,
+                marginTop: 5,
+                width: '100%',
+            }}
+        />
+    );
+
     if (!!isLoading)
         return (
             <Center flex={1}>
@@ -286,10 +281,11 @@ const MoodMainScreen = ({ navigation }) => {
             <Box flex={1} mt={4}>
                 <FlatList
                     lazy
-                    data={moods}
+                    data={moods?.sort((a,b) => b.date - a.date)}
                     renderItem={renderMoodItem}
                     keyExtractor={({ id }) => id}
                     contentContainerStyle={{ marginTop: 140 }}
+                    ItemSeparatorComponent={ItemSeparatorComponent}
                 />
             </Box>
             {renderFooter()}
