@@ -36,7 +36,7 @@ export const colorModeManager = {
         try {
             await AsyncStorage.setItem('@color-mode', value);
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     },
 };
@@ -146,8 +146,8 @@ const SettingsDetailScreen = ({ route }) => {
                     </ColorPalletteView>
                     <Box mt={4}>
                         <Text fontSize="xs">
-                            <Text fontWeight={700}>Note</Text>: in order for changes to fully take place, you need to restart the
-                            app
+                            <Text fontWeight={700}>Note</Text>: in order for changes to fully take
+                            place, you need to restart the app
                         </Text>
                     </Box>
                 </Box>

@@ -81,6 +81,7 @@ const HabitProvider = ({ children }) => {
 
     const monthlyHabits = habits.filter((habit) => habit.frequency === 'monthly');
     const weeklyHabits = habits.filter((habit) => habit.frequency === 'weekly');
+    const oneTimerHabits = habits.filter((habit) => habit.frequency === 'once');
 
     useEffect(() => {
         getHabits();
@@ -92,6 +93,7 @@ const HabitProvider = ({ children }) => {
                 habits,
                 monthlyHabits,
                 weeklyHabits,
+                oneTimerHabits,
                 habitsLoading,
                 habitSetter,
                 getSpecificHabit,

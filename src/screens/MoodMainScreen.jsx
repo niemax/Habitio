@@ -12,12 +12,13 @@ import {
 } from 'native-base';
 import Modal from 'react-native-modal';
 import MainButton from '../components/uiComponents/Button';
-import { AntDesign,  Ionicons } from '@expo/vector-icons';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 import useSettings from '../hooks/useSettings';
 import { useMoods } from '../context/MoodProvider';
 import { HabitDescriptionInput } from '../utils/StyledComponents/Styled';
 import { getCurrentDateFormatted } from '../utils/helpers/dateHelpers';
 import { renderEmoji } from './MoodDetailsScreen';
+import { scheduleMoodNotification } from '../utils/helpers/notification';
 
 const { width } = Dimensions.get('window');
 
@@ -32,6 +33,10 @@ const MoodMainScreen = ({ navigation }) => {
 
     const { navigate } = navigation;
     const textInputRef = useRef(null);
+
+    useEffect(() => {
+        scheduleMoodNotification();
+    }, []);
 
     useEffect(() => {
         checkIfShouldOpenTooltip();
@@ -188,10 +193,10 @@ const MoodMainScreen = ({ navigation }) => {
                     <Text fontSize="md" textAlign="center">
                         Which face describes your current feeling the best?
                     </Text>
-                    <Flex direction="row" justify="space-around" mt={8}>
+                    <Flex direction="row" justify="space-around" mt={4}>
                         {renderMoodButtons()}
                     </Flex>
-                    <Box mt={8}>
+                    <Box mt={4}>
                         <Text fontWeight={500} fontSize="md">
                             Add a comment (optional)
                         </Text>
@@ -281,7 +286,7 @@ const MoodMainScreen = ({ navigation }) => {
             <Box flex={1} mt={4}>
                 <FlatList
                     lazy
-                    data={moods?.sort((a,b) => b.date - a.date)}
+                    data={moods?.sort((a, b) => b.date - a.date)}
                     renderItem={renderMoodItem}
                     keyExtractor={({ id }) => id}
                     contentContainerStyle={{ marginTop: 140 }}

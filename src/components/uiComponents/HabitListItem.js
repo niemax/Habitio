@@ -125,10 +125,12 @@ const HabitListItem = ({ item }) => {
                                     >
                                         {name}
                                     </Text>
-                                    <Text fontWeight={400} fontSize="sm">
-                                        Goal: {!isSelectedWeekly ? days : times} {unitValue} per{' '}
-                                        {isSelectedWeekly ? 'day' : 'month'}
-                                    </Text>
+                                    {!specificDate && (
+                                        <Text fontWeight={400} fontSize="sm">
+                                            Goal: {!isSelectedWeekly ? days : times} {unitValue} per{' '}
+                                            {isSelectedWeekly ? 'day' : 'month'}
+                                        </Text>
+                                    )}
                                     {specificDate !== null && (
                                         <Text marginTop="4px">
                                             Doing it once on{' '}

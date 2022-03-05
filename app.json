@@ -9,7 +9,7 @@
     "splash": {
       "image": "./src/assets/brand.png",
       "resizeMode": "contain",
-      "backgroundColor": "#F9F9F9"
+      "backgroundColor": "#F1F1F1"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -20,16 +20,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.niemax.Habitio",
-      "buildNumber": "15"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./src/assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
-    },
-    "web": {
-      "favicon": "./src/assets/favicon.png"
+      "buildNumber": "17"
     },
     "description": "",
     "plugins": [
@@ -40,6 +31,9 @@
           "mode": "production"
         }
       ]
-    ]
+    ],
+    "android": {
+      "package": "com.niemax.Habitio"
+    }
   }
 }

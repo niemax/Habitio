@@ -53,8 +53,6 @@ const MoodProvider = ({ children }) => {
         updateMoods(filtered);
     };
 
-    console.log(moods);
-
     const getHappyMoodCount = () =>
         moods.map((mood) => mood.moodName === 'Happy').reduce((acc, curr) => acc + curr ?? 0, 0);
 

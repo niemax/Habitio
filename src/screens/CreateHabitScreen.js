@@ -85,7 +85,7 @@ const CreateHabit = ({ route, navigation }) => {
         progress: 0,
         noteInputs: [],
         streak: [],
-        frequency: selectedFrequency,
+        frequency: !!isEnabledSpecific ? 'once' : selectedFrequency,
         timesDoneThisWeek: 0,
     };
 
@@ -95,7 +95,6 @@ const CreateHabit = ({ route, navigation }) => {
         isEnabledSpecific,
         CRUDHabits,
         reminderTime,
-        name,
         specificDate,
     };
 

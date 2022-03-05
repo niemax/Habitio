@@ -1,13 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Alert, TouchableOpacity } from 'react-native';
-import {
-    Box,
-    Flex,
-    HStack,
-    PresenceTransition,
-    Text,
-    useColorModeValue,
-} from 'native-base';
+import { Box, Flex, HStack, PresenceTransition, Text, useColorModeValue } from 'native-base';
 import { useHabits } from '../../context/HabitProvider';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ActionSheet from '@alessiocancian/react-native-actionsheet';
@@ -35,7 +28,7 @@ export default function ListItemActionSheet({
     const navigation = useNavigation();
     const { navigate } = navigation;
 
-    const {colors} = useSettings()
+    const { colors } = useSettings();
 
     const { habits, habitSetter, getSpecificHabit } = useHabits();
     const habitItem = getSpecificHabit(id);
@@ -181,10 +174,12 @@ export default function ListItemActionSheet({
                             <Text textAlign="center" fontWeight={800} fontSize="3xl">
                                 {habitItem.name}
                             </Text>
-                            <Text textAlign="center">
-                                Goal: {!isSelectedWeekly ? habitItem.days : habitItem.times}{' '}
-                                {habitItem.unitValue} per {isSelectedWeekly ? 'day' : 'month'}
-                            </Text>
+                            {!habitItem.specificDate && (
+                                <Text textAlign="center">
+                                    Goal: {!isSelectedWeekly ? habitItem.days : habitItem.times}{' '}
+                                    {habitItem.unitValue} per {isSelectedWeekly ? 'day' : 'month'}
+                                </Text>
+                            )}
                         </Box>
                     </Box>
                     <CircularProgress

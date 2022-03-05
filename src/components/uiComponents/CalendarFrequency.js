@@ -61,16 +61,24 @@ const CalendarFrequency = ({
     if (!!isSelectedWeekly)
         return (
             <CalendarFrequencyContainer>
-                <Text marginLeft="15px" opacity={0.6}>
-                    Frequency
-                </Text>
-                <View style={{ flexDirection: 'row', marginLeft: 15, marginTop: 4 }}>
-                    {days === 7 ? <Text>Every day</Text> : <Text>{days} days per week</Text>}
-                    <Text>; </Text>
-                    <Text>
-                        {times} {unitValue} per day
-                    </Text>
-                </View>
+                {!specificDate && (
+                    <>
+                        <Text marginLeft="15px" opacity={0.6}>
+                            Frequency
+                        </Text>
+                        <View style={{ flexDirection: 'row', marginLeft: 15, marginTop: 4 }}>
+                            {days === 7 ? (
+                                <Text>Every day</Text>
+                            ) : (
+                                <Text>{days} days per week</Text>
+                            )}
+                            <Text>; </Text>
+                            <Text>
+                                {times} {unitValue} per day
+                            </Text>
+                        </View>
+                    </>
+                )}
                 {renderOtherInfo()}
                 {description && (
                     <Box mt={4}>
@@ -108,20 +116,24 @@ const CalendarFrequency = ({
         );
     return (
         <CalendarFrequencyContainer>
-            <>
-                <Text marginLeft="15px" opacity={0.6}>
-                    Frequency
-                </Text>
-                <View style={{ flexDirection: 'row', marginLeft: 15, marginTop: 4 }}>
-                    {days === 7 ? (
-                        <Text>Every day</Text>
-                    ) : (
-                        <Text>
-                            {days} {unitValue} per month
+            <Box>
+                {!specificDate && (
+                    <>
+                        <Text marginLeft="15px" opacity={0.6}>
+                            Frequency
                         </Text>
-                    )}
-                </View>
-            </>
+                        <View style={{ flexDirection: 'row', marginLeft: 15, marginTop: 4 }}>
+                            {days === 7 ? (
+                                <Text>Every day</Text>
+                            ) : (
+                                <Text>
+                                    {days} {unitValue} per month
+                                </Text>
+                            )}
+                        </View>
+                    </>
+                )}
+            </Box>
             {description && (
                 <Box mt={4}>
                     <Text marginLeft="15px" opacity={0.6}>

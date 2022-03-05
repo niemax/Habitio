@@ -30,17 +30,16 @@ const handleHabitCreation = ({
     isEnabledSpecific,
     CRUDHabits,
     reminderTime,
-    habitName,
     specificDate,
 }) => {
     const { reminderTimeHours, reminderTimeMinutes } = getParsedReminderTimeHours(reminderTime);
 
     if (checkIfReminderDateIsEnabled(isEnabledDate)) {
-        chRepeating(habitName, reminderTimeHours, reminderTimeMinutes, newHabit);
+        chRepeating(newHabit.name, reminderTimeHours, reminderTimeMinutes, newHabit);
     }
 
     if (checkIfSpecificDateisEnabled(isEnabledSpecific)) {
-        cHScheduleOneTime(habitName, specificDate, newHabit);
+        cHScheduleOneTime(newHabit.name, specificDate, newHabit);
     }
     CRUDHabits(newHabit);
 };

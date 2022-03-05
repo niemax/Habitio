@@ -80,9 +80,7 @@ export const chRepeating = async (name, hours, minutes, newHabit) => {
                 minute: minutes,
                 repeats: true,
             },
-        })
-            .then((identifier) => Object.assign(newHabit, { notificationId: identifier }))
-            .finally(() => console.log(newHabit));
+        }).then((identifier) => Object.assign(newHabit, { notificationId: identifier }));
     } catch (error) {
         console.error(error);
     }
@@ -99,4 +97,17 @@ export const cHScheduleOneTime = async (name, date, newHabit) => {
             repeats: false,
         },
     }).then((identifier) => Object.assign(newHabit, { notificationId: identifier }));
+};
+
+export const scheduleMoodNotification = async () => {
+    await Notifications.scheduleNotificationAsync({
+        content: {
+            title: 'How are you feeling today? 🤔',
+            body: `Think about how you're feeling today and check in! ⚡️`,
+        },
+        trigger: {
+            hour: 10,
+            repeats: true,
+        },
+    });
 };

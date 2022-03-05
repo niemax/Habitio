@@ -35,7 +35,7 @@ export default function App() {
             (response) => {
                 response;
             }
-        );
+        )
 
         return () => {
             Notifications.removeNotificationSubscription(notificationListener.current);

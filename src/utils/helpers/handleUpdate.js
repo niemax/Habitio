@@ -48,7 +48,6 @@ const handleUpdate = async (
     });
     scheduleRepeatingNotificationIfTimeIsNotNull(habitReminderTime, habitName, habits, id);
     if (habitSpecificDate !== null) scheduleOneTimeEdit(habitSpecificDate, habitName, habits, id);
-    console.log(newHabits);
     habitSetter(newHabits);
 };
 

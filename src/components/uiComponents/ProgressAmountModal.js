@@ -35,6 +35,8 @@ const ProgressAmountModal = ({
             swipeDirection="down"
             swipeThreshold={300}
             avoidKeyboard={true}
+            animationInTiming={500}
+            animationOutTiming={500}
         >
             <Box maxWidth="400px" bg={useColorModeValue('gray.100', 'gray.800')} rounded="2xl">
                 <Text textAlign="center" fontSize="lg" fontWeight={700} marginTop="10px">

@@ -21,7 +21,7 @@ import { BlurView } from 'expo-blur';
 import SettingsDetailScreen from '../screens/SettingsDetailScreen';
 import useSettings from '../hooks/useSettings';
 import MoodMainScreen from '../screens/MoodMainScreen';
-import MoodDetailsScreen from '../screens/MoodDetailsScreen';
+import MoodDetailsScreen, { renderEmoji } from '../screens/MoodDetailsScreen';
 import MoodEditScreen from '../screens/MoodEditScreen';
 import { useMoods } from '../context/MoodProvider';
 
@@ -300,6 +300,7 @@ const MainAppStack = () => {
     const navigation = useNavigation();
     const { colorMode } = useColorMode();
     const { habits, habitSetter } = useHabits();
+    const { getTodaysMood } = useMoods();
     const { colors } = useSettings();
 
     return (
@@ -345,6 +346,11 @@ const MainAppStack = () => {
                                     <AntDesign name="plus" size={20} color={colors.mainColor} />
                                 </Circle>
                             </TouchableOpacity>
+                        ),
+                        headerLeft: () => (
+                            <Text fontSize="md" fontWeight={600} fontSize={28}>
+                                {renderEmoji(getTodaysMood())}
+                            </Text>
                         ),
                     })}
                     component={HomeScreen}
