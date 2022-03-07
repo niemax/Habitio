@@ -4,6 +4,7 @@ import Modal from 'react-native-modal';
 import { TextInput } from 'react-native';
 import { useHabits } from '../../context/HabitProvider';
 import useSettings from '../../hooks/useSettings';
+import { renderIconBackgroundColor } from '../../utils/helpers/renderIconBackgroundColor';
 
 const ProgressAmountModal = ({
     showProgressModal,
@@ -15,7 +16,7 @@ const ProgressAmountModal = ({
     const [progressAmount, setProgressAmount] = useState(times);
     const { habits, habitSetter } = useHabits();
 
-    const { colors } = useSettings();
+    const { colors, color } = useSettings();
 
     const handleChangeValue = (amount) => {
         const mapped = habits.map((habit) => {
@@ -36,6 +37,7 @@ const ProgressAmountModal = ({
             swipeThreshold={300}
             avoidKeyboard={true}
             animationInTiming={500}
+            backdropTransitionOutTiming={0}
             animationOutTiming={500}
         >
             <Box maxWidth="400px" bg={useColorModeValue('gray.100', 'gray.800')} rounded="2xl">
@@ -67,7 +69,7 @@ const ProgressAmountModal = ({
                     justify="space-around"
                     mb={4}
                 >
-                    <Button.Group colorScheme="rose" space={2}>
+                    <Button.Group colorScheme={renderIconBackgroundColor(color)} space={2}>
                         <Button
                             size="lg"
                             bg={useColorModeValue('gray.200', 'gray.700')}

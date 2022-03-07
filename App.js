@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import FlashMessage from 'react-native-flash-message';
@@ -8,16 +8,15 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import * as Notifications from 'expo-notifications';
 import HabitProvider from './src/context/HabitProvider';
 import MainAppStack from './src/navigation/MainAppNav';
-import { NativeBaseProvider, useColorModeValue } from 'native-base';
+import { NativeBaseProvider, useColorMode, useColorModeValue } from 'native-base';
 import theme from './src/theme';
 import { colorModeManager } from './src/screens/SettingsDetailScreen';
-import useSettings from './src/hooks/useSettings';
-import SettingProvider from './src/hooks/useSettings';
 import MoodProvider from './src/context/MoodProvider';
 
 export default function App() {
     const [, , setExpoPushToken] = useState('');
     const [, , setNotification] = useState(false);
+    const { colorMode } = useColorMode();
 
     const notificationListener = useRef();
     const responseListener = useRef();
@@ -35,7 +34,7 @@ export default function App() {
             (response) => {
                 response;
             }
-        )
+        );
 
         return () => {
             Notifications.removeNotificationSubscription(notificationListener.current);
@@ -49,7 +48,7 @@ export default function App() {
                 <NativeBaseProvider theme={theme} colorModeManager={colorModeManager}>
                     <NavigationContainer theme={useColorModeValue(DefaultTheme, DarkTheme)}>
                         <SafeAreaProvider>
-                            <StatusBar style="auto" />
+                            <StatusBar style={colorMode === 'dark' ? 'light' : 'dark'} />
                             <FlashMessage position="top" />
                             <MainAppStack />
                         </SafeAreaProvider>

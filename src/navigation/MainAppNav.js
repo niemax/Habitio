@@ -176,7 +176,7 @@ const SettingsStack = () => {
     const { colorMode } = useColorMode();
     const { colors } = useSettings();
     return (
-        <Stack.Navigator initiaRouteName="Settings">
+        <Stack.Navigator initialRouteName="Settings">
             <Stack.Screen
                 name="Settings"
                 options={{

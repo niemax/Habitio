@@ -1,5 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Dimensions, Keyboard, TouchableOpacity, View } from 'react-native';
+import {
+    ActivityIndicator,
+    AsyncStorage,
+    Dimensions,
+    Keyboard,
+    ScrollView,
+    TouchableOpacity,
+    View,
+} from 'react-native';
 import {
     Box,
     Center,
@@ -9,6 +17,8 @@ import {
     Text,
     useColorModeValue,
     Tooltip,
+    Button,
+    HStack,
 } from 'native-base';
 import Modal from 'react-native-modal';
 import MainButton from '../components/uiComponents/Button';
@@ -19,12 +29,14 @@ import { HabitDescriptionInput } from '../utils/StyledComponents/Styled';
 import { getCurrentDateFormatted } from '../utils/helpers/dateHelpers';
 import { renderEmoji } from './MoodDetailsScreen';
 import { scheduleMoodNotification } from '../utils/helpers/notification';
+import { renderIconBackgroundColor } from '../utils/helpers/renderIconBackgroundColor';
 
 const { width } = Dimensions.get('window');
 
 const MoodMainScreen = ({ navigation }) => {
     const [isVisible, setIsVisible] = useState(false);
-    const { colors } = useSettings();
+
+    const { colors, color } = useSettings();
     const { moods, addMood, isLoading } = useMoods();
     const [text, setText] = useState('');
     const [moodIndex, setMoodIndex] = useState();
@@ -34,24 +46,30 @@ const MoodMainScreen = ({ navigation }) => {
     const { navigate } = navigation;
     const textInputRef = useRef(null);
 
-    useEffect(() => {
-        scheduleMoodNotification();
+    useEffect(async () => {
+        const isFirstMoodLaunch = await AsyncStorage.getItem('@firstMoodLaunch');
+        if (isFirstMoodLaunch === null) {
+            await scheduleMoodNotification();
+            await AsyncStorage.setItem('@firstMoodLaunch', 'false');
+        } else {
+            return;
+        }
     }, []);
 
     useEffect(() => {
         checkIfShouldOpenTooltip();
-        const timeout = setTimeout(() => setTooltipOpen(false), 5000);
+        const timeout = setTimeout(() => setTooltipOpen(false), 7000);
         return () => clearTimeout(timeout);
     }, []);
 
     const checkIfShouldOpenTooltip = () => {
         const currentDate = getCurrentDateFormatted(new Date());
+        // this is definitely not the best approach performance wise. Fix this
         const includesCurrentDate = moods.every((mood) => mood.date !== currentDate);
         if (!!includesCurrentDate) {
             setTooltipOpen(true);
-            return 1;
         }
-        return -1;
+        return;
     };
 
     const handleMood = () => {
@@ -62,11 +80,14 @@ const MoodMainScreen = ({ navigation }) => {
             id: Math.floor(Math.random() * 10000),
             date: date,
         };
-        addMood(moodObject);
-        setIsVisible(false);
-        setMoodName('');
-        setText('');
-        setMoodIndex();
+        Keyboard.dismiss();
+        setTimeout(() => {
+            addMood(moodObject);
+            setIsVisible(false);
+            setMoodName('');
+            setText('');
+            setMoodIndex();
+        }, 100);
     };
 
     const MOODS = ['Happy', 'Neutral', 'Sad'];
@@ -84,17 +105,17 @@ const MoodMainScreen = ({ navigation }) => {
                 initial={{
                     opacity: 0,
                     scale: 0,
-                    translateY: 34,
+                    translateY: 24,
                 }}
                 animate={{
-                    translateY: 0,
+                    translateY: 1,
                     scale: 1,
                     opacity: 1,
                     transition: {
                         type: 'spring',
-                        mass: 0.6,
+                        mass: 0.5,
                         stagger: {
-                            offset: 50,
+                            offset: 20,
                         },
                     },
                 }}
@@ -173,6 +194,7 @@ const MoodMainScreen = ({ navigation }) => {
             animationOutTiming={500}
             propagateSwipe={true}
             avoidKeyboard={true}
+            backdropTransitionOutTiming={0}
             onModalHide={() => {
                 setMoodName('');
                 setText('');
@@ -217,9 +239,32 @@ const MoodMainScreen = ({ navigation }) => {
                         </Center>
                     </Box>
                 </Box>
-                <MainButton rounded="lg" isDisabled={!moodName} w={40} h={12} onPress={handleMood}>
-                    Done
-                </MainButton>
+
+                <Button.Group colorScheme={renderIconBackgroundColor(color)} space={2}>
+                    <Button
+                        size="lg"
+                        bg={useColorModeValue('gray.200', 'gray.700')}
+                        rounded="lg"
+                        w="auto"
+                        px={12}
+                        h={50}
+                        variant="subtle"
+                        onPress={() => setIsVisible(false)}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        w="auto"
+                        px={12}
+                        h={50}
+                        variant="solid"
+                        rounded="lg"
+                        isDisabled={!moodName}
+                        onPress={handleMood}
+                    >
+                        Done
+                    </Button>
+                </Button.Group>
             </Flex>
         </Modal>
     );
@@ -285,6 +330,8 @@ const MoodMainScreen = ({ navigation }) => {
             {renderModal()}
             <Box flex={1} mt={4}>
                 <FlatList
+                    scrollEnabled={true}
+                    overScrollMode="always"
                     lazy
                     data={moods?.sort((a, b) => b.date - a.date)}
                     renderItem={renderMoodItem}

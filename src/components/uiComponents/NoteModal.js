@@ -44,6 +44,8 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
             onBackdropPress={() => Keyboard.dismiss()}
             animationInTiming={500}
             animationOutTiming={500}
+            backdropTransitionOutTiming={0}
+            hideModalContentWhileAnimating={true}
         >
             <Box bg={useColorModeValue('gray.100', 'gray.800')} rounded="3xl">
                 <Text textAlign="center" fontSize="lg" fontWeight={700} marginTop="10px">

@@ -29,7 +29,7 @@ export const renderIconBackgroundColor = (color) => {
         case '#02D94D':
             return 'lime';
         case '#7FBF3F':
-            return 'green';
+            return 'tertiary';
         case '#7F3FBF':
             return 'violet';
         case '#3FBFBF':

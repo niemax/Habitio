@@ -1,6 +1,5 @@
 import { getCurrentDateFormattedForCalendarComponent } from './dateHelpers';
 import { haptics } from './haptics';
-import { toasts } from './toastMethods';
 
 export const handleDoneToday = (id, name, habits, habitSetter) => {
     const calendarDateString = getCurrentDateFormattedForCalendarComponent();

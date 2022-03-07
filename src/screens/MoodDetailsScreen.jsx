@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Center, Flex, HStack, Text, useColorModeValue, VStack } from 'native-base';
 import { Alert, ScrollView, TouchableOpacity } from 'react-native';
 import { useMoods } from '../context/MoodProvider';
@@ -86,13 +86,14 @@ const MoodDetailsScreen = ({ route, navigation }) => {
                             <Text fontSize="lg" fontWeight={600}>
                                 Why did I feel {moodItem?.moodName}?
                             </Text>
-                            <Text fontSize="md">{!!moodItem?.text ? moodItem?.text : "No additional details"}</Text>
+                            <Text fontSize="md">
+                                {!!moodItem?.text ? moodItem?.text : 'No additional details'}
+                            </Text>
                         </Box>
                     </VStack>
                     <Center mt={40}>
                         <TouchableOpacity onPress={() => displayDeleteAlert()}>
                             <HStack>
-
                                 <Ionicons name="trash" size={24} color={colors.error} />
                                 <Text fontWeight={700} fontSize="xl" color={colors.error}>
                                     Delete mood

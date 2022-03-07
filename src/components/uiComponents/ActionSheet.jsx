@@ -26,7 +26,7 @@ export default function ListItemActionSheet({
     const [showModal, setShowModal] = useState(false);
     const [showProgressModal, setShowProgressModal] = useState(false);
     const navigation = useNavigation();
-    const { navigate } = navigation;
+    const { navigate, push } = navigation;
 
     const { colors } = useSettings();
 
@@ -121,6 +121,8 @@ export default function ListItemActionSheet({
                 animationInTiming={450}
                 animationOutTiming={400}
                 propagateSwipe={true}
+                backdropTransitionOutTiming={0}
+                hideModalContentWhileAnimating={true}
             >
                 <Flex
                     bg={useColorModeValue('white', 'gray.800')}
@@ -145,9 +147,8 @@ export default function ListItemActionSheet({
                             <HStack>
                                 <TouchableOpacity
                                     onPress={() => {
-                                        setIsVisible(false);
                                         setTimeout(() => {
-                                            navigate('CalendarModal', {
+                                            push('CalendarModal', {
                                                 id: id,
                                                 name: habitItem.name,
                                             });
