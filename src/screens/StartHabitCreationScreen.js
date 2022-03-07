@@ -102,7 +102,7 @@ const StartHabitCreation = ({ navigation }) => {
                 </Box>
             </ScrollView>
             <ButtonContainer>
-                <Button onPress={handleOwnHabit} w="70%">
+                <Button onPress={handleOwnHabit} w="100%">
                     Next
                 </Button>
             </ButtonContainer>

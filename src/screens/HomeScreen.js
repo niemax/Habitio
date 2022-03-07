@@ -7,7 +7,6 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { getAllNotifications } from '../utils/helpers/notification';
 import useSettings from '../hooks/useSettings';
-import { useMoods } from '../context/MoodProvider';
 
 const wait = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
 
@@ -45,8 +44,15 @@ const TotalProgressCircle = () => {
 
 const HomeScreen = () => {
     const [refreshing, setRefreshing] = useState(false);
-    const { habits, weeklyHabits, monthlyHabits, oneTimerHabits, getHabits, habitsLoading } =
-        useHabits();
+    const {
+        habits,
+        weeklyHabits,
+        monthlyHabits,
+        dailyHabits,
+        oneTimerHabits,
+        getHabits,
+        habitsLoading,
+    } = useHabits();
 
     const { colors } = useSettings();
 
@@ -58,6 +64,7 @@ const HomeScreen = () => {
 
     const WEEKLY_HABITS_LENGTH = weeklyHabits.length;
     const MONTHLY_HABITS_LENGTH = monthlyHabits.length;
+    const DAILY_HABITS_LENGTH = dailyHabits.length;
 
     useEffect(() => {
         getAllNotifications();
@@ -120,7 +127,18 @@ const HomeScreen = () => {
                         <Center mt={40}>
                             <TotalProgressCircle />
                         </Center>
-                        <Box>{renderHeader('weekly', 10)}</Box>
+                        <Box>{!!dailyHabits.length && renderHeader('daily', 10)}</Box>
+                        <Box>
+                            {!!dailyHabits.length &&
+                                dailyHabits?.map((item) => (
+                                    <HabitListItem
+                                        key={item.id}
+                                        item={item}
+                                        completed={item.completed}
+                                    />
+                                ))}
+                        </Box>
+                        <Box>{!!weeklyHabits.length && renderHeader('weekly', 10)}</Box>
                         <Box>
                             {!!weeklyHabits.length &&
                                 weeklyHabits?.map((item) => (
@@ -132,6 +150,7 @@ const HomeScreen = () => {
                                 ))}
                         </Box>
                         <Box>{!!monthlyHabits.length && renderHeader('monthly', 10)}</Box>
+
                         <Box>
                             {monthlyHabits?.map((item) => (
                                 <HabitListItem
@@ -142,6 +161,7 @@ const HomeScreen = () => {
                             ))}
                         </Box>
                         <Box>{!!oneTimerHabits.length && renderHeader('one timer', 10)}</Box>
+
                         <Box mb={40}>
                             {!!oneTimerHabits.length &&
                                 oneTimerHabits?.map((item) => (

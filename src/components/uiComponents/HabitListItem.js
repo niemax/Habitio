@@ -44,7 +44,6 @@ const HabitListItem = ({ item }) => {
     const { colorMode } = useColorMode();
     const { colors } = useSettings();
     const { habitSetter, habits } = useHabits();
-    const isSelectedWeekly = frequency === 'weekly';
 
     const handleHabitProgress = (operand) => {
         haptics.success();
@@ -127,8 +126,7 @@ const HabitListItem = ({ item }) => {
                                     </Text>
                                     {!specificDate && (
                                         <Text fontWeight={400} fontSize="sm">
-                                            Goal: {!isSelectedWeekly ? days : times} {unitValue} per{' '}
-                                            {isSelectedWeekly ? 'day' : 'month'}
+                                            {frequency} goal: {times} {unitValue}
                                         </Text>
                                     )}
                                     {specificDate !== null && (

@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useNavigation } from '@react-navigation/native';
 import HomeScreen from '../screens/HomeScreen';
 import HabitScreen from '../screens/HabitScreen';
 import CreateHabit from '../screens/CreateHabitScreen';
@@ -24,6 +23,7 @@ import MoodMainScreen from '../screens/MoodMainScreen';
 import MoodDetailsScreen, { renderEmoji } from '../screens/MoodDetailsScreen';
 import MoodEditScreen from '../screens/MoodEditScreen';
 import { useMoods } from '../context/MoodProvider';
+import SelectFrequencyScreen from '../screens/SelectFrequencyScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -292,12 +292,26 @@ const CreateHabitStack = () => {
                 })}
                 component={CreateHabit}
             />
+            <Stack.Screen
+                name="SelectFrequencyScreen"
+                options={{
+                    title: '',
+                    headerShown: true,
+                    headerBackTitleVisible: true,
+                    headerBackTitle: 'Back',
+                    headerTintColor: colors.mainColor,
+                    headerStyle: {
+                        backgroundColor:
+                            colorMode === 'dark' ? colors.mainBackground : colors.white,
+                    },
+                }}
+                component={SelectFrequencyScreen}
+            />
         </Stack.Navigator>
     );
 };
 
-const MainAppStack = () => {
-    const navigation = useNavigation();
+const MainAppStack = ({ navigation }) => {
     const { colorMode } = useColorMode();
     const { habits, habitSetter } = useHabits();
     const { getTodaysMood } = useMoods();

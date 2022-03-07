@@ -21,7 +21,6 @@ const CreateHabit = ({ route, navigation }) => {
     const [updatedColor, setUpdatedColor] = useState();
     const [colorUpdated, setColorUpdated] = useState(false);
     const [description, setDescription] = useState('');
-    const [daysCount, setDaysCount] = useState(1);
     const [timesCount, setTimesCount] = useState(1);
     const [specificDate, setSpecificDate] = useState(new Date());
     const [reminderTime, setReminderTime] = useState(new Date());
@@ -30,8 +29,10 @@ const CreateHabit = ({ route, navigation }) => {
     const [isEnabledDate, setIsEnabledDate] = useState(false);
     const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
     const [isEnabledEndDate, setIsEnabledEndDate] = useState(false);
-    const [selectedValue, setSelectedValue] = useState();
+    const [selectedValue, setSelectedValue] = useState('Times');
     const [selectedFrequency, setSelectedFrequency] = useState('weekly');
+    const [weekdays, setWeekdays] = useState([]);
+    const [habitNature, setHabitNature] = useState('Build a habit');
 
     const toggleSwitch = () =>
         !isEnabledSpecific && setIsEnabled((previousState) => !previousState);
@@ -69,7 +70,6 @@ const CreateHabit = ({ route, navigation }) => {
         id: Math.floor(Math.random() * 10000),
         color: color || updatedColor,
         icon: habitIcon,
-        days: isEnabled ? daysCount : 1,
         times: selectedFrequency !== 'monthly' ? timesCount : 0,
         specificDate: isEnabledSpecific ? specificDate : null,
         reminder: isEnabledDate ? reminderTime : null,
@@ -87,6 +87,8 @@ const CreateHabit = ({ route, navigation }) => {
         streak: [],
         frequency: !!isEnabledSpecific ? 'once' : selectedFrequency,
         timesDoneThisWeek: 0,
+        selectedWeekdays: weekdays,
+        habitNature: habitNature,
     };
 
     const objectToDispatch = {
@@ -139,21 +141,29 @@ const CreateHabit = ({ route, navigation }) => {
                                 toggleSwitchEndDate,
                             }}
                             setters={{
-                                setDaysCount,
                                 setSelectedValue,
                                 setTimesCount,
                                 setIsEnabledEndDate,
                                 setSelectedFrequency,
+                                setWeekdays,
+                                setHabitNature,
                             }}
                             values={{ specificDate, reminderTime, endDate }}
-                            states={{ daysCount, timesCount, selectedValue, selectedFrequency }}
+                            states={{
+                                timesCount,
+                                selectedValue,
+                                selectedFrequency,
+                                weekdays,
+                                habitNature,
+                            }}
                         />
                     </Box>
                 </Box>
             </ScrollView>
             <ButtonContainer>
                 <Button
-                    w="70%"
+                    w="100%"
+                    h={60}
                     onPress={() => {
                         handleHabitCreation(objectToDispatch);
                         navigate('Dashboard');

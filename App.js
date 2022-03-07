@@ -48,7 +48,7 @@ export default function App() {
                 <NativeBaseProvider theme={theme} colorModeManager={colorModeManager}>
                     <NavigationContainer theme={useColorModeValue(DefaultTheme, DarkTheme)}>
                         <SafeAreaProvider>
-                            <StatusBar style={colorMode === 'dark' ? 'light' : 'dark'} />
+                            <StatusBar style="auto" />
                             <FlashMessage position="top" />
                             <MainAppStack />
                         </SafeAreaProvider>

@@ -42,6 +42,7 @@ const handleHabitCreation = ({
         cHScheduleOneTime(newHabit.name, specificDate, newHabit);
     }
     CRUDHabits(newHabit);
+    console.log(newHabit);
 };
 
 export default handleHabitCreation;

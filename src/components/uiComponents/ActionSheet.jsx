@@ -35,6 +35,7 @@ export default function ListItemActionSheet({
 
     const actionSheetRef = useRef(null);
     const isSelectedWeekly = habitItem.frequency === 'weekly';
+    const isSelectedDaily = habitItem.frequency === "daily"
 
     const displayDeleteAlert = () => {
         Alert.alert(
@@ -147,6 +148,7 @@ export default function ListItemActionSheet({
                             <HStack>
                                 <TouchableOpacity
                                     onPress={() => {
+                                        setIsVisible(false)
                                         setTimeout(() => {
                                             push('CalendarModal', {
                                                 id: id,
@@ -177,8 +179,7 @@ export default function ListItemActionSheet({
                             </Text>
                             {!habitItem.specificDate && (
                                 <Text textAlign="center">
-                                    Goal: {!isSelectedWeekly ? habitItem.days : habitItem.times}{' '}
-                                    {habitItem.unitValue} per {isSelectedWeekly ? 'day' : 'month'}
+                                   {habitItem.frequency} goal: {habitItem.times} {habitItem.unitValue} 
                                 </Text>
                             )}
                         </Box>
