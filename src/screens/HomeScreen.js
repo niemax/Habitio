@@ -5,21 +5,20 @@ import HabitListItem from '../components/uiComponents/HabitListItem';
 import { Text, useColorModeValue, Flex, Center, HStack, Box, Spacer } from 'native-base';
 import Spinner from 'react-native-loading-spinner-overlay';
 import CircularProgress from 'react-native-circular-progress-indicator';
-import { getAllNotifications } from '../utils/helpers/notification';
 import useSettings from '../hooks/useSettings';
 
 const wait = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
 
 const TotalProgressCircle = () => {
-    const { weeklyHabits } = useHabits();
+    const { dailyHabits } = useHabits();
 
     const { colors } = useSettings();
 
-    const totalTimesWeeklyToDo = weeklyHabits
-        ?.map((habit) => habit.times * habit.days)
+    const totalTimesWeeklyToDo = dailyHabits
+        ?.map((habit) => habit.times)
         .reduce((acc, curr) => acc + curr, 0);
 
-    const value = weeklyHabits
+    const value = dailyHabits
         ?.map((habit) => habit.timesDoneThisWeek)
         .reduce((acc, curr) => acc + curr, 0);
 
@@ -30,7 +29,7 @@ const TotalProgressCircle = () => {
                 inActiveStrokeWidth={24}
                 activeStrokeWidth={24}
                 duration={800}
-                value={!weeklyHabits.length ? 0 : (value / totalTimesWeeklyToDo) * 100}
+                value={!dailyHabits?.length ? 0 : (value / totalTimesWeeklyToDo) * 100}
                 valueSuffix="%"
                 radius={95}
                 textColor={useColorModeValue('black', 'white')}
@@ -66,17 +65,13 @@ const HomeScreen = () => {
     const MONTHLY_HABITS_LENGTH = monthlyHabits.length;
     const DAILY_HABITS_LENGTH = dailyHabits.length;
 
-    useEffect(() => {
-        getAllNotifications();
-    }, []);
-
     const renderHeader = (frequency, marginTop) => (
         <HStack px={4} mt={marginTop}>
             <Box>
                 <Text fontWeight={800} fontSize="xl">
                     {frequency} habits{' '}
                     <Text opacity={0.6} fontWeight={400} fontSize="sm">
-                        ({frequency === 'weekly' ? WEEKLY_HABITS_LENGTH : MONTHLY_HABITS_LENGTH})
+                        ({frequency === 'daily' ? DAILY_HABITS_LENGTH : MONTHLY_HABITS_LENGTH})
                     </Text>
                 </Text>
             </Box>

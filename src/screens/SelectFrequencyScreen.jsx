@@ -1,4 +1,4 @@
-import { Box, Center, Circle, Flex, HStack, Text, VStack } from 'native-base';
+import { Box, Center, Flex, HStack, Text } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import ListContainer from '../components/uiComponents/ListContainer';
@@ -51,24 +51,27 @@ const SelectFrequencyScreen = ({ route }) => {
     const [showExtra, setShowExtra] = useState(frequency === 'daily');
     const [selectedWeekdays, setSelectedWeekdays] = useState(routeWeekdays);
     const [habitNature, setHabitNature] = useState(routeHabitNature);
+    const [stateFrequency, setStateFrequency] = useState(frequency);
 
     const { colors } = useSettings();
 
     const handleWeekdayChange = (name) => {
-        if (!selectedWeekdays.includes(name)) {
+        if (!selectedWeekdays?.includes(name)) {
             setSelectedWeekdays([...selectedWeekdays, name]);
         } else {
-            const filtered = selectedWeekdays.filter((weekday) => weekday !== name);
+            const filtered = selectedWeekdays?.filter((weekday) => weekday !== name);
             setSelectedWeekdays(filtered);
         }
     };
 
     useEffect(() => {
-        handleHabitNature(habitNature);
+        if (name === 'habit nature') {
+            handleHabitNature(habitNature);
+        }
     }, [habitNature]);
 
     useEffect(() => {
-        handleWeekdays(selectedWeekdays);
+        if (name === 'select frequency') handleWeekdays(selectedWeekdays);
     }, [selectedWeekdays]);
 
     if (name === 'habit nature')
@@ -79,11 +82,17 @@ const SelectFrequencyScreen = ({ route }) => {
                         I WANT TO
                     </Text>
                     <ListContainer py={2}>
-                        <SettingTouchable style={{ paddingVertical: 8 }} onPress={() => setHabitNature("Build a habit")}>
+                        <SettingTouchable
+                            style={{ paddingVertical: 8 }}
+                            onPress={() => setHabitNature('Build a habit')}
+                        >
                             <Text fontSize="md">Build a habit</Text>
                         </SettingTouchable>
                         <LineBreak />
-                        <SettingTouchable style={{ paddingVertical: 8 }} onPress={() => setHabitNature("Break a habit")}>
+                        <SettingTouchable
+                            style={{ paddingVertical: 8 }}
+                            onPress={() => setHabitNature('Break a habit')}
+                        >
                             <Text fontSize="md">Break a habit</Text>
                         </SettingTouchable>
                     </ListContainer>
@@ -103,9 +112,13 @@ const SelectFrequencyScreen = ({ route }) => {
                         onPress={() => {
                             handleChange('daily');
                             setShowExtra(true);
+                            setStateFrequency('daily');
                         }}
                     >
                         <Text fontSize="md">Daily</Text>
+                        {stateFrequency === 'daily' && (
+                            <Ionicons name="checkmark" size={20} color={colors.mainColor} />
+                        )}
                     </SettingTouchable>
                     <LineBreak />
                     <SettingTouchable
@@ -114,9 +127,13 @@ const SelectFrequencyScreen = ({ route }) => {
                             handleChange('weekly');
                             setSelectedWeekdays([]);
                             setShowExtra(false);
+                            setStateFrequency('weekly');
                         }}
                     >
                         <Text fontSize="md">Weekly</Text>
+                        {stateFrequency === 'weekly' && (
+                            <Ionicons name="checkmark" size={20} color={colors.mainColor} />
+                        )}
                     </SettingTouchable>
                     <LineBreak />
                     <SettingTouchable
@@ -125,9 +142,13 @@ const SelectFrequencyScreen = ({ route }) => {
                             handleChange('monthly');
                             setSelectedWeekdays([]);
                             setShowExtra(false);
+                            setStateFrequency('monthly');
                         }}
                     >
                         <Text fontSize="md">Monthly</Text>
+                        {stateFrequency === 'monthly' && (
+                            <Ionicons name="checkmark" size={20} color={colors.mainColor} />
+                        )}
                     </SettingTouchable>
                 </ListContainer>
                 {!!showExtra && (
@@ -144,11 +165,11 @@ const SelectFrequencyScreen = ({ route }) => {
                                             onPress={() => handleWeekdayChange(item.name, item.id)}
                                         >
                                             <Flex align="center" justify="center">
-                                                {selectedWeekdays.includes(item.name) ? (
+                                                {selectedWeekdays?.includes(item.name) ? (
                                                     <Center
                                                         rounded="full"
                                                         bg={
-                                                            selectedWeekdays.includes(item.name)
+                                                            selectedWeekdays?.includes(item.name)
                                                                 ? colors.mainColor
                                                                 : 'transparent'
                                                         }

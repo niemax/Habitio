@@ -1,3 +1,4 @@
+import { getHours, getMinutes } from 'date-fns';
 import { chRepeating, cHScheduleOneTime } from './notification';
 
 /**
@@ -6,8 +7,8 @@ import { chRepeating, cHScheduleOneTime } from './notification';
  */
 
 const getParsedReminderTimeHours = (time) => {
-    const reminderTimeHours = time.getHours();
-    const reminderTimeMinutes = time.getMinutes();
+    const reminderTimeHours = getHours(time);
+    const reminderTimeMinutes = getMinutes(time);
 
     return { reminderTimeHours, reminderTimeMinutes };
 };
@@ -42,7 +43,6 @@ const handleHabitCreation = ({
         cHScheduleOneTime(newHabit.name, specificDate, newHabit);
     }
     CRUDHabits(newHabit);
-    console.log(newHabit);
 };
 
 export default handleHabitCreation;

@@ -150,7 +150,7 @@ const MoodStack = () => {
             />
             <Stack.Screen
                 name="MoodEditScreen"
-                options={({ route }) => ({
+                options={{
                     presentation: 'modal',
                     headerShown: true,
                     headerTransparent: true,
@@ -163,7 +163,7 @@ const MoodStack = () => {
                     },
                     headerTitle: 'Edit mood',
                     headerBackTitle: 'Back',
-                })}
+                }}
                 component={MoodEditScreen}
             />
         </Stack.Navigator>
@@ -524,6 +524,21 @@ const MainAppStack = ({ navigation }) => {
                         headerTintColor: colors.mainColor,
                     })}
                     component={EditNote}
+                />
+                <Stack.Screen
+                    name="SelectFrequencyScreen"
+                    options={{
+                        title: '',
+                        headerShown: true,
+                        headerBackTitleVisible: true,
+                        headerBackTitle: 'Back',
+                        headerTintColor: colors.mainColor,
+                        headerStyle: {
+                            backgroundColor:
+                                colorMode === 'dark' ? colors.mainBackground : colors.white,
+                        },
+                    }}
+                    component={SelectFrequencyScreen}
                 />
             </Stack.Group>
         </Stack.Navigator>

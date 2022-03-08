@@ -51,7 +51,7 @@ const HabitListItem = ({ item }) => {
             if (habit.id === id) {
                 setHabitProgress(habitProgress + Number(operand));
                 habit.progress += Number(operand);
-                if (habit.frequency === 'weekly') {
+                if (habit.frequency === 'daily') {
                     habit.timesDoneThisWeek += Number(operand);
                 }
             }

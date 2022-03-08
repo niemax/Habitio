@@ -88,7 +88,7 @@ const CreateHabit = ({ route, navigation }) => {
         frequency: !!isEnabledSpecific ? 'once' : selectedFrequency,
         timesDoneThisWeek: 0,
         selectedWeekdays: weekdays,
-        habitNature: habitNature,
+        habitGoal: habitNature,
     };
 
     const objectToDispatch = {

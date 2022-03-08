@@ -11,7 +11,6 @@ const ShowHabitEditModal = ({ route }) => {
     const [selectedValue, setSelectedValue] = useState('');
     const [colorUpdated, setColorUpdated] = useState(false);
     const [stateDescription, setStateDescription] = useState('');
-    const [daysCount, setDaysCount] = useState();
     const [timesCount, setTimesCount] = useState();
     const [habitReminderTime, habitSetReminderTime] = useState();
     const [habitSpecificDate, habitSetSpecificDate] = useState();
@@ -21,7 +20,9 @@ const ShowHabitEditModal = ({ route }) => {
     const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
     const [isEnabledEndDate, setIsEnabledEndDate] = useState(false);
     const [selectedFrequency, setSelectedFrequency] = useState('');
-    const navigation = useNavigation();
+    const [weekdays, setWeekdays] = useState();
+    const [habitNature, setHabitNature] = useState();
+    const { goBack } = useNavigation();
 
     const toggleSwitch = () =>
         !isEnabledSpecific && setIsEnabled((previousState) => !previousState);
@@ -39,13 +40,14 @@ const ShowHabitEditModal = ({ route }) => {
         name,
         unitValue,
         description,
-        days,
         times,
         color,
         reminder,
         specificDate,
         endDate,
         frequency,
+        habitGoal,
+        selectedWeekdays,
     } = habitItem;
 
     useEffect(() => {
@@ -53,13 +55,14 @@ const ShowHabitEditModal = ({ route }) => {
         setHabitName(name);
         setSelectedValue(unitValue);
         setStateDescription(description);
-        setDaysCount(days);
         setTimesCount(times);
         setUpdatedColor(color);
         habitSetReminderTime(reminder ? new Date(reminder) : new Date());
         habitSetSpecificDate(specificDate ? new Date(specificDate) : new Date());
         habitSetEndDate(endDate ? new Date(endDate) : new Date());
         setSelectedFrequency(frequency);
+        setHabitNature(habitGoal);
+        setWeekdays(selectedWeekdays);
     }, []);
 
     const updateColor = (updColor) => {
@@ -67,8 +70,8 @@ const ShowHabitEditModal = ({ route }) => {
         setColorUpdated(true);
     };
 
-    const handleSubmit = () => {
-        handleUpdate(
+    const handleSubmit = async () => {
+        await handleUpdate(
             id,
             notificationId,
             habits,
@@ -77,14 +80,15 @@ const ShowHabitEditModal = ({ route }) => {
             selectedValue,
             updatedColor,
             stateDescription,
-            !!isEnabled ? daysCount : 0,
-            !!isEnabled ? timesCount : 0,
+            isEnabled ? timesCount : 0,
             isEnabledDate ? new Date(habitReminderTime) : null,
             isEnabledSpecific ? new Date(habitSpecificDate) : null,
             isEnabledEndDate ? new Date(habitEndDate) : null,
-            selectedFrequency
+            selectedFrequency,
+            habitNature,
+            weekdays
         );
-        navigation.goBack();
+        goBack();
     };
 
     const onChangeSpecific = (event, selectedDate) => {
@@ -112,7 +116,7 @@ const ShowHabitEditModal = ({ route }) => {
         if (endDate !== null) {
             setIsEnabledEndDate(true);
         }
-        if (days >= 1) {
+        if (times >= 1) {
             setIsEnabled(true);
         } else {
             setIsEnabled(false);
@@ -136,7 +140,6 @@ const ShowHabitEditModal = ({ route }) => {
                 setSelectedValue,
                 setSelectedFrequency,
                 setStateDescription,
-                setDaysCount,
                 setTimesCount,
                 setIsEnabledDate,
                 setIsEnabledEndDate,
@@ -144,10 +147,11 @@ const ShowHabitEditModal = ({ route }) => {
                 habitSetReminderTime,
                 habitSetSpecificDate,
                 habitSetEndDate,
+                setWeekdays,
+                setHabitNature,
             }}
             states={{
                 stateDescription,
-                daysCount,
                 timesCount,
                 modalVisible,
                 isEnabled,
@@ -162,6 +166,8 @@ const ShowHabitEditModal = ({ route }) => {
                 color,
                 colorUpdated,
                 updatedColor,
+                weekdays,
+                habitNature,
             }}
         />
     );

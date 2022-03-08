@@ -31,7 +31,7 @@ const HabitProvider = ({ children }) => {
                     if (currentMonth > habit.dataCurrentMonth && habit.frequency === 'monthly') {
                         habit.progress = 0;
                     }
-                    if (currentDay !== habit.dataCurrentDay && habit.frequency === 'weekly') {
+                    if (currentDay !== habit.dataCurrentDay && habit.frequency === 'daily') {
                         habit.progress = 0;
                         habit.dataCurrentDay = currentDay;
                         habit.completed = false;
@@ -40,12 +40,7 @@ const HabitProvider = ({ children }) => {
                         habit.timesDonesThisWeek = 0;
                         habit.dataCurrentWeek = currentWeek;
                     }
-                    if (
-                        formatDateForHabitEndDate(new Date()) ===
-                        formatDateForHabitEndDate(habit.endDate)
-                    ) {
-                        cancelPushNotification(habit.notificationId);
-                    }
+
                     return habit;
                 });
                 setHabits(mappedHabits);

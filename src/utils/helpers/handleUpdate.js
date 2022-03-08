@@ -1,8 +1,9 @@
+import { getHours, getMinutes } from 'date-fns';
 import { cancelPushNotification, scheduleOneTimeEdit, scheduleRepeatingEdit } from './notification';
 
 const checkReminderTimeForNullValuesAndParse = (reminderTime) => {
-    const parsedHour = reminderTime?.getHours();
-    const parsedMin = reminderTime?.getMinutes();
+    const parsedHour = getHours(reminderTime);
+    const parsedMin = getMinutes(reminderTime);
 
     return { parsedHour, parsedMin };
 };
@@ -46,7 +47,9 @@ const handleUpdate = async (
         }
         return habit;
     });
-    scheduleRepeatingNotificationIfTimeIsNotNull(habitReminderTime, habitName, habits, id);
+    if (!!reminderTime) {
+        scheduleRepeatingNotificationIfTimeIsNotNull(habitReminderTime, habitName, habits, id);
+    }
     if (habitSpecificDate !== null) scheduleOneTimeEdit(habitSpecificDate, habitName, habits, id);
     habitSetter(newHabits);
 };

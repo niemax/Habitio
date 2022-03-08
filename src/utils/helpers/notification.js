@@ -53,7 +53,7 @@ export const scheduleOneTimeEdit = async (date, name, habits, id) => {
     await Notifications.scheduleNotificationAsync({
         content: {
             title: name,
-            body: `Your reminder for ${name}`,
+            body: `Your reminder to ${name}`,
         },
         trigger: {
             date: date,
