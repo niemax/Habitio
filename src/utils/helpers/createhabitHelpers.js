@@ -42,6 +42,7 @@ const handleHabitCreation = ({
     if (checkIfSpecificDateisEnabled(isEnabledSpecific)) {
         cHScheduleOneTime(newHabit.name, specificDate, newHabit);
     }
+    console.log(newHabit);
     CRUDHabits(newHabit);
 };
 

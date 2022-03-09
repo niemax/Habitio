@@ -49,6 +49,7 @@ const HabitProvider = ({ children }) => {
                 setHabitsLoading(false);
             }
         } catch (error) {
+            setHabitsLoading(false);
             console.error(error);
             toasts.error(error);
         }

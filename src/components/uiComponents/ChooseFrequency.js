@@ -5,7 +5,6 @@ import {
     DateTimePickerView,
     FrequencySwitchContainer,
     HabitUtilityInfoContainer,
-    LineBreak,
 } from '../../utils/StyledComponents/Styled';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { Box, Flex, Button, Text, useColorMode, KeyboardAvoidingView, HStack } from 'native-base';
@@ -14,7 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import ListContainer from './ListContainer';
 import { SettingTouchable } from '../../screens/SettingsScreen';
 
-export default function Frequency({
+const Details = ({
     switchStates: { isEnabled, isEnabledDate, isEnabledSpecific, isEnabledEndDate },
     methods: {
         onChangeSpecific,
@@ -36,7 +35,7 @@ export default function Frequency({
         weekdays,
         habitNature,
     },
-}) {
+}) => {
     const { colorMode } = useColorMode();
 
     const { navigate } = useNavigation();
@@ -333,4 +332,6 @@ export default function Frequency({
             </SafeAreaView>
         </KeyboardAvoidingView>
     );
-}
+};
+
+export default Details;

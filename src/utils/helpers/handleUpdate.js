@@ -28,7 +28,9 @@ const handleUpdate = async (
     habitReminderTime,
     habitSpecificDate,
     endDate,
-    selectedFrequency
+    selectedFrequency,
+    habitNature,
+    weekdays
 ) => {
     await cancelPushNotification(notificationId);
 
@@ -44,13 +46,15 @@ const handleUpdate = async (
             habit.specificDate = habitSpecificDate !== null ? habitSpecificDate : null;
             habit.endDate = endDate;
             habit.frequency = selectedFrequency;
+            habit.habitGoal = habitNature;
+            habit.selectedWeekdays = weekdays;
         }
         return habit;
     });
-    if (!!reminderTime) {
+    if (!!habitReminderTime) {
         scheduleRepeatingNotificationIfTimeIsNotNull(habitReminderTime, habitName, habits, id);
     }
-    if (habitSpecificDate !== null) scheduleOneTimeEdit(habitSpecificDate, habitName, habits, id);
+    if (!!habitSpecificDate) scheduleOneTimeEdit(habitSpecificDate, habitName, habits, id);
     habitSetter(newHabits);
 };
 

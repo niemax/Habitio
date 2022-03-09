@@ -312,10 +312,10 @@ const CreateHabitStack = () => {
 };
 
 const MainAppStack = ({ navigation }) => {
-    const { colorMode } = useColorMode();
     const { habits, habitSetter } = useHabits();
-    const { getTodaysMood } = useMoods();
+    const { colorMode } = useColorMode();
     const { colors } = useSettings();
+    const { getTodaysMood } = useMoods();
 
     return (
         <Stack.Navigator
@@ -362,7 +362,7 @@ const MainAppStack = ({ navigation }) => {
                             </TouchableOpacity>
                         ),
                         headerLeft: () => (
-                            <Text fontSize="md" fontWeight={600} fontSize={28}>
+                            <Text fontSize="md" fontWeight={600}>
                                 {renderEmoji(getTodaysMood())}
                             </Text>
                         ),

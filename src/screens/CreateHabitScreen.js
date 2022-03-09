@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { ButtonContainer } from '../utils/StyledComponents/Styled';
 import HabitInput from '../components/uiComponents/HabitDescriptionInput';
-import Frequency from '../components/uiComponents/ChooseFrequency';
 import HabitColor from '../components/uiComponents/SelectHabitColorButton';
 import { getCurrentDay, getCurrentMonth, getCurrentWeek } from '../utils/helpers/dateHelpers';
 import handleHabitCreation from '../utils/helpers/createhabitHelpers';
@@ -10,6 +9,7 @@ import { useHabits } from '../context/HabitProvider';
 import { Box, Text } from 'native-base';
 import Button from '../components/uiComponents/Button';
 import MainContainer from '../components/uiComponents/MainContainer';
+import Details from '../components/uiComponents/ChooseFrequency';
 
 const currentWeek = getCurrentWeek();
 
@@ -124,7 +124,7 @@ const CreateHabit = ({ route, navigation }) => {
                         />
                     </Box>
                     <Box mt={4}>
-                        <Frequency
+                        <Details
                             switchStates={{
                                 isEnabledSpecific,
                                 isEnabled,

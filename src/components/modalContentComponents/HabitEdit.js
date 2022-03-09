@@ -6,11 +6,11 @@ import {
     HabitCentered,
     HabitInfoContainer,
 } from '../../utils/StyledComponents/Styled';
-import Frequency from '../uiComponents/ChooseFrequency';
 import HabitColor from '../uiComponents/SelectHabitColorButton';
 import { textInputShadow } from '../../utils/globalStyles';
 import MainButton from '../uiComponents/Button';
 import MainContainer from '../uiComponents/MainContainer';
+import Details from '../uiComponents/ChooseFrequency';
 
 export default function HabitEditContent({
     methods: {
@@ -98,7 +98,7 @@ export default function HabitEditContent({
                             />
                         </Box>
                         <Box>
-                            <Frequency
+                            <Details
                                 switchStates={{
                                     isEnabledSpecific,
                                     isEnabled,
