@@ -6,6 +6,7 @@ import { Text, useColorModeValue, Flex, Center, HStack, Box, Spacer } from 'nati
 import Spinner from 'react-native-loading-spinner-overlay';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import useSettings from '../hooks/useSettings';
+import { getAllNotifications } from '../utils/helpers/notification';
 
 const wait = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
 
@@ -28,10 +29,11 @@ const TotalProgressCircle = () => {
                 inActiveStrokeColor={useColorModeValue('#F9F9F9', colors.mainBackground)}
                 inActiveStrokeWidth={24}
                 activeStrokeWidth={24}
-                duration={100}
+                duration={1000}
                 value={!dailyHabits?.length ? 0 : (value / totalTimesWeeklyToDo) * 100}
                 valueSuffix="%"
-                radius={95}
+                radius={100}
+                textStyle={{ fontSize: 32, fontWeight: '800' }}
                 textColor={useColorModeValue('black', 'white')}
                 maxValue={100}
                 activeStrokeColor={value === totalTimesWeeklyToDo ? '#43E443' : colors.mainColor}
@@ -43,15 +45,8 @@ const TotalProgressCircle = () => {
 
 const HomeScreen = () => {
     const [refreshing, setRefreshing] = useState(false);
-    const {
-        habits,
-        weeklyHabits,
-        monthlyHabits,
-        dailyHabits,
-        oneTimerHabits,
-        getHabits,
-        habitsLoading,
-    } = useHabits();
+    const { habits, weeklyHabits, monthlyHabits, dailyHabits, getHabits, habitsLoading } =
+        useHabits();
 
     const { colors } = useSettings();
 
@@ -118,7 +113,7 @@ const HomeScreen = () => {
                 {habitsLoading ? (
                     renderContentLoader()
                 ) : (
-                    <Box>
+                    <Box mb={40}>
                         <Center mt={40}>
                             <TotalProgressCircle />
                         </Center>
@@ -154,18 +149,6 @@ const HomeScreen = () => {
                                     completed={item.completed}
                                 />
                             ))}
-                        </Box>
-                        <Box>{!!oneTimerHabits.length && renderHeader('one timer', 10)}</Box>
-
-                        <Box mb={40}>
-                            {!!oneTimerHabits.length &&
-                                oneTimerHabits?.map((item) => (
-                                    <HabitListItem
-                                        key={item.id}
-                                        item={item}
-                                        completed={item.completed}
-                                    />
-                                ))}
                         </Box>
                     </Box>
                 )}

@@ -1,5 +1,6 @@
 import { getHours, getMinutes } from 'date-fns';
-import { cancelPushNotification, scheduleOneTimeEdit, scheduleRepeatingEdit } from './notification';
+import { convertWeekdaysToNumbers } from './createhabitHelpers';
+import { cancelPushNotification, scheduleRepeatingEdit } from './notification';
 
 const checkReminderTimeForNullValuesAndParse = (reminderTime) => {
     const parsedHour = getHours(reminderTime);
@@ -14,7 +15,7 @@ const scheduleRepeatingNotificationIfTimeIsNotNull = (time, habitName, habits, i
     scheduleRepeatingEdit(parsedHour, parsedMin, habitName, habits, id);
 };
 
-const handleUpdate = async (
+const handleUpdate = (
     id,
     notificationId,
     habits,
@@ -23,16 +24,27 @@ const handleUpdate = async (
     unitValue,
     color,
     description,
-    daysCount,
     timesCount,
     habitReminderTime,
-    habitSpecificDate,
     endDate,
     selectedFrequency,
     habitNature,
     weekdays
 ) => {
-    await cancelPushNotification(notificationId);
+    cancelPushNotification(notificationId);
+
+    if (habitReminderTime !== null) {
+        const notificationDays = convertWeekdaysToNumbers(weekdays);
+        notificationDays?.forEach((day) => {
+            scheduleRepeatingNotificationIfTimeIsNotNull(
+                day,
+                habitReminderTime,
+                habitName,
+                habits,
+                id
+            );
+        });
+    }
 
     const newHabits = habits.map((habit) => {
         if (habit.id === id) {
@@ -40,10 +52,8 @@ const handleUpdate = async (
             habit.unitValue = unitValue;
             habit.color = color;
             habit.description = description;
-            habit.days = daysCount;
             habit.times = timesCount;
-            habit.reminder = habitReminderTime !== null ? habitReminderTime : null;
-            habit.specificDate = habitSpecificDate !== null ? habitSpecificDate : null;
+            habit.reminder = habitReminderTime !== null && habitReminderTime;
             habit.endDate = endDate;
             habit.frequency = selectedFrequency;
             habit.habitGoal = habitNature;
@@ -51,10 +61,7 @@ const handleUpdate = async (
         }
         return habit;
     });
-    if (!!habitReminderTime) {
-        scheduleRepeatingNotificationIfTimeIsNotNull(habitReminderTime, habitName, habits, id);
-    }
-    if (!!habitSpecificDate) scheduleOneTimeEdit(habitSpecificDate, habitName, habits, id);
+
     habitSetter(newHabits);
 };
 

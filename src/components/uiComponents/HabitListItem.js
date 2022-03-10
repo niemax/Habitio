@@ -17,26 +17,13 @@ import {
 import ActionSheet from './ActionSheet';
 import { haptics } from '../../utils/helpers/haptics';
 import { useHabits } from '../../context/HabitProvider';
-import { formatDateForHabitEndDate } from '../../utils/helpers/dateHelpers';
 import { renderIconBackgroundColor } from '../../utils/helpers/renderIconBackgroundColor';
 import { habitItemShadow } from '../../utils/globalStyles';
 import ProgressCircle from './CircularProgress';
 import useSettings from '../../hooks/useSettings';
 
 const HabitListItem = ({ item }) => {
-    const {
-        icon,
-        completed,
-        times,
-        days,
-        progress,
-        color,
-        name,
-        id,
-        unitValue,
-        specificDate,
-        frequency,
-    } = item;
+    const { icon, completed, times, progress, color, name, id, unitValue, frequency } = item;
 
     const [habitProgress, setHabitProgress] = useState(progress);
     const [isActionSheetVisible, setIsActionSheetVisible] = useState(false);
@@ -124,17 +111,9 @@ const HabitListItem = ({ item }) => {
                                     >
                                         {name}
                                     </Text>
-                                    {!specificDate && (
-                                        <Text fontWeight={400} fontSize="sm">
-                                            {frequency} goal: {times} {unitValue}
-                                        </Text>
-                                    )}
-                                    {specificDate !== null && (
-                                        <Text marginTop="4px">
-                                            Doing it once on{' '}
-                                            {formatDateForHabitEndDate(specificDate)}
-                                        </Text>
-                                    )}
+                                    <Text fontWeight={400} fontSize="sm">
+                                        {frequency} goal: {times} {unitValue}
+                                    </Text>
                                 </VStack>
                             </Box>
                         </HStack>
@@ -142,7 +121,7 @@ const HabitListItem = ({ item }) => {
                             id={id}
                             habitProgress={habitProgress}
                             handleHabitProgress={handleHabitProgress}
-                            size={34}
+                            size={36}
                             width={10}
                             fontSize={12}
                         />

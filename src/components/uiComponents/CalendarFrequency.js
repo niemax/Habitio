@@ -9,13 +9,12 @@ import { CalendarFrequencyContainer } from '../../utils/StyledComponents/Styled'
 
 const CalendarFrequency = ({
     description,
-    days,
     times,
     unitValue,
     endDate,
     reminder,
-    specificDate,
-    isSelectedWeekly,
+    isSelectedDaily,
+    weekdays,
 }) => {
     const renderOtherInfo = () => {
         endDate !== null && (
@@ -38,16 +37,6 @@ const CalendarFrequency = ({
         );
     }
     {
-        specificDate !== null && (
-            <Box mt={4}>
-                <Text marginLeft="15px" opacity={0.6}>
-                    Doing it once on
-                </Text>
-                <Text marginLeft="15px">{formatDateForHabitEndDate(specificDate)}</Text>
-            </Box>
-        );
-    }
-    {
         description && (
             <Box mt={4}>
                 <Text marginLeft="15px" opacity={0.6}>
@@ -58,28 +47,23 @@ const CalendarFrequency = ({
         );
     }
 
-    if (!!isSelectedWeekly)
+    if (!!isSelectedDaily)
         return (
             <CalendarFrequencyContainer>
-                {!specificDate && (
-                    <>
-                        <Text marginLeft="15px" opacity={0.6}>
-                            Frequency
-                        </Text>
-                        <View style={{ flexDirection: 'row', marginLeft: 15, marginTop: 4 }}>
-                            {days === 7 ? (
-                                <Text>Every day</Text>
-                            ) : (
-                                <Text>{days} days per week</Text>
-                            )}
-                            <Text>; </Text>
-                            <Text>
-                                {times} {unitValue} per day
-                            </Text>
-                        </View>
-                    </>
-                )}
                 {renderOtherInfo()}
+                <>
+                    <Text marginLeft="15px" opacity={0.6}>
+                        Frequency
+                    </Text>
+                    <View style={{ flexDirection: 'row', marginLeft: 15, marginTop: 4 }}>
+                        <Text>
+                            {times} {unitValue} per day on{' '}
+                        </Text>
+                        <Text fontWeight={600}>
+                            {weekdays?.map((weekday) => weekday).join(', ')}
+                        </Text>
+                    </View>
+                </>
                 {description && (
                     <Box mt={4}>
                         <Text marginLeft="15px" opacity={0.6}>
@@ -104,36 +88,11 @@ const CalendarFrequency = ({
                         <Text marginLeft="15px">{formatDateForHabitInfoReminder(reminder)}</Text>
                     </Box>
                 )}
-                {specificDate !== null && (
-                    <Box mt={4}>
-                        <Text marginLeft="15px" opacity={0.6}>
-                            Doing it once on
-                        </Text>
-                        <Text marginLeft="15px">{formatDateForHabitEndDate(specificDate)}</Text>
-                    </Box>
-                )}
             </CalendarFrequencyContainer>
         );
     return (
         <CalendarFrequencyContainer>
-            <Box>
-                {!specificDate && (
-                    <>
-                        <Text marginLeft="15px" opacity={0.6}>
-                            Frequency
-                        </Text>
-                        <View style={{ flexDirection: 'row', marginLeft: 15, marginTop: 4 }}>
-                            {days === 7 ? (
-                                <Text>Every day</Text>
-                            ) : (
-                                <Text>
-                                    {days} {unitValue} per month
-                                </Text>
-                            )}
-                        </View>
-                    </>
-                )}
-            </Box>
+            <Box></Box>
             {description && (
                 <Box mt={4}>
                     <Text marginLeft="15px" opacity={0.6}>
@@ -148,14 +107,6 @@ const CalendarFrequency = ({
                         End Date
                     </Text>
                     <Text marginLeft="15px">{formatDateForHabitEndDate(endDate)}</Text>
-                </Box>
-            )}
-            {specificDate !== null && (
-                <Box mt={4}>
-                    <Text marginLeft="15px" opacity={0.6}>
-                        Doing it once on
-                    </Text>
-                    <Text marginLeft="15px">{formatDateForHabitEndDate(specificDate)}</Text>
                 </Box>
             )}
         </CalendarFrequencyContainer>

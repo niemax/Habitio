@@ -13,23 +13,19 @@ const ShowHabitEditModal = ({ route }) => {
     const [stateDescription, setStateDescription] = useState('');
     const [timesCount, setTimesCount] = useState();
     const [habitReminderTime, habitSetReminderTime] = useState();
-    const [habitSpecificDate, habitSetSpecificDate] = useState();
     const [habitEndDate, habitSetEndDate] = useState();
     const [isEnabled, setIsEnabled] = useState(false);
     const [isEnabledDate, setIsEnabledDate] = useState(false);
-    const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
     const [isEnabledEndDate, setIsEnabledEndDate] = useState(false);
     const [selectedFrequency, setSelectedFrequency] = useState('');
     const [weekdays, setWeekdays] = useState();
     const [habitNature, setHabitNature] = useState();
+
     const { goBack } = useNavigation();
 
-    const toggleSwitch = () =>
-        !isEnabledSpecific && setIsEnabled((previousState) => !previousState);
-    const toggleSwitchDate = () =>
-        !isEnabledSpecific && setIsEnabledDate((previousState) => !previousState);
-    const toggleSwitchSpecific = () =>
-        !isEnabledDate && !isEnabled && setIsEnabledSpecific((previousState) => !previousState);
+    const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+    const toggleSwitchDate = () => setIsEnabledDate((previousState) => !previousState);
+
     const toggleSwitchEndDate = () => setIsEnabledEndDate((previousState) => !previousState);
 
     const { habits, habitSetter, getSpecificHabit } = useHabits();
@@ -43,7 +39,6 @@ const ShowHabitEditModal = ({ route }) => {
         times,
         color,
         reminder,
-        specificDate,
         endDate,
         frequency,
         habitGoal,
@@ -58,7 +53,6 @@ const ShowHabitEditModal = ({ route }) => {
         setTimesCount(times);
         setUpdatedColor(color);
         habitSetReminderTime(reminder ? new Date(reminder) : new Date());
-        habitSetSpecificDate(specificDate ? new Date(specificDate) : new Date());
         habitSetEndDate(endDate ? new Date(endDate) : new Date());
         setSelectedFrequency(frequency);
         setHabitNature(habitGoal);
@@ -71,7 +65,7 @@ const ShowHabitEditModal = ({ route }) => {
     };
 
     const handleSubmit = async () => {
-        await handleUpdate(
+        handleUpdate(
             id,
             notificationId,
             habits,
@@ -82,18 +76,12 @@ const ShowHabitEditModal = ({ route }) => {
             stateDescription,
             isEnabled ? timesCount : 0,
             isEnabledDate ? new Date(habitReminderTime) : null,
-            isEnabledSpecific ? new Date(habitSpecificDate) : null,
             isEnabledEndDate ? new Date(habitEndDate) : null,
             selectedFrequency,
             habitNature,
             weekdays
         );
         goBack();
-    };
-
-    const onChangeSpecific = (event, selectedDate) => {
-        const currentDate = selectedDate || specificDate;
-        habitSetSpecificDate(currentDate);
     };
 
     const onChangeReminderTime = (event, selectedDate) => {
@@ -110,9 +98,6 @@ const ShowHabitEditModal = ({ route }) => {
         if (reminder !== null) {
             setIsEnabledDate(true);
         }
-        if (specificDate !== null) {
-            setIsEnabledSpecific(true);
-        }
         if (endDate !== null) {
             setIsEnabledEndDate(true);
         }
@@ -128,11 +113,9 @@ const ShowHabitEditModal = ({ route }) => {
             methods={{
                 handleSubmit,
                 updateColor,
-                toggleSwitchSpecific,
                 toggleSwitch,
                 toggleSwitchDate,
                 toggleSwitchEndDate,
-                onChangeSpecific,
                 onChangeReminderTime,
                 onChangeEndDate,
             }}
@@ -145,7 +128,6 @@ const ShowHabitEditModal = ({ route }) => {
                 setIsEnabledEndDate,
                 setModalVisible,
                 habitSetReminderTime,
-                habitSetSpecificDate,
                 habitSetEndDate,
                 setWeekdays,
                 setHabitNature,
@@ -156,9 +138,7 @@ const ShowHabitEditModal = ({ route }) => {
                 modalVisible,
                 isEnabled,
                 isEnabledDate,
-                isEnabledSpecific,
                 isEnabledEndDate,
-                habitSpecificDate,
                 habitReminderTime,
                 habitEndDate,
                 selectedValue,

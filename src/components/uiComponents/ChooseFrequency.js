@@ -14,27 +14,17 @@ import ListContainer from './ListContainer';
 import { SettingTouchable } from '../../screens/SettingsScreen';
 
 const Details = ({
-    switchStates: { isEnabled, isEnabledDate, isEnabledSpecific, isEnabledEndDate },
+    switchStates: { isEnabled, isEnabledDate, isEnabledEndDate },
     methods: {
-        onChangeSpecific,
         onChangeReminderTime,
         onChangeEndDate,
-        toggleSwitchSpecific,
         toggleSwitch,
         toggleSwitchDate,
         toggleSwitchEndDate,
     },
     setters: { setSelectedValue, setTimesCount, setSelectedFrequency, setWeekdays, setHabitNature },
-    values: { specificDate, reminderTime, endDate, habitReminderTime },
-    states: {
-        timesCount,
-        habitSpecificDate,
-        habitEndDate,
-        selectedValue,
-        selectedFrequency,
-        weekdays,
-        habitNature,
-    },
+    values: { reminderTime, endDate, habitReminderTime },
+    states: { timesCount, habitEndDate, selectedValue, selectedFrequency, weekdays, habitNature },
 }) => {
     const { colorMode } = useColorMode();
 
@@ -52,7 +42,7 @@ const Details = ({
         />
     );
 
-    const isSelectedWeekly = selectedFrequency === 'weekly';
+    const isSelectedDaily = selectedFrequency === 'daily';
 
     const handleWeekdays = (weekdays) => setWeekdays(weekdays);
 
@@ -64,8 +54,8 @@ const Details = ({
 
     const renderHowOftenContainer = () =>
         isEnabled && (
-            <Box py={2}>
-                <ListContainer rounded="xl" py={2}>
+            <Box mt={2} px={1}>
+                <ListContainer rounded="xl">
                     <SettingTouchable
                         style={{ marginTop: 5 }}
                         onPress={() =>
@@ -90,7 +80,7 @@ const Details = ({
                     </SettingTouchable>
                     {renderLineBreak()}
                     <SettingTouchable
-                        style={{ marginTop: 10, marginBottom: 5 }}
+                        style={{ marginTop: 5, marginBottom: 5 }}
                         onPress={() =>
                             navigate('SelectFrequencyScreen', {
                                 name: 'select frequency',
@@ -102,43 +92,21 @@ const Details = ({
                             })
                         }
                     >
-                        <>
-                            <Text fontSize="md">How often?</Text>
-                        </>
+                        <Text fontSize="md">How often?</Text>
                         <HStack>
                             <Text>
-                                {!weekdays.length
+                                {!weekdays?.length
                                     ? selectedFrequency
                                     : weekdays?.map((weekday) => weekday).join(', ')}
                             </Text>
                             <Ionicons name="chevron-forward" size={20} color="gray" />
                         </HStack>
                     </SettingTouchable>
+                    {!!isSelectedDaily && renderLineBreak()}
+                    {renderReminder()}
                 </ListContainer>
             </Box>
         );
-
-    const renderCompleteOnce = () => (
-        <>
-            <FrequencySwitchContainer>
-                <Text fontSize="md">Complete once</Text>
-                <Switch onValueChange={toggleSwitchSpecific} value={isEnabledSpecific} />
-            </FrequencySwitchContainer>
-            <DateTimePickerView>
-                {isEnabledSpecific && (
-                    <DateTimePicker
-                        testID="dateTimePicker"
-                        value={specificDate || habitSpecificDate}
-                        mode="datetime"
-                        is24Hour="true"
-                        style={{ width: '100%' }}
-                        themeVariant={colorMode === 'light' ? 'light' : 'dark'}
-                        onChange={onChangeSpecific}
-                    />
-                )}
-            </DateTimePickerView>
-        </>
-    );
 
     const renderEndDate = () => (
         <HabitUtilityInfoContainer>
@@ -152,8 +120,9 @@ const Details = ({
                         <Switch onValueChange={toggleSwitchEndDate} value={isEnabledEndDate} />
                     </FrequencySwitchContainer>
                     {isEnabledEndDate && (
-                        <DateTimePickerView>
+                        <Box w={200} py={1}>
                             <DateTimePicker
+                                style={{ position: 'relative', right: 35 }}
                                 testID="dateTimePicker"
                                 value={endDate || habitEndDate}
                                 mode="datetime"
@@ -162,7 +131,7 @@ const Details = ({
                                 onChange={onChangeEndDate}
                                 display="default"
                             />
-                        </DateTimePickerView>
+                        </Box>
                     )}
                 </Box>
             </Box>
@@ -266,38 +235,27 @@ const Details = ({
         );
 
     const renderReminder = () =>
-        isSelectedWeekly && (
-            <HabitUtilityInfoContainer>
-                <Box mt={2}>
-                    <Text fontSize="xs" marginLeft="15px" mb={2} opacity={0.7}>
-                        SET A REMINDER
-                    </Text>
-                    <Box
-                        bg={colorMode === 'light' ? 'white' : 'gray.800'}
-                        px={4}
-                        py={1}
-                        rounded="xl"
-                    >
-                        <FrequencySwitchContainer>
-                            <Text fontSize="md">Reminder</Text>
-                            <Switch onValueChange={toggleSwitchDate} value={isEnabledDate} />
-                        </FrequencySwitchContainer>
-                        {isEnabledDate && (
-                            <DateTimePickerView>
-                                <DateTimePicker
-                                    testID="dateTimePicker"
-                                    value={reminderTime || habitReminderTime}
-                                    mode="time"
-                                    themeVariant={colorMode === 'light' ? 'light' : 'dark'}
-                                    is24Hour="true"
-                                    onChange={onChangeReminderTime}
-                                    display="default"
-                                />
-                            </DateTimePickerView>
-                        )}
+        isSelectedDaily && (
+            <Box bg={colorMode === 'light' ? 'white' : 'gray.800'} rounded="xl">
+                <FrequencySwitchContainer>
+                    <Text fontSize="md">Remind me</Text>
+                    <Switch onValueChange={toggleSwitchDate} value={isEnabledDate} />
+                </FrequencySwitchContainer>
+                {isEnabledDate && (
+                    <Box w={200} py={1}>
+                        <DateTimePicker
+                            style={{ position: 'relative', right: 120 }}
+                            testID="dateTimePicker"
+                            value={reminderTime || habitReminderTime}
+                            mode="time"
+                            themeVariant={colorMode === 'light' ? 'light' : 'dark'}
+                            is24Hour="true"
+                            onChange={onChangeReminderTime}
+                            display="compact"
+                        />
                     </Box>
-                </Box>
-            </HabitUtilityInfoContainer>
+                )}
+            </Box>
         );
 
     return (
@@ -313,11 +271,9 @@ const Details = ({
                         <Box
                             bg={colorMode === 'dark' ? 'gray.800' : 'white'}
                             px={3}
-                            py={3}
+                            py={1}
                             rounded="xl"
                         >
-                            {renderCompleteOnce()}
-                            {renderLineBreak()}
                             <FrequencySwitchContainer>
                                 <Text fontSize="md">Goal</Text>
                                 <Switch onValueChange={toggleSwitch} value={isEnabled} />
@@ -327,7 +283,6 @@ const Details = ({
                     {renderHowOftenContainer()}
                     {renderGoalIfEnabled()}
                     {renderEndDate()}
-                    {renderReminder()}
                 </Flex>
             </SafeAreaView>
         </KeyboardAvoidingView>

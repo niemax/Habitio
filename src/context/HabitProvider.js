@@ -55,6 +55,8 @@ const HabitProvider = ({ children }) => {
         }
     };
 
+    console.log(habits);
+
     const getSpecificHabit = (id) => habits.find((habit) => habit.id === id);
 
     const CRUDHabits = async (props) => {
@@ -78,7 +80,6 @@ const HabitProvider = ({ children }) => {
     const dailyHabits = habits.filter((habit) => habit.frequency === 'daily');
     const monthlyHabits = habits.filter((habit) => habit.frequency === 'monthly');
     const weeklyHabits = habits.filter((habit) => habit.frequency === 'weekly');
-    const oneTimerHabits = habits.filter((habit) => habit.frequency === 'once');
 
     useEffect(() => {
         getHabits();
@@ -90,7 +91,6 @@ const HabitProvider = ({ children }) => {
                 habits,
                 monthlyHabits,
                 weeklyHabits,
-                oneTimerHabits,
                 dailyHabits,
                 habitsLoading,
                 habitSetter,

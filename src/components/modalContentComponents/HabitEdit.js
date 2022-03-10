@@ -16,11 +16,9 @@ export default function HabitEditContent({
     methods: {
         handleSubmit,
         updateColor,
-        toggleSwitchSpecific,
         toggleSwitch,
         toggleSwitchDate,
         toggleSwitchEndDate,
-        onChangeSpecific,
         onChangeReminderTime,
         onChangeEndDate,
     },
@@ -40,9 +38,7 @@ export default function HabitEditContent({
         timesCount,
         isEnabled,
         isEnabledDate,
-        isEnabledSpecific,
         isEnabledEndDate,
-        habitSpecificDate,
         habitReminderTime,
         habitEndDate,
         selectedValue,
@@ -100,16 +96,13 @@ export default function HabitEditContent({
                         <Box>
                             <Details
                                 switchStates={{
-                                    isEnabledSpecific,
                                     isEnabled,
                                     isEnabledDate,
                                     isEnabledEndDate,
                                 }}
                                 methods={{
-                                    onChangeSpecific,
                                     onChangeReminderTime,
                                     onChangeEndDate,
-                                    toggleSwitchSpecific,
                                     toggleSwitch,
                                     toggleSwitchDate,
                                     toggleSwitchEndDate,
@@ -123,11 +116,10 @@ export default function HabitEditContent({
                                     setWeekdays,
                                     setHabitNature,
                                 }}
-                                values={{ isEnabledSpecific, habitReminderTime }}
+                                values={{ habitReminderTime }}
                                 states={{
                                     daysCount,
                                     timesCount,
-                                    habitSpecificDate,
                                     habitEndDate,
                                     selectedValue,
                                     selectedFrequency,

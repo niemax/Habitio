@@ -26,21 +26,9 @@ const CalendarModal = ({ route, navigation }) => {
     const { habits, habitSetter, getSpecificHabit } = useHabits();
     const habitItem = getSpecificHabit(route.params.id);
 
-    const {
-        id,
-        completedDates,
-        description,
-        days,
-        times,
-        unitValue,
-        noteInputs,
-        endDate,
-        reminder,
-        specificDate,
-        streak,
-    } = habitItem;
+    const isSelectedDaily = habitItem.frequency === 'daily';
 
-    const isSelectedWeekly = habitItem.frequency === 'weekly';
+    console.log(habitItem);
 
     const calendarDayPress = (day) => {
         const date = day.dateString;
@@ -57,8 +45,8 @@ const CalendarModal = ({ route, navigation }) => {
                             input: item.input,
                             date: formatDateForHabitEndDate(item.date),
                             id: item.id,
-                            allNotes: noteInputs,
-                            habitId: id,
+                            allNotes: habitItem.noteInputs,
+                            habitId: habitItem.id,
                         })
                     }
                 >
@@ -80,7 +68,10 @@ const CalendarModal = ({ route, navigation }) => {
     const renderHeader = () => (
         <>
             <Box mt={32}>
-                <CalendarStats completedDates={completedDates} streak={streak} />
+                <CalendarStats
+                    completedDates={habitItem.completedDates}
+                    streak={habitItem.streak}
+                />
             </Box>
             <Calendar
                 theme={{
@@ -97,18 +88,18 @@ const CalendarModal = ({ route, navigation }) => {
                 firstDay={1}
                 hideExtraDays={true}
                 maxDate={getCurrentDateFormattedForCalendarComponent()}
-                markedDates={completedDates}
+                markedDates={habitItem.completedDates}
                 onDayPress={(day) => calendarDayPress(day)}
             />
             <CalendarFrequency
-                description={description}
-                days={days}
-                times={times}
-                unitValue={unitValue}
-                endDate={endDate}
-                reminder={reminder}
-                specificDate={specificDate}
-                isSelectedWeekly={isSelectedWeekly}
+                description={habitItem.description}
+                days={habitItem.days}
+                times={habitItem.times}
+                unitValue={habitItem.unitValue}
+                endDate={habitItem.endDate}
+                reminder={habitItem.reminder}
+                isSelectedDaily={isSelectedDaily}
+                weekdays={habitItem.selectedWeekdays}
             />
             <CalendarLineBreak />
         </>
@@ -119,7 +110,7 @@ const CalendarModal = ({ route, navigation }) => {
             <Text marginLeft="15px" marginBottom="15px" opacity={0.7}>
                 Notes
             </Text>
-            {Object.values(noteInputs).length === 0 && (
+            {Object.values(habitItem.noteInputs).length === 0 && (
                 <Center>
                     <Text fontSize="md" color="gray.500">
                         No notes added yet
@@ -134,7 +125,9 @@ const CalendarModal = ({ route, navigation }) => {
             )}
             <FlatList
                 lazy
-                data={Object.values(noteInputs).sort((a, b) => new Date(b.date) - new Date(a.date))}
+                data={Object.values(habitItem.noteInputs).sort(
+                    (a, b) => new Date(b.date) - new Date(a.date)
+                )}
                 renderItem={renderNoteItem}
                 keyExtractor={({ id }) => id}
                 ListFooterComponent={
@@ -144,7 +137,7 @@ const CalendarModal = ({ route, navigation }) => {
                                 setNoteRenderAmount(noteRenderAmount + 3);
                             }}
                         >
-                            {noteInputs.length > noteRenderAmount && (
+                            {habitItem.noteInputs.length > noteRenderAmount && (
                                 <Text textAlign="center">Load more</Text>
                             )}
                         </TouchableOpacity>

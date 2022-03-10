@@ -1,12 +1,7 @@
 import React from 'react';
 import { Image, ScrollView, TouchableOpacity, View } from 'react-native';
 import { Box, Center, Flex, Text, useColorModeValue, VStack } from 'native-base';
-import {
-    ChevronTextContainer,
-    HabitCardsContainer,
-    HabitTextColumnContainer,
-    ImageContainer,
-} from '../utils/StyledComponents/Styled';
+import { ChevronTextContainer, ImageContainer } from '../utils/StyledComponents/Styled';
 import { Ionicons } from '@expo/vector-icons';
 import MainContainer from '../components/uiComponents/MainContainer';
 import useSettings from '../hooks/useSettings';
@@ -34,7 +29,7 @@ const HabitScreen = ({ route, navigation }) => {
                     </ChevronTextContainer>
                     <Image style={{ height: 100, width: 100 }} source={image} />
                 </ImageContainer>
-                <Box px={3}>
+                <Box px={1}>
                     <ListContainer colorNumber={800}>
                         {habitData.map(({ habitIcon, description, color, name }, index) => (
                             <>
@@ -52,7 +47,6 @@ const HabitScreen = ({ route, navigation }) => {
                                         direction="row"
                                         align="center"
                                         justify="space-between"
-                                        p={1}
                                         py={2}
                                     >
                                         <Flex direction="row" align="center">

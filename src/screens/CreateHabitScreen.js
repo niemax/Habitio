@@ -22,34 +22,23 @@ const CreateHabit = ({ route, navigation }) => {
     const [colorUpdated, setColorUpdated] = useState(false);
     const [description, setDescription] = useState('');
     const [timesCount, setTimesCount] = useState(1);
-    const [specificDate, setSpecificDate] = useState(new Date());
     const [reminderTime, setReminderTime] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [isEnabled, setIsEnabled] = useState(false);
     const [isEnabledDate, setIsEnabledDate] = useState(false);
-    const [isEnabledSpecific, setIsEnabledSpecific] = useState(false);
     const [isEnabledEndDate, setIsEnabledEndDate] = useState(false);
     const [selectedValue, setSelectedValue] = useState('Times');
     const [selectedFrequency, setSelectedFrequency] = useState('weekly');
     const [weekdays, setWeekdays] = useState([]);
     const [habitNature, setHabitNature] = useState('Build a habit');
 
-    const toggleSwitch = () =>
-        !isEnabledSpecific && setIsEnabled((previousState) => !previousState);
-    const toggleSwitchDate = () =>
-        !isEnabledSpecific && setIsEnabledDate((previousState) => !previousState);
-    const toggleSwitchSpecific = () =>
-        !isEnabledDate && !isEnabled && setIsEnabledSpecific((previousState) => !previousState);
+    const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+    const toggleSwitchDate = () => setIsEnabledDate((previousState) => !previousState);
     const toggleSwitchEndDate = () => setIsEnabledEndDate((previousState) => !previousState);
 
     const updateColor = (color) => {
         setUpdatedColor(color);
         setColorUpdated(true);
-    };
-
-    const onChangeSpecific = (event, selectedDate) => {
-        const currentDate = selectedDate || specificDate;
-        setSpecificDate(currentDate);
     };
 
     const onChangeReminderTime = (event, selectedDate) => {
@@ -70,8 +59,7 @@ const CreateHabit = ({ route, navigation }) => {
         id: Math.floor(Math.random() * 10000),
         color: color || updatedColor,
         icon: habitIcon,
-        times: selectedFrequency !== 'monthly' ? timesCount : 0,
-        specificDate: isEnabledSpecific ? specificDate : null,
+        times: !!timesCount ? timesCount : 1,
         reminder: isEnabledDate ? reminderTime : null,
         endDate: isEnabledEndDate ? endDate : null,
         unitValue: selectedValue,
@@ -85,7 +73,7 @@ const CreateHabit = ({ route, navigation }) => {
         progress: 0,
         noteInputs: [],
         streak: [],
-        frequency: !!isEnabledSpecific ? 'once' : selectedFrequency,
+        frequency: selectedFrequency,
         timesDoneThisWeek: 0,
         selectedWeekdays: weekdays,
         habitGoal: habitNature,
@@ -94,10 +82,9 @@ const CreateHabit = ({ route, navigation }) => {
     const objectToDispatch = {
         newHabit,
         isEnabledDate,
-        isEnabledSpecific,
         CRUDHabits,
         reminderTime,
-        specificDate,
+        weekdays,
     };
 
     return (
@@ -126,14 +113,11 @@ const CreateHabit = ({ route, navigation }) => {
                     <Box mt={4}>
                         <Details
                             switchStates={{
-                                isEnabledSpecific,
                                 isEnabled,
                                 isEnabledDate,
                                 isEnabledEndDate,
                             }}
                             methods={{
-                                toggleSwitchSpecific,
-                                onChangeSpecific,
                                 onChangeReminderTime,
                                 onChangeEndDate,
                                 toggleSwitch,
@@ -148,7 +132,7 @@ const CreateHabit = ({ route, navigation }) => {
                                 setWeekdays,
                                 setHabitNature,
                             }}
-                            values={{ specificDate, reminderTime, endDate }}
+                            values={{ reminderTime, endDate }}
                             states={{
                                 timesCount,
                                 selectedValue,
