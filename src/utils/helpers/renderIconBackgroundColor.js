@@ -34,6 +34,8 @@ export const renderIconBackgroundColor = (color) => {
             return 'violet';
         case '#3FBFBF':
             return 'cyan';
+        case '#818cf8':
+            return 'indigo';
         default:
             return 'rose';
     }

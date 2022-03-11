@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, ScrollView, TouchableOpacity, View } from 'react-native';
 import { Box, Center, Flex, Text, useColorModeValue, VStack } from 'native-base';
 import { ChevronTextContainer, ImageContainer } from '../utils/StyledComponents/Styled';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import MainContainer from '../components/uiComponents/MainContainer';
 import useSettings from '../hooks/useSettings';
 import ListContainer from '../components/uiComponents/ListContainer';
@@ -30,7 +30,7 @@ const HabitScreen = ({ route, navigation }) => {
                     <Image style={{ height: 100, width: 100 }} source={image} />
                 </ImageContainer>
                 <Box px={1}>
-                    <ListContainer colorNumber={800}>
+                    <ListContainer colorNumber={800} rounded="none">
                         {habitData.map(({ habitIcon, description, color, name }, index) => (
                             <>
                                 <TouchableOpacity
@@ -47,7 +47,7 @@ const HabitScreen = ({ route, navigation }) => {
                                         direction="row"
                                         align="center"
                                         justify="space-between"
-                                        py={2}
+                                        py={3}
                                     >
                                         <Flex direction="row" align="center">
                                             <Center
@@ -59,9 +59,10 @@ const HabitScreen = ({ route, navigation }) => {
                                                 h={10}
                                                 w={10}
                                             >
-                                                <Image
-                                                    style={{ height: 20, width: 20 }}
-                                                    source={habitIcon}
+                                                <MaterialCommunityIcons
+                                                    name={habitIcon}
+                                                    size={24}
+                                                    color={color}
                                                 />
                                             </Center>
                                             <VStack>

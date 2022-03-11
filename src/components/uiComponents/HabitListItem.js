@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { HomepageDataBox, HomepageDataView } from '../../utils/StyledComponents/Styled';
 import {
@@ -21,6 +20,7 @@ import { renderIconBackgroundColor } from '../../utils/helpers/renderIconBackgro
 import { habitItemShadow } from '../../utils/globalStyles';
 import ProgressCircle from './CircularProgress';
 import useSettings from '../../hooks/useSettings';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const HabitListItem = ({ item }) => {
     const { icon, completed, times, progress, color, name, id, unitValue, frequency } = item;
@@ -49,7 +49,7 @@ const HabitListItem = ({ item }) => {
 
     const renderIcon = () =>
         !!icon ? (
-            <Image style={{ height: 15, width: 15 }} source={icon} />
+            <MaterialCommunityIcons size={20} name={icon} color="black" />
         ) : (
             <Feather name="activity" size={15} color={color || colors.mainColor} />
         );
@@ -87,6 +87,7 @@ const HabitListItem = ({ item }) => {
                         <HStack>
                             <Flex align="center" mt={1}>
                                 <Button
+                                    disabled={true}
                                     variant="subtle"
                                     colorScheme={renderIconBackgroundColor(color)}
                                     p={3}

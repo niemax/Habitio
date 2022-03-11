@@ -81,12 +81,15 @@ const SelectFrequencyScreen = ({ route }) => {
                     <Text px={3} opacity={0.7} fontSize="xs">
                         I WANT TO
                     </Text>
-                    <ListContainer py={2}>
+                    <ListContainer py={1}>
                         <SettingTouchable
                             style={{ paddingVertical: 8 }}
                             onPress={() => setHabitNature('Build a habit')}
                         >
                             <Text fontSize="md">Build a habit</Text>
+                            {habitNature === 'Build a habit' && (
+                                <Ionicons name="checkmark" size={20} color={colors.mainColor} />
+                            )}
                         </SettingTouchable>
                         <LineBreak />
                         <SettingTouchable
@@ -94,6 +97,9 @@ const SelectFrequencyScreen = ({ route }) => {
                             onPress={() => setHabitNature('Break a habit')}
                         >
                             <Text fontSize="md">Break a habit</Text>
+                            {habitNature === 'Break a habit' && (
+                                <Ionicons name="checkmark" size={20} color={colors.mainColor} />
+                            )}
                         </SettingTouchable>
                     </ListContainer>
                 </Box>

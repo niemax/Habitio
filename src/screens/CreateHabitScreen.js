@@ -14,23 +14,24 @@ import Details from '../components/uiComponents/ChooseFrequency';
 const currentWeek = getCurrentWeek();
 
 const CreateHabit = ({ route, navigation }) => {
-    const { name, habitIcon, color, habitName } = route.params;
+    const { name, habitIcon, color, habitName, defaultTimes, defaultUnit, defaultGoal } =
+        route.params;
     const { CRUDHabits } = useHabits();
     const { navigate } = navigation;
 
     const [updatedColor, setUpdatedColor] = useState();
     const [colorUpdated, setColorUpdated] = useState(false);
     const [description, setDescription] = useState('');
-    const [timesCount, setTimesCount] = useState(1);
+    const [timesCount, setTimesCount] = useState(!!defaultTimes ? defaultTimes : 1);
     const [reminderTime, setReminderTime] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [isEnabled, setIsEnabled] = useState(false);
     const [isEnabledDate, setIsEnabledDate] = useState(false);
     const [isEnabledEndDate, setIsEnabledEndDate] = useState(false);
-    const [selectedValue, setSelectedValue] = useState('Times');
-    const [selectedFrequency, setSelectedFrequency] = useState('weekly');
+    const [selectedValue, setSelectedValue] = useState(!!defaultUnit ? defaultUnit : 'Times');
+    const [selectedFrequency, setSelectedFrequency] = useState('daily');
     const [weekdays, setWeekdays] = useState([]);
-    const [habitNature, setHabitNature] = useState('Build a habit');
+    const [habitNature, setHabitNature] = useState(!!defaultGoal ? defaultGoal : 'Build a habit');
 
     const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
     const toggleSwitchDate = () => setIsEnabledDate((previousState) => !previousState);

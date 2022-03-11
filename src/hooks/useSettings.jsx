@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 // todo: context
 const useSettings = () => {
     const [color, setColor] = useState('#FF4040');
@@ -29,7 +28,7 @@ const useSettings = () => {
     };
 
     const colors = {
-        mainBackground: '#18181b',
+        mainBackground: '#1c1c1e',
         mainColor: color,
         error: '#EA5B71',
         black: '#000000',
@@ -46,6 +45,7 @@ const useSettings = () => {
         '#FA0FE2',
         '#0FCBFA',
         '#0F84FA',
+        '#818cf8',
         '#2EB284',
         '#4C7226',
         '#722672',

@@ -3,7 +3,6 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
-import HabitScreen from '../screens/HabitScreen';
 import CreateHabit from '../screens/CreateHabitScreen';
 import StartHabitCreation from '../screens/StartHabitCreationScreen';
 import Settings from '../screens/SettingsScreen';
@@ -245,25 +244,7 @@ const CreateHabitStack = () => {
                 }}
                 component={StartHabitCreation}
             />
-            <Stack.Screen
-                name="HabitScreen"
-                options={{
-                    title: 'Choose one',
-                    headerBackTitleVisible: true,
-                    headerBackTitle: 'Back',
-                    headerTintColor: colors.mainColor,
-                    headerStyle: {
-                        backgroundColor:
-                            colorMode === 'dark' ? colors.mainBackground : colors.white,
-                    },
-                    headerTitleStyle: {
-                        color: colorMode === 'dark' ? 'white' : 'black',
-                        fontWeight: '600',
-                        fontSize: 18,
-                    },
-                }}
-                component={HabitScreen}
-            />
+
             <Stack.Screen
                 name="CreateHabit"
                 options={({ route }) => ({
@@ -525,21 +506,7 @@ const MainAppStack = ({ navigation }) => {
                     })}
                     component={EditNote}
                 />
-                <Stack.Screen
-                    name="SelectFrequencyScreen"
-                    options={{
-                        title: '',
-                        headerShown: true,
-                        headerBackTitleVisible: true,
-                        headerBackTitle: 'Back',
-                        headerTintColor: colors.mainColor,
-                        headerStyle: {
-                            backgroundColor:
-                                colorMode === 'dark' ? colors.mainBackground : colors.white,
-                        },
-                    }}
-                    component={SelectFrequencyScreen}
-                />
+                <Stack.Screen name="SelectFrequencyScreen" component={SelectFrequencyScreen} />
             </Stack.Group>
         </Stack.Navigator>
     );

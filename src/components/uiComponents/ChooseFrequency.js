@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Switch, TextInput, SafeAreaView } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {
-    DateTimePickerView,
     FrequencySwitchContainer,
     HabitUtilityInfoContainer,
 } from '../../utils/StyledComponents/Styled';
@@ -52,61 +51,60 @@ const Details = ({
         setSelectedFrequency(frequency);
     };
 
-    const renderHowOftenContainer = () =>
-        isEnabled && (
-            <Box mt={2} px={1}>
-                <ListContainer rounded="xl">
-                    <SettingTouchable
-                        style={{ marginTop: 5 }}
-                        onPress={() =>
-                            navigate('SelectFrequencyScreen', {
-                                handleHabitNature: handleHabitNature,
-                                name: 'habit nature',
-                                routeHabitNature: habitNature,
-                                handleChange: handleFrequencySelection,
-                                handleWeekdays: handleWeekdays,
-                                routeWeekdays: weekdays,
-                                frequency: selectedFrequency,
-                            })
-                        }
-                    >
-                        <>
-                            <Text fontSize="md">I want to</Text>
-                        </>
-                        <HStack>
-                            <Text>{habitNature}</Text>
-                            <Ionicons name="chevron-forward" size={20} color="gray" />
-                        </HStack>
-                    </SettingTouchable>
-                    {renderLineBreak()}
-                    <SettingTouchable
-                        style={{ marginTop: 5, marginBottom: 5 }}
-                        onPress={() =>
-                            navigate('SelectFrequencyScreen', {
-                                name: 'select frequency',
-                                handleChange: handleFrequencySelection,
-                                handleWeekdays: handleWeekdays,
-                                routeWeekdays: weekdays,
-                                frequency: selectedFrequency,
-                                handleHabitNature: handleHabitNature,
-                            })
-                        }
-                    >
-                        <Text fontSize="md">How often?</Text>
-                        <HStack>
-                            <Text>
-                                {!weekdays?.length
-                                    ? selectedFrequency
-                                    : weekdays?.map((weekday) => weekday).join(', ')}
-                            </Text>
-                            <Ionicons name="chevron-forward" size={20} color="gray" />
-                        </HStack>
-                    </SettingTouchable>
-                    {!!isSelectedDaily && renderLineBreak()}
-                    {renderReminder()}
-                </ListContainer>
-            </Box>
-        );
+    const renderHowOftenContainer = () => (
+        <Box mt={2}>
+            <ListContainer rounded="xl">
+                <SettingTouchable
+                    style={{ marginTop: 5 }}
+                    onPress={() =>
+                        navigate('SelectFrequencyScreen', {
+                            handleHabitNature: handleHabitNature,
+                            name: 'habit nature',
+                            routeHabitNature: habitNature,
+                            handleChange: handleFrequencySelection,
+                            handleWeekdays: handleWeekdays,
+                            routeWeekdays: weekdays,
+                            frequency: selectedFrequency,
+                        })
+                    }
+                >
+                    <>
+                        <Text fontSize="md">I want to</Text>
+                    </>
+                    <HStack>
+                        <Text opacity={0.7} fontSize="md">
+                            {habitNature}
+                        </Text>
+                        <Ionicons name="chevron-forward" size={20} color="gray" />
+                    </HStack>
+                </SettingTouchable>
+                {renderLineBreak()}
+                <SettingTouchable
+                    style={{ marginTop: 5, marginBottom: 5 }}
+                    onPress={() =>
+                        navigate('SelectFrequencyScreen', {
+                            name: 'select frequency',
+                            handleChange: handleFrequencySelection,
+                            handleWeekdays: handleWeekdays,
+                            routeWeekdays: weekdays,
+                            frequency: selectedFrequency,
+                            handleHabitNature: handleHabitNature,
+                        })
+                    }
+                >
+                    <Text fontSize="md">How often?</Text>
+                    <HStack>
+                        <Text opacity={0.7} fontSize="md">
+                            {!weekdays?.length ? selectedFrequency : 'Selected weekdays'}
+                        </Text>
+                        <Ionicons name="chevron-forward" size={20} color="gray" />
+                    </HStack>
+                </SettingTouchable>
+                {!!isSelectedDaily && renderLineBreak()}
+                {renderReminder()}
+            </ListContainer>
+        </Box>
+    );
 
     const renderEndDate = () => (
         <HabitUtilityInfoContainer>
@@ -149,90 +147,79 @@ const Details = ({
         />
     );
 
-    const renderGoalIfEnabled = () =>
-        isEnabled && (
-            <Box mt={4}>
-                <Text fontSize="xs" marginLeft="15px" opacity={0.7}>
-                    {`${selectedFrequency?.toUpperCase()} ${
-                        habitNature === 'Build a habit' ? 'GOAL' : 'MAXIMUM'
-                    }`}
-                </Text>
-                <HabitUtilityInfoContainer>
-                    <Box
-                        bg={colorMode === 'dark' ? 'gray.800' : 'white'}
-                        px={3}
-                        py={3}
-                        rounded="xl"
-                    >
-                        <SafeAreaView>
-                            <Flex
-                                rounded="md"
-                                direction="row"
-                                align="center"
-                                justify="space-between"
-                            >
-                                <Flex direction="row" align="center">
-                                    <Text fontSize="md">{timesCount}</Text>
-                                </Flex>
-                                <Flex
-                                    direction="row"
-                                    bg={colorMode === 'light' ? 'gray.100' : 'gray.600'}
-                                    rounded="lg"
-                                    align="center"
-                                    justify="center"
-                                    px={1}
-                                >
-                                    <Button
-                                        _pressed={{ background: 'transparent' }}
-                                        bg="transparent"
-                                        size={8}
-                                        onPress={() => {
-                                            if (timesCount > 1) {
-                                                setTimesCount(timesCount - 1);
-                                            }
-                                        }}
-                                    >
-                                        <Feather
-                                            name="minus"
-                                            size={22}
-                                            color={colorMode === 'light' ? 'black' : 'white'}
-                                        />
-                                    </Button>
-                                    {renderVerticalLineBreak()}
-                                    <Button
-                                        bg="transparent"
-                                        _pressed={{ background: 'transparent' }}
-                                        size={8}
-                                        onPress={() => setTimesCount(timesCount + 1)}
-                                    >
-                                        <Ionicons
-                                            name="add-sharp"
-                                            size={22}
-                                            color={colorMode === 'light' ? 'black' : 'white'}
-                                        />
-                                    </Button>
-                                </Flex>
+    const renderGoal = () => (
+        <Box mt={4}>
+            <Text fontSize="xs" marginLeft="15px" opacity={0.7}>
+                {`${selectedFrequency?.toUpperCase()} ${
+                    habitNature === 'Build a habit' ? 'GOAL' : 'MAXIMUM'
+                }`}
+            </Text>
+            <HabitUtilityInfoContainer>
+                <Box bg={colorMode === 'dark' ? 'gray.800' : 'white'} px={3} py={3} rounded="xl">
+                    <SafeAreaView>
+                        <Flex rounded="md" direction="row" align="center" justify="space-between">
+                            <Flex direction="row" align="center">
+                                <Text fontSize="md">{timesCount}</Text>
                             </Flex>
-                        </SafeAreaView>
-                        {renderLineBreak()}
-                        <Box mt={3}>
-                            <TextInput
-                                clearButtonMode="always"
-                                placeholder="Unit (e.g. minutes, times, pages)"
-                                width="100%"
-                                value={selectedValue}
-                                style={{
-                                    fontSize: 16,
-                                    color: colors.mainColor,
-                                }}
-                                placeholderTextColor="gray"
-                                onChangeText={(text) => setSelectedValue(text)}
-                            />
-                        </Box>
+                            <Flex
+                                direction="row"
+                                bg={colorMode === 'light' ? 'gray.100' : 'gray.600'}
+                                rounded="lg"
+                                align="center"
+                                justify="center"
+                                px={1}
+                            >
+                                <Button
+                                    _pressed={{ background: 'transparent' }}
+                                    bg="transparent"
+                                    size={8}
+                                    onPress={() => {
+                                        if (timesCount > 1) {
+                                            setTimesCount(timesCount - 1);
+                                        }
+                                    }}
+                                >
+                                    <Feather
+                                        name="minus"
+                                        size={22}
+                                        color={colorMode === 'light' ? 'black' : 'white'}
+                                    />
+                                </Button>
+                                {renderVerticalLineBreak()}
+                                <Button
+                                    bg="transparent"
+                                    _pressed={{ background: 'transparent' }}
+                                    size={8}
+                                    onPress={() => setTimesCount(timesCount + 1)}
+                                >
+                                    <Ionicons
+                                        name="add-sharp"
+                                        size={22}
+                                        color={colorMode === 'light' ? 'black' : 'white'}
+                                    />
+                                </Button>
+                            </Flex>
+                        </Flex>
+                    </SafeAreaView>
+                    {renderLineBreak()}
+                    <Box mt={3}>
+                        <TextInput
+                            clearButtonMode="always"
+                            placeholder="Unit (e.g. minutes, times, pages)"
+                            width="100%"
+                            value={selectedValue}
+                            style={{
+                                fontSize: 16,
+                                color: colors.mainColor,
+                            }}
+                            placeholderTextColor="gray"
+                            onChangeText={(text) => setSelectedValue(text)}
+                        />
                     </Box>
-                </HabitUtilityInfoContainer>
-            </Box>
-        );
+                </Box>
+            </HabitUtilityInfoContainer>
+        </Box>
+    );
 
     const renderReminder = () =>
         isSelectedDaily && (
@@ -267,21 +254,8 @@ const Details = ({
                             FREQUENCY
                         </Text>
                     </Box>
-                    <HabitUtilityInfoContainer>
-                        <Box
-                            bg={colorMode === 'dark' ? 'gray.800' : 'white'}
-                            px={3}
-                            py={1}
-                            rounded="xl"
-                        >
-                            <FrequencySwitchContainer>
-                                <Text fontSize="md">Goal</Text>
-                                <Switch onValueChange={toggleSwitch} value={isEnabled} />
-                            </FrequencySwitchContainer>
-                        </Box>
-                    </HabitUtilityInfoContainer>
                     {renderHowOftenContainer()}
-                    {renderGoalIfEnabled()}
+                    {renderGoal()}
                     {renderEndDate()}
                 </Flex>
             </SafeAreaView>

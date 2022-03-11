@@ -71,7 +71,7 @@ const ProgressCircle = ({ id, habitProgress, handleHabitProgress, size, width, h
                 titleColor={useColorModeValue('black', 'white')}
                 titleStyle={{ fontWeight: 'regular', fontSize: 20 }}
                 activeStrokeColor={habit?.completed ? '#43E443' : colors.mainColor}
-                activeStrokeSecondaryColor={habit?.completed ? '#43E4E4' : '#C25AFF'}
+                activeStrokeSecondaryColor={habit?.completed ? '43E4E4' : '#C25AFF'}
             />
         </TouchableOpacity>
     );

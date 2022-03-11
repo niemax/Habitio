@@ -1,28 +1,39 @@
 const data = [
     {
-        category: 'Self-Care',
+        category: 'Healthy',
         mainIcon: require('./assets/flatIcons/heart.png'),
         color: '#EA5B71',
         image: require('./assets/flatIcons/selfcare.png'),
         habits: [
             {
                 name: 'Drink Water',
-                habitIcon: require('./assets/flatIcons/drop.png'),
-                description: 'Stay hydrated throughout the day',
+                habitIcon: 'water',
                 color: '#0FCBFA',
+                defaultTimes: 5,
+                defaultUnit: 'glasses',
             },
-
             {
-                name: 'Go to bed earlier than normal',
-                habitIcon: require('./assets/flatIcons/sleeping.png'),
-                description: 'Wake up earlier and get to work while\nothers are sleeping',
-                color: '#3F3FBF',
+                name: 'Brush teeth',
+                habitIcon: 'tooth-outline',
+                color: 'gray',
+                defaultTimes: 2,
+            },
+            {
+                name: 'Go to bed early',
+                habitIcon: 'bed',
+                color: '#818cf8',
             },
             {
                 name: 'Meditate',
-                habitIcon: require('./assets/flatIcons/lotus.png'),
-                description: 'Take a moment for yourself to think',
+                habitIcon: 'meditation',
                 color: '#EA5B71',
+                defaultTimes: 10,
+                defaultUnit: 'minutes',
+            },
+            {
+                name: 'Eat vegetables',
+                habitIcon: 'carrot',
+                color: '#FA9C0F',
             },
         ],
     },
@@ -34,25 +45,27 @@ const data = [
         habits: [
             {
                 name: 'Read a book',
-                habitIcon: require('./assets/flatIcons/storytelling.png'),
-                description: 'Relax and learn something new\nand interesting',
+                habitIcon: 'book-variant-multiple',
                 color: '#FA9C0F',
+                defaultTimes: 20,
+                defaultUnit: 'pages',
             },
             {
                 name: 'Take a cold shower',
-                habitIcon: require('./assets/flatIcons/shower.png'),
-                description: 'Benefits yours metabolism and\ncirculation',
+                habitIcon: 'shower-head',
                 color: '#0F84FA',
             },
             {
                 name: 'Avoid social media',
-                habitIcon: require('./assets/flatIcons/social-media.png'),
-                description: 'Retain from social media platforms\nfor a moment',
-                color: '#7D6C06',
+                habitIcon: 'facebook',
+                color: '#0F84FA',
+                defaultTimes: 4,
+                defaultUnit: 'hours',
+                defaultGoal: 'Break a habit',
             },
             {
                 name: 'Make your bed',
-                habitIcon: require('./assets/flatIcons/bed.png'),
+                habitIcon: 'bed-king',
                 description: 'It is a good start to a productive day',
                 color: '#FF4040',
             },
@@ -66,15 +79,17 @@ const data = [
         habits: [
             {
                 name: 'Hit the gym',
-                habitIcon: require('./assets/flatIcons/treadmill.png'),
-                description: 'Get Stronger',
+                habitIcon: 'weight-lifter',
+                description: 'Build muscle',
                 color: '#2EB284',
             },
             {
                 name: 'Go for a walk',
-                habitIcon: require('./assets/flatIcons/person-walking.png'),
+                habitIcon: 'walk',
                 description: 'Wander around your neighborhood',
                 color: '#2EB284',
+                defaultTimes: 30,
+                defaultUnit: 'minutes',
             },
         ],
     },
@@ -86,9 +101,14 @@ const data = [
         habits: [
             {
                 name: 'Journal',
-                habitIcon: require('./assets/flatIcons/travel-journal.png'),
+                habitIcon: 'notebook',
                 description: 'Write down your accomplishments,\nexperiences, and goals',
                 color: '#FA9C0F',
+            },
+            {
+                name: 'Learn a new instrument',
+                habitIcon: 'guitar-acoustic',
+                color: '#818cf8',
             },
         ],
     },
@@ -100,7 +120,7 @@ const data = [
         habits: [
             {
                 name: 'Eat Breakfast',
-                habitIcon: require('./assets/flatIcons/coffee.png'),
+                habitIcon: 'food-apple-outline',
                 description: 'Start the day right with the most\nimportant meal of the day',
                 color: '#FF6347',
             },
