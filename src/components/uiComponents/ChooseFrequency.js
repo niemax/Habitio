@@ -13,14 +13,8 @@ import ListContainer from './ListContainer';
 import { SettingTouchable } from '../../screens/SettingsScreen';
 
 const Details = ({
-    switchStates: { isEnabled, isEnabledDate, isEnabledEndDate },
-    methods: {
-        onChangeReminderTime,
-        onChangeEndDate,
-        toggleSwitch,
-        toggleSwitchDate,
-        toggleSwitchEndDate,
-    },
+    switchStates: { isEnabledDate, isEnabledEndDate },
+    methods: { onChangeReminderTime, onChangeEndDate, toggleSwitchDate, toggleSwitchEndDate },
     setters: { setSelectedValue, setTimesCount, setSelectedFrequency, setWeekdays, setHabitNature },
     values: { reminderTime, endDate, habitReminderTime },
     states: { timesCount, habitEndDate, selectedValue, selectedFrequency, weekdays, habitNature },
@@ -52,7 +46,7 @@ const Details = ({
     };
 
     const renderHowOftenContainer = () => (
-        <Box mt={2}>
+        <Box>
             <ListContainer rounded="xl">
                 <SettingTouchable
                     style={{ marginTop: 5 }}
@@ -100,7 +94,8 @@ const Details = ({
                         <Ionicons name="chevron-forward" size={20} color="gray" />
                     </HStack>
                 </SettingTouchable>
-                {!!isSelectedDaily && renderLineBreak()}
+
+                {renderLineBreak()}
                 {renderReminder()}
             </ListContainer>
         </Box>
@@ -223,7 +218,7 @@ const Details = ({
 
     const renderReminder = () =>
         isSelectedDaily && (
-            <Box bg={colorMode === 'light' ? 'white' : 'gray.800'} rounded="xl">
+            <Box bg={colorMode === 'light' ? 'white' : 'gray.800'} rounded="xl" mt={1}>
                 <FrequencySwitchContainer>
                     <Text fontSize="md">Remind me</Text>
                     <Switch onValueChange={toggleSwitchDate} value={isEnabledDate} />

@@ -38,7 +38,7 @@ const MainTab = () => {
                     let iconName;
 
                     if (route.name === 'Dashboard') {
-                        iconName = 'list';
+                        iconName = 'aperture-sharp';
                     } else if (route.name === 'Settings') {
                         iconName = 'settings';
                     } else if (route.name === 'Mood') {
@@ -99,14 +99,13 @@ const MoodStack = () => {
     const { colorMode } = useColorMode();
     const { colors } = useSettings();
     const { getHappyMoodCount } = useMoods();
-
     const happyMoodCount = getHappyMoodCount();
+
     return (
         <Stack.Navigator>
             <Stack.Screen
                 name="Mood"
                 options={{
-                    tabBarLabel: 'Settings',
                     tabBarLabelStyle: { fontSize: 12 },
                     headerShown: true,
                     headerTransparent: true,
@@ -175,7 +174,7 @@ const SettingsStack = () => {
     const { colorMode } = useColorMode();
     const { colors } = useSettings();
     return (
-        <Stack.Navigator initialRouteName="Settings">
+        <Stack.Navigator>
             <Stack.Screen
                 name="Settings"
                 options={{
@@ -222,24 +221,32 @@ const SettingsStack = () => {
 const CreateHabitStack = () => {
     const { colorMode } = useColorMode();
     const { colors } = useSettings();
+
     return (
         <Stack.Navigator initialRouteName="StartHabitCreation">
             <Stack.Screen
                 name="StartHabitCreation"
                 options={{
-                    title: 'Add a Habit',
                     headerShown: true,
-                    headerTitleStyle: {
-                        color: colorMode === 'dark' ? 'white' : 'black',
-                        fontWeight: '600',
-                        fontSize: 18,
-                    },
-                    headerBackTitleVisible: true,
-                    headerBackTitle: 'Back',
-                    headerTintColor: colors.mainColor,
-                    headerStyle: {
+                    headerBlurEffect:
+                        colorMode === 'light' ? 'systemUltraThinMaterialLight' : 'dark',
+                    headerLargeTitle: true,
+                    headerLargeStyle: {
                         backgroundColor:
                             colorMode === 'dark' ? colors.mainBackground : colors.white,
+                    },
+                    headerLargeTitleStyle: {
+                        fontSize: 30,
+                        fontWeight: '800',
+                        color: colorMode === 'light' ? 'black' : 'white',
+                    },
+                    headerTransparent: true,
+                    headerBackTitle: 'Back',
+                    headerTitle: 'Add a habit',
+                    headerTitleStyle: {
+                        color: colorMode === 'light' ? 'black' : 'white',
+                        fontWeight: '600',
+                        fontSize: 18,
                     },
                 }}
                 component={StartHabitCreation}
@@ -351,7 +358,7 @@ const MainAppStack = ({ navigation }) => {
                     component={HomeScreen}
                 />
                 <Stack.Screen
-                    name="Settings"
+                    name="SettingsScreen"
                     options={{
                         headerShown: true,
                         headerBlurEffect:

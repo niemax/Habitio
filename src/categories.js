@@ -1,9 +1,6 @@
 const data = [
     {
         category: 'Healthy',
-        mainIcon: require('./assets/flatIcons/heart.png'),
-        color: '#EA5B71',
-        image: require('./assets/flatIcons/selfcare.png'),
         habits: [
             {
                 name: 'Drink Water',
@@ -15,8 +12,8 @@ const data = [
             {
                 name: 'Brush teeth',
                 habitIcon: 'tooth-outline',
-                color: 'gray',
                 defaultTimes: 2,
+                color: 'gray',
             },
             {
                 name: 'Go to bed early',
@@ -30,18 +27,10 @@ const data = [
                 defaultTimes: 10,
                 defaultUnit: 'minutes',
             },
-            {
-                name: 'Eat vegetables',
-                habitIcon: 'carrot',
-                color: '#FA9C0F',
-            },
         ],
     },
     {
         category: 'Productivity',
-        mainIcon: require('./assets/flatIcons/timetomarket.png'),
-        color: '#EBDBB1',
-        image: require('./assets/flatIcons/time-to-market.png'),
         habits: [
             {
                 name: 'Read a book',
@@ -66,37 +55,54 @@ const data = [
             {
                 name: 'Make your bed',
                 habitIcon: 'bed-king',
-                description: 'It is a good start to a productive day',
                 color: '#FF4040',
+            },
+            {
+                name: 'Take a nap',
+                habitIcon: 'sleep',
+                color: '#818cf8',
+                defaultTimes: 30,
+                defaultUnit: 'minutes',
+            },
+            {
+                name: `Set your most important tasks ${'\n'}for the day`,
+                habitIcon: 'format-list-checks',
+                color: '#FF4040',
+            },
+            {
+                name: 'Clean your apartment',
+                habitIcon: 'cleaning-services',
+                color: '#722672',
             },
         ],
     },
     {
         category: 'Fitness',
-        mainIcon: require('./assets/flatIcons/flexions-exercise.png'),
-        color: '#2EB284',
-        image: require('./assets/flatIcons/dumbbell.png'),
         habits: [
             {
                 name: 'Hit the gym',
                 habitIcon: 'weight-lifter',
-                description: 'Build muscle',
                 color: '#2EB284',
             },
             {
                 name: 'Go for a walk',
                 habitIcon: 'walk',
-                description: 'Wander around your neighborhood',
-                color: '#2EB284',
+                color: '#3F3FBF',
                 defaultTimes: 30,
                 defaultUnit: 'minutes',
+            },
+            {
+                name: 'Do twenty pushups',
+                habitIcon: 'arm-flex',
+                color: '#4C7226',
+                defaultTimes: 20,
+                defaultUnit: 'push-ups',
             },
         ],
     },
     {
         category: 'Goals',
         mainIcon: require('./assets/flatIcons/goal.png'),
-        color: '#EBDBB1',
         image: require('./assets/flatIcons/career.png'),
         habits: [
             {
@@ -110,19 +116,49 @@ const data = [
                 habitIcon: 'guitar-acoustic',
                 color: '#818cf8',
             },
+            {
+                name: 'Ten thousand steps a day',
+                habitIcon: 'foot-print',
+                color: '#7FBF3F',
+                defaultTimes: 100000,
+                defaultUnit: 'steps',
+            },
         ],
     },
     {
         category: 'Nutrition',
-        mainIcon: require('./assets/flatIcons/dinner.png'),
-        color: '#764D00',
-        image: require('./assets/flatIcons/nutrition.png'),
         habits: [
             {
-                name: 'Eat Breakfast',
+                name: 'Eat breakfast',
                 habitIcon: 'food-apple-outline',
-                description: 'Start the day right with the most\nimportant meal of the day',
                 color: '#FF6347',
+            },
+            {
+                name: 'Eat vegetables',
+                habitIcon: 'carrot',
+                color: '#FA9C0F',
+            },
+            {
+                name: 'Eat 5 meals a day',
+                habitIcon: 'food',
+                color: '#722672',
+                defaultTimes: 5,
+                defaultUnit: 'meals',
+            },
+        ],
+    },
+    {
+        category: 'Social',
+        habits: [
+            {
+                name: 'Call a relative',
+                habitIcon: 'phone',
+                color: '#2EB284',
+            },
+            {
+                name: 'Meet friends',
+                habitIcon: 'account-group-outline',
+                color: '#3FBFBF',
             },
         ],
     },

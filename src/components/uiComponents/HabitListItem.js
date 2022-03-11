@@ -20,10 +20,11 @@ import { renderIconBackgroundColor } from '../../utils/helpers/renderIconBackgro
 import { habitItemShadow } from '../../utils/globalStyles';
 import ProgressCircle from './CircularProgress';
 import useSettings from '../../hooks/useSettings';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
 const HabitListItem = ({ item }) => {
-    const { icon, completed, times, progress, color, name, id, unitValue, frequency } = item;
+    const { icon, completed, times, progress, color, name, id, unitValue, frequency, habitGoal } =
+        item;
 
     const [habitProgress, setHabitProgress] = useState(progress);
     const [isActionSheetVisible, setIsActionSheetVisible] = useState(false);
@@ -49,9 +50,13 @@ const HabitListItem = ({ item }) => {
 
     const renderIcon = () =>
         !!icon ? (
-            <MaterialCommunityIcons size={20} name={icon} color="black" />
+            icon === 'cleaning-services' ? (
+                <MaterialIcons size={20} color="black" name={icon} />
+            ) : (
+                <MaterialCommunityIcons size={20} color="black" name={icon} />
+            )
         ) : (
-            <Feather name="activity" size={15} color={color || colors.mainColor} />
+            <Feather name="activity" size={15} color="black" />
         );
 
     return (
@@ -113,7 +118,9 @@ const HabitListItem = ({ item }) => {
                                         {name}
                                     </Text>
                                     <Text fontWeight={400} fontSize="sm">
-                                        {frequency} goal: {times} {unitValue}
+                                        {frequency}{' '}
+                                        {habitGoal === 'Break a habit' ? 'maximum' : 'goal'}:{' '}
+                                        {times} {unitValue}
                                     </Text>
                                 </VStack>
                             </Box>

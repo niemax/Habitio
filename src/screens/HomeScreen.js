@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { RefreshControl, ScrollView } from 'react-native';
+import { ActivityIndicator, RefreshControl, ScrollView } from 'react-native';
 import { useHabits } from '../context/HabitProvider';
 import HabitListItem from '../components/uiComponents/HabitListItem';
 import { Text, useColorModeValue, Flex, Center, HStack, Box, Spacer } from 'native-base';
@@ -29,7 +29,7 @@ const TotalProgressCircle = () => {
                 inActiveStrokeColor={useColorModeValue('#F9F9F9', colors.mainBackground)}
                 inActiveStrokeWidth={24}
                 activeStrokeWidth={24}
-                duration={1000}
+                duration={1200}
                 value={!dailyHabits?.length ? 0 : (value / totalTimesWeeklyToDo) * 100}
                 valueSuffix="%"
                 radius={100}
@@ -75,17 +75,9 @@ const HomeScreen = () => {
     );
 
     const renderContentLoader = () => (
-        <Spinner
-            size="small"
-            visible={habitsLoading}
-            textContent={'Loading...'}
-            textStyle={{
-                color: useColorModeValue('black', 'white'),
-                fontSize: 16,
-                fontWeight: '400',
-            }}
-            color={colors.mainColor}
-        />
+        <Center flex={1} mt={40}>
+            <ActivityIndicator size="small" color={colors.mainColor} />
+        </Center>
     );
 
     if (!habits.length && !habitsLoading)
@@ -100,6 +92,7 @@ const HomeScreen = () => {
     return (
         <Flex flex={1} bg={useColorModeValue(colors.white, colors.black)}>
             <ScrollView
+                contentInsetAdjustmentBehavior="automatic"
                 refreshControl={
                     <RefreshControl
                         title="Release to refresh"
@@ -113,8 +106,8 @@ const HomeScreen = () => {
                 {habitsLoading ? (
                     renderContentLoader()
                 ) : (
-                    <Box mb={40}>
-                        <Center mt={40}>
+                    <Box mb={20}>
+                        <Center>
                             <TotalProgressCircle />
                         </Center>
                         <Box>{!!dailyHabits.length && renderHeader('daily', 10)}</Box>

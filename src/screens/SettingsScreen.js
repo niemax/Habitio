@@ -108,8 +108,8 @@ const Settings = ({ navigation }) => {
 
     return (
         <Flex flex={1} bg={useColorModeValue(colors.white, colors.black)}>
-            <ScrollView>
-                <Box mt={40}>
+            <ScrollView contentInsetAdjustmentBehavior="automatic">
+                <Box mt={10}>
                     <Box px={4}>
                         <Text fontSize="xs" marginLeft={4}>
                             CUSTOMIZATION

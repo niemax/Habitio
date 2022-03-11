@@ -3,7 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import useSettings from '../../hooks/useSettings';
 import { colorPalletteColor, colorPalletteView } from '../../utils/globalStyles';
 
-export default function ColorPalletteModal({ sheetRef, updateColor }) {
+export default function ColorPalletteModal({ setShowModal, updateColor }) {
     const { habitSelectionColors } = useSettings();
     return (
         <View>
@@ -12,8 +12,8 @@ export default function ColorPalletteModal({ sheetRef, updateColor }) {
                     <View key={index.toString()}>
                         <TouchableOpacity
                             onPress={() => {
-                                sheetRef.current?.hide();
                                 updateColor(item);
+                                setShowModal(false);
                             }}
                             style={{
                                 backgroundColor: item,

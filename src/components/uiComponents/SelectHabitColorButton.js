@@ -1,26 +1,30 @@
-import { Center, useColorModeValue } from 'native-base';
-import React, { useRef } from 'react';
-import { View } from 'react-native';
-import ActionSheet from 'react-native-actions-sheet';
-import useSettings from '../../hooks/useSettings';
+import { Box, Center, useColorModeValue } from 'native-base';
+import React from 'react';
+import { Keyboard, View } from 'react-native';
+import Modal from 'react-native-modal';
 import { habitColor } from '../../utils/globalStyles';
 import { SelectHabitColorButton } from '../../utils/StyledComponents/Styled';
 import ColorPalletteModal from './ColorPallette';
 
-export default function HabitColor({ colorUpdated, updatedColor, updateColor, color }) {
-    const sheetRef = useRef(null);
-    const { colors } = useSettings();
+export default function HabitColor({
+    showModal,
+    setShowModal,
+    colorUpdated,
+    updatedColor,
+    updateColor,
+    color,
+}) {
     return (
         <Center
             bg="gray.800"
             mt={2}
             ml={3}
-            h={10}
-            w={10}
+            h={6}
+            w={6}
             bg={useColorModeValue('gray.200', 'gray.700')}
             rounded="lg"
         >
-            <SelectHabitColorButton onPress={() => sheetRef.current.show()}>
+            <SelectHabitColorButton>
                 {!colorUpdated ? (
                     <View
                         style={{
@@ -36,18 +40,24 @@ export default function HabitColor({ colorUpdated, updatedColor, updateColor, co
                         }}
                     />
                 )}
-                <ActionSheet
-                    containerStyle={{
-                        backgroundColor: useColorModeValue(colors.white, colors.mainBackground),
-                        height: 200,
-                        borderRadius: 35,
-                    }}
-                    defaultOverlayOpacity={0.3}
-                    elevation={2}
-                    ref={sheetRef}
+                <Modal
+                    onSwipeComplete={() => setShowModal(false)}
+                    swipeDirection="down"
+                    isVisible={showModal}
+                    swipeThreshold={300}
+                    avoidKeyboard={true}
+                    onBackdropPress={() => Keyboard.dismiss()}
+                    animationInTiming={500}
+                    animationOutTiming={500}
+                    backdropTransitionOutTiming={0}
+                    hideModalContentWhileAnimating={true}
+                    style={{ justifyContent: 'flex-end', marginBottom: 30, marginHorizontal: 10 }}
+                    onBackdropPress={() => setShowModal(false)}
                 >
-                    <ColorPalletteModal updateColor={updateColor} sheetRef={sheetRef} />
-                </ActionSheet>
+                    <Box bg={useColorModeValue('gray.100', 'gray.800')} rounded="3xl" px={2}>
+                        <ColorPalletteModal updateColor={updateColor} setShowModal={setShowModal} />
+                    </Box>
+                </Modal>
             </SelectHabitColorButton>
         </Center>
     );

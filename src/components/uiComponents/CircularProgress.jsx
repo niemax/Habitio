@@ -1,12 +1,22 @@
 import React, { useEffect, useRef } from 'react';
-import { Box, Button, Flex, useColorModeValue } from 'native-base';
+import { Box, Button, Center, Flex, useColorModeValue } from 'native-base';
 import { useHabits } from '../../context/HabitProvider';
 import { AntDesign } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import AnimatedLottieView from 'lottie-react-native';
 import { handleDoneToday } from '../../utils/helpers/handleDone';
 import useSettings from '../../hooks/useSettings';
+
+import { TapGestureHandler } from 'react-native-gesture-handler';
+import Animated, {
+    Easing,
+    useAnimatedGestureHandler,
+    useAnimatedStyle,
+    useSharedValue,
+    withSpring,
+    withTiming,
+} from 'react-native-reanimated';
 
 export const RenderLottie = () => {
     const animation = useRef(null);
@@ -56,24 +66,46 @@ const ProgressCircle = ({ id, habitProgress, handleHabitProgress, size, width, h
         }
     };
 
+    const pressed = useSharedValue(0);
+
+    const uas = useAnimatedStyle(() => {
+        return {
+            transform: [{ scale: withSpring(pressed.value ? 1.2 : 1) }],
+        };
+    });
+
+    const eventHandler = useAnimatedGestureHandler({
+        onStart: (event, ctx) => {
+            pressed.value = 1;
+        },
+        onEnd: (event, ctx) => {
+            pressed.value = 0;
+        },
+    });
+
     const renderProgressCircle = () => (
-        <TouchableOpacity onPress={handleCirclePress} hitSlop={{ top: 10, right: 30 }}>
-            <CircularProgress
-                inActiveStrokeColor={useColorModeValue('#F9F9F9', 'black')}
-                inActiveStrokeWidth={width}
-                activeStrokeWidth={width}
-                duration={600}
-                value={!habit?.completed ? habitProgress : habit?.times || habit?.days}
-                radius={size}
-                textColor={useColorModeValue('black', 'white')}
-                maxValue={habit?.times || habit?.days}
-                title={!!habitItem && !habit?.completed && habit?.unitValue}
-                titleColor={useColorModeValue('black', 'white')}
-                titleStyle={{ fontWeight: 'regular', fontSize: 20 }}
-                activeStrokeColor={habit?.completed ? '#43E443' : colors.mainColor}
-                activeStrokeSecondaryColor={habit?.completed ? '43E4E4' : '#C25AFF'}
-            />
-        </TouchableOpacity>
+        <TapGestureHandler
+            onGestureEvent={eventHandler}
+            onHandlerStateChange={handleCirclePress}
+        >
+            <Animated.View style={uas}>
+                <CircularProgress
+                    inActiveStrokeColor={useColorModeValue('#F9F9F9', 'black')}
+                    inActiveStrokeWidth={width}
+                    activeStrokeWidth={width}
+                    duration={600}
+                    value={!habit?.completed ? habitProgress : habit?.times || habit?.days}
+                    radius={size}
+                    textColor={useColorModeValue('black', 'white')}
+                    maxValue={habit?.times || habit?.days}
+                    title={!!habitItem && !habit?.completed && habit?.unitValue}
+                    titleColor={useColorModeValue('black', 'white')}
+                    titleStyle={{ fontWeight: 'regular', fontSize: 20 }}
+                    activeStrokeColor={habit?.completed ? '#43E443' : colors.mainColor}
+                    activeStrokeSecondaryColor={habit?.completed ? '#43E4E4' : '#C25AFF'}
+                />
+            </Animated.View>
+       </TapGestureHandler>
     );
 
     return (

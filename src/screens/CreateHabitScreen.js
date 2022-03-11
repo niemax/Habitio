@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, TextInput } from 'react-native';
 import { ButtonContainer } from '../utils/StyledComponents/Styled';
-import HabitInput from '../components/uiComponents/HabitDescriptionInput';
 import HabitColor from '../components/uiComponents/SelectHabitColorButton';
 import { getCurrentDay, getCurrentMonth, getCurrentWeek } from '../utils/helpers/dateHelpers';
 import handleHabitCreation from '../utils/helpers/createhabitHelpers';
 import { useHabits } from '../context/HabitProvider';
-import { Box, Text } from 'native-base';
+import { Box, Flex, Text } from 'native-base';
 import Button from '../components/uiComponents/Button';
 import MainContainer from '../components/uiComponents/MainContainer';
 import Details from '../components/uiComponents/ChooseFrequency';
+import ListContainer from '../components/uiComponents/ListContainer';
+import { LineBreak, SettingTouchable } from './SettingsScreen';
 
 const currentWeek = getCurrentWeek();
 
@@ -32,6 +33,8 @@ const CreateHabit = ({ route, navigation }) => {
     const [selectedFrequency, setSelectedFrequency] = useState('daily');
     const [weekdays, setWeekdays] = useState([]);
     const [habitNature, setHabitNature] = useState(!!defaultGoal ? defaultGoal : 'Build a habit');
+
+    const [showModal, setShowModal] = useState(false);
 
     const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
     const toggleSwitchDate = () => setIsEnabledDate((previousState) => !previousState);
@@ -90,27 +93,37 @@ const CreateHabit = ({ route, navigation }) => {
 
     return (
         <MainContainer>
-            <ScrollView>
-                <Box flex={1} mt={24} px={2} mb={32}>
-                    <Text fontSize="xs" marginLeft="10px" marginTop="35px" opacity={0.7}>
-                        DESCRIPTION
+            <ScrollView contentInsetAdjustmentBehavior="automatic">
+                <Box flex={1} px={2} mb={32}>
+                    <Text fontSize="xs" marginLeft="15px" opacity={0.7}>
+                        DETAILS
                     </Text>
-                    <HabitInput
-                        actions={{
-                            setValue: (text) => setDescription(text),
-                        }}
-                    />
-                    <Box>
-                        <Text fontSize="xs" marginLeft="15px" opacity={0.7}>
-                            COLOR
-                        </Text>
-                        <HabitColor
-                            colorUpdated={colorUpdated}
-                            updatedColor={updatedColor}
-                            color={color}
-                            updateColor={updateColor}
-                        />
-                    </Box>
+                    <ListContainer>
+                        <Box py={2}>
+                            <TextInput
+                                autoCorrect={false}
+                                value={description}
+                                clearButtonMode="always"
+                                onChangeText={(text) => setDescription(text)}
+                                placeholder="Description"
+                                clearButtonMode="alwayswd"
+                            />
+                        </Box>
+                        <LineBreak />
+                        <SettingTouchable onPress={() => setShowModal(true)}>
+                            <Text fontSize="md" marginTop="15px">
+                                Color
+                            </Text>
+                            <HabitColor
+                                showModal={showModal}
+                                setShowModal={setShowModal}
+                                colorUpdated={colorUpdated}
+                                updatedColor={updatedColor}
+                                color={color}
+                                updateColor={updateColor}
+                            />
+                        </SettingTouchable>
+                    </ListContainer>
                     <Box mt={4}>
                         <Details
                             switchStates={{

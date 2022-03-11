@@ -1,13 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import {
-    formatDateForHabitEndDate,
-    getCurrentDay,
-    getCurrentMonth,
-    getCurrentWeek,
-} from '../utils/helpers/dateHelpers';
-import { cancelPushNotification } from '../utils/helpers/notification';
+import data from '../categories';
+import { getCurrentDay, getCurrentMonth, getCurrentWeek } from '../utils/helpers/dateHelpers';
 import { toasts } from '../utils/helpers/toastMethods';
 
 const HabitContext = createContext();
@@ -15,6 +10,7 @@ const HabitContext = createContext();
 const HabitProvider = ({ children }) => {
     const [habits, setHabits] = useState([]);
     const [habitsLoading, setHabitsLoading] = useState(false);
+    const [initialData] = useState(data);
 
     const currentDay = getCurrentDay();
     const currentMonth = getCurrentMonth();
@@ -55,8 +51,6 @@ const HabitProvider = ({ children }) => {
         }
     };
 
-    console.log(habits);
-
     const getSpecificHabit = (id) => habits.find((habit) => habit.id === id);
 
     const CRUDHabits = async (props) => {
@@ -88,6 +82,7 @@ const HabitProvider = ({ children }) => {
     return (
         <HabitContext.Provider
             value={{
+                initialData,
                 habits,
                 monthlyHabits,
                 weeklyHabits,

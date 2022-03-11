@@ -28,8 +28,6 @@ const CalendarModal = ({ route, navigation }) => {
 
     const isSelectedDaily = habitItem.frequency === 'daily';
 
-    console.log(habitItem);
-
     const calendarDayPress = (day) => {
         const date = day.dateString;
         const id = route.params.id;

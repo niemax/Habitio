@@ -19,7 +19,6 @@ export const toasts = {
             style: {
                 opacity: 0.87,
                 backgroundColor: '#040404',
-                borderRadius: 5,
             },
             icon: 'success',
         });
@@ -35,7 +34,6 @@ export const toasts = {
             style: {
                 opacity: 0.87,
                 backgroundColor: '#040404',
-                borderRadius: 5,
             },
         });
     },

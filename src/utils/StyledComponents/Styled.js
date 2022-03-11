@@ -150,7 +150,7 @@ export const HabitUtilityInfoContainer = styled.View`
     margin-top: 10px;
 `;
 
-export const SelectHabitColorButton = styled.TouchableOpacity``;
+export const SelectHabitColorButton = styled.View``;
 
 export const FrequencyTouchable = styled.View`
     border-radius: 7px;

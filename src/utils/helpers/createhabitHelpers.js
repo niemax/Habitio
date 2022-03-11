@@ -47,9 +47,8 @@ const checkIfReminderDateIsEnabled = (enabledDate) => {
 };
 
 const handleHabitCreation = ({ newHabit, isEnabledDate, CRUDHabits, reminderTime, weekdays }) => {
-    const { reminderTimeHours, reminderTimeMinutes } = getParsedReminderTimeHours(reminderTime);
-
     if (checkIfReminderDateIsEnabled(isEnabledDate)) {
+        const { reminderTimeHours, reminderTimeMinutes } = getParsedReminderTimeHours(reminderTime);
         const notificationDays = convertWeekdaysToNumbers(weekdays);
         notificationDays?.forEach((day) => {
             chRepeating(day, newHabit.name, reminderTimeHours, reminderTimeMinutes, newHabit);

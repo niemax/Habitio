@@ -31,7 +31,7 @@ export const getAllNotifications = async () => {
 export const scheduleRepeatingEdit = async (day, hours, minutes, name, habits, id) => {
     await Notifications.scheduleNotificationAsync({
         content: {
-            body: `Your daily reminder to ${name}`,
+            title: `Your daily reminder to ${name}`,
         },
         trigger: {
             hour: hours,
@@ -53,7 +53,7 @@ export const chRepeating = async (day, name, hours, minutes, newHabit) => {
     try {
         await Notifications.scheduleNotificationAsync({
             content: {
-                body: `Your daily reminder to ${name}`,
+                title: `Your daily reminder to ${name}`,
             },
             trigger: {
                 hour: hours,
@@ -74,7 +74,7 @@ export const scheduleMoodNotification = async () => {
             body: `Think about how you're feeling today and check in! ⚡️`,
         },
         trigger: {
-            hour: 10,
+            hour: 11,
             repeats: true,
         },
     });

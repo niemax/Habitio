@@ -1,16 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView, TextInput } from 'react-native';
-import { Box, useColorModeValue, Text } from 'native-base';
-import {
-    ButtonContainer,
-    HabitCentered,
-    HabitInfoContainer,
-} from '../../utils/StyledComponents/Styled';
+import { Box, Text } from 'native-base';
+import { ButtonContainer, HabitInfoContainer } from '../../utils/StyledComponents/Styled';
 import HabitColor from '../uiComponents/SelectHabitColorButton';
-import { textInputShadow } from '../../utils/globalStyles';
 import MainButton from '../uiComponents/Button';
 import MainContainer from '../uiComponents/MainContainer';
 import Details from '../uiComponents/ChooseFrequency';
+import ListContainer from '../uiComponents/ListContainer';
+import { LineBreak, SettingTouchable } from '../../screens/SettingsScreen';
 
 export default function HabitEditContent({
     methods: {
@@ -25,7 +22,6 @@ export default function HabitEditContent({
     setters: {
         setSelectedValue,
         setStateDescription,
-        setDaysCount,
         setTimesCount,
         setIsEnabledEndDate,
         setSelectedFrequency,
@@ -34,7 +30,6 @@ export default function HabitEditContent({
     },
     states: {
         stateDescription,
-        daysCount,
         timesCount,
         isEnabled,
         isEnabledDate,
@@ -50,49 +45,42 @@ export default function HabitEditContent({
         habitNature,
     },
 }) {
+    const [showModal, setShowModal] = useState(false);
     return (
         <MainContainer>
-            <ScrollView>
-                <Box mb={24} mt={24}>
-                    <Text
-                        fontSize="xs"
-                        marginLeft="24px"
-                        marginTop="35px"
-                        marginBottom="10px"
-                        opacity={0.7}
-                    >
-                        DESCRIPTION
-                    </Text>
+            <ScrollView contentInsetAdjustmentBehavior="automatic">
+                <Box mb={24}>
                     <HabitInfoContainer>
-                        <HabitCentered>
-                            <TextInput
-                                autoCorrect={false}
-                                value={stateDescription}
-                                clearButtonMode="always"
-                                style={{
-                                    backgroundColor: useColorModeValue('white', '#27272a'),
-                                    color: useColorModeValue('black', 'white'),
-                                    fontSize: 17,
-                                    width: '91%',
-                                    height: 50,
-                                    borderRadius: 8,
-                                    padding: 10,
-                                    ...textInputShadow,
-                                }}
-                                onChangeText={(text) => setStateDescription(text)}
-                            />
-                        </HabitCentered>
-                        <Box>
-                            <Text fontSize="xs" marginLeft="15px" opacity={0.7} marginTop="15px">
-                                COLOR
-                            </Text>
-                            <HabitColor
-                                colorUpdated={colorUpdated}
-                                updatedColor={updatedColor}
-                                color={color}
-                                updateColor={updateColor}
-                            />
-                        </Box>
+                        <Text fontSize="xs" marginLeft="15px" opacity={0.7}>
+                            DETAILS
+                        </Text>
+                        <ListContainer>
+                            <Box py={2}>
+                                <TextInput
+                                    autoCorrect={false}
+                                    value={stateDescription}
+                                    clearButtonMode="always"
+                                    onChangeText={(text) => setStateDescription(text)}
+                                    placeholder="description"
+                                    clearButtonMode="alwayswd"
+                                />
+                            </Box>
+                            <LineBreak />
+                            <SettingTouchable onPress={() => setShowModal(true)}>
+                                <Text fontSize="md" marginTop="15px">
+                                    Color
+                                </Text>
+                                <HabitColor
+                                    showModal={showModal}
+                                    setShowModal={setShowModal}
+                                    colorUpdated={colorUpdated}
+                                    updatedColor={updatedColor}
+                                    color={color}
+                                    updateColor={updateColor}
+                                />
+                            </SettingTouchable>
+                        </ListContainer>
+
                         <Box>
                             <Details
                                 switchStates={{
@@ -108,7 +96,6 @@ export default function HabitEditContent({
                                     toggleSwitchEndDate,
                                 }}
                                 setters={{
-                                    setDaysCount,
                                     setTimesCount,
                                     setSelectedValue,
                                     setIsEnabledEndDate,
@@ -118,7 +105,6 @@ export default function HabitEditContent({
                                 }}
                                 values={{ habitReminderTime }}
                                 states={{
-                                    daysCount,
                                     timesCount,
                                     habitEndDate,
                                     selectedValue,
