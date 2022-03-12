@@ -12,8 +12,6 @@ import Details from '../components/uiComponents/ChooseFrequency';
 import ListContainer from '../components/uiComponents/ListContainer';
 import { LineBreak, SettingTouchable } from './SettingsScreen';
 
-const currentWeek = getCurrentWeek();
-
 const CreateHabit = ({ route, navigation }) => {
     const { name, habitIcon, color, habitName, defaultTimes, defaultUnit, defaultGoal } =
         route.params;
@@ -55,12 +53,8 @@ const CreateHabit = ({ route, navigation }) => {
         setEndDate(currentDate);
     };
 
-    const currentDay = getCurrentDay();
-    const currentMonth = getCurrentMonth();
-
     const newHabit = {
         name: name || habitName,
-        id: Math.floor(Math.random() * 10000),
         color: color || updatedColor,
         icon: habitIcon,
         times: !!timesCount ? timesCount : 1,
@@ -68,17 +62,7 @@ const CreateHabit = ({ route, navigation }) => {
         endDate: isEnabledEndDate ? endDate : null,
         unitValue: selectedValue,
         description: description || null,
-        dataCurrentDay: currentDay,
-        dataCurrentWeek: currentWeek,
-        dataCurrentMonth: currentMonth,
-        completed: false,
-        calendarDone: false,
-        completedDates: {},
-        progress: 0,
-        noteInputs: [],
-        streak: [],
         frequency: selectedFrequency,
-        timesDoneThisWeek: 0,
         selectedWeekdays: weekdays,
         habitGoal: habitNature,
     };
@@ -94,19 +78,18 @@ const CreateHabit = ({ route, navigation }) => {
     return (
         <MainContainer>
             <ScrollView contentInsetAdjustmentBehavior="automatic">
-                <Box flex={1} px={2} mb={32}>
+                <Box flex={1} px={2} mb={32} mt={2}>
                     <Text fontSize="xs" marginLeft="15px" opacity={0.7}>
                         DETAILS
                     </Text>
                     <ListContainer>
-                        <Box py={2}>
+                        <Box py={3}>
                             <TextInput
                                 autoCorrect={false}
                                 value={description}
                                 clearButtonMode="always"
                                 onChangeText={(text) => setDescription(text)}
                                 placeholder="Description"
-                                clearButtonMode="alwayswd"
                             />
                         </Box>
                         <LineBreak />

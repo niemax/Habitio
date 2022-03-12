@@ -45,18 +45,53 @@ const HabitProvider = ({ children }) => {
                 setHabitsLoading(false);
             }
         } catch (error) {
-            setHabitsLoading(false);
             console.error(error);
-            toasts.error(error);
         }
+        setHabitsLoading(false);
     };
 
     const getSpecificHabit = (id) => habits.find((habit) => habit.id === id);
+    console.log(habits);
 
     const CRUDHabits = async (props) => {
         try {
-            setHabits([...habits, props]);
-            await AsyncStorage.setItem('@habit', JSON.stringify([...habits, props]));
+            setHabits([
+                ...habits,
+                {
+                    ...props,
+                    id: Math.floor(Math.random() * 10000),
+                    dataCurrentDay: currentDay,
+                    dataCurrentWeek: currentWeek,
+                    dataCurrentMonth: currentMonth,
+                    completed: false,
+                    calendarDone: false,
+                    completedDates: {},
+                    progress: 0,
+                    noteInputs: [],
+                    streak: [],
+                    timesDoneThisWeek: 0,
+                },
+            ]);
+            await AsyncStorage.setItem(
+                '@habit',
+                JSON.stringify([
+                    ...habits,
+                    {
+                        ...props,
+                        id: Math.floor(Math.random() * 10000),
+                        dataCurrentDay: currentDay,
+                        dataCurrentWeek: currentWeek,
+                        dataCurrentMonth: currentMonth,
+                        completed: false,
+                        calendarDone: false,
+                        completedDates: {},
+                        progress: 0,
+                        noteInputs: [],
+                        streak: [],
+                        timesDoneThisWeek: 0,
+                    },
+                ])
+            );
         } catch (error) {
             console.error(error);
         }

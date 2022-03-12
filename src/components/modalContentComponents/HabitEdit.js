@@ -49,20 +49,19 @@ export default function HabitEditContent({
     return (
         <MainContainer>
             <ScrollView contentInsetAdjustmentBehavior="automatic">
-                <Box mb={24}>
+                <Box mb={24} mt={2}>
                     <HabitInfoContainer>
                         <Text fontSize="xs" marginLeft="15px" opacity={0.7}>
                             DETAILS
                         </Text>
                         <ListContainer>
-                            <Box py={2}>
+                            <Box py={3}>
                                 <TextInput
                                     autoCorrect={false}
                                     value={stateDescription}
                                     clearButtonMode="always"
                                     onChangeText={(text) => setStateDescription(text)}
                                     placeholder="description"
-                                    clearButtonMode="alwayswd"
                                 />
                             </Box>
                             <LineBreak />

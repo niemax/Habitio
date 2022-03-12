@@ -1,12 +1,10 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { ActivityIndicator, RefreshControl, ScrollView } from 'react-native';
 import { useHabits } from '../context/HabitProvider';
 import HabitListItem from '../components/uiComponents/HabitListItem';
 import { Text, useColorModeValue, Flex, Center, HStack, Box, Spacer } from 'native-base';
-import Spinner from 'react-native-loading-spinner-overlay';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import useSettings from '../hooks/useSettings';
-import { getAllNotifications } from '../utils/helpers/notification';
 
 const wait = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
 
@@ -60,13 +58,27 @@ const HomeScreen = () => {
     const MONTHLY_HABITS_LENGTH = monthlyHabits.length;
     const DAILY_HABITS_LENGTH = dailyHabits.length;
 
+    const getSpecificHabitsLengthByFrequency = (frequency) => {
+        switch (frequency) {
+            case 'daily':
+                return DAILY_HABITS_LENGTH;
+                break;
+            case 'weekly':
+                return WEEKLY_HABITS_LENGTH;
+                break;
+            case 'monthly':
+                return MONTHLY_HABITS_LENGTH;
+                break;
+        }
+    };
+
     const renderHeader = (frequency, marginTop) => (
         <HStack px={4} mt={marginTop}>
             <Box>
                 <Text fontWeight={800} fontSize="xl">
                     {frequency} habits{' '}
                     <Text opacity={0.6} fontWeight={400} fontSize="sm">
-                        ({frequency === 'daily' ? DAILY_HABITS_LENGTH : MONTHLY_HABITS_LENGTH})
+                        ({getSpecificHabitsLengthByFrequency(frequency)})
                     </Text>
                 </Text>
             </Box>

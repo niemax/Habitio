@@ -110,7 +110,7 @@ export default function ListItemActionSheet({
     };
 
     return (
-        <Flex flex={1}>
+        <Flex>
             <Modal
                 onSwipeComplete={() => setIsVisible(false)}
                 swipeDirection="down"
@@ -192,11 +192,11 @@ export default function ListItemActionSheet({
                                         </TouchableOpacity>
                                     </HStack>
                                 </Flex>
-                                <Box mb={1} mt={2}>
-                                    <Text textAlign="center" fontWeight={800} fontSize="3xl">
+                                <Box mb={3} mt={2}>
+                                    <Text textAlign="center" fontWeight={700} fontSize="4xl">
                                         {habitItem.name}
                                     </Text>
-                                    <Text fontWeight={400} fontSize="sm" textAlign="center">
+                                    <Text fontWeight={400} fontSize="lg" textAlign="center">
                                         {habitItem.frequency}{' '}
                                         {habitItem.habitGoal === 'Break a habit'
                                             ? 'maximum'

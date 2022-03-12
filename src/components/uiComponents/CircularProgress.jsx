@@ -1,22 +1,13 @@
 import React, { useEffect, useRef } from 'react';
-import { Box, Button, Center, Flex, useColorModeValue } from 'native-base';
+import { Box, Button, Flex, useColorModeValue } from 'native-base';
 import { useHabits } from '../../context/HabitProvider';
 import { AntDesign } from '@expo/vector-icons';
-import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import AnimatedLottieView from 'lottie-react-native';
 import { handleDoneToday } from '../../utils/helpers/handleDone';
 import useSettings from '../../hooks/useSettings';
-
-import { TapGestureHandler } from 'react-native-gesture-handler';
-import Animated, {
-    Easing,
-    useAnimatedGestureHandler,
-    useAnimatedStyle,
-    useSharedValue,
-    withSpring,
-    withTiming,
-} from 'react-native-reanimated';
+import * as Animatable from 'react-native-animatable';
 
 export const RenderLottie = () => {
     const animation = useRef(null);
@@ -48,6 +39,7 @@ const ProgressCircle = ({ id, habitProgress, handleHabitProgress, size, width, h
         } else if (habitProgress > 0) {
             handleHabitProgress(-1);
         }
+        animationRef.current?.pulse();
     };
 
     const handleCirclePress = () => {
@@ -56,6 +48,7 @@ const ProgressCircle = ({ id, habitProgress, handleHabitProgress, size, width, h
         } else {
             handleHabitProgress(1);
         }
+        animationRef.current?.pulse();
     };
 
     const handleIncrement = () => {
@@ -64,31 +57,14 @@ const ProgressCircle = ({ id, habitProgress, handleHabitProgress, size, width, h
         } else {
             handleHabitProgress(1);
         }
+        animationRef.current?.pulse();
     };
 
-    const pressed = useSharedValue(0);
-
-    const uas = useAnimatedStyle(() => {
-        return {
-            transform: [{ scale: withSpring(pressed.value ? 1.2 : 1) }],
-        };
-    });
-
-    const eventHandler = useAnimatedGestureHandler({
-        onStart: (event, ctx) => {
-            pressed.value = 1;
-        },
-        onEnd: (event, ctx) => {
-            pressed.value = 0;
-        },
-    });
+    const animationRef = useRef(null);
 
     const renderProgressCircle = () => (
-        <TapGestureHandler
-            onGestureEvent={eventHandler}
-            onHandlerStateChange={handleCirclePress}
-        >
-            <Animated.View style={uas}>
+        <TouchableWithoutFeedback onPress={handleCirclePress}>
+            <Animatable.View ref={animationRef}>
                 <CircularProgress
                     inActiveStrokeColor={useColorModeValue('#F9F9F9', 'black')}
                     inActiveStrokeWidth={width}
@@ -97,15 +73,15 @@ const ProgressCircle = ({ id, habitProgress, handleHabitProgress, size, width, h
                     value={!habit?.completed ? habitProgress : habit?.times || habit?.days}
                     radius={size}
                     textColor={useColorModeValue('black', 'white')}
-                    maxValue={habit?.times || habit?.days}
+                    maxValue={habit?.times}
                     title={!!habitItem && !habit?.completed && habit?.unitValue}
                     titleColor={useColorModeValue('black', 'white')}
                     titleStyle={{ fontWeight: 'regular', fontSize: 20 }}
                     activeStrokeColor={habit?.completed ? '#43E443' : colors.mainColor}
                     activeStrokeSecondaryColor={habit?.completed ? '#43E4E4' : '#C25AFF'}
                 />
-            </Animated.View>
-       </TapGestureHandler>
+            </Animatable.View>
+        </TouchableWithoutFeedback>
     );
 
     return (
