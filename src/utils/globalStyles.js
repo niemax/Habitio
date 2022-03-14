@@ -60,7 +60,6 @@ export const calendarStyles = {
     textMonthFontSize: 20,
     textMonthFontWeight: '600',
     textDayHeaderFontSize: 14,
-    dotColor: 'transparent',
 };
 
 export const noHabitsImageStyle = {

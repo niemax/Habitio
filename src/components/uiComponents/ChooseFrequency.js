@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Switch, TextInput, SafeAreaView } from 'react-native';
+import { View, Switch, TextInput, SafeAreaView, Dimensions } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {
     FrequencySwitchContainer,
@@ -17,7 +17,15 @@ const Details = ({
     methods: { onChangeReminderTime, onChangeEndDate, toggleSwitchDate, toggleSwitchEndDate },
     setters: { setSelectedValue, setTimesCount, setSelectedFrequency, setWeekdays, setHabitNature },
     values: { reminderTime, endDate, habitReminderTime },
-    states: { timesCount, habitEndDate, selectedValue, selectedFrequency, weekdays, habitNature },
+    states: {
+        timesCount,
+        habitEndDate,
+        selectedValue,
+        selectedFrequency,
+        weekdays,
+        habitNature,
+        scrollRef,
+    },
 }) => {
     const { colorMode } = useColorMode();
 
@@ -36,6 +44,7 @@ const Details = ({
     );
 
     const isSelectedDaily = selectedFrequency === 'daily';
+    const isSelectedWeekly = selectedFrequency === 'weekly';
 
     const handleWeekdays = (weekdays) => setWeekdays(weekdays);
 
@@ -89,12 +98,13 @@ const Details = ({
                     <Text fontSize="md">How often?</Text>
                     <HStack>
                         <Text opacity={0.7} fontSize="md">
-                            {!weekdays?.length ? selectedFrequency : 'Selected weekdays'}
+                            {!weekdays?.length
+                                ? selectedFrequency
+                                : `Selected weekday${selectedFrequency === 'daily' ? 's' : ''}`}
                         </Text>
                         <Ionicons name="chevron-forward" size={20} color="gray" />
                     </HStack>
                 </SettingTouchable>
-
                 {renderLineBreak()}
                 {renderReminder()}
             </ListContainer>
@@ -113,9 +123,8 @@ const Details = ({
                         <Switch onValueChange={toggleSwitchEndDate} value={isEnabledEndDate} />
                     </FrequencySwitchContainer>
                     {isEnabledEndDate && (
-                        <Box w={200} py={1}>
+                        <Box mt={1} py={1}>
                             <DateTimePicker
-                                style={{ position: 'relative', right: 35 }}
                                 testID="dateTimePicker"
                                 value={endDate || habitEndDate}
                                 mode="datetime"
@@ -199,6 +208,7 @@ const Details = ({
                     {renderLineBreak()}
                     <Box mt={3}>
                         <TextInput
+                            onPressIn={() => scrollRef.current?.scrollTo(100)}
                             clearButtonMode="always"
                             placeholder="Unit (e.g. minutes, times, pages)"
                             width="100%"
@@ -216,32 +226,33 @@ const Details = ({
         </Box>
     );
 
-    const renderReminder = () =>
-        isSelectedDaily && (
-            <Box bg={colorMode === 'light' ? 'white' : 'gray.800'} rounded="xl" mt={1}>
-                <FrequencySwitchContainer>
-                    <Text fontSize="md">Remind me</Text>
-                    <Switch onValueChange={toggleSwitchDate} value={isEnabledDate} />
-                </FrequencySwitchContainer>
-                {isEnabledDate && (
-                    <Box w={200} py={1}>
-                        <DateTimePicker
-                            style={{ position: 'relative', right: 120 }}
-                            testID="dateTimePicker"
-                            value={reminderTime || habitReminderTime}
-                            mode="time"
-                            themeVariant={colorMode === 'light' ? 'light' : 'dark'}
-                            is24Hour="true"
-                            onChange={onChangeReminderTime}
-                            display="compact"
-                        />
-                    </Box>
-                )}
-            </Box>
-        );
+    const renderReminder = () => {
+        if (!!isSelectedDaily || isSelectedWeekly)
+            return (
+                <Box bg={colorMode === 'light' ? 'white' : 'gray.800'} rounded="xl" mt={1}>
+                    <FrequencySwitchContainer>
+                        <Text fontSize="md">Remind me</Text>
+                        <Switch onValueChange={toggleSwitchDate} value={isEnabledDate} />
+                    </FrequencySwitchContainer>
+                    {isEnabledDate && (
+                        <Box mt={1} py={1}>
+                            <DateTimePicker
+                                testID="dateTimePicker"
+                                value={reminderTime || habitReminderTime}
+                                mode="time"
+                                themeVariant={colorMode === 'light' ? 'light' : 'dark'}
+                                is24Hour="true"
+                                onChange={onChangeReminderTime}
+                                display="compact"
+                            />
+                        </Box>
+                    )}
+                </Box>
+            );
+    };
 
     return (
-        <KeyboardAvoidingView behavior="padding">
+        <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
             <SafeAreaView>
                 <Flex mt={4} px={0.5}>
                     <Box>

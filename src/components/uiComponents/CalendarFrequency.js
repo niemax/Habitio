@@ -13,57 +13,21 @@ const CalendarFrequency = ({
     unitValue,
     endDate,
     reminder,
-    isSelectedDaily,
     weekdays,
+    frequency,
 }) => {
-    const renderOtherInfo = () => {
-        endDate !== null && (
-            <Box mt={4}>
-                <Text marginLeft="15px" opacity={0.6}>
-                    End Date
-                </Text>
-                <Text marginLeft="15px">{formatDateForHabitEndDate(endDate)}</Text>
-            </Box>
-        );
-    };
-    {
-        reminder !== null && (
-            <Box mt={4}>
-                <Text marginLeft="15px" opacity={0.6}>
-                    Reminder
-                </Text>
-                <Text marginLeft="15px">{formatDateForHabitInfoReminder(reminder)}</Text>
-            </Box>
-        );
-    }
-    {
-        description && (
-            <Box mt={4}>
-                <Text marginLeft="15px" opacity={0.6}>
-                    Description
-                </Text>
-                <Text marginLeft="15px">{description}</Text>
-            </Box>
-        );
-    }
-
-    if (!!isSelectedDaily)
+    if (frequency === 'daily' || frequency === 'weekly')
         return (
             <CalendarFrequencyContainer>
-                {renderOtherInfo()}
-                <>
-                    <Text marginLeft="15px" opacity={0.6}>
-                        Frequency
+                <Text marginLeft="15px" opacity={0.6}>
+                    Frequency
+                </Text>
+                <View style={{ flexDirection: 'row', marginLeft: 15, marginTop: 4 }}>
+                    <Text>
+                        {times} {unitValue} {frequency} on{' '}
                     </Text>
-                    <View style={{ flexDirection: 'row', marginLeft: 15, marginTop: 4 }}>
-                        <Text>
-                            {times} {unitValue} per day on{' '}
-                        </Text>
-                        <Text fontWeight={600}>
-                            {weekdays?.map((weekday) => weekday).join(', ')}
-                        </Text>
-                    </View>
-                </>
+                    <Text fontWeight={600}>{weekdays?.map((weekday) => weekday).join(', ')}</Text>
+                </View>
                 {description && (
                     <Box mt={4}>
                         <Text marginLeft="15px" opacity={0.6}>
@@ -92,23 +56,33 @@ const CalendarFrequency = ({
         );
     return (
         <CalendarFrequencyContainer>
-            <Box></Box>
-            {description && (
-                <Box mt={4}>
-                    <Text marginLeft="15px" opacity={0.6}>
-                        Description
+            <Box>
+                <Text marginLeft="15px" opacity={0.6}>
+                    Frequency
+                </Text>
+                <View style={{ flexDirection: 'row', marginLeft: 15, marginTop: 4 }}>
+                    <Text>
+                        {times} {unitValue} {frequency}
                     </Text>
-                    <Text marginLeft="15px">{description}</Text>
-                </Box>
-            )}
-            {endDate !== null && (
-                <Box mt={4}>
-                    <Text marginLeft="15px" opacity={0.6}>
-                        End Date
-                    </Text>
-                    <Text marginLeft="15px">{formatDateForHabitEndDate(endDate)}</Text>
-                </Box>
-            )}
+                    <Text fontWeight={600}>{weekdays?.map((weekday) => weekday).join(', ')}</Text>
+                </View>
+                {description && (
+                    <Box mt={4}>
+                        <Text marginLeft="15px" opacity={0.6}>
+                            Description
+                        </Text>
+                        <Text marginLeft="15px">{description}</Text>
+                    </Box>
+                )}
+                {endDate !== null && (
+                    <Box mt={4}>
+                        <Text marginLeft="15px" opacity={0.6}>
+                            End Date
+                        </Text>
+                        <Text marginLeft="15px">{formatDateForHabitEndDate(endDate)}</Text>
+                    </Box>
+                )}
+            </Box>
         </CalendarFrequencyContainer>
     );
 };

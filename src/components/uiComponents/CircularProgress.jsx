@@ -34,43 +34,49 @@ const ProgressCircle = ({ id, habitProgress, handleHabitProgress, size, width, h
     const { colors } = useSettings();
 
     const handleDecrement = () => {
-        if (habit.completed) {
+        if (habit.completed && habitProgress <= habit?.times) {
             handleDoneToday(id, habit.name, habits, habitSetter);
+            handleHabitProgress(-1);
         } else if (habitProgress > 0) {
             handleHabitProgress(-1);
         }
-        animationRef.current?.pulse();
+        animationRef.current?.pulse(300);
     };
 
     const handleCirclePress = () => {
         if (habitProgress - habit.times === -1) {
             handleDoneToday(id, habit.name, habits, habitSetter);
+            handleHabitProgress(1);
         } else {
             handleHabitProgress(1);
         }
-        animationRef.current?.pulse();
+        animationRef.current?.pulse(300);
     };
 
     const handleIncrement = () => {
         if (habit.times - habitProgress === 1) {
             handleDoneToday(id, habit.name, habits, habitSetter);
+            handleHabitProgress(1);
         } else {
             handleHabitProgress(1);
         }
-        animationRef.current?.pulse();
+        animationRef.current?.pulse(300);
     };
 
     const animationRef = useRef(null);
 
     const renderProgressCircle = () => (
-        <TouchableWithoutFeedback onPress={handleCirclePress}>
+        <TouchableWithoutFeedback
+            onPress={handleCirclePress}
+            onLongPress={() => handleDoneToday(id, habit.name, habits, habitSetter)}
+        >
             <Animatable.View ref={animationRef}>
                 <CircularProgress
                     inActiveStrokeColor={useColorModeValue('#F9F9F9', 'black')}
                     inActiveStrokeWidth={width}
                     activeStrokeWidth={width}
-                    duration={600}
-                    value={!habit?.completed ? habitProgress : habit?.times || habit?.days}
+                    duration={700}
+                    value={habitProgress}
                     radius={size}
                     textColor={useColorModeValue('black', 'white')}
                     maxValue={habit?.times}

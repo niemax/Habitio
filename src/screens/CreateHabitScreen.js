@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { ScrollView, TextInput } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { KeyboardAvoidingView, ScrollView, TextInput } from 'react-native';
 import { ButtonContainer } from '../utils/StyledComponents/Styled';
 import HabitColor from '../components/uiComponents/SelectHabitColorButton';
-import { getCurrentDay, getCurrentMonth, getCurrentWeek } from '../utils/helpers/dateHelpers';
 import handleHabitCreation from '../utils/helpers/createhabitHelpers';
 import { useHabits } from '../context/HabitProvider';
-import { Box, Flex, Text } from 'native-base';
+import { Box, Text } from 'native-base';
 import Button from '../components/uiComponents/Button';
 import MainContainer from '../components/uiComponents/MainContainer';
 import Details from '../components/uiComponents/ChooseFrequency';
@@ -75,11 +74,13 @@ const CreateHabit = ({ route, navigation }) => {
         weekdays,
     };
 
+    const scrollRef = useRef(null);
+
     return (
         <MainContainer>
-            <ScrollView contentInsetAdjustmentBehavior="automatic">
-                <Box flex={1} px={2} mb={32} mt={2}>
-                    <Text fontSize="xs" marginLeft="15px" opacity={0.7}>
+            <ScrollView contentInsetAdjustmentBehavior="automatic" ref={scrollRef}>
+                <Box flex={1} px={2} mb={80} mt={2}>
+                    <Text fontSize="xs" ml={4} opacity={0.7}>
                         DETAILS
                     </Text>
                     <ListContainer>
@@ -136,6 +137,7 @@ const CreateHabit = ({ route, navigation }) => {
                                 selectedFrequency,
                                 weekdays,
                                 habitNature,
+                                scrollRef,
                             }}
                         />
                     </Box>

@@ -27,10 +27,10 @@ const TotalProgressCircle = () => {
                 inActiveStrokeColor={useColorModeValue('#F9F9F9', colors.mainBackground)}
                 inActiveStrokeWidth={24}
                 activeStrokeWidth={24}
-                duration={1200}
+                duration={700}
                 value={!dailyHabits?.length ? 0 : (value / totalTimesWeeklyToDo) * 100}
                 valueSuffix="%"
-                radius={100}
+                radius={95}
                 textStyle={{ fontSize: 32, fontWeight: '800' }}
                 textColor={useColorModeValue('black', 'white')}
                 maxValue={100}

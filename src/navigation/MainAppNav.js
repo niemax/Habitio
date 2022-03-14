@@ -10,7 +10,7 @@ import ShowHabitEditModal from '../components/modalComponents/HabitEditModal';
 import CalendarModal from '../components/modalComponents/CalendarModal';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
-import { Text, useColorMode, Circle, HStack } from 'native-base';
+import { Text, useColorMode, Circle, HStack, Flex } from 'native-base';
 import EditNote from '../screens/EditNoteModal';
 import { formatDateForHabitEndDate } from '../utils/helpers/dateHelpers';
 import { handleNoteDelete } from '../utils/helpers/noteMethods';
@@ -338,15 +338,12 @@ const MainAppStack = ({ navigation }) => {
                             <TouchableOpacity
                                 onPress={() => navigation.navigate('CreateHabitStack')}
                             >
-                                <Circle
-                                    size="xs"
-                                    shadow="5"
-                                    rounded="full"
-                                    _pressed={{ bg: colors.purple }}
-                                    bg={colorMode === 'dark' ? 'gray.800' : 'gray.100'}
-                                >
-                                    <AntDesign name="plus" size={20} color={colors.mainColor} />
-                                </Circle>
+                                <Flex direction="row" align="center">
+                                    <Text color={colors.mainColor} mr={1}>
+                                        Add a habit
+                                    </Text>
+                                    <AntDesign name="plus" size={28} color={colors.mainColor} />
+                                </Flex>
                             </TouchableOpacity>
                         ),
                         headerLeft: () => (

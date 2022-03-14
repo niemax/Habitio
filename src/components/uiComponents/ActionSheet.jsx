@@ -15,7 +15,6 @@ import { AntDesign } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
 import useSettings from '../../hooks/useSettings';
 import { BlurView } from 'expo-blur';
-import Animated from 'react-native-reanimated';
 
 export default function ListItemActionSheet({
     id,
@@ -78,6 +77,7 @@ export default function ListItemActionSheet({
                         h={50}
                         rounded="xl"
                         variant="solid"
+                        fontSize={18}
                     >
                         Mark as done
                     </MainButton>
@@ -140,7 +140,7 @@ export default function ListItemActionSheet({
                 >
                     <BlurView
                         tint={useColorModeValue('light', 'dark')}
-                        intensity={useColorModeValue(70, 100)}
+                        intensity={useColorModeValue(75, 100)}
                         style={{ overflow: 'hidden', borderRadius: 30 }}
                     >
                         <Flex
@@ -175,7 +175,7 @@ export default function ListItemActionSheet({
                                             }}
                                         >
                                             <MaterialCommunityIcons
-                                                name="history"
+                                                name="chart-arc"
                                                 size={32}
                                                 color={colors.mainColor}
                                                 style={{ marginRight: 10 }}
@@ -185,7 +185,7 @@ export default function ListItemActionSheet({
                                             onPress={() => actionSheetRef.current.show()}
                                         >
                                             <MaterialCommunityIcons
-                                                name="dots-horizontal-circle"
+                                                name="dots-horizontal"
                                                 size={32}
                                                 color={colors.mainColor}
                                             />
@@ -210,7 +210,6 @@ export default function ListItemActionSheet({
                                 habitProgress={habitProgress}
                                 handleHabitProgress={handleHabitProgress}
                                 size={95}
-                                fontSize={34}
                                 habitItem={true}
                                 width={22}
                             />
@@ -231,7 +230,6 @@ export default function ListItemActionSheet({
             <ActionSheet
                 tintColor={colors.mainColor}
                 ref={actionSheetRef}
-                title={'Choose an action'}
                 options={['Add a note', 'Change value', 'Edit Habit', 'Delete Habit', 'Cancel']}
                 cancelButtonIndex={4}
                 onPress={(index) => decideAction(index)}

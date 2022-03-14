@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { ScrollView, TextInput } from 'react-native';
 import { Box, Text } from 'native-base';
 import { ButtonContainer, HabitInfoContainer } from '../../utils/StyledComponents/Styled';
@@ -46,12 +46,13 @@ export default function HabitEditContent({
     },
 }) {
     const [showModal, setShowModal] = useState(false);
+    const scrollRef = useRef(null);
     return (
         <MainContainer>
-            <ScrollView contentInsetAdjustmentBehavior="automatic">
-                <Box mb={24} mt={2}>
+            <ScrollView contentInsetAdjustmentBehavior="automatic" ref={scrollRef}>
+                <Box mb={80} mt={2}>
                     <HabitInfoContainer>
-                        <Text fontSize="xs" marginLeft="15px" opacity={0.7}>
+                        <Text fontSize="xs" ml={4} opacity={0.7}>
                             DETAILS
                         </Text>
                         <ListContainer>
@@ -110,6 +111,7 @@ export default function HabitEditContent({
                                     selectedFrequency,
                                     weekdays,
                                     habitNature,
+                                    scrollRef,
                                 }}
                             />
                         </Box>

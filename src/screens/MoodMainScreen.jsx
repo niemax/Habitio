@@ -105,7 +105,7 @@ const MoodMainScreen = ({ navigation }) => {
                 initial={{
                     opacity: 0,
                     scale: 0,
-                    translateY: 24,
+                    translateY: 14,
                 }}
                 animate={{
                     translateY: 1,
@@ -113,9 +113,9 @@ const MoodMainScreen = ({ navigation }) => {
                     opacity: 1,
                     transition: {
                         type: 'spring',
-                        mass: 0.5,
+                        mass: 0.3,
                         stagger: {
-                            offset: 20,
+                            offset: 10,
                         },
                     },
                 }}
@@ -242,21 +242,8 @@ const MoodMainScreen = ({ navigation }) => {
 
                 <Button.Group colorScheme={renderIconBackgroundColor(color)} space={2}>
                     <Button
-                        size="lg"
-                        bg={useColorModeValue('gray.200', 'gray.700')}
-                        rounded="lg"
-                        w="auto"
-                        px={12}
                         h={50}
-                        variant="subtle"
-                        onPress={() => setIsVisible(false)}
-                    >
-                        Cancel
-                    </Button>
-                    <Button
-                        w="auto"
-                        px={12}
-                        h={50}
+                        w={40}
                         variant="solid"
                         rounded="lg"
                         isDisabled={!moodName}

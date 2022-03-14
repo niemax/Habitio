@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { ScrollView } from 'react-native';
 import { ButtonContainer, HabitInput, InputContainer } from '../utils/StyledComponents/Styled';
 import { Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
@@ -22,6 +22,7 @@ const StartHabitCreation = ({ navigation }) => {
     const handleOwnHabit = () => {
         if (habitName === '') {
             setError('Name Required');
+            scrollviewRef.current?.scrollTo({ x: 0, y: 0, animated: true });
         } else {
             navigate('CreateHabit', {
                 habitName: habitName,
@@ -31,9 +32,16 @@ const StartHabitCreation = ({ navigation }) => {
 
     const renderLineBreak = () => <LineBreak />;
 
+    const scrollviewRef = useRef(null);
+
+    const inputErrorStyle = {
+        borderWidth: 1,
+        borderColor: colors.error,
+    };
+
     return (
         <MainContainer bgColor="#EFEFEF">
-            <ScrollView contentInsetAdjustmentBehavior="automatic">
+            <ScrollView contentInsetAdjustmentBehavior="automatic" ref={scrollviewRef}>
                 <Box px={4}>
                     <Text marginTop="20px" ml={5}>
                         CREATE YOUR OWN HABIT
@@ -43,10 +51,13 @@ const StartHabitCreation = ({ navigation }) => {
                             clearButtonMode="always"
                             placeholder="habit name..."
                             placeholderTextColor="gray"
-                            style={{
-                                backgroundColor: useColorModeValue('white', '#27272a'),
-                                color: useColorModeValue('black', 'white'),
-                            }}
+                            style={[
+                                {
+                                    backgroundColor: useColorModeValue('white', '#27272a'),
+                                    color: useColorModeValue('black', 'white'),
+                                },
+                                !!error && inputErrorStyle,
+                            ]}
                             onChangeText={(text) => {
                                 setError('');
                                 setHabitName(text);
@@ -58,7 +69,7 @@ const StartHabitCreation = ({ navigation }) => {
                         {error}
                     </Text>
                     <Box mt={2} mb={40}>
-                        <Text mb={6} ml={5}>
+                        <Text mb={4} ml={5}>
                             OR CHOOSE
                         </Text>
                         {initialData.map(({ category, habits }) => (

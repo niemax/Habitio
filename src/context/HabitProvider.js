@@ -2,8 +2,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import data from '../categories';
-import { getCurrentDay, getCurrentMonth, getCurrentWeek } from '../utils/helpers/dateHelpers';
-import { toasts } from '../utils/helpers/toastMethods';
+import {
+    formatDateForHabitEndDate,
+    getCurrentDay,
+    getCurrentMonth,
+    getCurrentWeek,
+} from '../utils/helpers/dateHelpers';
+import { cancelPushNotification } from '../utils/helpers/notification';
 
 const HabitContext = createContext();
 
@@ -29,14 +34,20 @@ const HabitProvider = ({ children }) => {
                     }
                     if (currentDay !== habit.dataCurrentDay && habit.frequency === 'daily') {
                         habit.progress = 0;
-                        habit.dataCurrentDay = currentDay;
+                        habit.timesDoneThisWeek = 0;
                         habit.completed = false;
+                        habit.dataCurrentDay = currentDay;
                     }
-                    if (currentWeek !== habit.dataCurrentWeek) {
-                        habit.timesDonesThisWeek = 0;
+                    if (currentWeek !== habit.dataCurrentWeek && habit.frequency === 'weekly') {
+                        habit.progress = 0;
                         habit.dataCurrentWeek = currentWeek;
                     }
-
+                    if (
+                        formatDateForHabitEndDate(habit.endDate) ===
+                        formatDateForHabitEndDate(new Date())
+                    ) {
+                        cancelPushNotification(habit.notificationId);
+                    }
                     return habit;
                 });
                 setHabits(mappedHabits);
@@ -51,7 +62,6 @@ const HabitProvider = ({ children }) => {
     };
 
     const getSpecificHabit = (id) => habits.find((habit) => habit.id === id);
-    console.log(habits);
 
     const CRUDHabits = async (props) => {
         try {
@@ -68,7 +78,6 @@ const HabitProvider = ({ children }) => {
                     completedDates: {},
                     progress: 0,
                     noteInputs: [],
-                    streak: [],
                     timesDoneThisWeek: 0,
                 },
             ]);
@@ -87,7 +96,6 @@ const HabitProvider = ({ children }) => {
                         completedDates: {},
                         progress: 0,
                         noteInputs: [],
-                        streak: [],
                         timesDoneThisWeek: 0,
                     },
                 ])

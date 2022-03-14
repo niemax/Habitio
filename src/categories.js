@@ -102,8 +102,6 @@ const data = [
     },
     {
         category: 'Goals',
-        mainIcon: require('./assets/flatIcons/goal.png'),
-        image: require('./assets/flatIcons/career.png'),
         habits: [
             {
                 name: 'Journal',

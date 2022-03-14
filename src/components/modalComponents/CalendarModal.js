@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, TouchableOpacity, View } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { CalendarLineBreak } from '../../utils/StyledComponents/Styled';
@@ -21,7 +21,7 @@ const CalendarModal = ({ route, navigation }) => {
     const { colorMode } = useColorMode();
     const { navigate } = navigation;
 
-    const { colors, color } = useSettings();
+    const { colors } = useSettings();
 
     const { habits, habitSetter, getSpecificHabit } = useHabits();
     const habitItem = getSpecificHabit(route.params.id);
@@ -77,10 +77,10 @@ const CalendarModal = ({ route, navigation }) => {
                         colorMode === 'light' ? colors.white : colors.mainBackground,
                     monthTextColor: colorMode === 'light' ? 'black' : 'white',
                     dayTextColor: colorMode === 'light' ? 'black' : 'white',
-                    selectedDayBackgroundColor: color,
-                    arrowColor: color,
-                    todayTextColor: color,
-                    indicatorColor: color,
+                    selectedDayBackgroundColor: colors.mainColor,
+                    arrowColor: colors.mainColor,
+                    todayTextColor: colors.mainColor,
+                    dotColor: colors.mainColor,
                     ...calendarStyles,
                 }}
                 firstDay={1}
@@ -98,6 +98,7 @@ const CalendarModal = ({ route, navigation }) => {
                 reminder={habitItem.reminder}
                 isSelectedDaily={isSelectedDaily}
                 weekdays={habitItem.selectedWeekdays}
+                frequency={habitItem.frequency}
             />
             <CalendarLineBreak />
         </>

@@ -15,15 +15,7 @@ export default function HabitColor({
     color,
 }) {
     return (
-        <Center
-            bg="gray.800"
-            mt={2}
-            ml={3}
-            h={6}
-            w={6}
-            bg={useColorModeValue('gray.200', 'gray.700')}
-            rounded="lg"
-        >
+        <Center mt={2} ml={3} h={6} w={6} rounded="lg">
             <SelectHabitColorButton>
                 {!colorUpdated ? (
                     <View
@@ -46,9 +38,8 @@ export default function HabitColor({
                     isVisible={showModal}
                     swipeThreshold={300}
                     avoidKeyboard={true}
-                    onBackdropPress={() => Keyboard.dismiss()}
-                    animationInTiming={500}
-                    animationOutTiming={500}
+                    animationInTiming={700}
+                    animationOutTiming={700}
                     backdropTransitionOutTiming={0}
                     hideModalContentWhileAnimating={true}
                     style={{ justifyContent: 'flex-end', marginBottom: 30, marginHorizontal: 10 }}

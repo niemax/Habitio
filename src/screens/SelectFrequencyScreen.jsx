@@ -48,7 +48,7 @@ const SelectFrequencyScreen = ({ route }) => {
         routeHabitNature,
         handleHabitNature,
     } = route?.params;
-    const [showExtra, setShowExtra] = useState(frequency === 'daily');
+    const [showExtra, setShowExtra] = useState(frequency !== 'monthly');
     const [selectedWeekdays, setSelectedWeekdays] = useState(routeWeekdays);
     const [habitNature, setHabitNature] = useState(routeHabitNature);
     const [stateFrequency, setStateFrequency] = useState(frequency);
@@ -56,9 +56,14 @@ const SelectFrequencyScreen = ({ route }) => {
     const { colors } = useSettings();
 
     const handleWeekdayChange = (name) => {
-        if (!selectedWeekdays?.includes(name)) {
-            setSelectedWeekdays([...selectedWeekdays, name]);
+        if (stateFrequency === 'weekly' && !selectedWeekdays?.includes(name)) {
+            setSelectedWeekdays([name]);
         } else {
+            setSelectedWeekdays([]);
+        }
+        if (stateFrequency === 'daily' && !selectedWeekdays?.includes(name)) {
+            setSelectedWeekdays([...selectedWeekdays, name]);
+        } else if (stateFrequency === 'daily') {
             const filtered = selectedWeekdays?.filter((weekday) => weekday !== name);
             setSelectedWeekdays(filtered);
         }
@@ -132,7 +137,7 @@ const SelectFrequencyScreen = ({ route }) => {
                         onPress={() => {
                             handleChange('weekly');
                             setSelectedWeekdays([]);
-                            setShowExtra(false);
+                            setShowExtra(true);
                             setStateFrequency('weekly');
                         }}
                     >
@@ -160,7 +165,7 @@ const SelectFrequencyScreen = ({ route }) => {
                 {!!showExtra && (
                     <Box mt={4}>
                         <Text px={3} opacity={0.7} fontSize="xs">
-                            WHICH DAYS?
+                            {stateFrequency === 'daily' ? 'WHICH DAYS?' : 'WHICH DAY?'}
                         </Text>
                         <ListContainer rounded="md">
                             <Flex direction="row" justify="space-evenly">

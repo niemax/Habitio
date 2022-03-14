@@ -9,10 +9,10 @@ const checkReminderTimeForNullValuesAndParse = (reminderTime) => {
     return { parsedHour, parsedMin };
 };
 
-const scheduleRepeatingNotificationIfTimeIsNotNull = (time, habitName, habits, id) => {
+const scheduleRepeatingNotificationIfTimeIsNotNull = (day, time, habitName, habits, id) => {
     const { parsedHour, parsedMin } = checkReminderTimeForNullValuesAndParse(time);
 
-    scheduleRepeatingEdit(parsedHour, parsedMin, habitName, habits, id);
+    scheduleRepeatingEdit(day, parsedHour, parsedMin, habitName, habits, id);
 };
 
 const handleUpdate = (
@@ -34,15 +34,10 @@ const handleUpdate = (
     cancelPushNotification(notificationId);
 
     if (habitReminderTime !== null) {
+        const { parsedHour, parsedMin } = checkReminderTimeForNullValuesAndParse(habitReminderTime);
         const notificationDays = convertWeekdaysToNumbers(weekdays);
         notificationDays?.forEach((day) => {
-            scheduleRepeatingNotificationIfTimeIsNotNull(
-                day,
-                habitReminderTime,
-                habitName,
-                habits,
-                id
-            );
+            scheduleRepeatingEdit(day, parsedHour, parsedMin, habitName, habits, id);
         });
     }
 

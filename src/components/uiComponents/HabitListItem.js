@@ -30,7 +30,6 @@ const HabitListItem = ({ item }) => {
     const [isActionSheetVisible, setIsActionSheetVisible] = useState(false);
     const { onClose } = useDisclose();
     const { colorMode } = useColorMode();
-    const { colors } = useSettings();
     const { habitSetter, habits } = useHabits();
 
     const handleHabitProgress = (operand) => {
@@ -136,17 +135,15 @@ const HabitListItem = ({ item }) => {
                     </HomepageDataBox>
                 </Stagger>
             </HomepageDataView>
-            <Container>
-                <ActionSheet
-                    id={id}
-                    habitProgress={habitProgress}
-                    setHabitProgress={setHabitProgress}
-                    handleHabitProgress={handleHabitProgress}
-                    isVisible={isActionSheetVisible}
-                    setIsVisible={setIsActionSheetVisible}
-                    onClose={onClose}
-                />
-            </Container>
+            <ActionSheet
+                id={id}
+                habitProgress={habitProgress}
+                setHabitProgress={setHabitProgress}
+                handleHabitProgress={handleHabitProgress}
+                isVisible={isActionSheetVisible}
+                setIsVisible={setIsActionSheetVisible}
+                onClose={onClose}
+            />
         </>
     );
 };

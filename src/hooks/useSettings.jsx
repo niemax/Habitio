@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const useSettings = () => {
-    const [color, setColor] = useState('#FF4040');
+    const [color, setColor] = useState('#818cf8');
+    const [stateColor, setStateColor] = useState('');
 
     const getMainColor = async () => {
         try {
@@ -52,7 +53,14 @@ const useSettings = () => {
         '#EA5B71',
     ];
 
-    return { colors, habitSelectionColors, getMainColor, handleSetColor, color, setColor };
+    return {
+        colors,
+        habitSelectionColors,
+        getMainColor,
+        handleSetColor,
+        color,
+        setColor,
+    };
 };
 
 export default useSettings;
