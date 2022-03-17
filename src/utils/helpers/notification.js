@@ -10,9 +10,7 @@ Notifications.setNotificationHandler({
 
 export const cancelPushNotification = async (id) => {
     try {
-        await Notifications.cancelScheduledNotificationAsync(id).then(() => {
-            console.log(`Successfully cancelled notification with id: ${id}`);
-        });
+        await Notifications.cancelScheduledNotificationAsync(id);
     } catch (error) {
         console.error(error);
     }
@@ -49,22 +47,18 @@ export const scheduleRepeatingEdit = async (day, hours, minutes, name, habits, i
     });
 };
 
-export const chRepeating = async (day, name, hours, minutes, newHabit) => {
-    try {
-        await Notifications.scheduleNotificationAsync({
-            content: {
-                title: `Reminder to ${name}`,
-            },
-            trigger: {
-                hour: hours,
-                minute: minutes,
-                weekday: day,
-                repeats: true,
-            },
-        }).then((identifier) => Object.assign(newHabit, { notificationId: identifier }));
-    } catch (error) {
-        console.error(error);
-    }
+export const chRepeating = async (day, name, hours, minutes) => {
+    Notifications.scheduleNotificationAsync({
+        content: {
+            title: `Reminder to ${name}`,
+        },
+        trigger: {
+            hour: hours,
+            minute: minutes,
+            weekday: day,
+            repeats: true,
+        },
+    });
 };
 
 export const scheduleMoodNotification = async () => {

@@ -33,28 +33,31 @@ export const convertWeekdaysToNumbers = (arr) => {
     return newArr;
 };
 
-const getParsedReminderTimeHours = (time) => {
+export const getParsedReminderTimeHours = (time) => {
     const reminderTimeHours = getHours(time);
     const reminderTimeMinutes = getMinutes(time);
 
     return { reminderTimeHours, reminderTimeMinutes };
 };
 
-const checkIfReminderDateIsEnabled = (enabledDate) => {
+export const checkIfReminderDateIsEnabled = (enabledDate) => {
     if (!enabledDate) return false;
 
     return true;
 };
 
-const handleHabitCreation = ({ newHabit, isEnabledDate, CRUDHabits, reminderTime, weekdays }) => {
+const handleHabitCreation = async ({ newHabit, isEnabledDate, reminderTime, weekdays }) => {
     if (checkIfReminderDateIsEnabled(isEnabledDate)) {
         const { reminderTimeHours, reminderTimeMinutes } = getParsedReminderTimeHours(reminderTime);
         const notificationDays = convertWeekdaysToNumbers(weekdays);
         notificationDays?.forEach((day) => {
-            chRepeating(day, newHabit.name, reminderTimeHours, reminderTimeMinutes, newHabit);
+            chRepeating(day, newHabit.name, reminderTimeHours, reminderTimeMinutes, newHabit).then(
+                (id) => {
+                    newHabit.notificationIds.push(id);
+                }
+            );
         });
     }
-    CRUDHabits(newHabit);
 };
 
 export default handleHabitCreation;

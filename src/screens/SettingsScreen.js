@@ -1,6 +1,6 @@
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Alert, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Alert, ScrollView, View } from 'react-native';
 import { useHabits } from '../context/HabitProvider';
 import { deleteNotifications } from '../utils/helpers/notification';
 import { Box, Center, Flex, HStack, Text, useColorModeValue } from 'native-base';

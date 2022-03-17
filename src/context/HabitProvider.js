@@ -58,7 +58,6 @@ const HabitProvider = ({ children }) => {
         } catch (error) {
             console.error(error);
         }
-        setHabitsLoading(false);
     };
 
     const getSpecificHabit = (id) => habits.find((habit) => habit.id === id);
@@ -69,7 +68,6 @@ const HabitProvider = ({ children }) => {
                 ...habits,
                 {
                     ...props,
-                    id: Math.floor(Math.random() * 10000),
                     dataCurrentDay: currentDay,
                     dataCurrentWeek: currentWeek,
                     dataCurrentMonth: currentMonth,

@@ -4,7 +4,6 @@ import {
     AsyncStorage,
     Dimensions,
     Keyboard,
-    ScrollView,
     TouchableOpacity,
     View,
 } from 'react-native';
@@ -18,7 +17,6 @@ import {
     useColorModeValue,
     Tooltip,
     Button,
-    HStack,
 } from 'native-base';
 import Modal from 'react-native-modal';
 import MainButton from '../components/uiComponents/Button';
@@ -77,7 +75,7 @@ const MoodMainScreen = ({ navigation }) => {
         const moodObject = {
             text: text,
             moodName: moodName,
-            id: Math.floor(Math.random() * 10000),
+            id: moods.length + 1,
             date: date,
         };
         Keyboard.dismiss();
@@ -318,9 +316,8 @@ const MoodMainScreen = ({ navigation }) => {
             <Box flex={1} mt={4}>
                 <FlatList
                     scrollEnabled={true}
-                    overScrollMode="always"
                     lazy
-                    data={moods?.sort((a, b) => b.date - a.date)}
+                    data={moods?.sort((a, b) => a.id - b.id)}
                     renderItem={renderMoodItem}
                     keyExtractor={({ id }) => id}
                     contentContainerStyle={{ marginTop: 140 }}

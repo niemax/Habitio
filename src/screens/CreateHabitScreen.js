@@ -1,8 +1,12 @@
 import React, { useRef, useState } from 'react';
-import { KeyboardAvoidingView, ScrollView, TextInput } from 'react-native';
+import { ScrollView, TextInput } from 'react-native';
 import { ButtonContainer } from '../utils/StyledComponents/Styled';
 import HabitColor from '../components/uiComponents/SelectHabitColorButton';
-import handleHabitCreation from '../utils/helpers/createhabitHelpers';
+import {
+    checkIfReminderDateIsEnabled,
+    convertWeekdaysToNumbers,
+    getParsedReminderTimeHours,
+} from '../utils/helpers/createhabitHelpers';
 import { useHabits } from '../context/HabitProvider';
 import { Box, Text } from 'native-base';
 import Button from '../components/uiComponents/Button';
@@ -10,6 +14,8 @@ import MainContainer from '../components/uiComponents/MainContainer';
 import Details from '../components/uiComponents/ChooseFrequency';
 import ListContainer from '../components/uiComponents/ListContainer';
 import { LineBreak, SettingTouchable } from './SettingsScreen';
+import { chRepeating } from '../utils/helpers/notification';
+import * as Notifications from 'expo-notifications';
 
 const CreateHabit = ({ route, navigation }) => {
     const { name, habitIcon, color, habitName, defaultTimes, defaultUnit, defaultGoal } =
@@ -30,7 +36,7 @@ const CreateHabit = ({ route, navigation }) => {
     const [selectedFrequency, setSelectedFrequency] = useState('daily');
     const [weekdays, setWeekdays] = useState([]);
     const [habitNature, setHabitNature] = useState(!!defaultGoal ? defaultGoal : 'Build a habit');
-
+    const [notificationIds, setNotificationIds] = useState([]);
     const [showModal, setShowModal] = useState(false);
 
     const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
@@ -66,15 +72,31 @@ const CreateHabit = ({ route, navigation }) => {
         habitGoal: habitNature,
     };
 
-    const objectToDispatch = {
-        newHabit,
-        isEnabledDate,
-        CRUDHabits,
-        reminderTime,
-        weekdays,
-    };
-
     const scrollRef = useRef(null);
+
+    const handleHabitCreation = async () => {
+        if (checkIfReminderDateIsEnabled(isEnabledDate)) {
+            const { reminderTimeHours, reminderTimeMinutes } =
+                getParsedReminderTimeHours(reminderTime);
+            const notificationDays = convertWeekdaysToNumbers(weekdays);
+            notificationDays?.forEach(async (day) => {
+                const id = await Notifications.scheduleNotificationAsync({
+                    content: {
+                        title: `Reminder to ${name}`,
+                    },
+                    trigger: {
+                        hour: reminderTimeHours,
+                        minute: reminderTimeMinutes,
+                        weekday: day,
+                        repeats: true,
+                    },
+                });
+                console.log(id);
+            });
+            CRUDHabits(newHabit, { notificationIds: notificationIds });
+            navigate('Dashboard');
+        }
+    };
 
     return (
         <MainContainer>
@@ -144,14 +166,7 @@ const CreateHabit = ({ route, navigation }) => {
                 </Box>
             </ScrollView>
             <ButtonContainer>
-                <Button
-                    w="100%"
-                    h={60}
-                    onPress={() => {
-                        handleHabitCreation(objectToDispatch);
-                        navigate('Dashboard');
-                    }}
-                >
+                <Button w="100%" h={60} onPress={handleHabitCreation}>
                     Create
                 </Button>
             </ButtonContainer>

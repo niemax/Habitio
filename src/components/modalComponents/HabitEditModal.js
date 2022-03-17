@@ -32,7 +32,7 @@ const ShowHabitEditModal = ({ route }) => {
     const habitItem = getSpecificHabit(route.params.id);
     const {
         id,
-        notificationId,
+        identifiers,
         name,
         unitValue,
         description,
@@ -67,7 +67,7 @@ const ShowHabitEditModal = ({ route }) => {
     const handleSubmit = async () => {
         handleUpdate(
             id,
-            notificationId,
+            identifiers,
             habits,
             habitSetter,
             habitName,
@@ -95,17 +95,9 @@ const ShowHabitEditModal = ({ route }) => {
     };
 
     const checkSwitchStates = () => {
-        if (reminder !== null) {
-            setIsEnabledDate(true);
-        }
-        if (endDate !== null) {
-            setIsEnabledEndDate(true);
-        }
-        if (times >= 1) {
-            setIsEnabled(true);
-        } else {
-            setIsEnabled(false);
-        }
+        !!reminder && setIsEnabledDate(true);
+        !!endDate && setIsEnabledEndDate(true);
+        times > 0 && setIsEnabled(true);
     };
 
     return (

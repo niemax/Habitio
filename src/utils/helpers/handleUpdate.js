@@ -9,12 +9,6 @@ const checkReminderTimeForNullValuesAndParse = (reminderTime) => {
     return { parsedHour, parsedMin };
 };
 
-const scheduleRepeatingNotificationIfTimeIsNotNull = (day, time, habitName, habits, id) => {
-    const { parsedHour, parsedMin } = checkReminderTimeForNullValuesAndParse(time);
-
-    scheduleRepeatingEdit(day, parsedHour, parsedMin, habitName, habits, id);
-};
-
 const handleUpdate = (
     id,
     notificationId,
@@ -31,33 +25,33 @@ const handleUpdate = (
     habitNature,
     weekdays
 ) => {
-    cancelPushNotification(notificationId);
-
-    if (habitReminderTime !== null) {
-        const { parsedHour, parsedMin } = checkReminderTimeForNullValuesAndParse(habitReminderTime);
-        const notificationDays = convertWeekdaysToNumbers(weekdays);
-        notificationDays?.forEach((day) => {
-            scheduleRepeatingEdit(day, parsedHour, parsedMin, habitName, habits, id);
-        });
-    }
-
-    const newHabits = habits.map((habit) => {
-        if (habit.id === id) {
-            habit.name = habitName;
-            habit.unitValue = unitValue;
-            habit.color = color;
-            habit.description = description;
-            habit.times = timesCount;
-            habit.reminder = habitReminderTime !== null && habitReminderTime;
-            habit.endDate = endDate;
-            habit.frequency = selectedFrequency;
-            habit.habitGoal = habitNature;
-            habit.selectedWeekdays = weekdays;
+    cancelPushNotification(notificationId).then(() => {
+        if (habitReminderTime !== null) {
+            const { parsedHour, parsedMin } =
+                checkReminderTimeForNullValuesAndParse(habitReminderTime);
+            const notificationDays = convertWeekdaysToNumbers(weekdays);
+            notificationDays?.forEach((day) => {
+                scheduleRepeatingEdit(day, parsedHour, parsedMin, habitName, habits, id);
+            });
         }
-        return habit;
-    });
 
-    habitSetter(newHabits);
+        const newHabits = habits.map((habit) => {
+            if (habit.id === id) {
+                habit.name = habitName;
+                habit.unitValue = unitValue;
+                habit.color = color;
+                habit.description = description;
+                habit.times = timesCount;
+                habit.reminder = habitReminderTime !== null && habitReminderTime;
+                habit.endDate = endDate;
+                habit.frequency = selectedFrequency;
+                habit.habitGoal = habitNature;
+                habit.selectedWeekdays = weekdays;
+            }
+            return habit;
+        });
+        habitSetter(newHabits);
+    });
 };
 
 export default handleUpdate;

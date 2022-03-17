@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const useSettings = () => {
     const [color, setColor] = useState('#818cf8');
-    const [stateColor, setStateColor] = useState('');
 
     const getMainColor = async () => {
         try {

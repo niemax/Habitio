@@ -34,6 +34,7 @@ export default function ListItemActionSheet({
     const { habits, habitSetter, getSpecificHabit } = useHabits();
     const habitItem = getSpecificHabit(id);
 
+    console.log(habitItem);
     const actionSheetRef = useRef(null);
 
     const displayDeleteAlert = () => {

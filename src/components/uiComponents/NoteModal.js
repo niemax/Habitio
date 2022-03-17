@@ -47,7 +47,7 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
             backdropTransitionOutTiming={0}
             hideModalContentWhileAnimating={true}
         >
-            <Box bg={useColorModeValue('gray.100', 'gray.800')} rounded="3xl">
+            <Box bg={useColorModeValue('gray.100', 'gray.800')} rounded="2xl">
                 <Text textAlign="center" fontSize="lg" fontWeight={700} marginTop="10px">
                     Note
                 </Text>
