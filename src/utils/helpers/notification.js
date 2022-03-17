@@ -47,7 +47,7 @@ export const scheduleRepeatingEdit = async (day, hours, minutes, name, habits, i
     });
 };
 
-export const chRepeating = async (day, name, hours, minutes) => {
+export const chRepeating = (day, name, hours, minutes) => {
     Notifications.scheduleNotificationAsync({
         content: {
             title: `Reminder to ${name}`,
