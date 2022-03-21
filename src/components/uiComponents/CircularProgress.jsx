@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { Box, Button, Flex, useColorModeValue } from 'native-base';
 import { useHabits } from '../../context/HabitProvider';
 import { AntDesign } from '@expo/vector-icons';
@@ -33,7 +33,7 @@ const ProgressCircle = ({ id, habitProgress, handleHabitProgress, size, width, h
 
     const { colors } = useSettings();
 
-    const handleDecrement = () => {
+    const handleDecrement = useCallback(() => {
         if (habit.completed && habitProgress <= habit?.times) {
             handleDoneToday(id, habit.name, habits, habitSetter);
             handleHabitProgress(-1);
@@ -41,9 +41,9 @@ const ProgressCircle = ({ id, habitProgress, handleHabitProgress, size, width, h
             handleHabitProgress(-1);
         }
         animationRef.current?.pulse(300);
-    };
+    }, [habitProgress]);
 
-    const handleCirclePress = () => {
+    const handleCirclePress = useCallback(() => {
         if (habitProgress - habit.times === -1) {
             handleDoneToday(id, habit.name, habits, habitSetter);
             handleHabitProgress(1);
@@ -51,9 +51,9 @@ const ProgressCircle = ({ id, habitProgress, handleHabitProgress, size, width, h
             handleHabitProgress(1);
         }
         animationRef.current?.pulse(300);
-    };
+    }, [habitProgress]);
 
-    const handleIncrement = () => {
+    const handleIncrement = useCallback(() => {
         if (habit.times - habitProgress === 1) {
             handleDoneToday(id, habit.name, habits, habitSetter);
             handleHabitProgress(1);
@@ -61,28 +61,25 @@ const ProgressCircle = ({ id, habitProgress, handleHabitProgress, size, width, h
             handleHabitProgress(1);
         }
         animationRef.current?.pulse(300);
-    };
+    }, [habitProgress]);
 
     const animationRef = useRef(null);
 
     const renderProgressCircle = () => (
-        <TouchableWithoutFeedback
-            onPress={handleCirclePress}
-            onLongPress={() => handleDoneToday(id, habit.name, habits, habitSetter)}
-        >
+        <TouchableWithoutFeedback onPress={handleCirclePress}>
             <Animatable.View ref={animationRef}>
                 <CircularProgress
-                    inActiveStrokeColor={useColorModeValue('#F9F9F9', 'black')}
+                    inActiveStrokeColor={useColorModeValue('#F9F9F9', colors.mainBackground)}
                     inActiveStrokeWidth={width}
                     activeStrokeWidth={width}
-                    duration={700}
+                    duration={400}
                     value={habitProgress}
                     radius={size}
                     textColor={useColorModeValue('black', 'white')}
                     maxValue={habit?.times}
                     title={!!habitItem && !habit?.completed && habit?.unitValue}
                     titleColor={useColorModeValue('black', 'white')}
-                    titleStyle={{ fontWeight: 'regular', fontSize: 20 }}
+                    titleStyle={{ fontSize: 20 }}
                     activeStrokeColor={habit?.completed ? '#43E443' : colors.mainColor}
                     activeStrokeSecondaryColor={habit?.completed ? '#43E4E4' : '#C25AFF'}
                 />

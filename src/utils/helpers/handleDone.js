@@ -16,7 +16,7 @@ export const handleDoneToday = (id, name, habits, habitSetter) => {
                 if (habit.id === id) {
                     habit.completed = true;
                     habit.completedDates = completedDatesObj;
-                    habit.timesDoneThisWeek = habit.times;
+                    habit.timesDoneThisWeek = habit.progress;
                     haptics.success();
                 }
             } else {
@@ -43,13 +43,14 @@ export const handleDoneOtherDay = (date, id, habits, habitSetter) => {
 
             if (!(date in completedDatesObj)) {
                 completedDatesObj[date] = {
-                    selected: true,
+                    marked: true,
                     date: new Date(date),
                 };
                 if (habit.id === id) {
                     habit.completedDates = completedDatesObj;
-                    habit.calendarDone = true;
-                    habit.timesDoneThisWeek = habit.times;
+                    habit.completed = true;
+                    habit.progress = habit.times;
+                    habit.timesDoneThisWeek += Number(habit.times);
                     haptics.success();
                 }
             } else {
@@ -57,7 +58,8 @@ export const handleDoneOtherDay = (date, id, habits, habitSetter) => {
                 if (habit.id === id) {
                     habit.completedDates = completedDatesObj;
                     habit.calendarDone = false;
-                    habit.timesDoneThisWeek = habit.progress;
+                    habit.completed = false;
+                    habit.timesDoneThisWeek -= habit.times;
                     haptics.warning();
                 }
             }

@@ -56,41 +56,11 @@ export const showHabitImage = {
 };
 
 export const calendarStyles = {
-    textDayFontSize: 20,
+    textDayFontSize: 18,
+    textDayFontWeight: '500',
     textMonthFontSize: 20,
-    textMonthFontWeight: '600',
+    textMonthFontWeight: '500',
     textDayHeaderFontSize: 14,
-};
-
-export const noHabitsImageStyle = {
-    width: 150,
-    height: 150,
-    marginTop: 10,
-};
-
-export const homepageBoxShadow = {
-    shadowColor: '#000',
-    shadowOffset: {
-        width: 0,
-        height: 1,
-    },
-    shadowOpacity: 0.12,
-    shadowRadius: 1.22,
-    elevation: 3,
-};
-
-export const tabNavStyle = {
-    activeTintColor: '#03fff7',
-    inactiveTintColor: '#3b3b3b',
-    showLabel: false,
-    position: 'absolute',
-    left: 15,
-    right: 15,
-    height: 75,
-    width: '92%',
-    borderRadius: 15,
-    backgroundColor: '#141414',
-    bottom: 10,
 };
 
 export const habitColor = {
@@ -114,15 +84,6 @@ export const colorPalletteColor = {
     marginVertical: 20,
 };
 
-export const progressBar = {
-    position: 'absolute',
-    bottom: 0,
-    left: 5,
-    right: 3,
-    borderBottomRightRadius: 30,
-    borderBottomLeftRadius: 30,
-};
-
 export const textInputShadow = {
     fontSize: 16,
     shadowColor: '#000',
@@ -132,15 +93,4 @@ export const textInputShadow = {
     },
     shadowOpacity: 0.05,
     shadowRadius: 0.84,
-};
-
-export const habitItemShadow = {
-    shadowColor: '#000',
-    shadowOffset: {
-        width: 1,
-        height: 10,
-    },
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
-    elevation: 6,
 };

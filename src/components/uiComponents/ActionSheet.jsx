@@ -6,7 +6,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ActionSheet from '@alessiocancian/react-native-actionsheet';
 import { handleDoneToday } from '../../utils/helpers/handleDone';
 import { useNavigation } from '@react-navigation/native';
-import deleteHabit from '../../utils/helpers/deleteHabit';
 import NoteModal from './NoteModal';
 import ProgressAmountModal from './ProgressAmountModal';
 import CircularProgress from './CircularProgress';
@@ -31,10 +30,9 @@ export default function ListItemActionSheet({
 
     const { colors } = useSettings();
 
-    const { habits, habitSetter, getSpecificHabit } = useHabits();
+    const { habits, habitSetter, getSpecificHabit, deleteHabit } = useHabits();
     const habitItem = getSpecificHabit(id);
 
-    console.log(habitItem);
     const actionSheetRef = useRef(null);
 
     const displayDeleteAlert = () => {
@@ -44,7 +42,7 @@ export default function ListItemActionSheet({
             [
                 {
                     text: 'OK',
-                    onPress: () => deleteHabit(habits, habitSetter, habitItem.notificationId, id),
+                    onPress: () => deleteHabit(habitItem.notificationId, id),
                 },
                 {
                     text: 'Cancel',
@@ -52,6 +50,11 @@ export default function ListItemActionSheet({
                 },
             ]
         );
+    };
+
+    const handleHabitDoneAndProgress = () => {
+        handleDoneToday(id, habitItem.name, habits, habitSetter);
+        setHabitProgress(habitItem.times);
     };
 
     const renderAnimatedButton = () =>
@@ -72,7 +75,7 @@ export default function ListItemActionSheet({
             >
                 <Box mt={4}>
                     <MainButton
-                        onPress={() => handleDoneToday(id, habitItem.name, habits, habitSetter)}
+                        onPress={handleHabitDoneAndProgress}
                         size="lg"
                         w={300}
                         h={50}
@@ -90,7 +93,7 @@ export default function ListItemActionSheet({
         const navigateToEditModal = () => {
             setIsVisible(false);
             setTimeout(() => {
-                navigate('ShowHabitEditModal', {
+                navigate('HabitEditModal', {
                     id: habitItem.id,
                     name: habitItem.name,
                 });
@@ -110,6 +113,16 @@ export default function ListItemActionSheet({
         }
     };
 
+    const navigateToCalendar = () => {
+        setIsVisible(false);
+        setTimeout(() => {
+            push('CalendarModal', {
+                id: id,
+                name: habitItem.name,
+            });
+        }, 1200);
+    };
+
     return (
         <Flex>
             <Modal
@@ -119,7 +132,11 @@ export default function ListItemActionSheet({
                 swipeThreshold={100}
                 onBackdropPress={() => setIsVisible(false)}
                 backdropOpacity={0.2}
-                style={{ justifyContent: 'flex-end', marginBottom: 30, marginHorizontal: 10 }}
+                style={{
+                    justifyContent: 'flex-end',
+                    marginBottom: 30,
+                    marginHorizontal: 10,
+                }}
                 propagateSwipe={true}
                 backdropTransitionOutTiming={0}
                 animationOutTiming={500}
@@ -164,17 +181,7 @@ export default function ListItemActionSheet({
                                         </TouchableOpacity>
                                     </Box>
                                     <HStack>
-                                        <TouchableOpacity
-                                            onPress={() => {
-                                                setIsVisible(false);
-                                                setTimeout(() => {
-                                                    push('CalendarModal', {
-                                                        id: id,
-                                                        name: habitItem.name,
-                                                    });
-                                                }, 1200);
-                                            }}
-                                        >
+                                        <TouchableOpacity onPress={navigateToCalendar}>
                                             <MaterialCommunityIcons
                                                 name="chart-arc"
                                                 size={32}
@@ -183,7 +190,7 @@ export default function ListItemActionSheet({
                                             />
                                         </TouchableOpacity>
                                         <TouchableOpacity
-                                            onPress={() => actionSheetRef.current.show()}
+                                            onPress={() => actionSheetRef.current?.show()}
                                         >
                                             <MaterialCommunityIcons
                                                 name="dots-horizontal"

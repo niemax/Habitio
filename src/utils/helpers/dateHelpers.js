@@ -7,6 +7,9 @@ export const getCurrentMonth = () => getMonth(new Date());
 
 export const getCurrentDateFormatted = (d) => moment().format('ddd, ll', d);
 
+export const getCurrentDateFormattedWithHoursAndMinutes = (d) =>
+    moment().format('ddd, ll, HH:mm', d);
+
 export const getCurrentDateFormattedForCalendarComponent = (
     newDate = format(new Date(), 'yyyy-MM-dd')
 ) => newDate;

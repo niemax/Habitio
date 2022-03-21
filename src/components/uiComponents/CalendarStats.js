@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { CalendarLineBreak } from '../../utils/StyledComponents/Styled';
 import { Box, Flex, Text, useColorMode } from 'native-base';
 import useSettings from '../../hooks/useSettings';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const CalendarStats = ({ completedDates }) => {
-    const { colorMode } = useColorMode();
     const [streak, setStreak] = useState(0);
 
     const { colors } = useSettings();
 
-    useEffect(() => {
+    useMemo(() => {
         const dates = Object.values(completedDates).map((date) => date.date);
         let count = 0;
         dates?.forEach((el, i) => {
@@ -25,51 +24,54 @@ const CalendarStats = ({ completedDates }) => {
             return count;
         });
         setStreak(count);
-    }, [completedDates?.length]);
+    }, [completedDates]);
+
+    /*  useEffect(() => {
+        setStreak(streakCount);
+    }, [streakCount, streak, Object.keys(completedDates).length]); */
 
     return (
         <Box p={3}>
-            <Flex bg={colorMode === 'light' ? 'gray.100' : 'gray.800'} rounded="lg" p={3}>
-                <Flex direction="row" justify="space-around">
-                    <Flex align="center">
-                        <Text fontWeight={900} fontSize="xl" textAlign="center">
-                            {Object.keys(completedDates).length}
-                        </Text>
-                        <MaterialCommunityIcons
-                            name="trophy-award"
-                            size={24}
-                            color={colors.mainColor}
-                        />
-                        <Text fifteen opacity={0.7}>
-                            total done
-                        </Text>
-                    </Flex>
-                    <Flex align="center">
-                        <Text fontWeight={900} fontSize="xl" textAlign="center"></Text>
-                        <MaterialCommunityIcons
-                            name="trophy-award"
-                            size={24}
-                            color={colors.mainColor}
-                        />
-                        <Text fifteen opacity={0.7}>
-                            avg. completion
-                        </Text>
-                    </Flex>
-                    <Flex align="center" justify="center">
-                        <Text
-                            fontWeight={900}
-                            fontSize="xl"
-                            textAlign="center"
-                            color={colors.mainColor}
-                        >
-                            {streak}
-                        </Text>
-                        🔥
-                        <Text opacity={0.7}>current streak</Text>
-                    </Flex>
+            <Flex direction="row" justify="space-around">
+                <Flex align="center">
+                    <MaterialCommunityIcons
+                        name="trophy-award"
+                        size={24}
+                        color={colors.mainColor}
+                    />
+                    <Text fontWeight={900} fontSize="3xl" textAlign="center">
+                        {Object.keys(completedDates).length}
+                    </Text>
+                    <Text fifteen opacity={0.7}>
+                        total done
+                    </Text>
+                </Flex>
+                <Flex align="center">
+                    <MaterialCommunityIcons
+                        name="trophy-award"
+                        size={24}
+                        color={colors.mainColor}
+                    />
+                    <Text fontWeight={900} fontSize="3xl" textAlign="center">
+                        {Object.keys(completedDates)?.length / 4}
+                    </Text>
+                    <Text fifteen opacity={0.7}>
+                        avg. completion
+                    </Text>
+                </Flex>
+                <Flex align="center" justify="center">
+                    🔥
+                    <Text
+                        fontWeight={900}
+                        fontSize="3xl"
+                        textAlign="center"
+                        color={colors.mainColor}
+                    >
+                        {streak}
+                    </Text>
+                    <Text opacity={0.7}>current streak</Text>
                 </Flex>
             </Flex>
-            <CalendarLineBreak />
         </Box>
     );
 };

@@ -4,16 +4,23 @@ import { Alert, ScrollView, TouchableOpacity } from 'react-native';
 import { useMoods } from '../context/MoodProvider';
 import useSettings from '../hooks/useSettings';
 import { Ionicons } from '@expo/vector-icons';
+import { getCurrentDateFormatted } from '../utils/helpers/dateHelpers';
+import { getHours, getMinutes } from 'date-fns';
 
 export const renderEmoji = (mood) => {
     let text;
     switch (mood) {
         case 'Happy':
-            return (text = '🥳');
+            return (text = '😊');
+            break;
         case 'Neutral':
             return (text = '😐');
+            break;
         case 'Sad':
             return (text = '😞');
+            break;
+        default:
+            '';
     }
     return text;
 };
@@ -24,7 +31,28 @@ const MoodDetailsScreen = ({ route, navigation }) => {
     const { id } = route.params;
     const moodItem = getSpecificMood(id);
 
+    console.log(moodItem);
     const { navigate, goBack } = navigation;
+
+    const currentDateFormatted = getCurrentDateFormatted(new Date());
+
+    const formatDate = () => {
+        if (currentDateFormatted === getCurrentDateFormatted(new Date(moodItem?.date))) {
+            const hours = getHours(new Date(moodItem?.dateObject));
+            const minutes = getMinutes(new Date(moodItem?.dateObject));
+            return (
+                <Text>
+                    Today, {hours}:{minutes}
+                </Text>
+            );
+        } else {
+            return (
+                <Text>
+                    {getCurrentDateFormatted(new Date(moodItem?.dateObject))}, {hours}:${minutes}
+                </Text>
+            );
+        }
+    };
 
     const displayDeleteAlert = () => {
         Alert.alert(
@@ -49,14 +77,11 @@ const MoodDetailsScreen = ({ route, navigation }) => {
     return (
         <Flex flex={1} bg={useColorModeValue(colors.white, colors.black)}>
             <ScrollView>
-                <Box mt={32} px={4}>
+                <Box mt={40} px={4}>
                     <Flex direction="row" justify="space-between" align="center">
-                        <Text fontWeight={800} fontSize={32}>
-                            Summary
-                        </Text>
+                        <Text fontSize={16}>{formatDate()}</Text>
                         <Flex direction="row" justify="flex-end" align="baseline">
                             <TouchableOpacity
-                                style={{ marginLeft: 5 }}
                                 onPress={() =>
                                     navigate('MoodEditScreen', {
                                         text: moodItem?.text,

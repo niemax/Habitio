@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Switch, TextInput, SafeAreaView, Dimensions } from 'react-native';
+import { View, Switch, TextInput, SafeAreaView } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {
     FrequencySwitchContainer,
@@ -208,7 +208,9 @@ const Details = ({
                     {renderLineBreak()}
                     <Box mt={3}>
                         <TextInput
-                            onPressIn={() => scrollRef.current?.scrollTo(100)}
+                            onPressIn={() =>
+                                scrollRef.current?.scrollTo({ y: 180, animated: true })
+                            }
                             clearButtonMode="always"
                             placeholder="Unit (e.g. minutes, times, pages)"
                             width="100%"

@@ -4,7 +4,7 @@ import HabitEditContent from '../modalContentComponents/HabitEdit';
 import { useHabits } from '../../context/HabitProvider';
 import handleUpdate from '../../utils/helpers/handleUpdate';
 
-const ShowHabitEditModal = ({ route }) => {
+const HabitEditModal = ({ route }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [updatedColor, setUpdatedColor] = useState();
     const [habitName, setHabitName] = useState('');
@@ -30,33 +30,20 @@ const ShowHabitEditModal = ({ route }) => {
 
     const { habits, habitSetter, getSpecificHabit } = useHabits();
     const habitItem = getSpecificHabit(route.params.id);
-    const {
-        id,
-        identifiers,
-        name,
-        unitValue,
-        description,
-        times,
-        color,
-        reminder,
-        endDate,
-        frequency,
-        habitGoal,
-        selectedWeekdays,
-    } = habitItem;
+    const { id, color } = habitItem;
 
     useEffect(() => {
         checkSwitchStates();
-        setHabitName(name);
-        setSelectedValue(unitValue);
-        setStateDescription(description);
-        setTimesCount(times);
-        setUpdatedColor(color);
-        habitSetReminderTime(reminder ? new Date(reminder) : new Date());
-        habitSetEndDate(endDate ? new Date(endDate) : new Date());
-        setSelectedFrequency(frequency);
-        setHabitNature(habitGoal);
-        setWeekdays(selectedWeekdays);
+        setHabitName(habitItem.name);
+        setSelectedValue(habitItem.unitValue);
+        setStateDescription(habitItem.description);
+        setTimesCount(habitItem.times);
+        setUpdatedColor(habitItem.color);
+        habitSetReminderTime(habitItem.reminder ? new Date(habitItem.reminder) : new Date());
+        habitSetEndDate(habitItem.endDate ? new Date(habitItem.endDate) : new Date());
+        setSelectedFrequency(habitItem.frequency);
+        setHabitNature(habitItem.habitGoal);
+        setWeekdays(habitItem.selectedWeekdays);
     }, []);
 
     const updateColor = (updColor) => {
@@ -64,10 +51,10 @@ const ShowHabitEditModal = ({ route }) => {
         setColorUpdated(true);
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = () => {
         handleUpdate(
             id,
-            identifiers,
+            habitItem.notificationIds,
             habits,
             habitSetter,
             habitName,
@@ -95,9 +82,9 @@ const ShowHabitEditModal = ({ route }) => {
     };
 
     const checkSwitchStates = () => {
-        !!reminder && setIsEnabledDate(true);
-        !!endDate && setIsEnabledEndDate(true);
-        times > 0 && setIsEnabled(true);
+        habitItem.reminder && setIsEnabledDate(true);
+        habitItem.endDate && setIsEnabledEndDate(true);
+        habitItem.times > 0 && setIsEnabled(true);
     };
 
     return (
@@ -145,4 +132,4 @@ const ShowHabitEditModal = ({ route }) => {
     );
 };
 
-export default ShowHabitEditModal;
+export default HabitEditModal;

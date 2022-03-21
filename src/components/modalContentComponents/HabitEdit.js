@@ -8,6 +8,7 @@ import MainContainer from '../uiComponents/MainContainer';
 import Details from '../uiComponents/ChooseFrequency';
 import ListContainer from '../uiComponents/ListContainer';
 import { LineBreak, SettingTouchable } from '../../screens/SettingsScreen';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function HabitEditContent({
     methods: {
@@ -119,7 +120,9 @@ export default function HabitEditContent({
                 </Box>
             </ScrollView>
             <ButtonContainer>
-                <MainButton onPress={handleSubmit}>Update</MainButton>
+                <MainButton w="100%" onPress={handleSubmit}>
+                    <Ionicons name="checkmark-sharp" size={36} color="white" />
+                </MainButton>
             </ButtonContainer>
         </MainContainer>
     );

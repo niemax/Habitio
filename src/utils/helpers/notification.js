@@ -38,9 +38,11 @@ export const scheduleRepeatingEdit = async (day, hours, minutes, name, habits, i
             repeats: true,
         },
     }).then((identifier) => {
+        const arr = [];
+        arr.push(identifier);
         habits.map((habit) => {
             if (habit.id === id) {
-                habit.notificationId = identifier;
+                habit.notificationId = arr;
             }
             return habit;
         });

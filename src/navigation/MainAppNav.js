@@ -6,11 +6,11 @@ import HomeScreen from '../screens/HomeScreen';
 import CreateHabit from '../screens/CreateHabitScreen';
 import StartHabitCreation from '../screens/StartHabitCreationScreen';
 import Settings from '../screens/SettingsScreen';
-import ShowHabitEditModal from '../components/modalComponents/HabitEditModal';
+import HabitEditModal from '../components/modalComponents/HabitEditModal';
 import CalendarModal from '../components/modalComponents/CalendarModal';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
-import { Text, useColorMode, Circle, HStack, Flex } from 'native-base';
+import { Text, useColorMode, HStack, Flex } from 'native-base';
 import EditNote from '../screens/EditNoteModal';
 import { formatDateForHabitEndDate } from '../utils/helpers/dateHelpers';
 import { handleNoteDelete } from '../utils/helpers/noteMethods';
@@ -135,13 +135,22 @@ const MoodStack = () => {
                     headerShown: true,
                     headerTransparent: true,
                     headerTintColor: colors.mainColor,
+                    headerLargeTitle: true,
+                    headerLargeStyle: {
+                        backgroundColor: colorMode === 'dark' ? colors.black : colors.white,
+                    },
+                    headerLargeTitleStyle: {
+                        fontSize: 32,
+                        fontWeight: '700',
+                        color: colorMode === 'dark' ? 'white' : 'black',
+                    },
+                    title: 'Summary',
                     headerBlurEffect:
                         colorMode === 'light' ? 'systemUltraThinMaterialLight' : 'dark',
 
                     headerTitleStyle: {
                         color: colorMode === 'light' ? 'black' : 'white',
                     },
-                    headerTitle: route.params.date,
                     headerBackTitle: 'Back',
                 })}
                 component={MoodDetailsScreen}
@@ -303,7 +312,6 @@ const MainAppStack = ({ navigation }) => {
     const { habits, habitSetter } = useHabits();
     const { colorMode } = useColorMode();
     const { colors } = useSettings();
-    const { getTodaysMood } = useMoods();
 
     return (
         <Stack.Navigator
@@ -314,7 +322,7 @@ const MainAppStack = ({ navigation }) => {
                 headerTitleStyle: { color: '#FFFFFF', fontSize: 18 },
             }}
         >
-            <Stack.Group screenOptions={{ presentation: 'modal' }}>
+            <Stack.Group screenOptions={{ presentation: 'modal', animation: 'flip' }}>
                 <Stack.Screen
                     name="Dashboard"
                     options={() => ({
@@ -322,6 +330,7 @@ const MainAppStack = ({ navigation }) => {
                         headerTransparent: true,
                         headerBlurEffect:
                             colorMode === 'light' ? 'systemUltraThinMaterialLight' : 'dark',
+                        title: 'Today',
                         headerLargeTitle: true,
                         headerLargeStyle: {
                             backgroundColor: colorMode === 'dark' ? colors.black : colors.white,
@@ -345,11 +354,6 @@ const MainAppStack = ({ navigation }) => {
                                     <AntDesign name="plus" size={28} color={colors.mainColor} />
                                 </Flex>
                             </TouchableOpacity>
-                        ),
-                        headerLeft: () => (
-                            <Text fontSize="md" fontWeight={600}>
-                                {renderEmoji(getTodaysMood())}
-                            </Text>
                         ),
                     })}
                     component={HomeScreen}
@@ -387,21 +391,11 @@ const MainAppStack = ({ navigation }) => {
             </Stack.Group>
             <Stack.Group screenOptions={{ presentation: 'modal' }}>
                 <Stack.Screen
-                    name="ShowHabitEditModal"
+                    name="HabitEditModal"
                     options={({ route }) => ({
                         headerShown: true,
                         headerBlurEffect:
                             colorMode === 'light' ? 'systemUltraThinMaterialLight' : 'dark',
-                        headerLargeTitle: true,
-                        headerLargeStyle: {
-                            backgroundColor:
-                                colorMode === 'dark' ? colors.mainBackground : colors.white,
-                        },
-                        headerLargeTitleStyle: {
-                            fontSize: 30,
-                            fontWeight: '800',
-                            color: colorMode === 'light' ? 'black' : 'white',
-                        },
                         headerTransparent: true,
                         headerTintColor: colors.mainColor,
                         headerBackTitleVisible: true,
@@ -420,34 +414,28 @@ const MainAppStack = ({ navigation }) => {
                             </TouchableOpacity>
                         ),
                     })}
-                    component={ShowHabitEditModal}
+                    component={HabitEditModal}
                 />
                 <Stack.Screen
                     name="CalendarModal"
                     options={({ route }) => ({
+                        presentation: 'modal',
+                        animation: 'flip',
                         headerShown: true,
                         headerTransparent: true,
                         headerBlurEffect:
                             colorMode === 'light' ? 'systemUltraThinMaterialLight' : 'dark',
-                        headerLargeTitle: true,
-                        headerLargeStyle: {
-                            backgroundColor:
-                                colorMode === 'light' ? colors.white : colors.mainBackground,
-                        },
-                        headerLargeTitleStyle: {
-                            fontSize: 30,
-                            fontWeight: '800',
-                            color: colorMode === 'light' ? 'black' : 'white',
-                        },
+
                         title: route.params.name,
+                        headerBackTitleVisible: true,
                         headerTitleStyle: {
                             color: colorMode === 'light' ? 'black' : 'white',
                             fontWeight: '600',
-                            fontSize: 18,
+                            fontSize: 20,
                         },
-                        headerRight: () => (
+                        headerLeft: () => (
                             <TouchableOpacity onPress={() => navigation.goBack()}>
-                                <Text color={colors.mainColor} fontSize="lg" fontWeight={600}>
+                                <Text color={colors.mainColor} fontSize="lg" fontWeight={700}>
                                     Done
                                 </Text>
                             </TouchableOpacity>

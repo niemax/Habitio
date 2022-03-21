@@ -13,6 +13,7 @@ const MoodProvider = ({ children }) => {
     const addMood = async (props) => {
         try {
             setMoods([...moods, props]);
+            console.log(props);
             await AsyncStorage.setItem('@moods', JSON.stringify([...moods, props]));
         } catch (error) {
             console.error(error);

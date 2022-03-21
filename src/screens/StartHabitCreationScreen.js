@@ -22,7 +22,7 @@ const StartHabitCreation = ({ navigation }) => {
     const handleOwnHabit = () => {
         if (habitName === '') {
             setError('Name Required');
-            scrollviewRef.current?.scrollTo({ x: 0, y: 0, animated: true });
+            scrollviewRef.current?.scrollTo({ y: 0, animated: true });
         } else {
             navigate('CreateHabit', {
                 habitName: habitName,
@@ -41,11 +41,9 @@ const StartHabitCreation = ({ navigation }) => {
 
     return (
         <MainContainer bgColor="#EFEFEF">
-            <ScrollView contentInsetAdjustmentBehavior="automatic" ref={scrollviewRef}>
-                <Box px={4}>
-                    <Text marginTop="20px" ml={5}>
-                        CREATE YOUR OWN HABIT
-                    </Text>
+            <ScrollView ref={scrollviewRef}>
+                <Box px={4} mt={32}>
+                    <Text ml={5}>CREATE YOUR OWN HABIT</Text>
                     <InputContainer>
                         <HabitInput
                             clearButtonMode="always"

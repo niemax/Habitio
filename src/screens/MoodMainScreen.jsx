@@ -17,6 +17,7 @@ import {
     useColorModeValue,
     Tooltip,
     Button,
+    VStack,
 } from 'native-base';
 import Modal from 'react-native-modal';
 import MainButton from '../components/uiComponents/Button';
@@ -47,7 +48,7 @@ const MoodMainScreen = ({ navigation }) => {
     useEffect(async () => {
         const isFirstMoodLaunch = await AsyncStorage.getItem('@firstMoodLaunch');
         if (isFirstMoodLaunch === null) {
-            await scheduleMoodNotification();
+            scheduleMoodNotification();
             await AsyncStorage.setItem('@firstMoodLaunch', 'false');
         } else {
             return;
@@ -56,12 +57,11 @@ const MoodMainScreen = ({ navigation }) => {
 
     useEffect(() => {
         checkIfShouldOpenTooltip();
-        const timeout = setTimeout(() => setTooltipOpen(false), 7000);
+        const timeout = setTimeout(() => setTooltipOpen(false), 5000);
         return () => clearTimeout(timeout);
     }, []);
 
     const checkIfShouldOpenTooltip = () => {
-        const currentDate = getCurrentDateFormatted(new Date());
         // this is definitely not the best approach performance wise. Fix this
         const includesCurrentDate = moods.every((mood) => mood.date !== currentDate);
         if (!!includesCurrentDate) {
@@ -71,12 +71,12 @@ const MoodMainScreen = ({ navigation }) => {
     };
 
     const handleMood = () => {
-        const date = getCurrentDateFormatted(new Date());
         const moodObject = {
             text: text,
             moodName: moodName,
             id: moods.length + 1,
-            date: date,
+            dateObject: new Date(),
+            date: getCurrentDateFormatted(new Date()),
         };
         Keyboard.dismiss();
         setTimeout(() => {
@@ -97,58 +97,60 @@ const MoodMainScreen = ({ navigation }) => {
     const currentDate = getCurrentDateFormatted(new Date());
 
     const renderMoodItem = ({ item }) => (
-        <>
-            <Stagger
-                visible={true}
-                initial={{
-                    opacity: 0,
-                    scale: 0,
-                    translateY: 14,
-                }}
-                animate={{
-                    translateY: 1,
-                    scale: 1,
-                    opacity: 1,
-                    transition: {
-                        type: 'spring',
-                        mass: 0.3,
-                        stagger: {
-                            offset: 10,
-                        },
+        <Stagger
+            visible={true}
+            initial={{
+                opacity: 0,
+                scale: 0,
+                translateY: 14,
+            }}
+            animate={{
+                translateY: 1,
+                scale: 1,
+                opacity: 1,
+                transition: {
+                    type: 'spring',
+                    mass: 0.3,
+                    stagger: {
+                        offset: 10,
                     },
-                }}
+                },
+            }}
+        >
+            <TouchableOpacity
+                onPress={() =>
+                    navigate('MoodDetailsScreen', {
+                        id: item.id,
+                        date: item.date,
+                        dateObject: item.dateObject,
+                    })
+                }
             >
-                <Box px={4} py={3}>
-                    <Text fontSize="xl" fontWeight={600} mb={2}>
-                        {item.date === currentDate ? 'Today' : item.date}
-                    </Text>
-                </Box>
-                <TouchableOpacity
-                    onPress={() =>
-                        navigate('MoodDetailsScreen', {
-                            id: item.id,
-                            date: item.date,
-                        })
-                    }
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        paddingHorizontal: 15,
-                        alignItems: 'center',
-                    }}
-                >
-                    <Flex direction="row" align="center">
-                        <Text fontSize={30}>{renderEmoji(item.moodName)}</Text>
-                        <Text ml={1} fontSize="md" fontWeight={600}>
-                            {item.moodName}
+                <Flex direction="row" justify="space-between" px={4} py={3} align="center">
+                    <VStack align="center" w="50%">
+                        <Flex direction="row" align="center">
+                            <Text fontSize={24}>{renderEmoji(item.moodName)}</Text>
+                            <Text ml={1} fontSize="md" fontWeight={600}>
+                                {item.moodName}
+                            </Text>
+                        </Flex>
+                        <Flex>
+                            <Text numberOfLines={1} opacity={0.7}>
+                                {item.text}
+                            </Text>
+                        </Flex>
+                    </VStack>
+                    <Flex align="center">
+                        <Text fontSize="md" mb={2} opacity={0.7}>
+                            {item.date === currentDate ? 'Today' : item.date}
                         </Text>
+                        <Box>
+                            <Ionicons name="chevron-forward" size={20} color="gray" />
+                        </Box>
                     </Flex>
-                    <Box>
-                        <Ionicons name="chevron-forward" size={20} color="gray" />
-                    </Box>
-                </TouchableOpacity>
-            </Stagger>
-        </>
+                </Flex>
+            </TouchableOpacity>
+        </Stagger>
     );
 
     const renderMoodButtons = () => (

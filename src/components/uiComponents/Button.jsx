@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button } from 'native-base';
+import { Button, HStack } from 'native-base';
 import { renderIconBackgroundColor } from '../../utils/helpers/renderIconBackgroundColor';
+import { Ionicons } from '@expo/vector-icons';
 import useSettings from '../../hooks/useSettings';
 
 const MainButton = ({

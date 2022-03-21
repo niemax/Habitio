@@ -82,11 +82,11 @@ const SelectFrequencyScreen = ({ route }) => {
     if (name === 'habit nature')
         return (
             <MainContainer>
-                <Box px={2} mt={10}>
+                <Box mt={10}>
                     <Text px={3} opacity={0.7} fontSize="xs">
                         I WANT TO
                     </Text>
-                    <ListContainer py={1}>
+                    <ListContainer py={1} rounded="none">
                         <SettingTouchable
                             style={{ paddingVertical: 8 }}
                             onPress={() => setHabitNature('Build a habit')}
@@ -113,11 +113,11 @@ const SelectFrequencyScreen = ({ route }) => {
 
     return (
         <MainContainer>
-            <Box px={2} mt={10}>
+            <Box mt={10}>
                 <Text px={3} opacity={0.7} fontSize="xs">
                     HOW OFTEN?
                 </Text>
-                <ListContainer py={2}>
+                <ListContainer py={2} rounded="none">
                     <SettingTouchable
                         style={{ paddingVertical: 8 }}
                         onPress={() => {
@@ -167,7 +167,7 @@ const SelectFrequencyScreen = ({ route }) => {
                         <Text px={3} opacity={0.7} fontSize="xs">
                             {stateFrequency === 'daily' ? 'WHICH DAYS?' : 'WHICH DAY?'}
                         </Text>
-                        <ListContainer rounded="md">
+                        <ListContainer rounded="none">
                             <Flex direction="row" justify="space-evenly">
                                 <HStack p={2} space={6}>
                                     {weekdays.map((item) => (

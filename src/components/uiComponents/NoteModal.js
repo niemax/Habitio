@@ -34,6 +34,18 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
         setInputText('');
     };
 
+    function resetState() {
+        setInputText('');
+        setShowModal(false);
+    }
+
+    const handleDone = () => {
+        if (!!inputText) {
+            handleNoteInput();
+            setShowModal(false);
+        }
+    };
+
     return (
         <Modal
             onSwipeComplete={() => setShowModal(false)}
@@ -81,25 +93,11 @@ const NoteModal = ({ showModal, setShowModal, id }) => {
                             w={150}
                             h={50}
                             variant="subtle"
-                            onPress={() => {
-                                setInputText('');
-                                setShowModal(false);
-                            }}
+                            onPress={resetState}
                         >
                             Cancel
                         </Button>
-                        <Button
-                            w={150}
-                            h={50}
-                            variant="subtle"
-                            rounded="xl"
-                            onPress={() => {
-                                if (!!inputText) {
-                                    handleNoteInput();
-                                    setShowModal(false);
-                                }
-                            }}
-                        >
+                        <Button w={150} h={50} variant="subtle" rounded="xl" onPress={handleDone}>
                             Done
                         </Button>
                     </Button.Group>

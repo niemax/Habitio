@@ -34,13 +34,13 @@ const HabitProvider = ({ children }) => {
                     }
                     if (currentDay !== habit.dataCurrentDay && habit.frequency === 'daily') {
                         habit.progress = 0;
-                        habit.timesDoneThisWeek = 0;
                         habit.completed = false;
                         habit.dataCurrentDay = currentDay;
                     }
                     if (currentWeek !== habit.dataCurrentWeek && habit.frequency === 'weekly') {
                         habit.progress = 0;
                         habit.dataCurrentWeek = currentWeek;
+                        habit.timesDoneThisWeek = 0;
                     }
                     if (
                         formatDateForHabitEndDate(habit.endDate) ===
@@ -85,7 +85,6 @@ const HabitProvider = ({ children }) => {
                     ...habits,
                     {
                         ...props,
-                        id: Math.floor(Math.random() * 10000),
                         dataCurrentDay: currentDay,
                         dataCurrentWeek: currentWeek,
                         dataCurrentMonth: currentMonth,
@@ -102,6 +101,7 @@ const HabitProvider = ({ children }) => {
             console.error(error);
         }
     };
+    console.log(habits);
 
     const habitSetter = async (props) => {
         try {
@@ -110,6 +110,12 @@ const HabitProvider = ({ children }) => {
         } catch (error) {
             console.error(error);
         }
+    };
+
+    const deleteHabit = (notificationId, id) => {
+        cancelPushNotification(notificationId);
+        const filtered = habits.filter((habit) => habit.id !== id);
+        habitSetter(filtered);
     };
 
     const dailyHabits = habits.filter((habit) => habit.frequency === 'daily');
@@ -134,6 +140,7 @@ const HabitProvider = ({ children }) => {
                 getHabits,
                 setHabits,
                 CRUDHabits,
+                deleteHabit,
             }}
         >
             {children}

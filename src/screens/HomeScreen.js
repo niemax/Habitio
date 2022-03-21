@@ -17,9 +17,7 @@ const TotalProgressCircle = () => {
         ?.map((habit) => habit.times)
         .reduce((acc, curr) => acc + curr, 0);
 
-    const value = dailyHabits
-        ?.map((habit) => habit.timesDoneThisWeek)
-        .reduce((acc, curr) => acc + curr, 0);
+    const value = dailyHabits?.map((habit) => habit.progress).reduce((acc, curr) => acc + curr, 0);
 
     return (
         <Box mt={4}>
@@ -52,7 +50,7 @@ const HomeScreen = () => {
         setRefreshing(true);
         getHabits();
         wait(200).then(() => setRefreshing(false));
-    }, []);
+    }, [refreshing]);
 
     const WEEKLY_HABITS_LENGTH = weeklyHabits.length;
     const MONTHLY_HABITS_LENGTH = monthlyHabits.length;
@@ -104,7 +102,6 @@ const HomeScreen = () => {
     return (
         <Flex flex={1} bg={useColorModeValue(colors.white, colors.black)}>
             <ScrollView
-                contentInsetAdjustmentBehavior="automatic"
                 refreshControl={
                     <RefreshControl
                         title="Release to refresh"
@@ -115,48 +112,50 @@ const HomeScreen = () => {
                     />
                 }
             >
-                {habitsLoading ? (
-                    renderContentLoader()
-                ) : (
-                    <Box mb={20}>
-                        <Center>
-                            <TotalProgressCircle />
-                        </Center>
-                        <Box>{!!dailyHabits.length && renderHeader('daily', 10)}</Box>
-                        <Box>
-                            {!!dailyHabits.length &&
-                                dailyHabits?.map((item) => (
-                                    <HabitListItem
-                                        key={item.id}
-                                        item={item}
-                                        completed={item.completed}
-                                    />
-                                ))}
-                        </Box>
-                        <Box>{!!weeklyHabits.length && renderHeader('weekly', 10)}</Box>
-                        <Box>
-                            {!!weeklyHabits.length &&
-                                weeklyHabits?.map((item) => (
-                                    <HabitListItem
-                                        key={item.id}
-                                        item={item}
-                                        completed={item.completed}
-                                    />
-                                ))}
-                        </Box>
-                        <Box>{!!monthlyHabits.length && renderHeader('monthly', 10)}</Box>
+                <Box mt={40}>
+                    {habitsLoading ? (
+                        renderContentLoader()
+                    ) : (
+                        <Box mb={20}>
+                            <Center>
+                                <TotalProgressCircle />
+                            </Center>
+                            <Box>{!!dailyHabits.length && renderHeader('daily', 10)}</Box>
+                            <Box>
+                                {!!dailyHabits.length &&
+                                    dailyHabits?.map((item) => (
+                                        <HabitListItem
+                                            key={item.id}
+                                            item={item}
+                                            completed={item.completed}
+                                        />
+                                    ))}
+                            </Box>
+                            <Box>{!!weeklyHabits.length && renderHeader('weekly', 10)}</Box>
+                            <Box>
+                                {!!weeklyHabits.length &&
+                                    weeklyHabits?.map((item) => (
+                                        <HabitListItem
+                                            key={item.id}
+                                            item={item}
+                                            completed={item.completed}
+                                        />
+                                    ))}
+                            </Box>
+                            <Box>{!!monthlyHabits.length && renderHeader('monthly', 10)}</Box>
 
-                        <Box>
-                            {monthlyHabits?.map((item) => (
-                                <HabitListItem
-                                    key={item.id}
-                                    item={item}
-                                    completed={item.completed}
-                                />
-                            ))}
+                            <Box>
+                                {monthlyHabits?.map((item) => (
+                                    <HabitListItem
+                                        key={item.id}
+                                        item={item}
+                                        completed={item.completed}
+                                    />
+                                ))}
+                            </Box>
                         </Box>
-                    </Box>
-                )}
+                    )}
+                </Box>
             </ScrollView>
         </Flex>
     );

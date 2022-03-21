@@ -192,11 +192,9 @@ export const HomepageDataBox = styled.TouchableOpacity`
     margin-top: 2px;
     height: 84px;
     width: ${deviceWidth - 30} 
-    padding-horizontal: 13px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border-radius: ${radius};
 `;
 
 export const ShowHabitFrequency = styled.View`

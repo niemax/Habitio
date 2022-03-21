@@ -74,6 +74,11 @@ const data = [
                 habitIcon: 'cleaning-services',
                 color: '#722672',
             },
+            {
+                name: 'Check and sort your emails',
+                habitIcon: 'email-check-outline',
+                color: '#3FBFBF',
+            },
         ],
     },
     {

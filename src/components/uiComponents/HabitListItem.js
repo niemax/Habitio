@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Feather } from '@expo/vector-icons';
+import React, { useEffect, useState } from 'react';
+import { Feather, Ionicons } from '@expo/vector-icons';
 import { HomepageDataBox, HomepageDataView } from '../../utils/StyledComponents/Styled';
 import {
     Box,
@@ -11,16 +11,15 @@ import {
     useColorMode,
     Button,
     Stagger,
-    Container,
 } from 'native-base';
 import ActionSheet from './ActionSheet';
 import { haptics } from '../../utils/helpers/haptics';
 import { useHabits } from '../../context/HabitProvider';
 import { renderIconBackgroundColor } from '../../utils/helpers/renderIconBackgroundColor';
-import { habitItemShadow } from '../../utils/globalStyles';
 import ProgressCircle from './CircularProgress';
-import useSettings from '../../hooks/useSettings';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { convertWeekdaysToNumbers } from '../../utils/helpers/createhabitHelpers';
+import { getCurrentDay } from '../../utils/helpers/dateHelpers';
 
 const HabitListItem = ({ item }) => {
     const { icon, completed, times, progress, color, name, id, unitValue, frequency, habitGoal } =
@@ -33,10 +32,9 @@ const HabitListItem = ({ item }) => {
     const { habitSetter, habits } = useHabits();
 
     const handleHabitProgress = (operand) => {
-        haptics.success();
         const mapped = habits.map((habit) => {
             if (habit.id === id) {
-                setHabitProgress(habitProgress + Number(operand));
+                setHabitProgress((prevProgress) => prevProgress + Number(operand));
                 habit.progress += Number(operand);
                 if (habit.frequency === 'daily') {
                     habit.timesDoneThisWeek += Number(operand);
@@ -45,14 +43,41 @@ const HabitListItem = ({ item }) => {
             return habit;
         });
         habitSetter(mapped);
+        haptics.success();
     };
+
+    const checkIfIsDoneForTheWeek = () => {
+        if (item.timesDoneThisWeek === times * item.selectedWeekdays.length) {
+            return true;
+        }
+        return false;
+    };
+
+    const checkNextCompletionDay = () => {
+        const selectedWeekdaysToNumbers = convertWeekdaysToNumbers(item.selectedWeekdays);
+        const currentDay = getCurrentDay();
+        let nextDay = null;
+
+        if (!selectedWeekdaysToNumbers.includes(currentDay)) {
+            const sorted = selectedWeekdaysToNumbers.sort();
+            const looped = sorted.map((index) => {
+                if (currentDay < index) {
+                }
+            });
+        }
+        //console.log(nextDay);
+    };
+
+    useEffect(() => {
+        checkNextCompletionDay();
+    }, []);
 
     const renderIcon = () =>
         !!icon ? (
             icon === 'cleaning-services' ? (
-                <MaterialIcons size={20} color="black" name={icon} />
+                <MaterialIcons size={20} color={color} name={icon} />
             ) : (
-                <MaterialCommunityIcons size={20} color="black" name={icon} />
+                <MaterialCommunityIcons size={20} color={color} name={icon} />
             )
         ) : (
             <Feather name="activity" size={15} color="black" />
@@ -81,13 +106,7 @@ const HabitListItem = ({ item }) => {
                         },
                     }}
                 >
-                    <HomepageDataBox
-                        onPress={() => setIsActionSheetVisible(true)}
-                        style={{
-                            backgroundColor: colorMode === 'light' ? 'white' : '#151618',
-                            ...habitItemShadow,
-                        }}
-                    >
+                    <HomepageDataBox onPress={() => setIsActionSheetVisible(true)}>
                         <HStack>
                             <Flex align="center" mt={1}>
                                 <Button
@@ -124,14 +143,21 @@ const HabitListItem = ({ item }) => {
                                 </VStack>
                             </Box>
                         </HStack>
-                        <ProgressCircle
-                            id={id}
-                            habitProgress={habitProgress}
-                            handleHabitProgress={handleHabitProgress}
-                            size={36}
-                            width={10}
-                            fontSize={12}
-                        />
+                        {!!checkIfIsDoneForTheWeek() ? (
+                            <Flex direction="row" align="center">
+                                <Text>Weekly goal</Text>
+                                <Ionicons name="checkmark-outline" size={32} color="#7FBF3F" />
+                            </Flex>
+                        ) : (
+                            <ProgressCircle
+                                id={id}
+                                habitProgress={habitProgress}
+                                handleHabitProgress={handleHabitProgress}
+                                size={32}
+                                width={10}
+                                fontSize={12}
+                            />
+                        )}
                     </HomepageDataBox>
                 </Stagger>
             </HomepageDataView>
